@@ -28,4 +28,10 @@ public:
 	static float GetValue(FName RowName, float DefaultValue);
 	
 	static FString GetStringValue(FName RowName, const FString& DefaultString);
+	
+	UFUNCTION(BlueprintPure, Category = "Live Config", meta = (BlueprintThreadSafe))
+	static FName GetRowName(const FLiveConfigRowName& RowName);
+
+	UFUNCTION(BlueprintPure, Category = "Live Config", meta = (BlueprintThreadSafe))
+	static FLiveConfigRowName MakeLiteralLiveConfigRowName(FLiveConfigRowName RowName);
 };

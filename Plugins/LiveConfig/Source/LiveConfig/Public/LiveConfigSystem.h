@@ -3,6 +3,7 @@
 #include "Subsystems/EngineSubsystem.h"
 #include "Interfaces/IHttpRequest.h"
 #include "CoreMinimal.h"
+#include "LiveConfigPropertyName.h"
 #include "LiveConfigSystem.generated.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(LogLiveConfig, Log, Log);
@@ -13,7 +14,7 @@ struct FLiveConfigPropertyDefinition
     GENERATED_BODY()
 
     UPROPERTY(BlueprintReadWrite)
-    FName PropertyName;
+    FLiveConfigRowName PropertyName;
 
     UPROPERTY(BlueprintReadWrite)
     FString Description;
@@ -22,6 +23,9 @@ struct FLiveConfigPropertyDefinition
     TArray<FName> Tags;
 };
 
+/**
+ * Property *values*
+ */
 USTRUCT(BlueprintType)
 struct FLiveConfigProperty
 {
@@ -43,6 +47,8 @@ class LIVECONFIG_API ULiveConfigSystem : public UEngineSubsystem
     GENERATED_BODY()
 
 public:
+    static ULiveConfigSystem* Get();
+    
     // USubsystem
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void Deinitialize() override;
@@ -78,6 +84,12 @@ public:
     
     void DownloadConfig();
 
+    /** Get all available row names (public for editor access) */
+    UFUNCTION(BlueprintCallable, Category = "Live Config")
+    TArray<FLiveConfigRowName> GetAllRowNames() const;
+
+    bool DoesPropertyNameExist(FName PropertyName) const;
+
 
 private:
     FString SheetUrl;
@@ -93,7 +105,7 @@ private:
 
     /** The main storage for our key-value pairs. */
     UPROPERTY(VisibleAnywhere)
-    TMap<FName, FLiveConfigProperty> ConfigValues;
+    TMap<FLiveConfigRowName, FLiveConfigProperty> ConfigValues;
     
     void OnTravel(UWorld* World, FWorldInitializationValues WorldInitializationValues);
     void OnStartGameInstance(UGameInstance* GameInstance);

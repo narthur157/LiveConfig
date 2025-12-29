@@ -50,3 +50,13 @@ FString ULiveConfigLib::GetStringValue(FName RowName, const FString& DefaultStri
 
 	return DefaultString;
 }
+
+FName ULiveConfigLib::GetRowName(const FLiveConfigRowName& RowName)
+{
+	return RowName.GetRowName();
+}
+
+FLiveConfigRowName ULiveConfigLib::MakeLiteralLiveConfigRowName(FLiveConfigRowName RowName)
+{
+	return RowName;
+}

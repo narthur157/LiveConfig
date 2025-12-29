@@ -1,7 +1,9 @@
 ﻿#include "LiveConfigEditor.h"
 
 #include "EdGraphUtilities.h"
-#include "LiveConfigPropertyDefinitionCustomization.h"
+#include "LiveConfigPropertyName.h"
+#include "LiveConfigRowNameCustomization.h"
+#include "LiveConfigRowNamePinFactory.h"
 #include "LiveConfigSystem.h"
 
 #define LOCTEXT_NAMESPACE "FLiveConfigEditorModule"
@@ -9,21 +11,22 @@
 void FLiveConfigEditorModule::StartupModule()
 {
 	FPropertyEditorModule& PropertyModule = FModuleManager::GetModuleChecked<FPropertyEditorModule>("PropertyEditor");
+
+	// Register customization for FLiveConfigRowName
 	PropertyModule.RegisterCustomPropertyTypeLayout(
-		FLiveConfigPropertyDefinition::StaticStruct()->GetFName(),
-		FOnGetPropertyTypeCustomizationInstance::CreateStatic(&FLiveConfigPropertyDefinitionCustomization::MakeInstance)
+		FLiveConfigRowName::StaticStruct()->GetFName(),
+		FOnGetPropertyTypeCustomizationInstance::CreateStatic(&FLiveConfigRowNameCustomization::MakeInstance)
 	);
 
-	auto PropertyPinFactory = MakeShareable(new FLiveConfigPropertyPinFactory());
-
-	// Register it
-	FEdGraphUtilities::RegisterVisualPinFactory(PropertyPinFactory);
+	auto RowNamePinFactory = MakeShareable(new FLiveConfigRowNamePinFactory());
+	FEdGraphUtilities::RegisterVisualPinFactory(RowNamePinFactory);
 }
 
 void FLiveConfigEditorModule::ShutdownModule()
 {
 	FPropertyEditorModule& PropertyModule = FModuleManager::GetModuleChecked<FPropertyEditorModule>("PropertyEditor");
-	PropertyModule.UnregisterCustomPropertyTypeLayout(FLiveConfigPropertyDefinition::StaticStruct()->GetFName());   
+	PropertyModule.UnregisterCustomPropertyTypeLayout(FLiveConfigPropertyDefinition::StaticStruct()->GetFName());
+	PropertyModule.UnregisterCustomPropertyTypeLayout(FLiveConfigRowName::StaticStruct()->GetFName());
 }
 
 #undef LOCTEXT_NAMESPACE

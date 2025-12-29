@@ -23,9 +23,8 @@ public:
 	 */
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite)
 	float EditorPollRateMinutes = 30;
-
 	
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite)
-	TMap<FName, FLiveConfigPropertyDefinition> PropertyDefinitions;
+	TMap<FLiveConfigRowName, FLiveConfigPropertyDefinition> PropertyDefinitions;
 };
 

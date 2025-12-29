@@ -9,6 +9,11 @@
 
 DEFINE_LOG_CATEGORY(LogLiveConfig)
 
+ULiveConfigSystem* ULiveConfigSystem::Get()
+{
+    return GEngine->GetEngineSubsystem<ULiveConfigSystem>();
+}
+
 void ULiveConfigSystem::Initialize(FSubsystemCollectionBase& Collection)
 {
     SheetUrl = ULiveConfigGameSettings::StaticClass()->GetDefaultObject<ULiveConfigGameSettings>()->SheetUrl;
@@ -130,12 +135,24 @@ void ULiveConfigSystem::OnSheetDownloadComplete(FHttpRequestPtr Request, FHttpRe
         
             for (const auto& Pair : ConfigValues)
             {
-                TagList->GameplayTagList.AddUnique(FGameplayTagTableRow(Pair.Key, Pair.Value.Description));
+                //TagList->GameplayTagList.AddUnique(FGameplayTagTableRow(Pair.Key, Pair.Value.Description));
             }
         
             TagList->SortTags();
         }
     }
+}
+
+TArray<FLiveConfigRowName> ULiveConfigSystem::GetAllRowNames() const
+{
+    TArray<FLiveConfigRowName> RowNames;
+    ConfigValues.GetKeys(RowNames);
+    return RowNames;
+}
+
+bool ULiveConfigSystem::DoesPropertyNameExist(FName PropertyName) const
+{
+    return ConfigValues.Contains(PropertyName);
 }
 
 void ULiveConfigSystem::OnTravel(UWorld* World, FWorldInitializationValues WorldInitializationValues)

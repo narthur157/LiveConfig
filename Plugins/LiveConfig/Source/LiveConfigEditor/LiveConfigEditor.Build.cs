@@ -24,7 +24,9 @@ public class LiveConfigEditor : ModuleRules
                 "PropertyEditor",
                 "GraphEditor",
                 "UnrealEd",
-                "BlueprintGraph"
+                "BlueprintGraph", 
+                "EditorStyle",
+                "InputCore"
             }
         );
     }
