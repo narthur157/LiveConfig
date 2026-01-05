@@ -1,17 +1,17 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "LiveConfigRowChip.h"
+#include "LiveConfigPropertyChip.h"
 
 #include "LiveConfigPropertyStyle.h"
 #include "SlateOptMacros.h"
 
-#define LOCTEXT_NAMESPACE "LiveConfigRowChip"
+#define LOCTEXT_NAMESPACE "LiveConfigPropertyChip"
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
-SLATE_IMPLEMENT_WIDGET(SLiveConfigRowChip)
+SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyChip)
 
-void SLiveConfigRowChip::PrivateRegisterAttributes(FSlateAttributeInitializer& AttributeInitializer)
+void SLiveConfigPropertyChip::PrivateRegisterAttributes(FSlateAttributeInitializer& AttributeInitializer)
 {
 	SLATE_ADD_MEMBER_ATTRIBUTE_DEFINITION_WITH_NAME(AttributeInitializer, "TooltipText", ToolTipTextAttribute, EInvalidateWidgetReason::Layout);
 	SLATE_ADD_MEMBER_ATTRIBUTE_DEFINITION_WITH_NAME(AttributeInitializer, "Text", TextAttribute, EInvalidateWidgetReason::Layout);
@@ -20,15 +20,15 @@ void SLiveConfigRowChip::PrivateRegisterAttributes(FSlateAttributeInitializer& A
 	SLATE_ADD_MEMBER_ATTRIBUTE_DEFINITION_WITH_NAME(AttributeInitializer, "IsSelected", IsSelectedAttribute, EInvalidateWidgetReason::Layout)
 	.OnValueChanged(FSlateAttributeDescriptor::FAttributeValueChangedDelegate::CreateLambda([](SWidget& Widget)
 		{
-			static_cast<SLiveConfigRowChip&>(Widget).UpdatePillStyle();
+			static_cast<SLiveConfigPropertyChip&>(Widget).UpdatePillStyle();
 		}));
 }
 
-SLiveConfigRowChip::SLiveConfigRowChip() : ToolTipTextAttribute(*this), TextAttribute(*this), ShowClearButtonAttribute(*this), IsSelectedAttribute(*this)
+SLiveConfigPropertyChip::SLiveConfigPropertyChip() : ToolTipTextAttribute(*this), TextAttribute(*this), ShowClearButtonAttribute(*this), IsSelectedAttribute(*this)
 {
 }
 
-void SLiveConfigRowChip::Construct(const FArguments& InArgs)
+void SLiveConfigPropertyChip::Construct(const FArguments& InArgs)
 {
 	TextAttribute.Assign(*this, InArgs._Text);
 	ToolTipTextAttribute.Assign(*this, InArgs._ToolTipText);
@@ -38,7 +38,7 @@ void SLiveConfigRowChip::Construct(const FArguments& InArgs)
 	OnEditPressed = InArgs._OnEditPressed;
 	OnClearPressed = InArgs._OnClearPressed;
 	
-	TWeakPtr<SLiveConfigRowChip> WeakSelf = StaticCastWeakPtr<SLiveConfigRowChip>(AsWeak());
+	TWeakPtr<SLiveConfigPropertyChip> WeakSelf = StaticCastWeakPtr<SLiveConfigPropertyChip>(AsWeak());
 
 	ChildSlot
 	[
@@ -59,13 +59,13 @@ void SLiveConfigRowChip::Construct(const FArguments& InArgs)
 					.ContentPadding(0)
 					.ToolTipText_Lambda([WeakSelf]()
 					{
-						const TSharedPtr<SLiveConfigRowChip> Self = WeakSelf.Pin();
+						const TSharedPtr<SLiveConfigPropertyChip> Self = WeakSelf.Pin();
 						return Self.IsValid() ? Self->ToolTipTextAttribute.Get() : FText::GetEmpty();
 					})
 					.IsEnabled(!InArgs._ReadOnly)
 					.OnClicked_Lambda([WeakSelf]()
 					{
-						if (const TSharedPtr<SLiveConfigRowChip> Self = WeakSelf.Pin())
+						if (const TSharedPtr<SLiveConfigPropertyChip> Self = WeakSelf.Pin())
 						{
 							const FModifierKeysState ModifierKeys = FSlateApplication::Get().GetModifierKeys();
 
@@ -87,7 +87,7 @@ void SLiveConfigRowChip::Construct(const FArguments& InArgs)
 							.Font(FAppStyle::GetFontStyle( TEXT("PropertyWindow.NormalFont")))
 							.Text_Lambda([WeakSelf]()
 							{
-								const TSharedPtr<SLiveConfigRowChip> Self = WeakSelf.Pin();
+								const TSharedPtr<SLiveConfigPropertyChip> Self = WeakSelf.Pin();
 								return Self.IsValid() ? Self->TextAttribute.Get() : FText::GetEmpty();
 							})
 						]
@@ -109,7 +109,7 @@ void SLiveConfigRowChip::Construct(const FArguments& InArgs)
 							.ContentPadding(FMargin(2, 0, 0, 0))
 							.OnClicked_Lambda([WeakSelf]()
 							{
-								const TSharedPtr<SLiveConfigRowChip> Self = WeakSelf.Pin();
+								const TSharedPtr<SLiveConfigPropertyChip> Self = WeakSelf.Pin();
 								if (Self.IsValid() && Self->OnClearPressed.IsBound())
 								{
 									return Self->OnClearPressed.Execute();
@@ -120,7 +120,7 @@ void SLiveConfigRowChip::Construct(const FArguments& InArgs)
 								SNew(SImage)
 								.ColorAndOpacity_Lambda([WeakSelf]()
 								{
-									const TSharedPtr<SLiveConfigRowChip> Self = WeakSelf.Pin();
+									const TSharedPtr<SLiveConfigPropertyChip> Self = WeakSelf.Pin();
 									if (Self.IsValid() && Self->ClearButton.IsValid())
 									{
 										return Self->ClearButton->IsHovered() ? FStyleColors::White : FStyleColors::Foreground;
@@ -138,7 +138,7 @@ void SLiveConfigRowChip::Construct(const FArguments& InArgs)
 	];
 }
 
-void SLiveConfigRowChip::UpdatePillStyle()
+void SLiveConfigPropertyChip::UpdatePillStyle()
 {
 	const bool bIsSelected = IsSelectedAttribute.Get();
 	if (bIsSelected != bLastHasIsSelected)

@@ -6,7 +6,7 @@
 #include "DetailWidgetRow.h"
 #include "LiveConfigPropertyName.h"
 
-class FLiveConfigRowNameCustomization : public IPropertyTypeCustomization
+class FLiveConfigPropertyCustomization : public IPropertyTypeCustomization
 {
 public:
     static TSharedRef<IPropertyTypeCustomization> MakeInstance();
@@ -16,14 +16,14 @@ public:
     virtual void CustomizeChildren(TSharedRef<IPropertyHandle> PropertyHandle, IDetailChildrenBuilder& ChildBuilder, IPropertyTypeCustomizationUtils& CustomizationUtils) override;
 
 private:
-    /** Handle when the row name changes in the widget */
-    void OnRowNameChanged(FLiveConfigRowName NewRowName);
+    /** Handle when the property changes in the widget */
+    void OnPropertyChanged(FLiveConfigProperty NewProperty);
 
-    /** Get the current row name from the property */
-    FName GetCurrentRowName() const;
+    /** Get the current name from the property */
+    FName GetCurrentProperty() const;
 
-    /** Set the row name in the property */
-    void SetRowName(FLiveConfigRowName NewRowName);
+    /** Set the property in the property */
+    void SetProperty(FLiveConfigProperty NewProperty);
 
     TSharedPtr<IPropertyHandle> PropertyHandle;
     TSharedPtr<class SComboButton> ComboButton;

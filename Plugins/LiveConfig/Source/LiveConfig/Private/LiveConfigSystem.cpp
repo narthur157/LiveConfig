@@ -109,7 +109,7 @@ void ULiveConfigSystem::OnSheetDownloadComplete(FHttpRequestPtr Request, FHttpRe
         {
             // The parser gives us TCHAR*, so we convert them to FName/FString
             const FName Key(Columns[0]);
-            FLiveConfigProperty Value;
+            FLiveConfigValue Value;
             Value.RawValue = Columns[1];
             Value.Description = Columns[3];
             
@@ -143,14 +143,14 @@ void ULiveConfigSystem::OnSheetDownloadComplete(FHttpRequestPtr Request, FHttpRe
     }
 }
 
-TArray<FLiveConfigRowName> ULiveConfigSystem::GetAllRowNames() const
+TArray<FLiveConfigProperty> ULiveConfigSystem::GetAllProperties() const
 {
-    TArray<FLiveConfigRowName> RowNames;
-    ConfigValues.GetKeys(RowNames);
-    return RowNames;
+    TArray<FLiveConfigProperty> Properties;
+    ConfigValues.GetKeys(Properties);
+    return Properties;
 }
 
-bool ULiveConfigSystem::DoesPropertyNameExist(FName PropertyName) const
+bool ULiveConfigSystem::DoesPropertyNameExist(FLiveConfigProperty PropertyName) const
 {
     return ConfigValues.Contains(PropertyName);
 }
@@ -174,18 +174,18 @@ void ULiveConfigSystem::OnStartGameInstance(UGameInstance* GameInstance)
     }), PollingRate, true);
 }
 
-FString ULiveConfigSystem::GetStringValue(FName Key, const FString& DefaultValue)
+FString ULiveConfigSystem::GetStringValue(FLiveConfigProperty Key, const FString& DefaultValue)
 {
     if (!ConfigValues.Contains(Key))
     {
         return DefaultValue;        
     }
     
-    const FLiveConfigProperty* FoundValue = ConfigValues.Find(Key);
+    const FLiveConfigValue* FoundValue = ConfigValues.Find(Key);
     return FoundValue ? *FoundValue->RawValue : DefaultValue;
 }
 
-float ULiveConfigSystem::GetFloatValue(FName Key, float DefaultValue)
+float ULiveConfigSystem::GetFloatValue(FLiveConfigProperty Key, float DefaultValue)
 {
     if (!ConfigValues.Contains(Key))
     {
@@ -201,7 +201,7 @@ float ULiveConfigSystem::GetFloatValue(FName Key, float DefaultValue)
     return DefaultValue;
 }
 
-bool ULiveConfigSystem::GetBoolValue(FName Key, bool bDefault)
+bool ULiveConfigSystem::GetBoolValue(FLiveConfigProperty Key, bool bDefault)
 {
     if (!ConfigValues.Contains(Key))
     {

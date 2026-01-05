@@ -1,30 +1,30 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "LiveConfigRowCombo.h"
+#include "LiveConfigPropertyCombo.h"
 
 #include "LiveConfigPropertyStyle.h"
-#include "LiveConfigRowChip.h"
-#include "LiveConfigRowPicker.h"
+#include "LiveConfigPropertyChip.h"
+#include "LiveConfigPropertyPicker.h"
 #include "SlateOptMacros.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
-SLATE_IMPLEMENT_WIDGET(SLiveConfigRowCombo)
+SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyCombo)
 
-void SLiveConfigRowCombo::PrivateRegisterAttributes(FSlateAttributeInitializer& AttributeInitializer)
+void SLiveConfigPropertyCombo::PrivateRegisterAttributes(FSlateAttributeInitializer& AttributeInitializer)
 {
-    SLATE_ADD_MEMBER_ATTRIBUTE_DEFINITION_WITH_NAME(AttributeInitializer, "RowName", RowNameAttribute, EInvalidateWidgetReason::Layout);
+    SLATE_ADD_MEMBER_ATTRIBUTE_DEFINITION_WITH_NAME(AttributeInitializer, "Property", RowNameAttribute, EInvalidateWidgetReason::Layout);
 }
 
-SLiveConfigRowCombo::SLiveConfigRowCombo() : RowNameAttribute(*this)
+SLiveConfigPropertyCombo::SLiveConfigPropertyCombo() : RowNameAttribute(*this)
 {
 }
 
-void SLiveConfigRowCombo::Construct(const FArguments& InArgs)
+void SLiveConfigPropertyCombo::Construct(const FArguments& InArgs)
 {
-    RowNameAttribute.Assign(*this, InArgs._RowName);
-	OnRowNameChanged = InArgs._OnRowNameChanged;
+    RowNameAttribute.Assign(*this, InArgs._Property);
+	OnPropertyChanged = InArgs._OnPropertyChanged;
 
     ChildSlot
     [
@@ -35,14 +35,14 @@ void SLiveConfigRowCombo::Construct(const FArguments& InArgs)
         .Clipping(EWidgetClipping::OnDemand) 
         .OnGetMenuContent_Lambda([this]()
         {
-            return SNew(SLiveConfigRowPicker)
+            return SNew(SLiveConfigPropertyPicker)
                 .bReadOnly(false)
-                .OnRowNameChanged(this, &SLiveConfigRowCombo::OnRowNameSelected);
+                .OnPropertyChanged(this, &SLiveConfigPropertyCombo::OnPropertySelected);
         })
         .ButtonContent()
         [
-            SAssignNew(Chip, SLiveConfigRowChip)
-            .ShowClearButton(this, &SLiveConfigRowCombo::ShowClearButton)
+            SAssignNew(Chip, SLiveConfigPropertyChip)
+            .ShowClearButton(this, &SLiveConfigPropertyCombo::ShowClearButton)
             .OnEditPressed_Lambda([&]
             {
                 if (ComboButton->IsOpen())
@@ -58,16 +58,16 @@ void SLiveConfigRowCombo::Construct(const FArguments& InArgs)
             .OnClearPressed_Lambda([&]
             {
                 ComboButton->SetIsOpen(false);
-                OnRowNameChanged.ExecuteIfBound({});
+                OnPropertyChanged.ExecuteIfBound({});
                 return FReply::Handled();
             })
             .ReadOnly(false)
             .Text_Lambda([this]()
             {
-                FLiveConfigRowName CurrentRowName = RowNameAttribute.Get();
-                if (CurrentRowName.IsValid())
+                FLiveConfigProperty CurrentProperty = RowNameAttribute.Get();
+                if (CurrentProperty.IsValid())
                 {
-                    return FText::FromName(CurrentRowName.GetRowName());
+                    return FText::FromName(CurrentProperty.GetName());
                 }
                 return NSLOCTEXT("LiveConfig", "None", "None");
             })
@@ -75,16 +75,16 @@ void SLiveConfigRowCombo::Construct(const FArguments& InArgs)
     ];
 }
 
-bool SLiveConfigRowCombo::ShowClearButton() const
+bool SLiveConfigPropertyCombo::ShowClearButton() const
 {
     return RowNameAttribute.Get().IsValid();
 }
 
-void SLiveConfigRowCombo::OnRowNameSelected(FLiveConfigRowName RowName)
+void SLiveConfigPropertyCombo::OnPropertySelected(FLiveConfigProperty Property)
 {
-    if (RowName.IsValid())
+    if (Property.IsValid())
     {
-        OnRowNameChanged.ExecuteIfBound(RowName);
+        OnPropertyChanged.ExecuteIfBound(Property);
         ComboButton->SetIsOpen(false);
     }
 }

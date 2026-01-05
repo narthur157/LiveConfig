@@ -1,6 +1,5 @@
-#include "LiveConfigRowPicker.h"
+#include "LiveConfigPropertyPicker.h"
 
-#include "DetailWidgetRow.h"
 #include "Framework/Application/SlateApplication.h"
 #include "LiveConfigSystem.h"
 #include "LiveConfigEditorSettings.h"
@@ -13,20 +12,19 @@
 #include "Widgets/Text/STextBlock.h"
 #include "Widgets/Layout/SSeparator.h"
 #include "Widgets/Layout/SBox.h"
-#include "EditorStyleSet.h"
 #include "Engine/Engine.h"
 #include "UObject/UObjectGlobals.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
-void SLiveConfigRowPicker::Construct(const FArguments& InArgs)
+void SLiveConfigPropertyPicker::Construct(const FArguments& InArgs)
 {
     Filter = InArgs._Filter;
     bReadOnly = InArgs._bReadOnly;
     bMultiSelect = InArgs._bMultiSelect;
-    OnRowNameChanged = InArgs._OnRowNameChanged;
+    OnPropertyChanged = InArgs._OnPropertyChanged;
 
-    RefreshRowNameList();
+    RefreshPropertyList();
 
     ChildSlot
     [
@@ -38,19 +36,19 @@ void SLiveConfigRowPicker::Construct(const FArguments& InArgs)
         .Padding(2.0f)
         [
             SAssignNew(SearchBox, SSearchBox)
-            .OnTextChanged(this, &SLiveConfigRowPicker::OnFilterTextChanged)
-            .HintText(NSLOCTEXT("LiveConfig", "SearchRowNames", "Search row names..."))
+            .OnTextChanged(this, &SLiveConfigPropertyPicker::OnFilterTextChanged)
+            .HintText(NSLOCTEXT("LiveConfig", "SearchProperties", "Search properties..."))
         ]
 
-        // List of row names
+        // List of propertys
         + SVerticalBox::Slot()
         .FillHeight(1.0f)
         .Padding(2.0f)
         [
-            SAssignNew(RowNameListView, SListView<TSharedPtr<FLiveConfigRowName>>)
-            .ListItemsSource(&FilteredRowNames)
-            .OnGenerateRow(this, &SLiveConfigRowPicker::GenerateRow)
-            .OnSelectionChanged(this, &SLiveConfigRowPicker::OnSelectionChanged)
+            SAssignNew(PropertyListView, SListView<TSharedPtr<FLiveConfigProperty>>)
+            .ListItemsSource(&FilteredProperties)
+            .OnGenerateRow(this, &SLiveConfigPropertyPicker::GenerateRow)
+            .OnSelectionChanged(this, &SLiveConfigPropertyPicker::OnSelectionChanged)
             .SelectionMode(bMultiSelect ? ESelectionMode::Multi : ESelectionMode::Single)
         ]
 
@@ -62,7 +60,7 @@ void SLiveConfigRowPicker::Construct(const FArguments& InArgs)
             SNew(SSeparator)
         ]
 
-        // Add new row name section
+        // Add new property section
         + SVerticalBox::Slot()
         .AutoHeight()
         .Padding(2.0f)
@@ -73,8 +71,8 @@ void SLiveConfigRowPicker::Construct(const FArguments& InArgs)
             .FillWidth(1.0f)
             [
                 SAssignNew(AddNewTextBox, SEditableTextBox)
-                .HintText(NSLOCTEXT("LiveConfig", "AddNewRowName", "Enter new row name..."))
-                .OnTextCommitted(this, &SLiveConfigRowPicker::OnCommitNewRowName)
+                .HintText(NSLOCTEXT("LiveConfig", "AddNewProperty", "Enter new property name..."))
+                .OnTextCommitted(this, &SLiveConfigPropertyPicker::OnCommitNewProperty)
                 .IsEnabled(!bReadOnly)
             ]
 
@@ -88,7 +86,7 @@ void SLiveConfigRowPicker::Construct(const FArguments& InArgs)
                 {
                     if (AddNewTextBox.IsValid())
                     {
-                        OnCommitNewRowName(AddNewTextBox->GetText(), ETextCommit::OnEnter);
+                        OnCommitNewProperty(AddNewTextBox->GetText(), ETextCommit::OnEnter);
                     }
                     return FReply::Handled();
                 })
@@ -98,33 +96,33 @@ void SLiveConfigRowPicker::Construct(const FArguments& InArgs)
     ];
 }
 
-void SLiveConfigRowPicker::RefreshRowNameList()
+void SLiveConfigPropertyPicker::RefreshPropertyList()
 {
-    AvailableRowNames.Empty();
-    FilteredRowNames.Empty();
+    AvailablePropertyNames.Empty();
+    FilteredProperties.Empty();
 
-    // Get all row names from the system
-    TArray<FLiveConfigRowName> AllRowNames = ULiveConfigSystem::Get()->GetAllRowNames();
+    // Get all propertys from the system
+    TArray<FLiveConfigProperty> AllProperties = ULiveConfigSystem::Get()->GetAllProperties();
 
-    // Also get row names from property definitions in editor settings
+    // Also get propertys from property definitions in editor settings
 #if WITH_EDITOR
     if (ULiveConfigEditorSettings* EditorSettings = GetMutableDefault<ULiveConfigEditorSettings>())
     {
-        EditorSettings->PropertyDefinitions.GetKeys(AllRowNames);
+        EditorSettings->PropertyDefinitions.GetKeys(AllProperties);
     }
 #endif
 
     // Remove duplicates and sort
-    AllRowNames.Sort([](const FLiveConfigRowName& A, const FLiveConfigRowName& B)
+    AllProperties.Sort([](const FLiveConfigProperty& A, const FLiveConfigProperty& B)
     {
         return A.ToString() < B.ToString();
     });
 
-    for (const FLiveConfigRowName& RowName : AllRowNames)
+    for (const FLiveConfigProperty& Property : AllProperties)
     {
-        if (RowName.IsValid())
+        if (Property.IsValid())
         {
-            AvailableRowNames.Add(MakeShareable(new FLiveConfigRowName(RowName.GetRowName())));
+            AvailablePropertyNames.Add(MakeShareable(new FLiveConfigProperty(Property.GetName())));
         }
     }
 
@@ -132,27 +130,27 @@ void SLiveConfigRowPicker::RefreshRowNameList()
     OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
 }
 
-void SLiveConfigRowPicker::OnFilterTextChanged(const FText& InFilterText)
+void SLiveConfigPropertyPicker::OnFilterTextChanged(const FText& InFilterText)
 {
-    FilteredRowNames.Empty();
+    FilteredProperties.Empty();
 
     const FString FilterString = InFilterText.ToString().ToLower();
 
-    for (const TSharedPtr<FLiveConfigRowName>& RowName : AvailableRowNames)
+    for (const TSharedPtr<FLiveConfigProperty>& Property : AvailablePropertyNames)
     {
-        if (FilterString.IsEmpty() || RowName->ToString().ToLower().Contains(FilterString))
+        if (FilterString.IsEmpty() || Property->ToString().ToLower().Contains(FilterString))
         {
-            FilteredRowNames.Add(RowName);
+            FilteredProperties.Add(Property);
         }
     }
 
-    if (RowNameListView.IsValid())
+    if (PropertyListView.IsValid())
     {
-        RowNameListView->RequestListRefresh();
+        PropertyListView->RequestListRefresh();
     }
 }
 
-TSharedRef<ITableRow> SLiveConfigRowPicker::GenerateRow(TSharedPtr<FLiveConfigRowName> InItem, const TSharedRef<STableViewBase>& OwnerTable)
+TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveConfigProperty> InItem, const TSharedRef<STableViewBase>& OwnerTable)
 {
     return SNew(STableRow<TSharedPtr<FName>>, OwnerTable)
         .Content()
@@ -164,46 +162,46 @@ TSharedRef<ITableRow> SLiveConfigRowPicker::GenerateRow(TSharedPtr<FLiveConfigRo
             .Padding(4.0f, 2.0f)
             [
                 SNew(STextBlock)
-                .Text(GetRowNameDisplayText(*InItem))
-                .ToolTipText(GetRowNameDescription(*InItem))
+                .Text(GetPropertyDisplayText(*InItem))
+                .ToolTipText(GetPropertyDescription(*InItem))
             ]
         ];
 }
 
-void SLiveConfigRowPicker::OnSelectionChanged(TSharedPtr<FLiveConfigRowName> InItem, ESelectInfo::Type SelectInfo)
+void SLiveConfigPropertyPicker::OnSelectionChanged(TSharedPtr<FLiveConfigProperty> InItem, ESelectInfo::Type SelectInfo)
 {
     if (InItem.IsValid())
     {
-        SelectedRowName = *InItem;
-        OnRowNameChanged.ExecuteIfBound(SelectedRowName);
+        SelectedProperty = *InItem;
+        OnPropertyChanged.ExecuteIfBound(SelectedProperty);
     }
 }
 
-void SLiveConfigRowPicker::OnAddNewRowName()
+void SLiveConfigPropertyPicker::OnAddNewProperty()
 {
     if (AddNewTextBox.IsValid())
     {
-        OnCommitNewRowName(AddNewTextBox->GetText(), ETextCommit::OnEnter);
+        OnCommitNewProperty(AddNewTextBox->GetText(), ETextCommit::OnEnter);
     }
 }
 
-void SLiveConfigRowPicker::OnCommitNewRowName(const FText& InText, ETextCommit::Type CommitInfo)
+void SLiveConfigPropertyPicker::OnCommitNewProperty(const FText& InText, ETextCommit::Type CommitInfo)
 {
     if (bReadOnly || CommitInfo != ETextCommit::OnEnter)
     {
         return;
     }
 
-    const FString NewRowNameString = InText.ToString().TrimStartAndEnd();
-    if (NewRowNameString.IsEmpty())
+    const FString PropertyNameString = InText.ToString().TrimStartAndEnd();
+    if (PropertyNameString.IsEmpty())
     {
         return;
     }
 
-    FName NewRowName(*NewRowNameString);
+    FName NewPropertyName(*PropertyNameString);
 
     // Validate the name (basic validation)
-    if (NewRowName == NAME_None)
+    if (NewPropertyName == NAME_None)
     {
         return;
     }
@@ -212,23 +210,23 @@ void SLiveConfigRowPicker::OnCommitNewRowName(const FText& InText, ETextCommit::
 #if WITH_EDITOR
     if (ULiveConfigEditorSettings* EditorSettings = GetMutableDefault<ULiveConfigEditorSettings>())
     {
-        if (!EditorSettings->PropertyDefinitions.Contains(NewRowName))
+        if (!EditorSettings->PropertyDefinitions.Contains(NewPropertyName))
         {
             FLiveConfigPropertyDefinition NewDef;
-            NewDef.PropertyName = NewRowName;
-            NewDef.Description = FString::Printf(TEXT("User-added row name: %s"), *NewRowNameString);
-            EditorSettings->PropertyDefinitions.Add(NewRowName, NewDef);
+            NewDef.PropertyName = NewPropertyName;
+            NewDef.Description = FString::Printf(TEXT("User-added property: %s"), *PropertyNameString);
+            EditorSettings->PropertyDefinitions.Add(NewPropertyName, NewDef);
             EditorSettings->SaveConfig();
         }
     }
 #endif
 
     // Refresh the list
-    RefreshRowNameList();
+    RefreshPropertyList();
 
     // Select the new item
-    SelectedRowName = NewRowName;
-    OnRowNameChanged.ExecuteIfBound(SelectedRowName);
+    SelectedProperty = NewPropertyName;
+    OnPropertyChanged.ExecuteIfBound(SelectedProperty);
 
     // Clear the text box
     if (AddNewTextBox.IsValid())
@@ -237,12 +235,12 @@ void SLiveConfigRowPicker::OnCommitNewRowName(const FText& InText, ETextCommit::
     }
 }
 
-FText SLiveConfigRowPicker::GetRowNameDisplayText(FLiveConfigRowName RowName) const
+FText SLiveConfigPropertyPicker::GetPropertyDisplayText(FLiveConfigProperty Property) const
 {
-    return FText::FromName(RowName.GetRowName());
+    return FText::FromName(Property.GetName());
 }
 
-FText SLiveConfigRowPicker::GetRowNameDescription(FLiveConfigRowName RowName) const
+FText SLiveConfigPropertyPicker::GetPropertyDescription(FLiveConfigProperty Property) const
 {
     if (ULiveConfigSystem* System = GEngine->GetEngineSubsystem<ULiveConfigSystem>())
     {
@@ -254,7 +252,7 @@ FText SLiveConfigRowPicker::GetRowNameDescription(FLiveConfigRowName RowName) co
 #if WITH_EDITOR
     if (const ULiveConfigEditorSettings* EditorSettings = GetDefault<ULiveConfigEditorSettings>())
     {
-        if (const FLiveConfigPropertyDefinition* Def = EditorSettings->PropertyDefinitions.Find(RowName))
+        if (const FLiveConfigPropertyDefinition* Def = EditorSettings->PropertyDefinitions.Find(Property))
         {
             return FText::FromString(Def->Description);
         }
@@ -264,18 +262,18 @@ FText SLiveConfigRowPicker::GetRowNameDescription(FLiveConfigRowName RowName) co
     return FText::GetEmpty();
 }
 
-void SLiveConfigRowPicker::SetSelectedRowName(FLiveConfigRowName InRowName)
+void SLiveConfigPropertyPicker::SetSelectedProperty(FLiveConfigProperty InProperty)
 {
-    SelectedRowName = InRowName;
+    SelectedProperty = InProperty;
 
     // Find and select in list
-    if (RowNameListView.IsValid())
+    if (PropertyListView.IsValid())
     {
-        for (const TSharedPtr<FLiveConfigRowName>& RowName : FilteredRowNames)
+        for (const TSharedPtr<FLiveConfigProperty>& Property : FilteredProperties)
         {
-            if (RowName.IsValid() && *RowName == InRowName)
+            if (Property.IsValid() && *Property == InProperty)
             {
-                RowNameListView->SetSelection(RowName);
+                PropertyListView->SetSelection(Property);
                 break;
             }
         }

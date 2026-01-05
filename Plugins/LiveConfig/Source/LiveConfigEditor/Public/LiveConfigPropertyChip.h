@@ -8,16 +8,16 @@
 /**
  * 
  */
-class SLiveConfigRowChip : public SCompoundWidget
+class SLiveConfigPropertyChip : public SCompoundWidget
 {
-	SLATE_DECLARE_WIDGET_API(SLiveConfigRowChip, SCompoundWidget, LIVECONFIGEDITOR_API)
+	SLATE_DECLARE_WIDGET_API(SLiveConfigPropertyChip, SCompoundWidget, LIVECONFIGEDITOR_API)
 public:
-	SLiveConfigRowChip();
+	SLiveConfigPropertyChip();
 	
 	DECLARE_DELEGATE_RetVal(FReply, FOnEditPressed);
 	DECLARE_DELEGATE_RetVal(FReply, FOnClearPressed);
 	
-	SLATE_BEGIN_ARGS(SLiveConfigRowChip) {}
+	SLATE_BEGIN_ARGS(SLiveConfigPropertyChip) {}
 		SLATE_ARGUMENT(bool, ReadOnly)
 		SLATE_ATTRIBUTE(FText, TooltipText)
 		SLATE_ATTRIBUTE(FText, Text)

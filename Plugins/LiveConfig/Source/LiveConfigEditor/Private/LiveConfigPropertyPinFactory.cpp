@@ -1,12 +1,12 @@
-#include "LiveConfigRowNamePinFactory.h"
+#include "LiveConfigPropertyPinFactory.h"
 
 #include "EdGraphSchema_K2.h"
 #include "LiveConfigPropertyName.h"
-#include "LiveConfigRowNamePin.h"
+#include "LiveConfigPropertyPin.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
-TSharedPtr<class SGraphPin> FLiveConfigRowNamePinFactory::CreatePin(class UEdGraphPin* Pin) const
+TSharedPtr<class SGraphPin> FLiveConfigPropertyPinFactory::CreatePin(class UEdGraphPin* Pin) const
 {
     if (Pin == nullptr)
     {
@@ -15,9 +15,9 @@ TSharedPtr<class SGraphPin> FLiveConfigRowNamePinFactory::CreatePin(class UEdGra
 
     // Check if the pin is the FLiveConfigRowName struct type
     if (Pin->PinType.PinCategory == UEdGraphSchema_K2::PC_Struct &&
-        Pin->PinType.PinSubCategoryObject == FLiveConfigRowName::StaticStruct())
+        Pin->PinType.PinSubCategoryObject == FLiveConfigProperty::StaticStruct())
     {
-        return SNew(SLiveConfigRowNamePin, Pin);
+        return SNew(SLiveConfigPropertyPin, Pin);
     }
 
     return nullptr;

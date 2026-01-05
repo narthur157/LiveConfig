@@ -21,42 +21,42 @@ FString ULiveConfigLib::GetStringValue(FGameplayTag Row, const FString& DefaultS
 	return GetStringValue(Row.GetTagName(), DefaultString);
 }
 
-bool ULiveConfigLib::IsFeatureEnabled(FName RowName, bool bDefault)
+bool ULiveConfigLib::IsFeatureEnabled(FLiveConfigProperty Property, bool bDefault)
 {
 	if (auto LiveConfigSystem = GEngine->GetEngineSubsystem<ULiveConfigSystem>())
 	{
-		return LiveConfigSystem->GetBoolValue(RowName, bDefault);
+		return LiveConfigSystem->GetBoolValue(Property.GetName(), bDefault);
 	}
 
 	return bDefault;
 }
 
-float ULiveConfigLib::GetValue(FName RowName, float DefaultValue)
+float ULiveConfigLib::GetValue(FLiveConfigProperty Property, float DefaultValue)
 {
 	if (auto LiveConfigSystem = GEngine->GetEngineSubsystem<ULiveConfigSystem>())
 	{
-		return LiveConfigSystem->GetFloatValue(RowName, DefaultValue);
+		return LiveConfigSystem->GetFloatValue(Property, DefaultValue);
 	}
 
 	return DefaultValue;
 }
 
-FString ULiveConfigLib::GetStringValue(FName RowName, const FString& DefaultString)
+FString ULiveConfigLib::GetStringValue(FLiveConfigProperty Property, const FString& DefaultString)
 {
 	if (auto LiveConfigSystem = GEngine->GetEngineSubsystem<ULiveConfigSystem>())
 	{
-		return LiveConfigSystem->GetStringValue(RowName, DefaultString);
+		return LiveConfigSystem->GetStringValue(Property, DefaultString);
 	}
 
 	return DefaultString;
 }
 
-FName ULiveConfigLib::GetRowName(const FLiveConfigRowName& RowName)
+FName ULiveConfigLib::GetPropertyName(const FLiveConfigProperty& Property)
 {
-	return RowName.GetRowName();
+	return Property.GetName();
 }
 
-FLiveConfigRowName ULiveConfigLib::MakeLiteralLiveConfigRowName(FLiveConfigRowName RowName)
+FLiveConfigProperty ULiveConfigLib::MakeLiteralLiveConfigProperty(FLiveConfigProperty Property)
 {
-	return RowName;
+	return Property;
 }

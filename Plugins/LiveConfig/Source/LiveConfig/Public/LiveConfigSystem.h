@@ -14,7 +14,7 @@ struct FLiveConfigPropertyDefinition
     GENERATED_BODY()
 
     UPROPERTY(BlueprintReadWrite)
-    FLiveConfigRowName PropertyName;
+    FLiveConfigProperty PropertyName;
 
     UPROPERTY(BlueprintReadWrite)
     FString Description;
@@ -27,7 +27,7 @@ struct FLiveConfigPropertyDefinition
  * Property *values*
  */
 USTRUCT(BlueprintType)
-struct FLiveConfigProperty
+struct FLiveConfigValue
 {
     GENERATED_BODY()
 
@@ -62,15 +62,15 @@ public:
      * @return The found value or the default.
      */
     UFUNCTION(BlueprintCallable, Category = "Live Config")
-    FString GetStringValue(FName Key, const FString& DefaultValue = "");
+    FString GetStringValue(FLiveConfigProperty Key, const FString& DefaultValue = "");
 
     /** Gets a configuration value as a float. */
     UFUNCTION(BlueprintCallable, Category = "Live Config")
-    float GetFloatValue(FName Key, float DefaultValue = 0.0f);
+    float GetFloatValue(FLiveConfigProperty Key, float DefaultValue = 0.0f);
 
     /** Gets a configuration value as a float. */
     UFUNCTION(BlueprintCallable, Category = "Live Config")
-    bool GetBoolValue(FName Key, bool bDefault = false);
+    bool GetBoolValue(FLiveConfigProperty Key, bool bDefault = false);
 
     /** Returns true if the data has been successfully downloaded and parsed. */
     UFUNCTION(BlueprintCallable, Category = "Live Config")
@@ -86,9 +86,9 @@ public:
 
     /** Get all available row names (public for editor access) */
     UFUNCTION(BlueprintCallable, Category = "Live Config")
-    TArray<FLiveConfigRowName> GetAllRowNames() const;
+    TArray<FLiveConfigProperty> GetAllProperties() const;
 
-    bool DoesPropertyNameExist(FName PropertyName) const;
+    bool DoesPropertyNameExist(FLiveConfigProperty PropertyName) const;
 
 
 private:
@@ -105,7 +105,7 @@ private:
 
     /** The main storage for our key-value pairs. */
     UPROPERTY(VisibleAnywhere)
-    TMap<FLiveConfigRowName, FLiveConfigProperty> ConfigValues;
+    TMap<FLiveConfigProperty, FLiveConfigValue> ConfigValues;
     
     void OnTravel(UWorld* World, FWorldInitializationValues WorldInitializationValues);
     void OnStartGameInstance(UGameInstance* GameInstance);

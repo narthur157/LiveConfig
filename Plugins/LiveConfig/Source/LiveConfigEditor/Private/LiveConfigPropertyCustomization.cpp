@@ -1,9 +1,9 @@
-#include "LiveConfigRowNameCustomization.h"
+#include "LiveConfigPropertyCustomization.h"
 
 #include "DetailWidgetRow.h"
 #include "LiveConfigSystem.h"
 #include "PropertyCustomizationHelpers.h"
-#include "LiveConfigRowPicker.h"
+#include "LiveConfigPropertyPicker.h"
 #include "Widgets/Input/SComboButton.h"
 #include "Widgets/Text/STextBlock.h"
 #include "UObject/UnrealType.h"
@@ -12,12 +12,12 @@
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
-TSharedRef<IPropertyTypeCustomization> FLiveConfigRowNameCustomization::MakeInstance()
+TSharedRef<IPropertyTypeCustomization> FLiveConfigPropertyCustomization::MakeInstance()
 {
-    return MakeShareable(new FLiveConfigRowNameCustomization);
+    return MakeShareable(new FLiveConfigPropertyCustomization);
 }
 
-void FLiveConfigRowNameCustomization::CustomizeHeader(TSharedRef<IPropertyHandle> InPropertyHandle, FDetailWidgetRow& HeaderRow, IPropertyTypeCustomizationUtils& CustomizationUtils)
+void FLiveConfigPropertyCustomization::CustomizeHeader(TSharedRef<IPropertyHandle> InPropertyHandle, FDetailWidgetRow& HeaderRow, IPropertyTypeCustomizationUtils& CustomizationUtils)
 {
     PropertyHandle = InPropertyHandle;
 
@@ -32,20 +32,20 @@ void FLiveConfigRowNameCustomization::CustomizeHeader(TSharedRef<IPropertyHandle
             SAssignNew(ComboButton, SComboButton)
             .OnGetMenuContent_Lambda([this]()
             {
-                FLiveConfigRowName CurrentRowName = GetCurrentRowName();
-                TSharedRef<SLiveConfigRowPicker> Widget = SNew(SLiveConfigRowPicker)
+                FLiveConfigProperty CurrentProperty = GetCurrentProperty();
+                TSharedRef<SLiveConfigPropertyPicker> Widget = SNew(SLiveConfigPropertyPicker)
                     .bReadOnly(false)
-                    .OnRowNameChanged_Lambda([this](FLiveConfigRowName NewRowName)
+                    .OnPropertyChanged_Lambda([this](FLiveConfigProperty NewProperty)
                     {
-                        OnRowNameChanged(NewRowName);
+                        OnPropertyChanged(NewProperty);
                         if (ComboButton.IsValid())
                         {
                             ComboButton->SetIsOpen(false);
                         }
                     });
-                if (CurrentRowName.IsValid())
+                if (CurrentProperty.IsValid())
                 {
-                    Widget->SetSelectedRowName(CurrentRowName);
+                    Widget->SetSelectedProperty(CurrentProperty);
                 }
                 return Widget;
             })
@@ -55,19 +55,19 @@ void FLiveConfigRowNameCustomization::CustomizeHeader(TSharedRef<IPropertyHandle
                 SNew(STextBlock)
                 .Text_Lambda([this]()
                 {
-                    FName CurrentRowName = GetCurrentRowName();
-                    if (CurrentRowName != NAME_None)
+                    FName CurrentPropertyName = GetCurrentProperty();
+                    if (CurrentPropertyName != NAME_None)
                     {
-                        return FText::FromName(CurrentRowName);
+                        return FText::FromName(CurrentPropertyName);
                     }
                     return NSLOCTEXT("LiveConfig", "None", "None");
                 })
                 .ToolTipText_Lambda([this]()
                 {
-                    FName CurrentRowName = GetCurrentRowName();
-                    if (CurrentRowName != NAME_None)
+                    FName CurrentPropertyName = GetCurrentProperty();
+                    if (CurrentPropertyName != NAME_None)
                     {
-                        return FText::FromName(CurrentRowName);
+                        return FText::FromName(CurrentPropertyName);
                     }
                     return FText::GetEmpty();
                 })
@@ -75,17 +75,17 @@ void FLiveConfigRowNameCustomization::CustomizeHeader(TSharedRef<IPropertyHandle
         ];
 }
 
-void FLiveConfigRowNameCustomization::CustomizeChildren(TSharedRef<IPropertyHandle> InPropertyHandle, IDetailChildrenBuilder& ChildBuilder, IPropertyTypeCustomizationUtils& CustomizationUtils)
+void FLiveConfigPropertyCustomization::CustomizeChildren(TSharedRef<IPropertyHandle> InPropertyHandle, IDetailChildrenBuilder& ChildBuilder, IPropertyTypeCustomizationUtils& CustomizationUtils)
 {
     // No children to customize
 }
 
-void FLiveConfigRowNameCustomization::OnRowNameChanged(FLiveConfigRowName NewRowName)
+void FLiveConfigPropertyCustomization::OnPropertyChanged(FLiveConfigProperty NewProperty)
 {
-    SetRowName(NewRowName);
+    SetProperty(NewProperty);
 }
 
-FName FLiveConfigRowNameCustomization::GetCurrentRowName() const
+FName FLiveConfigPropertyCustomization::GetCurrentProperty() const
 {
     if (!PropertyHandle.IsValid() || !PropertyHandle->IsValidHandle())
     {
@@ -97,18 +97,18 @@ FName FLiveConfigRowNameCustomization::GetCurrentRowName() const
 
     if (RawData.Num() > 0)
     {
-        // FLiveConfigRowName is a struct, so we need to access the RowName member
+        // FLiveConfigProperty is a struct, so we need to access the RowName member
         // We'll need to get the struct property and then the RowName property
         if (FStructProperty* StructProperty = CastField<FStructProperty>(PropertyHandle->GetProperty()))
         {
-            if (FProperty* RowNameProperty = StructProperty->Struct->FindPropertyByName(TEXT("RowName")))
+            if (FProperty* PropertyProperty = StructProperty->Struct->FindPropertyByName(TEXT("PropertyName")))
             {
-                if (FNameProperty* NameProp = CastField<FNameProperty>(RowNameProperty))
+                if (FNameProperty* NameProp = CastField<FNameProperty>(PropertyProperty))
                 {
-                    FName* RowNamePtr = NameProp->GetPropertyValuePtr_InContainer(RawData[0]);
-                    if (RowNamePtr)
+                    FName* NamePtr = NameProp->GetPropertyValuePtr_InContainer(RawData[0]);
+                    if (NamePtr)
                     {
-                        return *RowNamePtr;
+                        return *NamePtr;
                     }
                 }
             }
@@ -118,14 +118,14 @@ FName FLiveConfigRowNameCustomization::GetCurrentRowName() const
     return NAME_None;
 }
 
-void FLiveConfigRowNameCustomization::SetRowName(FLiveConfigRowName NewRowName)
+void FLiveConfigPropertyCustomization::SetProperty(FLiveConfigProperty NewProperty)
 {
     if (!PropertyHandle.IsValid() || !PropertyHandle->IsValidHandle())
     {
         return;
     }
 
-    // Set the RowName member of the FLiveConfigRowName struct
+    // Set the RowName member of the FLiveConfigProperty struct
     TArray<void*> RawData;
     PropertyHandle->AccessRawData(RawData);
 
@@ -133,14 +133,14 @@ void FLiveConfigRowNameCustomization::SetRowName(FLiveConfigRowName NewRowName)
     {
         if (FStructProperty* StructProperty = CastField<FStructProperty>(PropertyHandle->GetProperty()))
         {
-            if (FProperty* RowNameProperty = StructProperty->Struct->FindPropertyByName(GET_MEMBER_NAME_CHECKED(FLiveConfigRowName, RowName)))
+            if (FProperty* PropertyProperty = StructProperty->Struct->FindPropertyByName(GET_MEMBER_NAME_CHECKED(FLiveConfigProperty, PropertyName)))
             {
-                if (FNameProperty* NameProp = CastField<FNameProperty>(RowNameProperty))
+                if (FNameProperty* NameProp = CastField<FNameProperty>(PropertyProperty))
                 {
-                    FName* RowNamePtr = NameProp->GetPropertyValuePtr_InContainer(RawData[0]);
-                    if (RowNamePtr)
+                    FName* NamePtr = NameProp->GetPropertyValuePtr_InContainer(RawData[0]);
+                    if (NamePtr)
                     {
-                        *RowNamePtr = NewRowName.GetRowName();
+                        *NamePtr = NewProperty.GetName();
                         PropertyHandle->NotifyPostChange(EPropertyChangeType::ValueSet);
                     }
                 }

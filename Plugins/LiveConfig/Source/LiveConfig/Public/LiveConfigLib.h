@@ -23,15 +23,15 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Live Config")
 	static FString GetStringValue(UPARAM(Meta=(Categories="LiveConfig")) FGameplayTag Row, const FString& DefaultString);
 	
-	static bool IsFeatureEnabled(FName RowName, bool bDefault);
+	static bool IsFeatureEnabled(FLiveConfigProperty Property, bool bDefault);
 	
-	static float GetValue(FName RowName, float DefaultValue);
+	static float GetValue(FLiveConfigProperty Property, float DefaultValue);
 	
-	static FString GetStringValue(FName RowName, const FString& DefaultString);
+	static FString GetStringValue(FLiveConfigProperty Property, const FString& DefaultString);
 	
 	UFUNCTION(BlueprintPure, Category = "Live Config", meta = (BlueprintThreadSafe))
-	static FName GetRowName(const FLiveConfigRowName& RowName);
+	static FName GetPropertyName(const FLiveConfigProperty& Property);
 
 	UFUNCTION(BlueprintPure, Category = "Live Config", meta = (BlueprintThreadSafe))
-	static FLiveConfigRowName MakeLiteralLiveConfigRowName(FLiveConfigRowName RowName);
+	static FLiveConfigProperty MakeLiteralLiveConfigProperty(FLiveConfigProperty Property);
 };
