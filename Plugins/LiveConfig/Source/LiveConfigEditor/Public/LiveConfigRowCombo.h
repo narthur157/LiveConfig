@@ -6,6 +6,7 @@
 #include "LiveConfigRowNamePin.h"
 #include "Widgets/SCompoundWidget.h"
 
+class SLiveConfigRowChip;
 /**
  * 
  */
@@ -30,8 +31,12 @@ public:
 	/** Constructs this widget with InArgs */
 	void Construct(const FArguments& InArgs);
 protected:
+	bool ShowClearButton() const;
+	void OnRowNameSelected(FLiveConfigRowName RowName);
+	
 	FOnRowNameChanged OnRowNameChanged;
 	TSlateAttribute<FLiveConfigRowName> RowNameAttribute;
+	TSharedPtr<SComboButton> ComboButton;
+	TSharedPtr<SLiveConfigRowChip> Chip;
 
-	void OnRowNameSelected(FLiveConfigRowName RowName);
 };

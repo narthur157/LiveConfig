@@ -9,3 +9,4 @@ public:
     virtual TSharedPtr<class SGraphPin> CreatePin(class UEdGraphPin* Pin) const override;
 };
 
+

@@ -1,11 +1,8 @@
 #include "LiveConfigRowNamePin.h"
-#include "LiveConfigRowPicker.h"
 #include "EdGraphSchema_K2.h"
 #include "LiveConfigPropertyName.h"
 #include "LiveConfigRowCombo.h"
-#include "Kismet2/BlueprintEditorUtils.h"
-#include "LiveConfigSystem.h"
-#include "LiveConfigRowPicker.h"
+
 #include "Widgets/Input/SComboButton.h"
 #include "Widgets/Text/STextBlock.h"
 
@@ -67,3 +64,4 @@ void SLiveConfigRowNamePin::SetRowName(FLiveConfigRowName NewRowName)
 }
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
+

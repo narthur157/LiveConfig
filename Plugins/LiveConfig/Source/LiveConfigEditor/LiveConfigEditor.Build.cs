@@ -10,7 +10,7 @@ public class LiveConfigEditor : ModuleRules
             new string[]
             {
                 "Core",
-                "LiveConfig"
+                "LiveConfig", 
             }
         );
 

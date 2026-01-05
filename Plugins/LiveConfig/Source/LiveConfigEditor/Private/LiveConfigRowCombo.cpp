@@ -3,6 +3,8 @@
 
 #include "LiveConfigRowCombo.h"
 
+#include "LiveConfigPropertyStyle.h"
+#include "LiveConfigRowChip.h"
 #include "LiveConfigRowPicker.h"
 #include "SlateOptMacros.h"
 
@@ -26,28 +28,56 @@ void SLiveConfigRowCombo::Construct(const FArguments& InArgs)
 
     ChildSlot
     [
-        SNew(SComboButton)
-            .OnGetMenuContent_Lambda([this]()
+        SAssignNew(ComboButton, SComboButton)
+        .ComboButtonStyle(FLiveConfigPropertyStyle::Get(), "LiveConfigProperty.ComboButton")
+        .HasDownArrow(true)
+        .ContentPadding(1)
+        .Clipping(EWidgetClipping::OnDemand) 
+        .OnGetMenuContent_Lambda([this]()
+        {
+            return SNew(SLiveConfigRowPicker)
+                .bReadOnly(false)
+                .OnRowNameChanged(this, &SLiveConfigRowCombo::OnRowNameSelected);
+        })
+        .ButtonContent()
+        [
+            SAssignNew(Chip, SLiveConfigRowChip)
+            .ShowClearButton(this, &SLiveConfigRowCombo::ShowClearButton)
+            .OnEditPressed_Lambda([&]
             {
-                return SNew(SLiveConfigRowPicker)
-                    .bReadOnly(false)
-                    .OnRowNameChanged(this, &SLiveConfigRowCombo::OnRowNameSelected);
-            })
-            .ContentPadding(FMargin(2.0f, 2.0f))
-            .ButtonContent()
-            [
-                SNew(STextBlock)
-                .Text_Lambda([this]()
+                if (ComboButton->IsOpen())
                 {
-                    FLiveConfigRowName CurrentRowName = RowNameAttribute.Get();
-                    if (CurrentRowName.IsValid())
-                    {
-                        return FText::FromName(CurrentRowName.GetRowName());
-                    }
-                    return NSLOCTEXT("LiveConfig", "None", "None");
-                })
-            ]
+                    ComboButton->SetIsOpen(false); 
+                }
+                else
+                {
+                    ComboButton->SetIsOpen(ComboButton->ShouldOpenDueToClick()); 
+                }
+                return FReply::Handled();
+            })
+            .OnClearPressed_Lambda([&]
+            {
+                ComboButton->SetIsOpen(false);
+                OnRowNameChanged.ExecuteIfBound({});
+                return FReply::Handled();
+            })
+            .ReadOnly(false)
+            .Text_Lambda([this]()
+            {
+                FLiveConfigRowName CurrentRowName = RowNameAttribute.Get();
+                if (CurrentRowName.IsValid())
+                {
+                    return FText::FromName(CurrentRowName.GetRowName());
+                }
+                return NSLOCTEXT("LiveConfig", "None", "None");
+            })
+        ]
     ];
+}
+
+bool SLiveConfigRowCombo::ShowClearButton() const
+{
+    return RowNameAttribute.Get().IsValid();
 }
 
 void SLiveConfigRowCombo::OnRowNameSelected(FLiveConfigRowName RowName)
@@ -55,6 +85,7 @@ void SLiveConfigRowCombo::OnRowNameSelected(FLiveConfigRowName RowName)
     if (RowName.IsValid())
     {
         OnRowNameChanged.ExecuteIfBound(RowName);
+        ComboButton->SetIsOpen(false);
     }
 }
 

@@ -2,6 +2,7 @@
 
 #include "EdGraphUtilities.h"
 #include "LiveConfigPropertyName.h"
+#include "LiveConfigPropertyStyle.h"
 #include "LiveConfigRowNameCustomization.h"
 #include "LiveConfigRowNamePinFactory.h"
 #include "LiveConfigSystem.h"
@@ -20,6 +21,7 @@ void FLiveConfigEditorModule::StartupModule()
 
 	auto RowNamePinFactory = MakeShareable(new FLiveConfigRowNamePinFactory());
 	FEdGraphUtilities::RegisterVisualPinFactory(RowNamePinFactory);
+	FLiveConfigPropertyStyle::Initialize();
 }
 
 void FLiveConfigEditorModule::ShutdownModule()
