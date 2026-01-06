@@ -1,5 +1,7 @@
 #include "LiveConfigPropertyPin.h"
 #include "EdGraphSchema_K2.h"
+#include "K2Node_CallFunction.h"
+#include "K2Node_LiveConfigLookup.h"
 #include "LiveConfigPropertyName.h"
 #include "LiveConfigPropertyCombo.h"
 
@@ -21,10 +23,46 @@ TSharedRef<SWidget> SLiveConfigPropertyPin::GetDefaultValueWidget()
     {
         return SNullWidget::NullWidget;
     }
+
+    TOptional<ELiveConfigPropertyType> FilterType;
+    if (UEdGraphNode* Node = GraphPinObj->GetOwningNode())
+    {
+        if (UK2Node_CallFunction* CallFunctionNode = Cast<UK2Node_CallFunction>(Node))
+        {
+            if (UFunction* TargetFunction = CallFunctionNode->GetTargetFunction())
+            {
+                if (TargetFunction->GetOutermost()->GetName().Contains(TEXT("LiveConfig")))
+                {
+                    FName FunctionName = TargetFunction->GetFName();
+                    if (FunctionName == TEXT("IsFeatureEnabled"))
+                    {
+                        FilterType = ELiveConfigPropertyType::Bool;
+                    }
+                    else if (FunctionName == TEXT("GetValue"))
+                    {
+                        FilterType = ELiveConfigPropertyType::Float;
+                    }
+                    else if (FunctionName == TEXT("GetIntValue"))
+                    {
+                        FilterType = ELiveConfigPropertyType::Int;
+                    }
+                    else if (FunctionName == TEXT("GetStringValue"))
+                    {
+                        FilterType = ELiveConfigPropertyType::String;
+                    }
+                }
+            }
+        }
+        else if (UK2Node_LiveConfigLookup* LookupNode = Cast<UK2Node_LiveConfigLookup>(Node))
+        {
+            // No filter for the lookup node itself as it handles all types
+        }
+    }
     
     return SNew(SLiveConfigPropertyCombo)
         .Visibility(this, &SGraphPin::GetDefaultValueVisibility)
         .ReadOnly(false)
+        .FilterType(FilterType)
         .OnPropertyChanged(this, &SLiveConfigPropertyPin::OnPropertyChanged)
         .Property(this , &SLiveConfigPropertyPin::GetCurrentProperty);
 

@@ -33,8 +33,35 @@ void FLiveConfigPropertyCustomization::CustomizeHeader(TSharedRef<IPropertyHandl
             .OnGetMenuContent_Lambda([this]()
             {
                 FLiveConfigProperty CurrentProperty = GetCurrentProperty();
+                
+                TOptional<ELiveConfigPropertyType> FilterType;
+                if (PropertyHandle.IsValid())
+                {
+                    const FString& FilterTypeString = PropertyHandle->GetMetaData(TEXT("FilterType"));
+                    if (!FilterTypeString.IsEmpty())
+                    {
+                        if (FilterTypeString == TEXT("Bool"))
+                        {
+                            FilterType = ELiveConfigPropertyType::Bool;
+                        }
+                        else if (FilterTypeString == TEXT("Float"))
+                        {
+                            FilterType = ELiveConfigPropertyType::Float;
+                        }
+                        else if (FilterTypeString == TEXT("Int"))
+                        {
+                            FilterType = ELiveConfigPropertyType::Int;
+                        }
+                        else if (FilterTypeString == TEXT("String"))
+                        {
+                            FilterType = ELiveConfigPropertyType::String;
+                        }
+                    }
+                }
+
                 TSharedRef<SLiveConfigPropertyPicker> Widget = SNew(SLiveConfigPropertyPicker)
                     .bReadOnly(false)
+                    .FilterType(FilterType)
                     .OnPropertyChanged_Lambda([this](FLiveConfigProperty NewProperty)
                     {
                         OnPropertyChanged(NewProperty);

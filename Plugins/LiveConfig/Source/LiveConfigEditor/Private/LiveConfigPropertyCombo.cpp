@@ -16,15 +16,17 @@ SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyCombo)
 void SLiveConfigPropertyCombo::PrivateRegisterAttributes(FSlateAttributeInitializer& AttributeInitializer)
 {
     SLATE_ADD_MEMBER_ATTRIBUTE_DEFINITION_WITH_NAME(AttributeInitializer, "Property", RowNameAttribute, EInvalidateWidgetReason::Layout);
+    SLATE_ADD_MEMBER_ATTRIBUTE_DEFINITION_WITH_NAME(AttributeInitializer, "FilterType", FilterTypeAttribute, EInvalidateWidgetReason::Layout);
 }
 
-SLiveConfigPropertyCombo::SLiveConfigPropertyCombo() : RowNameAttribute(*this)
+SLiveConfigPropertyCombo::SLiveConfigPropertyCombo() : RowNameAttribute(*this), FilterTypeAttribute(*this)
 {
 }
 
 void SLiveConfigPropertyCombo::Construct(const FArguments& InArgs)
 {
     RowNameAttribute.Assign(*this, InArgs._Property);
+    FilterTypeAttribute.Assign(*this, InArgs._FilterType);
 	OnPropertyChanged = InArgs._OnPropertyChanged;
 
     ChildSlot
@@ -38,6 +40,7 @@ void SLiveConfigPropertyCombo::Construct(const FArguments& InArgs)
         {
             return SNew(SLiveConfigPropertyPicker)
                 .bReadOnly(false)
+                .FilterType(FilterTypeAttribute.Get())
                 .OnPropertyChanged(this, &SLiveConfigPropertyCombo::OnPropertySelected);
         })
         .ButtonContent()

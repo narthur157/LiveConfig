@@ -23,6 +23,7 @@ public:
 		SLATE_ARGUMENT(bool, ReadOnly)
 		
 		SLATE_ATTRIBUTE(FLiveConfigProperty, Property)
+		SLATE_ATTRIBUTE(TOptional<ELiveConfigPropertyType>, FilterType)
 		
 		SLATE_EVENT(FOnPropertyChanged, OnPropertyChanged)
 		
@@ -36,6 +37,7 @@ protected:
 	
 	FOnPropertyChanged OnPropertyChanged;
 	TSlateAttribute<FLiveConfigProperty> RowNameAttribute;
+	TSlateAttribute<TOptional<ELiveConfigPropertyType>> FilterTypeAttribute;
 	TSharedPtr<SComboButton> ComboButton;
 	TSharedPtr<SLiveConfigPropertyChip> Chip;
 

@@ -17,11 +17,14 @@
 #include "Engine/Engine.h"
 #include "UObject/UObjectGlobals.h"
 
+#define LOCTEXT_NAMESPACE "LiveConfigPropertyPicker"
+
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 void SLiveConfigPropertyPicker::Construct(const FArguments& InArgs)
 {
     Filter = InArgs._Filter;
+    FilterType = InArgs._FilterType;
     bReadOnly = InArgs._bReadOnly;
     bMultiSelect = InArgs._bMultiSelect;
     OnPropertyChanged = InArgs._OnPropertyChanged;
@@ -156,6 +159,19 @@ void SLiveConfigPropertyPicker::RefreshPropertyList()
     {
         if (Property.IsValid())
         {
+            if (FilterType.IsSet())
+            {
+                if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
+                {
+                    if (const FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(Property))
+                    {
+                        if (Def->PropertyType != FilterType.GetValue())
+                        {
+                            continue;
+                        }
+                    }
+                }
+            }
             AvailablePropertyNames.Add(MakeShareable(new FLiveConfigProperty(Property.GetName())));
         }
     }
@@ -186,40 +202,127 @@ void SLiveConfigPropertyPicker::OnFilterTextChanged(const FText& InFilterText)
 
 TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveConfigProperty> InItem, const TSharedRef<STableViewBase>& OwnerTable)
 {
-    return SNew(STableRow<TSharedPtr<FLiveConfigProperty>>, OwnerTable)
-        .Content()
-        [
-            SNew(SHorizontalBox)
+    TSharedPtr<SHorizontalBox> ContentBox;
+    TSharedPtr<SHorizontalBox> TagsBox;
+    FText ValueText = LOCTEXT("ValueUnknown", "Unknown");
+
+    if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
+    {
+        if (const FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(*InItem))
+        {
+            ValueText = FText::FromString(Def->Value);
             
+            if (Def->Tags.Num() > 0)
+            {
+                SAssignNew(TagsBox, SHorizontalBox);
+                for (const FName& PropertyTag : Def->Tags)
+                {
+                    TagsBox->AddSlot()
+                    .AutoWidth()
+                    .Padding(2, 0)
+                    [
+                        SNew(SBorder)
+                        .BorderImage(FAppStyle::GetBrush("Graph.Node.Body"))
+                        .BorderBackgroundColor(FLinearColor(0.2f, 0.2f, 0.2f, 0.5f))
+                        .Padding(FMargin(4, 0))
+                        [
+                            SNew(STextBlock)
+                            .Text(FText::FromName(PropertyTag))
+                            .Font(FAppStyle::GetFontStyle("SmallFont"))
+                        ]
+                    ];
+                }
+            }
+        }
+    }
+
+    TSharedRef<STableRow<TSharedPtr<FLiveConfigProperty>>> Row = SNew(STableRow<TSharedPtr<FLiveConfigProperty>>, OwnerTable);
+    
+    Row->SetContent(
+        SNew(SHorizontalBox)
+        
+        + SHorizontalBox::Slot()
+        .FillWidth(1.0f)
+        .Padding(4.0f, 2.0f)
+        .VAlign(VAlign_Center)
+        [
+            SAssignNew(ContentBox, SHorizontalBox)
             + SHorizontalBox::Slot()
-            .FillWidth(1.0f)
-            .Padding(4.0f, 2.0f)
+            .AutoWidth()
+            .VAlign(VAlign_Center)
             [
-                SNew(STextBlock)
-                .Text(GetPropertyDisplayText(*InItem))
-                .ToolTipText(GetPropertyDescription(*InItem))
+                SNew(SBox)
+                .WidthOverride(150.0f)
+                [
+                    SNew(STextBlock)
+                    .Text(GetPropertyDisplayText(*InItem))
+                    .Font(FAppStyle::GetFontStyle("BoldFont"))
+                    .ToolTipText(GetPropertyDescription(*InItem))
+                ]
             ]
 
             + SHorizontalBox::Slot()
             .AutoWidth()
-            .Padding(2.0f)
+            .VAlign(VAlign_Center)
+            .Padding(8.0f, 0.0f, 4.0f, 0.0f)
             [
-                SNew(SButton)
-                .ButtonStyle(FAppStyle::Get(), "SimpleButton")
-                .ToolTipText(NSLOCTEXT("LiveConfig", "GoToManager", "Go to Manager"))
-                .OnClicked_Lambda([InItem]()
-                {
-                    FLiveConfigEditorModule& EditorModule = FModuleManager::GetModuleChecked<FLiveConfigEditorModule>("LiveConfigEditor");
-                    EditorModule.OpenPropertyManager(*InItem);
-                    return FReply::Handled();
-                })
+                SNew(SBox)
+                .WidthOverride(45.0f)
                 [
-                    SNew(SImage)
-                    .Image(FAppStyle::GetBrush("Icons.Settings"))
-                    .DesiredSizeOverride(FVector2D(14, 14))
+                    SNew(STextBlock)
+                    .Text(LOCTEXT("ValueLabel", "Value:"))
+                    .ColorAndOpacity(FSlateColor::UseSubduedForeground())
                 ]
             ]
+
+            + SHorizontalBox::Slot()
+            .AutoWidth()
+            .VAlign(VAlign_Center)
+            .Padding(12.0f, 0.0f, 0.0f, 0.0f)
+            [
+                SNew(SBox)
+                .WidthOverride(100.0f)
+                [
+                    SNew(STextBlock)
+                    .Text(ValueText)
+                ]
+            ]
+        ]
+
+        + SHorizontalBox::Slot()
+        .AutoWidth()
+        .VAlign(VAlign_Center)
+        .Padding(2.0f)
+        [
+            SNew(SButton)
+            .ButtonStyle(FAppStyle::Get(), "SimpleButton")
+            .ToolTipText(NSLOCTEXT("LiveConfig", "GoToManager", "Go to Manager"))
+            .OnClicked_Lambda([InItem]()
+            {
+                FLiveConfigEditorModule& EditorModule = FModuleManager::GetModuleChecked<FLiveConfigEditorModule>("LiveConfigEditor");
+                EditorModule.OpenPropertyManager(*InItem);
+                return FReply::Handled();
+            })
+            [
+                SNew(SImage)
+                .Image(FAppStyle::GetBrush("Icons.Settings"))
+                .DesiredSizeOverride(FVector2D(14, 14))
+            ]
+        ]
+    );
+
+    if (TagsBox.IsValid())
+    {
+        ContentBox->AddSlot()
+        .AutoWidth()
+        .VAlign(VAlign_Center)
+        .Padding(8.0f, 0.0f, 0.0f, 0.0f)
+        [
+            TagsBox.ToSharedRef()
         ];
+    }
+
+    return Row;
 }
 
 void SLiveConfigPropertyPicker::OnSelectionChanged(TSharedPtr<FLiveConfigProperty> InItem, ESelectInfo::Type SelectInfo)
@@ -333,5 +436,7 @@ void SLiveConfigPropertyPicker::SetSelectedProperty(FLiveConfigProperty InProper
         }
     }
 }
+
+#undef LOCTEXT_NAMESPACE
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
