@@ -155,56 +155,41 @@ void ULiveConfigSystem::OnStartGameInstance(UGameInstance* GameInstance)
     }), PollingRate, true);
 }
 
-FString ULiveConfigSystem::GetStringValue(FLiveConfigProperty Key, const FString& DefaultValue)
+FString ULiveConfigSystem::GetStringValue(FLiveConfigProperty Key)
 {
-    if (!ConfigValues.Contains(Key))
+    if (ConfigValues.Contains(Key))
     {
-        return DefaultValue;        
+        const FLiveConfigValue* FoundValue = ConfigValues.Find(Key);
+        return FoundValue ? FoundValue->RawValue : FString();
     }
     
-    const FLiveConfigValue* FoundValue = ConfigValues.Find(Key);
-    return FoundValue ? *FoundValue->RawValue : DefaultValue;
+    return FString();
 }
 
-float ULiveConfigSystem::GetFloatValue(FLiveConfigProperty Key, float DefaultValue)
+float ULiveConfigSystem::GetFloatValue(FLiveConfigProperty Key)
 {
-    if (!ConfigValues.Contains(Key))
-    {
-        return DefaultValue;        
-    }
-    
     const FString StringValue = GetStringValue(Key);
     if (!StringValue.IsEmpty())
     {
         return FCString::Atof(*StringValue);
     }
 
-    return DefaultValue;
+    return 0.0f;
 }
 
-int32 ULiveConfigSystem::GetIntValue(FLiveConfigProperty Key, int32 DefaultValue)
+int32 ULiveConfigSystem::GetIntValue(FLiveConfigProperty Key)
 {
-    if (!ConfigValues.Contains(Key))
-    {
-        return DefaultValue;        
-    }
-    
     const FString StringValue = GetStringValue(Key);
     if (!StringValue.IsEmpty())
     {
         return FCString::Atoi(*StringValue);
     }
 
-    return DefaultValue;
+    return 0;
 }
 
-bool ULiveConfigSystem::GetBoolValue(FLiveConfigProperty Key, bool bDefault)
+bool ULiveConfigSystem::GetBoolValue(FLiveConfigProperty Key)
 {
-    if (!ConfigValues.Contains(Key))
-    {
-        return bDefault;        
-    }
-    
     const FString StringValue = GetStringValue(Key);
     if (StringValue.Contains("true"))
     {

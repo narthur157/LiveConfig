@@ -6,20 +6,20 @@
 #include "LiveConfigPropertyName.h"
 #include "LiveConfigSystem.generated.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(LogLiveConfig, Log, Log);
+LIVECONFIG_API DECLARE_LOG_CATEGORY_EXTERN(LogLiveConfig, Log, All);
 
 USTRUCT(BlueprintType)
 struct FLiveConfigPropertyDefinition
 {
     GENERATED_BODY()
 
-    UPROPERTY(BlueprintReadWrite)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Property")
     FLiveConfigProperty PropertyName;
 
-    UPROPERTY(BlueprintReadWrite)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Property")
     FString Description;
 
-    UPROPERTY(BlueprintReadWrite)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Property")
     TArray<FName> Tags;
 };
 
@@ -58,23 +58,22 @@ public:
     /**
      * Gets a configuration value as a string.
      * @param Key The CVar-like name to look up.
-     * @param DefaultValue The value to return if the key is not found or data isn't loaded.
-     * @return The found value or the default.
+     * @return The found value or the default from property definition.
      */
     UFUNCTION(BlueprintCallable, Category = "Live Config")
-    FString GetStringValue(FLiveConfigProperty Key, const FString& DefaultValue = "");
+    FString GetStringValue(FLiveConfigProperty Key);
 
     /** Gets a configuration value as a float. */
     UFUNCTION(BlueprintCallable, Category = "Live Config")
-    float GetFloatValue(FLiveConfigProperty Key, float DefaultValue = 0.0f);
+    float GetFloatValue(FLiveConfigProperty Key);
 
     /** Gets a configuration value as an integer. */
     UFUNCTION(BlueprintCallable, Category = "Live Config")
-    int32 GetIntValue(FLiveConfigProperty Key, int32 DefaultValue = 0);
+    int32 GetIntValue(FLiveConfigProperty Key);
 
     /** Gets a configuration value as a boolean. */
     UFUNCTION(BlueprintCallable, Category = "Live Config")
-    bool GetBoolValue(FLiveConfigProperty Key, bool bDefault = false);
+    bool GetBoolValue(FLiveConfigProperty Key);
 
     /** Returns true if the data has been successfully downloaded and parsed. */
     UFUNCTION(BlueprintCallable, Category = "Live Config")

@@ -42,7 +42,4 @@ private:
 
 	/** Get the type name for a pin */
 	static FName GetPinTypeName(const UEdGraphPin* Pin);
-
-	/** Get the default value for a pin as a string */
-	static FString GetPinDefaultValueString(const UEdGraphPin* Pin);
 };

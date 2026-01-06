@@ -5,44 +5,44 @@
 
 #include "LiveConfigSystem.h"
 
-bool ULiveConfigLib::IsFeatureEnabled(FLiveConfigProperty Property, bool bDefault)
+bool ULiveConfigLib::IsFeatureEnabled(FLiveConfigProperty Property)
 {
 	if (auto LiveConfigSystem = GEngine->GetEngineSubsystem<ULiveConfigSystem>())
 	{
-		return LiveConfigSystem->GetBoolValue(Property, bDefault);
+		return LiveConfigSystem->GetBoolValue(Property);
 	}
 
-	return bDefault;
+	return false;
 }
 
-float ULiveConfigLib::GetValue(FLiveConfigProperty Property, float DefaultValue)
+float ULiveConfigLib::GetValue(FLiveConfigProperty Property)
 {
 	if (auto LiveConfigSystem = GEngine->GetEngineSubsystem<ULiveConfigSystem>())
 	{
-		return LiveConfigSystem->GetFloatValue(Property, DefaultValue);
+		return LiveConfigSystem->GetFloatValue(Property);
 	}
 
-	return DefaultValue;
+	return 0.0f;
 }
 
-int32 ULiveConfigLib::GetIntValue(FLiveConfigProperty Property, int32 DefaultValue)
+int32 ULiveConfigLib::GetIntValue(FLiveConfigProperty Property)
 {
 	if (auto LiveConfigSystem = GEngine->GetEngineSubsystem<ULiveConfigSystem>())
 	{
-		return LiveConfigSystem->GetIntValue(Property, DefaultValue);
+		return LiveConfigSystem->GetIntValue(Property);
 	}
 
-	return DefaultValue;
+	return 0;
 }
 
-FString ULiveConfigLib::GetStringValue(FLiveConfigProperty Property, const FString& DefaultString)
+FString ULiveConfigLib::GetStringValue(FLiveConfigProperty Property)
 {
 	if (auto LiveConfigSystem = GEngine->GetEngineSubsystem<ULiveConfigSystem>())
 	{
-		return LiveConfigSystem->GetStringValue(Property, DefaultString);
+		return LiveConfigSystem->GetStringValue(Property);
 	}
 
-	return DefaultString;
+	return FString();
 }
 
 FName ULiveConfigLib::GetPropertyName(const FLiveConfigProperty& Property)

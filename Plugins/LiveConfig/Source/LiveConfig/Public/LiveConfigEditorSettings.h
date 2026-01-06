@@ -15,16 +15,19 @@ class LIVECONFIG_API ULiveConfigEditorSettings : public UDeveloperSettings
 {
 	GENERATED_BODY()
 public:
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite)
+	virtual FName GetCategoryName() const override { return TEXT("Project"); }
+	virtual FName GetSectionName() const override { return TEXT("Live Config Editor"); }
+
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "GoogleSheets")
 	bool bPollConfigInEditor = true;
 
 	/**
 	 * How often to refresh the config in editor
 	 */
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "GoogleSheets")
 	float EditorPollRateMinutes = 30;
 	
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General")
 	TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition> PropertyDefinitions;
 };
 

@@ -2,6 +2,7 @@
 #include "K2Node_CallFunction.h"
 #include "LiveConfigLib.h"
 #include "LiveConfigEditorSettings.h"
+#include "LiveConfigSystem.h"
 #include "EdGraph/EdGraph.h"
 #include "EdGraph/EdGraphPin.h"
 #include "EdGraphSchema_K2.h"
@@ -15,28 +16,28 @@
 
 void FLiveConfigBlueprintExtensions::Initialize()
 {
-	UE_LOG(LogTemp, Log, TEXT("[LiveConfig] FLiveConfigBlueprintExtensions::Initialize() called"));
+	UE_LOG(LogLiveConfig, Log, TEXT("FLiveConfigBlueprintExtensions::Initialize() called"));
 
 	if (!UToolMenus::IsToolMenuUIEnabled())
 	{
-		UE_LOG(LogTemp, Warning, TEXT("[LiveConfig] ToolMenu UI is NOT enabled. Skipping menu registration."));
+		UE_LOG(LogLiveConfig, Warning, TEXT("ToolMenu UI is NOT enabled. Skipping menu registration."));
 		return;
 	}
 
-	UE_LOG(LogTemp, Log, TEXT("[LiveConfig] Registering startup callback for ToolMenus"));
+	UE_LOG(LogLiveConfig, Log, TEXT("Registering startup callback for ToolMenus"));
 	UToolMenus::RegisterStartupCallback(FSimpleMulticastDelegate::FDelegate::CreateStatic(&FLiveConfigBlueprintExtensions::RegisterMenus));
 	
 	// Also try to register immediately if UToolMenus is already ready
 	if (UToolMenus::Get())
 	{
-		UE_LOG(LogTemp, Log, TEXT("[LiveConfig] UToolMenus already exists, calling RegisterMenus immediately"));
+		UE_LOG(LogLiveConfig, Log, TEXT("UToolMenus already exists, calling RegisterMenus immediately"));
 		RegisterMenus();
 	}
 }
 
 void FLiveConfigBlueprintExtensions::RegisterMenus()
 {
-	UE_LOG(LogTemp, Log, TEXT("[LiveConfig] Registering menus..."));
+	UE_LOG(LogLiveConfig, Log, TEXT("Registering menus..."));
 	FToolMenuOwnerScoped OwnerScoped("LiveConfig");
 
 	TArray<FName> MenuNames = { 
@@ -50,11 +51,11 @@ void FLiveConfigBlueprintExtensions::RegisterMenus()
 		UToolMenu* Menu = UToolMenus::Get()->ExtendMenu(MenuName);
 		if (Menu)
 		{
-			UE_LOG(LogTemp, Log, TEXT("[LiveConfig] Extending menu: %s"), *MenuName.ToString());
+			UE_LOG(LogLiveConfig, Log, TEXT("Extending menu: %s"), *MenuName.ToString());
 			
 			FToolMenuSection& Section = Menu->FindOrAddSection("EdGraphSchemaPinActions");
 			
-			UE_LOG(LogTemp, Log, TEXT("[LiveConfig] Adding entries to section: EdGraphSchemaPinActions in menu: %s"), *MenuName.ToString());
+			UE_LOG(LogLiveConfig, Log, TEXT("Adding entries to section: EdGraphSchemaPinActions in menu: %s"), *MenuName.ToString());
 
 			// Add a static entry for testing
 			Section.AddMenuEntry(
@@ -62,18 +63,18 @@ void FLiveConfigBlueprintExtensions::RegisterMenus()
 				LOCTEXT("LiveConfigTestStatic", "Live Config Test (Static)"),
 				LOCTEXT("LiveConfigTestStaticTooltip", "Static test entry"),
 				FSlateIcon(),
-				FUIAction(FExecuteAction::CreateLambda([](){ UE_LOG(LogTemp, Log, TEXT("[LiveConfig] Static test menu clicked")); }))
+				FUIAction(FExecuteAction::CreateLambda([](){ UE_LOG(LogLiveConfig, Log, TEXT("Static test menu clicked")); }))
 			);
 
 			Section.AddDynamicEntry("LiveConfigPromote", FNewToolMenuSectionDelegate::CreateLambda([MenuName](FToolMenuSection& InSection)
 			{
-				UE_LOG(LogTemp, Log, TEXT("[LiveConfig] Dynamic entry callback for section: %s in menu: %s"), *InSection.Name.ToString(), *MenuName.ToString());
+				UE_LOG(LogLiveConfig, Log, TEXT("Dynamic entry callback for section: %s in menu: %s"), *InSection.Name.ToString(), *MenuName.ToString());
 				AddPromoteToLiveConfigMenu(InSection);
 			}));
 		}
 		else
 		{
-			UE_LOG(LogTemp, Warning, TEXT("[LiveConfig] Could not find menu to extend: %s"), *MenuName.ToString());
+			UE_LOG(LogLiveConfig, Warning, TEXT("Could not find menu to extend: %s"), *MenuName.ToString());
 		}
 	}
 }
@@ -85,28 +86,28 @@ void FLiveConfigBlueprintExtensions::Shutdown()
 
 void FLiveConfigBlueprintExtensions::AddPromoteToLiveConfigMenu(FToolMenuSection& InSection)
 {
-	UE_LOG(LogTemp, Log, TEXT("[LiveConfig] AddPromoteToLiveConfigMenu called for section: %s"), *InSection.Name.ToString());
+	UE_LOG(LogLiveConfig, Log, TEXT("AddPromoteToLiveConfigMenu called for section: %s"), *InSection.Name.ToString());
 
 	UGraphNodeContextMenuContext* Context = InSection.FindContext<UGraphNodeContextMenuContext>();
 	if (!Context)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("[LiveConfig] No context found in section: %s"), *InSection.Name.ToString());
+		UE_LOG(LogLiveConfig, Warning, TEXT("No context found in section: %s"), *InSection.Name.ToString());
 		return;
 	}
 
 	if (!Context->Pin)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("[LiveConfig] No pin found in context for section: %s"), *InSection.Name.ToString());
+		UE_LOG(LogLiveConfig, Warning, TEXT("No pin found in context for section: %s"), *InSection.Name.ToString());
 		return;
 	}
 
 	UEdGraphPin* Pin = const_cast<UEdGraphPin*>(Context->Pin);
-	UE_LOG(LogTemp, Log, TEXT("[LiveConfig] Found pin: %s (Type: %s, Direction: %d)"), 
+	UE_LOG(LogLiveConfig, Log, TEXT("Found pin: %s (Type: %s, Direction: %d)"), 
 		*Pin->GetName(), *Pin->PinType.PinCategory.ToString(), (int32)Pin->Direction);
 
 	if (CanPromotePinToLiveConfig(Pin))
 	{
-		UE_LOG(LogTemp, Log, TEXT("[LiveConfig] Pin %s is eligible for promotion. Adding menu entry."), *Pin->GetName());
+		UE_LOG(LogLiveConfig, Log, TEXT("Pin %s is eligible for promotion. Adding menu entry."), *Pin->GetName());
 		InSection.AddMenuEntry(
 			"PromoteToLiveConfig",
 			LOCTEXT("PromoteToLiveConfig", "Promote to Live Config Property"),
@@ -117,7 +118,7 @@ void FLiveConfigBlueprintExtensions::AddPromoteToLiveConfigMenu(FToolMenuSection
 	}
 	else
 	{
-		UE_LOG(LogTemp, Log, TEXT("[LiveConfig] Pin %s is NOT eligible for promotion."), *Pin->GetName());
+		UE_LOG(LogLiveConfig, Log, TEXT("Pin %s is NOT eligible for promotion."), *Pin->GetName());
 	}
 }
 
@@ -125,7 +126,7 @@ void FLiveConfigBlueprintExtensions::AddPromoteToLiveConfigMenu(FMenuBuilder& Me
 {
 	if (CanPromotePinToLiveConfig(Pin))
 	{
-		UE_LOG(LogTemp, Log, TEXT("[LiveConfig] FExtender: Adding menu entry for pin: %s"), *Pin->GetName());
+		UE_LOG(LogLiveConfig, Log, TEXT("FExtender: Adding menu entry for pin: %s"), *Pin->GetName());
 		MenuBuilder.BeginSection("LiveConfig", LOCTEXT("LiveConfigSection", "Live Config"));
 		MenuBuilder.AddMenuEntry(
 			LOCTEXT("PromoteToLiveConfig", "Promote to Live Config Property"),
@@ -139,7 +140,7 @@ void FLiveConfigBlueprintExtensions::AddPromoteToLiveConfigMenu(FMenuBuilder& Me
 
 TSharedRef<FExtender> FLiveConfigBlueprintExtensions::OnExtendPinMenu(const TSharedRef<FUICommandList> CommandList, const UEdGraph* Graph, const UEdGraphNode* Node, const UEdGraphPin* Pin, bool bReadOnly)
 {
-	UE_LOG(LogTemp, Log, TEXT("[LiveConfig] OnExtendPinMenu called for pin: %s"), Pin ? *Pin->GetName() : TEXT("None"));
+	UE_LOG(LogLiveConfig, Log, TEXT("OnExtendPinMenu called for pin: %s"), Pin ? *Pin->GetName() : TEXT("None"));
 	TSharedRef<FExtender> Extender = MakeShareable(new FExtender());
 
 	if (Pin)
@@ -170,7 +171,6 @@ void FLiveConfigBlueprintExtensions::PromotePinToLiveConfig(UEdGraphPin* Pin)
 
 	// Get pin information
 	FName PropertyType = GetPinTypeName(Pin);
-	FString DefaultValue = GetPinDefaultValueString(Pin);
 
 	// Create the node
 	const FScopedTransaction Transaction(LOCTEXT("PromoteToLiveConfigTransaction", "Promote to Live Config"));
@@ -214,23 +214,23 @@ void FLiveConfigBlueprintExtensions::PromotePinToLiveConfig(UEdGraphPin* Pin)
 
 	if (PropertyPin)
 	{
-		PropertyPin->DefaultValue = TEXT("(PropertyName=\"None\")");
-	}
-
-	// Set default value on the DefaultValue/bDefault/DefaultString pin
-	UEdGraphPin* DefaultValuePin = NewNode->FindPin(TEXT("DefaultValue"));
-	if (!DefaultValuePin)
-	{
-		DefaultValuePin = NewNode->FindPin(TEXT("bDefault"));
-	}
-	if (!DefaultValuePin)
-	{
-		DefaultValuePin = NewNode->FindPin(TEXT("DefaultString"));
-	}
-
-	if (DefaultValuePin)
-	{
-		DefaultValuePin->DefaultValue = DefaultValue;
+		// Use the pin name as a suggestion for the property name if it's not a generic name
+		FString PropertyNameSuggestion = Pin->GetName();
+		PropertyPin->DefaultValue = FString::Printf(TEXT("(PropertyName=\"%s\")"), *PropertyNameSuggestion);
+		
+		// Add this property to the editor settings if it doesn't exist
+		ULiveConfigEditorSettings* Settings = GetMutableDefault<ULiveConfigEditorSettings>();
+		FLiveConfigProperty PropertyKey;
+		PropertyKey.PropertyName = FName(*PropertyNameSuggestion);
+		if (!Settings->PropertyDefinitions.Contains(PropertyKey))
+		{
+			FLiveConfigPropertyDefinition NewDef;
+			NewDef.PropertyName = PropertyKey;
+			NewDef.Description = FString::Printf(TEXT("Promoted from pin %s in %s"), *Pin->GetName(), *Graph->GetName());
+			
+			Settings->PropertyDefinitions.Add(PropertyKey, NewDef);
+			Settings->SaveConfig();
+		}
 	}
 
 	// Connect the output pin to the original pin
@@ -323,43 +323,6 @@ FName FLiveConfigBlueprintExtensions::GetPinTypeName(const UEdGraphPin* Pin)
 	}
 
 	return TEXT("String");
-}
-
-FString FLiveConfigBlueprintExtensions::GetPinDefaultValueString(const UEdGraphPin* Pin)
-{
-	if (!Pin)
-	{
-		return FString();
-	}
-
-	// Return the current default value or a sensible default
-	if (!Pin->DefaultValue.IsEmpty())
-	{
-		return Pin->DefaultValue;
-	}
-	else if (!Pin->AutogeneratedDefaultValue.IsEmpty())
-	{
-		return Pin->AutogeneratedDefaultValue;
-	}
-
-	// Provide type-appropriate defaults
-	if (Pin->PinType.PinCategory == UEdGraphSchema_K2::PC_Double ||
-		Pin->PinType.PinCategory == UEdGraphSchema_K2::PC_Real ||
-		Pin->PinType.PinCategory == TEXT("float") ||
-		Pin->PinType.PinCategory == TEXT("double"))
-	{
-		return TEXT("0.0");
-	}
-	else if (Pin->PinType.PinCategory == UEdGraphSchema_K2::PC_Int || Pin->PinType.PinCategory == UEdGraphSchema_K2::PC_Int64)
-	{
-		return TEXT("0");
-	}
-	else if (Pin->PinType.PinCategory == UEdGraphSchema_K2::PC_Boolean)
-	{
-		return TEXT("false");
-	}
-
-	return FString();
 }
 
 #undef LOCTEXT_NAMESPACE

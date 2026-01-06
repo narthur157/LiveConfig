@@ -13,7 +13,7 @@
 
 void FLiveConfigEditorModule::StartupModule()
 {
-	UE_LOG(LogTemp, Log, TEXT("[LiveConfig] LiveConfigEditorModule::StartupModule()"));
+	UE_LOG(LogLiveConfig, Log, TEXT("LiveConfigEditorModule::StartupModule()"));
 
 	FPropertyEditorModule& PropertyModule = FModuleManager::GetModuleChecked<FPropertyEditorModule>("PropertyEditor");
 
