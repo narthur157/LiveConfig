@@ -2,6 +2,7 @@
 #include "K2Node_CallFunction.h"
 #include "LiveConfigLib.h"
 #include "LiveConfigEditorSettings.h"
+#include "LiveConfigGameSettings.h"
 #include "LiveConfigSystem.h"
 #include "EdGraph/EdGraph.h"
 #include "EdGraph/EdGraphPin.h"
@@ -218,8 +219,8 @@ void FLiveConfigBlueprintExtensions::PromotePinToLiveConfig(UEdGraphPin* Pin)
 		FString PropertyNameSuggestion = Pin->GetName();
 		PropertyPin->DefaultValue = FString::Printf(TEXT("(PropertyName=\"%s\")"), *PropertyNameSuggestion);
 		
-		// Add this property to the editor settings if it doesn't exist
-		ULiveConfigEditorSettings* Settings = GetMutableDefault<ULiveConfigEditorSettings>();
+		// Add this property to the game settings if it doesn't exist
+		ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
 		FLiveConfigProperty PropertyKey;
 		PropertyKey.PropertyName = FName(*PropertyNameSuggestion);
 		if (!Settings->PropertyDefinitions.Contains(PropertyKey))

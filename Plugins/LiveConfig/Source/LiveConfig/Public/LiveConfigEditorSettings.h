@@ -26,8 +26,5 @@ public:
 	 */
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "GoogleSheets")
 	float EditorPollRateMinutes = 30;
-	
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General")
-	TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition> PropertyDefinitions;
 };
 

@@ -7,6 +7,7 @@
 #include "LiveConfigPropertyChip.h"
 #include "LiveConfigPropertyPicker.h"
 #include "SlateOptMacros.h"
+#include "LiveConfigEditor/LiveConfigEditor.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 

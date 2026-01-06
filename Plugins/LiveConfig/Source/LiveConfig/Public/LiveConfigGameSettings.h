@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DeveloperSettings.h"
+#include "LiveConfigSystem.h"
 #include "LiveConfigGameSettings.generated.h"
 
 /**
@@ -25,4 +26,7 @@ public:
 	// default in-game polling rate
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "GoogleSheets")
 	float PollingRate = 30;
+
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General")
+	TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition> PropertyDefinitions;
 };

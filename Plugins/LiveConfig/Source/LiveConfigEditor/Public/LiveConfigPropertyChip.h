@@ -22,7 +22,6 @@ public:
 		SLATE_ATTRIBUTE(FText, TooltipText)
 		SLATE_ATTRIBUTE(FText, Text)
 		SLATE_ATTRIBUTE(bool, IsSelected)
-		// If true, shows clear button inside the chip
 		SLATE_ATTRIBUTE(bool, ShowClearButton)
 		SLATE_EVENT(FOnEditPressed, OnEditPressed)
 		SLATE_EVENT(FOnClearPressed, OnClearPressed)

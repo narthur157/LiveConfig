@@ -1,8 +1,10 @@
 #include "LiveConfigPropertyPicker.h"
+#include "LiveConfigEditor/LiveConfigEditor.h"
 
 #include "Framework/Application/SlateApplication.h"
 #include "LiveConfigSystem.h"
 #include "LiveConfigEditorSettings.h"
+#include "LiveConfigGameSettings.h"
 #include "PropertyHandle.h"
 #include "Widgets/Input/SSearchBox.h"
 #include "Widgets/Input/SEditableTextBox.h"
@@ -29,7 +31,47 @@ void SLiveConfigPropertyPicker::Construct(const FArguments& InArgs)
     ChildSlot
     [
         SNew(SVerticalBox)
+
+        // Manager button
+        + SVerticalBox::Slot()
+        .AutoHeight()
+        .Padding(2.0f)
+        [
+            SNew(SButton)
+            .ButtonStyle(FAppStyle::Get(), "SimpleButton")
+            .OnClicked_Lambda([]()
+            {
+                FLiveConfigEditorModule& EditorModule = FModuleManager::GetModuleChecked<FLiveConfigEditorModule>("LiveConfigEditor");
+                EditorModule.OpenPropertyManager();
+                return FReply::Handled();
+            })
+            [
+                SNew(SHorizontalBox)
+                + SHorizontalBox::Slot()
+                .AutoWidth()
+                .VAlign(VAlign_Center)
+                .Padding(0, 0, 4, 0)
+                [
+                    SNew(SImage)
+                    .Image(FAppStyle::GetBrush("Icons.Settings"))
+                    .DesiredSizeOverride(FVector2D(16, 16))
+                ]
+                + SHorizontalBox::Slot()
+                .VAlign(VAlign_Center)
+                [
+                    SNew(STextBlock)
+                    .Text(NSLOCTEXT("LiveConfig", "ManageProperties", "Manage Live Config..."))
+                ]
+            ]
+        ]
         
+        + SVerticalBox::Slot()
+        .AutoHeight()
+        .Padding(2.0f)
+        [
+            SNew(SSeparator)
+        ]
+
         // Search box
         + SVerticalBox::Slot()
         .AutoHeight()
@@ -101,16 +143,8 @@ void SLiveConfigPropertyPicker::RefreshPropertyList()
     AvailablePropertyNames.Empty();
     FilteredProperties.Empty();
 
-    // Get all propertys from the system
+    // Get all propertys from the system - now consolidated
     TArray<FLiveConfigProperty> AllProperties = ULiveConfigSystem::Get()->GetAllProperties();
-
-    // Also get propertys from property definitions in editor settings
-#if WITH_EDITOR
-    if (ULiveConfigEditorSettings* EditorSettings = GetMutableDefault<ULiveConfigEditorSettings>())
-    {
-        EditorSettings->PropertyDefinitions.GetKeys(AllProperties);
-    }
-#endif
 
     // Remove duplicates and sort
     AllProperties.Sort([](const FLiveConfigProperty& A, const FLiveConfigProperty& B)
@@ -152,7 +186,7 @@ void SLiveConfigPropertyPicker::OnFilterTextChanged(const FText& InFilterText)
 
 TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveConfigProperty> InItem, const TSharedRef<STableViewBase>& OwnerTable)
 {
-    return SNew(STableRow<TSharedPtr<FName>>, OwnerTable)
+    return SNew(STableRow<TSharedPtr<FLiveConfigProperty>>, OwnerTable)
         .Content()
         [
             SNew(SHorizontalBox)
@@ -164,6 +198,26 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
                 SNew(STextBlock)
                 .Text(GetPropertyDisplayText(*InItem))
                 .ToolTipText(GetPropertyDescription(*InItem))
+            ]
+
+            + SHorizontalBox::Slot()
+            .AutoWidth()
+            .Padding(2.0f)
+            [
+                SNew(SButton)
+                .ButtonStyle(FAppStyle::Get(), "SimpleButton")
+                .ToolTipText(NSLOCTEXT("LiveConfig", "GoToManager", "Go to Manager"))
+                .OnClicked_Lambda([InItem]()
+                {
+                    FLiveConfigEditorModule& EditorModule = FModuleManager::GetModuleChecked<FLiveConfigEditorModule>("LiveConfigEditor");
+                    EditorModule.OpenPropertyManager(*InItem);
+                    return FReply::Handled();
+                })
+                [
+                    SNew(SImage)
+                    .Image(FAppStyle::GetBrush("Icons.Settings"))
+                    .DesiredSizeOverride(FVector2D(14, 14))
+                ]
             ]
         ];
 }
@@ -208,15 +262,15 @@ void SLiveConfigPropertyPicker::OnCommitNewProperty(const FText& InText, ETextCo
 
     // Add to property definitions if in editor
 #if WITH_EDITOR
-    if (ULiveConfigEditorSettings* EditorSettings = GetMutableDefault<ULiveConfigEditorSettings>())
+    if (ULiveConfigGameSettings* GameSettings = GetMutableDefault<ULiveConfigGameSettings>())
     {
-        if (!EditorSettings->PropertyDefinitions.Contains(NewPropertyName))
+        if (!GameSettings->PropertyDefinitions.Contains(NewPropertyName))
         {
             FLiveConfigPropertyDefinition NewDef;
             NewDef.PropertyName = NewPropertyName;
             NewDef.Description = FString::Printf(TEXT("User-added property: %s"), *PropertyNameString);
-            EditorSettings->PropertyDefinitions.Add(NewPropertyName, NewDef);
-            EditorSettings->SaveConfig();
+            GameSettings->PropertyDefinitions.Add(NewPropertyName, NewDef);
+            GameSettings->SaveConfig();
         }
     }
 #endif
@@ -250,9 +304,9 @@ FText SLiveConfigPropertyPicker::GetPropertyDescription(FLiveConfigProperty Prop
     }
 
 #if WITH_EDITOR
-    if (const ULiveConfigEditorSettings* EditorSettings = GetDefault<ULiveConfigEditorSettings>())
+    if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
     {
-        if (const FLiveConfigPropertyDefinition* Def = EditorSettings->PropertyDefinitions.Find(Property))
+        if (const FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(Property))
         {
             return FText::FromString(Def->Description);
         }

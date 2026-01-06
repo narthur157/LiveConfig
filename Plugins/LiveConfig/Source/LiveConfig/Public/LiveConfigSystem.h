@@ -8,6 +8,15 @@
 
 LIVECONFIG_API DECLARE_LOG_CATEGORY_EXTERN(LogLiveConfig, Log, All);
 
+UENUM(BlueprintType)
+enum class ELiveConfigPropertyType : uint8
+{
+	String,
+	Int,
+	Float,
+	Bool
+};
+
 USTRUCT(BlueprintType)
 struct FLiveConfigPropertyDefinition
 {
@@ -20,21 +29,15 @@ struct FLiveConfigPropertyDefinition
     FString Description;
 
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Property")
+    ELiveConfigPropertyType PropertyType = ELiveConfigPropertyType::String;
+
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Property")
     TArray<FName> Tags;
+
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Property")
+    FString Value;
 };
 
-/**
- * Property *values*
- */
-USTRUCT(BlueprintType)
-struct FLiveConfigValue
-{
-    GENERATED_BODY()
-
-    FString RawValue;
-    FString Description;
-    
-};
 
 
 /**
@@ -87,6 +90,9 @@ public:
     
     void DownloadConfig();
 
+    /** Refresh properties from editor settings */
+    void RefreshFromSettings();
+
     /** Get all available row names (public for editor access) */
     UFUNCTION(BlueprintCallable, Category = "Live Config")
     TArray<FLiveConfigProperty> GetAllProperties() const;
@@ -106,10 +112,6 @@ private:
     /** Callback function for when the HTTP request completes. */
     void OnSheetDownloadComplete(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 
-    /** The main storage for our key-value pairs. */
-    UPROPERTY(VisibleAnywhere)
-    TMap<FLiveConfigProperty, FLiveConfigValue> ConfigValues;
-    
     void OnTravel(UWorld* World, FWorldInitializationValues WorldInitializationValues);
     void OnStartGameInstance(UGameInstance* GameInstance);
 

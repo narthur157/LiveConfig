@@ -17,10 +17,17 @@ void ULiveConfigSystem::Initialize(FSubsystemCollectionBase& Collection)
 {
     SheetUrl = ULiveConfigGameSettings::StaticClass()->GetDefaultObject<ULiveConfigGameSettings>()->SheetUrl;
 
+    RefreshFromSettings();
+
     DownloadConfig();
 
     FWorldDelegates::OnPostWorldInitialization.AddUObject(this, &ThisClass::OnTravel);
     FWorldDelegates::OnStartGameInstance.AddUObject(this, &ThisClass::OnStartGameInstance);
+}
+
+void ULiveConfigSystem::RefreshFromSettings()
+{
+    // No-op now as we use settings directly
 }
 
 
@@ -91,7 +98,11 @@ void ULiveConfigSystem::OnSheetDownloadComplete(FHttpRequestPtr Request, FHttpRe
         return;
     }
 
-    ConfigValues.Empty();
+    ULiveConfigGameSettings* GameSettings = GetMutableDefault<ULiveConfigGameSettings>();
+    if (!GameSettings)
+    {
+        return;
+    }
 
     const FString CsvContent = Response->GetContentAsString();
     
@@ -108,32 +119,53 @@ void ULiveConfigSystem::OnSheetDownloadComplete(FHttpRequestPtr Request, FHttpRe
         {
             // The parser gives us TCHAR*, so we convert them to FName/FString
             const FName Key(Columns[0]);
-            FLiveConfigValue Value;
-            Value.RawValue = Columns[1];
-            Value.Description = Columns[3];
             
-            if (Key != NAME_None && !Value.RawValue.IsEmpty())
+            // Try to find existing definition to preserve its metadata if needed, 
+            // but actually we want to override values from the sheet.
+            FLiveConfigPropertyDefinition& Def = GameSettings->PropertyDefinitions.FindOrAdd(Key);
+            Def.PropertyName = Key;
+            Def.Value = Columns[1];
+            
+            // Parse tags (comma-separated in the 3rd column)
+            FString TagsStr = Columns[2];
+            TArray<FString> TagStrings;
+            TagsStr.ParseIntoArray(TagStrings, TEXT(","), true);
+            Def.Tags.Empty();
+            for (const FString& Tag : TagStrings)
             {
-                ConfigValues.Add(Key, Value);
-                UE_LOG(LogLiveConfig, Log, TEXT("Downloaded config value: %s: %s (%s)"), *Key.ToString(), *Value.RawValue, *Value.Description);
+                Def.Tags.Add(FName(*Tag.TrimStartAndEnd()));
+            }
+
+            Def.Description = Columns[3];
+            
+            if (Key != NAME_None && !Def.Value.IsEmpty())
+            {
+                UE_LOG(LogLiveConfig, Log, TEXT("Downloaded config value: %s: %s (%s)"), *Key.ToString(), *Def.Value, *Def.Description);
             }
         }
     }
     
     bIsDataReady = true;
-    UE_LOG(LogLiveConfig, Log, TEXT("LiveConfigSystem:Successfully loaded %d key-value pairs"), ConfigValues.Num());
+    UE_LOG(LogLiveConfig, Log, TEXT("LiveConfigSystem:Successfully loaded %d key-value pairs"), GameSettings->PropertyDefinitions.Num());
 }
 
 TArray<FLiveConfigProperty> ULiveConfigSystem::GetAllProperties() const
 {
     TArray<FLiveConfigProperty> Properties;
-    ConfigValues.GetKeys(Properties);
+    if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
+    {
+        GameSettings->PropertyDefinitions.GetKeys(Properties);
+    }
     return Properties;
 }
 
 bool ULiveConfigSystem::DoesPropertyNameExist(FLiveConfigProperty PropertyName) const
 {
-    return ConfigValues.Contains(PropertyName);
+    if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
+    {
+        return GameSettings->PropertyDefinitions.Contains(PropertyName);
+    }
+    return false;
 }
 
 void ULiveConfigSystem::OnTravel(UWorld* World, FWorldInitializationValues WorldInitializationValues)
@@ -157,12 +189,14 @@ void ULiveConfigSystem::OnStartGameInstance(UGameInstance* GameInstance)
 
 FString ULiveConfigSystem::GetStringValue(FLiveConfigProperty Key)
 {
-    if (ConfigValues.Contains(Key))
+    if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
     {
-        const FLiveConfigValue* FoundValue = ConfigValues.Find(Key);
-        return FoundValue ? FoundValue->RawValue : FString();
+        if (const FLiveConfigPropertyDefinition* FoundValue = GameSettings->PropertyDefinitions.Find(Key))
+        {
+            return FoundValue->Value;
+        }
     }
-    
+
     return FString();
 }
 
