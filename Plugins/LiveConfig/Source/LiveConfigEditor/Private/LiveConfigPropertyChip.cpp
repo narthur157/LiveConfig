@@ -9,7 +9,7 @@
 #define LOCTEXT_NAMESPACE "LiveConfigPropertyChip"
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
-SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyChip)
+SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyChip);
 
 void SLiveConfigPropertyChip::PrivateRegisterAttributes(FSlateAttributeInitializer& AttributeInitializer)
 {
@@ -145,11 +145,11 @@ void SLiveConfigPropertyChip::UpdatePillStyle()
 	{
 		if (bIsSelected)
 		{
-			ChipButton->SetButtonStyle(&FLiveConfigPropertyStyle::Get().GetWidgetStyle<FButtonStyle>("GameplayTags.ChipButton.Selected"));
+			ChipButton->SetButtonStyle(&FLiveConfigPropertyStyle::Get().GetWidgetStyle<FButtonStyle>("LiveConfigProperty.ChipButton.Selected"));
 		}
 		else
 		{
-			ChipButton->SetButtonStyle(&FLiveConfigPropertyStyle::Get().GetWidgetStyle<FButtonStyle>("GameplayTags.ChipButton.Unselected"));
+			ChipButton->SetButtonStyle(&FLiveConfigPropertyStyle::Get().GetWidgetStyle<FButtonStyle>("LiveConfigProperty.ChipButton.Unselected"));
 		}
 		bLastHasIsSelected = bIsSelected;
 	}	

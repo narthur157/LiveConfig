@@ -24,9 +24,12 @@ public class LiveConfigEditor : ModuleRules
                 "PropertyEditor",
                 "GraphEditor",
                 "UnrealEd",
-                "BlueprintGraph", 
+                "BlueprintGraph",
+                "Kismet",
+                "KismetCompiler",
                 "EditorStyle",
-                "InputCore"
+                "InputCore",
+                "ToolMenus"
             }
         );
     }

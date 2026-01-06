@@ -9,6 +9,6 @@ public class LiveConfig : ModuleRules
 		PublicDependencyModuleNames.AddRange( new string[] { "Core", "HTTP" } );
 			
 		
-		PrivateDependencyModuleNames.AddRange( new string[] { "CoreUObject", "Engine", "Slate", "SlateCore", "DeveloperSettings", "GameplayTags" } );
+		PrivateDependencyModuleNames.AddRange( new string[] { "CoreUObject", "Engine", "Slate", "SlateCore", "DeveloperSettings" } );
 	}
 }

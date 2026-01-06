@@ -23,7 +23,7 @@
 		{
 			"Name": "LiveConfigEditor",
 			"Type": "Editor",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "PostEngineInit"
 		}
 	]
 }

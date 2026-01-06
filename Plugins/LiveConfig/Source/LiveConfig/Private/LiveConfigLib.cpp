@@ -3,29 +3,13 @@
 
 #include "LiveConfigLib.h"
 
-#include "GameplayTagContainer.h"
 #include "LiveConfigSystem.h"
-
-bool ULiveConfigLib::IsFeatureEnabled(FGameplayTag Row, bool bDefault)
-{
-	return IsFeatureEnabled(Row.GetTagName(), bDefault);
-}
-
-float ULiveConfigLib::GetValue(FGameplayTag Row, float DefaultValue)
-{
-	return GetValue(Row.GetTagName(), DefaultValue);
-}
-
-FString ULiveConfigLib::GetStringValue(FGameplayTag Row, const FString& DefaultString)
-{
-	return GetStringValue(Row.GetTagName(), DefaultString);
-}
 
 bool ULiveConfigLib::IsFeatureEnabled(FLiveConfigProperty Property, bool bDefault)
 {
 	if (auto LiveConfigSystem = GEngine->GetEngineSubsystem<ULiveConfigSystem>())
 	{
-		return LiveConfigSystem->GetBoolValue(Property.GetName(), bDefault);
+		return LiveConfigSystem->GetBoolValue(Property, bDefault);
 	}
 
 	return bDefault;
@@ -36,6 +20,16 @@ float ULiveConfigLib::GetValue(FLiveConfigProperty Property, float DefaultValue)
 	if (auto LiveConfigSystem = GEngine->GetEngineSubsystem<ULiveConfigSystem>())
 	{
 		return LiveConfigSystem->GetFloatValue(Property, DefaultValue);
+	}
+
+	return DefaultValue;
+}
+
+int32 ULiveConfigLib::GetIntValue(FLiveConfigProperty Property, int32 DefaultValue)
+{
+	if (auto LiveConfigSystem = GEngine->GetEngineSubsystem<ULiveConfigSystem>())
+	{
+		return LiveConfigSystem->GetIntValue(Property, DefaultValue);
 	}
 
 	return DefaultValue;

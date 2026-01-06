@@ -68,7 +68,11 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Live Config")
     float GetFloatValue(FLiveConfigProperty Key, float DefaultValue = 0.0f);
 
-    /** Gets a configuration value as a float. */
+    /** Gets a configuration value as an integer. */
+    UFUNCTION(BlueprintCallable, Category = "Live Config")
+    int32 GetIntValue(FLiveConfigProperty Key, int32 DefaultValue = 0);
+
+    /** Gets a configuration value as a boolean. */
     UFUNCTION(BlueprintCallable, Category = "Live Config")
     bool GetBoolValue(FLiveConfigProperty Key, bool bDefault = false);
 

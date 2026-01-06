@@ -1,13 +1,12 @@
 #include "LiveConfigSystem.h"
 
-#include "GameplayTagsSettings.h"
 #include "HttpModule.h"
 #include "LiveConfigEditorSettings.h"
 #include "LiveConfigGameSettings.h"
 #include "Interfaces/IHttpResponse.h"
 #include "Serialization/Csv/CsvParser.h"
 
-DEFINE_LOG_CATEGORY(LogLiveConfig)
+DEFINE_LOG_CATEGORY(LogLiveConfig);
 
 ULiveConfigSystem* ULiveConfigSystem::Get()
 {
@@ -52,7 +51,7 @@ void ULiveConfigSystem::DownloadConfig()
     double TimeSinceLastDownload = FPlatformTime::Seconds() - TimeLoadStarted;
     if (TimeSinceLastDownload < RateLimitSeconds)
     {
-        UE_LOG(LogLiveConfig, Log, TEXT("Preventing downloading config due to rate limit, time since last download %f (limit %f)"), TimeSinceLastDownload, RateLimitSeconds)
+        UE_LOG(LogLiveConfig, Log, TEXT("Preventing downloading config due to rate limit, time since last download %f (limit %f)"), TimeSinceLastDownload, RateLimitSeconds);
         return;
     }
     
@@ -123,24 +122,6 @@ void ULiveConfigSystem::OnSheetDownloadComplete(FHttpRequestPtr Request, FHttpRe
     
     bIsDataReady = true;
     UE_LOG(LogLiveConfig, Log, TEXT("LiveConfigSystem:Successfully loaded %d key-value pairs"), ConfigValues.Num());
-
-    // update tag ini file
-    {
-        UGameplayTagsManager& TagManager = UGameplayTagsManager::Get();
-        FGameplayTagSource* TagSource = TagManager.FindTagSource("LiveConfig");
-            
-        if (TagSource)
-        {
-            UGameplayTagsList* TagList = TagSource->SourceTagList;
-        
-            for (const auto& Pair : ConfigValues)
-            {
-                //TagList->GameplayTagList.AddUnique(FGameplayTagTableRow(Pair.Key, Pair.Value.Description));
-            }
-        
-            TagList->SortTags();
-        }
-    }
 }
 
 TArray<FLiveConfigProperty> ULiveConfigSystem::GetAllProperties() const
@@ -196,6 +177,22 @@ float ULiveConfigSystem::GetFloatValue(FLiveConfigProperty Key, float DefaultVal
     if (!StringValue.IsEmpty())
     {
         return FCString::Atof(*StringValue);
+    }
+
+    return DefaultValue;
+}
+
+int32 ULiveConfigSystem::GetIntValue(FLiveConfigProperty Key, int32 DefaultValue)
+{
+    if (!ConfigValues.Contains(Key))
+    {
+        return DefaultValue;        
+    }
+    
+    const FString StringValue = GetStringValue(Key);
+    if (!StringValue.IsEmpty())
+    {
+        return FCString::Atoi(*StringValue);
     }
 
     return DefaultValue;
