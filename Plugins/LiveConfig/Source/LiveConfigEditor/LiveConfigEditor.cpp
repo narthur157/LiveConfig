@@ -8,7 +8,7 @@
 #include "LiveConfigSystem.h"
 #include "LiveConfigBlueprintExtensions.h"
 #include "GraphEditorModule.h"
-#include "SLiveConfigPropertyManager.h"
+#include "PropertyManager/SLiveConfigPropertyManager.h"
 #include "Widgets/Docking/SDockTab.h"
 #include "ToolMenus.h"
 
