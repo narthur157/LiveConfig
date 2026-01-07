@@ -31,9 +31,17 @@ public:
 
 	/** Constructs this widget with InArgs */
 	void Construct(const FArguments& InArgs);
+	virtual FReply OnMouseButtonDown(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent) override;
+	virtual FReply OnMouseButtonUp(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent) override;
 protected:
 	bool ShowClearButton() const;
 	void OnPropertySelected(FLiveConfigProperty Property);
+
+	TSharedPtr<SWidget> OnGetContextMenuContent();
+	void OnCopyProperty();
+	void OnPasteProperty();
+	bool CanPasteProperty() const;
+	void OnClearProperty();
 	
 	FOnPropertyChanged OnPropertyChanged;
 	TSlateAttribute<FLiveConfigProperty> RowNameAttribute;

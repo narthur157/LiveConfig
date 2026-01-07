@@ -372,8 +372,20 @@ void SLiveConfigPropertyPicker::OnCommitNewProperty(const FText& InText, ETextCo
             FLiveConfigPropertyDefinition NewDef;
             NewDef.PropertyName = NewPropertyName;
             NewDef.Description = FString::Printf(TEXT("User-added property: %s"), *PropertyNameString);
+            
+            if (FilterType.IsSet())
+            {
+                NewDef.PropertyType = FilterType.GetValue();
+            }
+
             GameSettings->PropertyDefinitions.Add(NewPropertyName, NewDef);
             GameSettings->SaveConfig();
+            GameSettings->UpdateDefaultConfigFile();
+
+            if (ULiveConfigSystem* System = GEngine->GetEngineSubsystem<ULiveConfigSystem>())
+            {
+                System->RefreshFromSettings();
+            }
         }
     }
 #endif

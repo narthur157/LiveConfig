@@ -1,5 +1,6 @@
 #include "LiveConfigBlueprintExtensions.h"
 #include "K2Node_CallFunction.h"
+#include "K2Node_LiveConfigLookup.h"
 #include "LiveConfigLib.h"
 #include "LiveConfigEditorSettings.h"
 #include "LiveConfigGameSettings.h"
@@ -171,34 +172,15 @@ void FLiveConfigBlueprintExtensions::PromotePinToLiveConfig(UEdGraphPin* Pin)
 	}
 
 	// Get pin information
-	FName PropertyType = GetPinTypeName(Pin);
+	// FName PropertyType = GetPinTypeName(Pin); // No longer needed as we use Pin->PinType directly
 
 	// Create the node
 	const FScopedTransaction Transaction(LOCTEXT("PromoteToLiveConfigTransaction", "Promote to Live Config"));
 	Graph->Modify();
 
-	UK2Node_CallFunction* NewNode = NewObject<UK2Node_CallFunction>(Graph);
-
-	// Determine which function to call based on type
-	FName FunctionName = NAME_None;
-	if (PropertyType == TEXT("Float"))
-	{
-		FunctionName = GET_FUNCTION_NAME_CHECKED(ULiveConfigLib, GetValue);
-	}
-	else if (PropertyType == TEXT("Int"))
-	{
-		FunctionName = GET_FUNCTION_NAME_CHECKED(ULiveConfigLib, GetIntValue);
-	}
-	else if (PropertyType == TEXT("Bool"))
-	{
-		FunctionName = GET_FUNCTION_NAME_CHECKED(ULiveConfigLib, IsFeatureEnabled);
-	}
-	else
-	{
-		FunctionName = GET_FUNCTION_NAME_CHECKED(ULiveConfigLib, GetStringValue);
-	}
-
-	NewNode->FunctionReference.SetExternalMember(FunctionName, ULiveConfigLib::StaticClass());
+	UK2Node_LiveConfigLookup* NewNode = NewObject<UK2Node_LiveConfigLookup>(Graph);
+	
+	NewNode->DefaultPinType = Pin->PinType;
 	NewNode->AllocateDefaultPins();
 	
 	Graph->AddNode(NewNode, false, false);
@@ -211,7 +193,7 @@ void FLiveConfigBlueprintExtensions::PromotePinToLiveConfig(UEdGraphPin* Pin)
 	}
 
 	// Set property name on the Property pin
-	UEdGraphPin* PropertyPin = NewNode->FindPin(TEXT("Property"));
+	UEdGraphPin* PropertyPin = NewNode->GetPropertyPin();
 
 	if (PropertyPin)
 	{
@@ -229,13 +211,31 @@ void FLiveConfigBlueprintExtensions::PromotePinToLiveConfig(UEdGraphPin* Pin)
 			NewDef.PropertyName = PropertyKey;
 			NewDef.Description = FString::Printf(TEXT("Promoted from pin %s in %s"), *Pin->GetName(), *Graph->GetName());
 			
+			// Set correct type in definition
+			if (Pin->PinType.PinCategory == UEdGraphSchema_K2::PC_Boolean)
+			{
+				NewDef.PropertyType = ELiveConfigPropertyType::Bool;
+			}
+			else if (Pin->PinType.PinCategory == UEdGraphSchema_K2::PC_Int || Pin->PinType.PinCategory == UEdGraphSchema_K2::PC_Int64)
+			{
+				NewDef.PropertyType = ELiveConfigPropertyType::Int;
+			}
+			else if (Pin->PinType.PinCategory == UEdGraphSchema_K2::PC_Float || Pin->PinType.PinCategory == UEdGraphSchema_K2::PC_Real || Pin->PinType.PinCategory == TEXT("double"))
+			{
+				NewDef.PropertyType = ELiveConfigPropertyType::Float;
+			}
+			else
+			{
+				NewDef.PropertyType = ELiveConfigPropertyType::String;
+			}
+			
 			Settings->PropertyDefinitions.Add(PropertyKey, NewDef);
 			Settings->SaveConfig();
 		}
 	}
 
 	// Connect the output pin to the original pin
-	UEdGraphPin* ValuePin = NewNode->GetReturnValuePin();
+	UEdGraphPin* ValuePin = NewNode->GetValuePin();
 	const UEdGraphSchema_K2* Schema = GetDefault<UEdGraphSchema_K2>();
 	
 	// If the pin was connected to something, break those links first

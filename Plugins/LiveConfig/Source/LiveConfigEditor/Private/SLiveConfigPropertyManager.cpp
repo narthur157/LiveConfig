@@ -68,7 +68,7 @@ public:
 
 private:
 	TSharedPtr<FLiveConfigPropertyDefinition> Item;
-	int32 Index;
+	int32 Index = 0;
 	FSimpleDelegate OnChanged;
 };
 
@@ -81,14 +81,28 @@ public:
 	SLATE_BEGIN_ARGS(SLiveConfigPropertyRow) {}
 		SLATE_EVENT(FOnDeleteProperty, OnDeleteProperty);
 		SLATE_EVENT(FIsNameDuplicate, IsNameDuplicate);
+		SLATE_EVENT(FSimpleDelegate, OnChanged);
 	SLATE_END_ARGS();
 
-	void Construct(const FArguments& InArgs, const TSharedRef<STableViewBase>& InOwnerTable, TSharedPtr<FLiveConfigPropertyDefinition> InItem)
+	void Construct(const FArguments& InArgs, const TSharedRef<STableViewBase>& InOwnerTable, TSharedPtr<FLiveConfigPropertyDefinition> InItem, int32 InIndex)
 	{
 		Item = InItem;
 		OnDeleteProperty = InArgs._OnDeleteProperty;
 		OnIsNameDuplicate = InArgs._IsNameDuplicate;
-		SMultiColumnTableRow<TSharedPtr<FLiveConfigPropertyDefinition>>::Construct(FSuperRowType::FArguments(), InOwnerTable);
+		OnChanged = InArgs._OnChanged;
+		
+		SMultiColumnTableRow<TSharedPtr<FLiveConfigPropertyDefinition>>::Construct(
+			FSuperRowType::FArguments()
+			.Padding(FMargin(0, 2)), 
+			InOwnerTable);
+
+		if (InIndex % 2 == 1)
+		{
+			// Use a subtle dark background for striping
+			SetBorderImage(FAppStyle::GetBrush("WhiteBrush"));
+			SetBorderBackgroundColor(FLinearColor(1.0f, 1.0f, 1.0f, 0.05f));
+		}
+
 		RefreshTags();
 	}
 
@@ -117,12 +131,16 @@ public:
 		else if (ColumnName == "Name")
 		{
 			return SNew(SBox)
-				.Padding(2.0f)
+				.Padding(FMargin(4.0f, 0.0f))
 				.VAlign(VAlign_Center)
 				[
 					SNew(SEditableTextBox)
 					.Text(FText::FromName(Item->PropertyName.GetName()))
-					.OnTextCommitted_Lambda([this](const FText& NewText, ETextCommit::Type) { Item->PropertyName = FLiveConfigProperty(FName(*NewText.ToString())); })
+					.OnTextCommitted_Lambda([this](const FText& NewText, ETextCommit::Type)
+					{
+						Item->PropertyName = FLiveConfigProperty(FName(*NewText.ToString()));
+						OnChanged.ExecuteIfBound();
+					})
 					.ForegroundColor_Lambda([this]()
 					{
 						if (OnIsNameDuplicate.IsBound() && OnIsNameDuplicate.Execute(Item->PropertyName.GetName()))
@@ -144,11 +162,16 @@ public:
 		else if (ColumnName == "Description")
 		{
 			return SNew(SBox)
-				.Padding(2.0f)
+				.Padding(FMargin(4.0f, 0.0f))
+				.VAlign(VAlign_Center)
 				[
 					SNew(SEditableTextBox)
 					.Text(FText::FromString(Item->Description))
-					.OnTextChanged_Lambda([this](const FText& NewText) { Item->Description = NewText.ToString(); })
+					.OnTextCommitted_Lambda([this](const FText& NewText, ETextCommit::Type)
+					{
+						Item->Description = NewText.ToString();
+						OnChanged.ExecuteIfBound();
+					})
 				];
 		}
 		else if (ColumnName == "Type")
@@ -163,7 +186,8 @@ public:
 			}
 
 			return SNew(SBox)
-				.Padding(2.0f)
+				.Padding(FMargin(4.0f, 0.0f))
+				.VAlign(VAlign_Center)
 				[
 					SNew(SComboBox<TSharedPtr<ELiveConfigPropertyType>>)
 					.OptionsSource(&TypeOptions)
@@ -190,6 +214,7 @@ public:
 								Item->Value = "false";
 								break;
 							}
+							OnChanged.ExecuteIfBound();
 						}
 					})
 					[
@@ -205,7 +230,8 @@ public:
 		else if (ColumnName == "Value")
 		{
 			return SNew(SBox)
-				.Padding(2.0f)
+				.Padding(FMargin(4.0f, 0.0f))
+				.VAlign(VAlign_Center)
 				[
 					SNew(SWidgetSwitcher)
 					.WidgetIndex_Lambda([this]()
@@ -216,22 +242,23 @@ public:
 					[
 						SNew(SEditableTextBox)
 						.Text_Lambda([this]() { return FText::FromString(Item->Value); })
-						.OnTextChanged_Lambda([this](const FText& NewText)
+						.OnTextCommitted_Lambda([this](const FText& NewText, ETextCommit::Type CommitType)
 						{
 							FString NewVal = NewText.ToString();
 							if (Item->PropertyType == ELiveConfigPropertyType::Int)
 							{
 								if (NewVal.IsEmpty() || NewVal == TEXT("-")) { Item->Value = NewVal; return; }
-								if (NewVal.IsNumeric()) { Item->Value = NewVal; }
+								if (NewVal.IsNumeric()) { Item->Value = NewVal; OnChanged.ExecuteIfBound(); }
 							}
 							else if (Item->PropertyType == ELiveConfigPropertyType::Float)
 							{
 								if (NewVal.IsEmpty() || NewVal == TEXT("-") || NewVal == TEXT(".") || NewVal == TEXT("-.")) { Item->Value = NewVal; return; }
-								if (NewVal.IsNumeric()) { Item->Value = NewVal; }
+								if (NewVal.IsNumeric()) { Item->Value = NewVal; OnChanged.ExecuteIfBound(); }
 							}
 							else
 							{
 								Item->Value = NewVal;
+								OnChanged.ExecuteIfBound();
 							}
 						})
 					]
@@ -245,6 +272,7 @@ public:
 						.OnCheckStateChanged_Lambda([this](ECheckBoxState NewState)
 						{
 							Item->Value = NewState == ECheckBoxState::Checked ? TEXT("true") : TEXT("false");
+							OnChanged.ExecuteIfBound();
 						})
 					]
 				];
@@ -252,7 +280,8 @@ public:
 		else if (ColumnName == "Tags")
 		{
 			return SNew(SBox)
-				.Padding(2.0f)
+				.Padding(FMargin(4.0f, 0.0f))
+				.VAlign(VAlign_Center)
 				[
 					SAssignNew(TagsBox, SWrapBox)
 					.UseAllottedSize(true)
@@ -275,7 +304,7 @@ public:
 					SNew(SBox)
 					.WidthOverride(120.0f)
 					[
-						SNew(SLiveConfigTagRow, Item, i, FSimpleDelegate::CreateSP(this, &SLiveConfigPropertyRow::RefreshTags))
+						SNew(SLiveConfigTagRow, Item, i, FSimpleDelegate::CreateSP(this, &SLiveConfigPropertyRow::OnTagChanged))
 					]
 				];
 			}
@@ -289,7 +318,7 @@ public:
 				.OnClicked_Lambda([this]()
 				{
 					Item->Tags.Add(NAME_None);
-					RefreshTags();
+					OnTagChanged();
 					return FReply::Handled();
 				})
 				.ToolTipText(LOCTEXT("AddTag", "Add Tag"))
@@ -302,15 +331,27 @@ public:
 		}
 	}
 
+	void OnTagChanged()
+	{
+		RefreshTags();
+		OnChanged.ExecuteIfBound();
+	}
+
 private:
 	TSharedPtr<FLiveConfigPropertyDefinition> Item;
 	TSharedPtr<SWrapBox> TagsBox;
 	FOnDeleteProperty OnDeleteProperty;
 	FIsNameDuplicate OnIsNameDuplicate;
+	FSimpleDelegate OnChanged;
 };
 
 void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 {
+	if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
+	{
+		System->OnPropertiesUpdated.AddSP(this, &SLiveConfigPropertyManager::RefreshList);
+	}
+
 	RefreshList();
 
 	ChildSlot
@@ -336,13 +377,6 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 				SAssignNew(SearchBox, SSearchBox)
 				.OnTextChanged(this, &SLiveConfigPropertyManager::OnFilterTextChanged)
 			]
-			+ SHorizontalBox::Slot()
-			.AutoWidth()
-			[
-				SNew(SButton)
-				.Text(LOCTEXT("Save", "Save Changes"))
-				.OnClicked(this, &SLiveConfigPropertyManager::OnSave)
-			]
 		]
 
 		+ SVerticalBox::Slot()
@@ -353,11 +387,27 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 			.OnGenerateRow(this, &SLiveConfigPropertyManager::OnGenerateRow)
 			.HeaderRow(
 				SNew(SHeaderRow)
-				+ SHeaderRow::Column("Name").DefaultLabel(LOCTEXT("NameColumn", "Name")).FillWidth(0.2f)
-				+ SHeaderRow::Column("Description").DefaultLabel(LOCTEXT("DescriptionColumn", "Description")).FillWidth(0.25f)
-				+ SHeaderRow::Column("Type").DefaultLabel(LOCTEXT("TypeColumn", "Type")).FillWidth(0.1f)
-				+ SHeaderRow::Column("Value").DefaultLabel(LOCTEXT("ValueColumn", "Value")).FillWidth(0.2f)
-				+ SHeaderRow::Column("Tags").DefaultLabel(LOCTEXT("TagsColumn", "Tags")).FillWidth(0.25f)
+				+ SHeaderRow::Column("Actions").DefaultLabel(LOCTEXT("ActionsColumn", "")).FixedWidth(30.0f)
+				+ SHeaderRow::Column("Name")
+				.DefaultLabel(LOCTEXT("NameColumn", "Name"))
+				.FillWidth(0.2f)
+				.HeaderContentPadding(FMargin(4.0f, 0.0f))
+				+ SHeaderRow::Column("Description")
+				.DefaultLabel(LOCTEXT("DescriptionColumn", "Description"))
+				.FillWidth(0.25f)
+				.HeaderContentPadding(FMargin(4.0f, 0.0f))
+				+ SHeaderRow::Column("Type")
+				.DefaultLabel(LOCTEXT("TypeColumn", "Type"))
+				.FillWidth(0.1f)
+				.HeaderContentPadding(FMargin(4.0f, 0.0f))
+				+ SHeaderRow::Column("Value")
+				.DefaultLabel(LOCTEXT("ValueColumn", "Value"))
+				.FillWidth(0.2f)
+				.HeaderContentPadding(FMargin(4.0f, 0.0f))
+				+ SHeaderRow::Column("Tags")
+				.DefaultLabel(LOCTEXT("TagsColumn", "Tags"))
+				.FillWidth(0.25f)
+				.HeaderContentPadding(FMargin(4.0f, 0.0f))
 			)
 		]
 	];
@@ -365,13 +415,20 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 
 TSharedRef<ITableRow> SLiveConfigPropertyManager::OnGenerateRow(TSharedPtr<FLiveConfigPropertyDefinition> InItem, const TSharedRef<STableViewBase>& OwnerTable)
 {
-	return SNew(SLiveConfigPropertyRow, OwnerTable, InItem)
+	int32 Index = FilteredPropertyList.IndexOfByKey(InItem);
+	return SNew(SLiveConfigPropertyRow, OwnerTable, InItem, Index)
 		.OnDeleteProperty(this, &SLiveConfigPropertyManager::RemoveProperty)
-		.IsNameDuplicate(this, &SLiveConfigPropertyManager::IsNameDuplicate);
+		.IsNameDuplicate(this, &SLiveConfigPropertyManager::IsNameDuplicate)
+		.OnChanged(FSimpleDelegate::CreateSP(this, &SLiveConfigPropertyManager::Save));
 }
 
 void SLiveConfigPropertyManager::RefreshList()
 {
+	if (bIsSaving)
+	{
+		return;
+	}
+
 	FullPropertyList.Empty();
 	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
 	for (auto& Pair : Settings->PropertyDefinitions)
@@ -432,9 +489,10 @@ void SLiveConfigPropertyManager::OnAddNewProperty()
 	NewProp->PropertyName = FLiveConfigProperty(FName(TEXT("NewProperty")));
 	FullPropertyList.Add(NewProp);
 	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
+	Save();
 }
 
-FReply SLiveConfigPropertyManager::OnSave()
+void SLiveConfigPropertyManager::Save()
 {
 	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
 	Settings->PropertyDefinitions.Empty();
@@ -447,16 +505,17 @@ FReply SLiveConfigPropertyManager::OnSave()
 	// Notify system to refresh its base values
 	if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
 	{
+		bIsSaving = true;
 		System->RefreshFromSettings();
+		bIsSaving = false;
 	}
-
-	return FReply::Handled();
 }
 
 void SLiveConfigPropertyManager::RemoveProperty(TSharedPtr<FLiveConfigPropertyDefinition> InItem)
 {
 	FullPropertyList.Remove(InItem);
 	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
+	Save();
 }
 
 bool SLiveConfigPropertyManager::IsNameDuplicate(FName Name) const

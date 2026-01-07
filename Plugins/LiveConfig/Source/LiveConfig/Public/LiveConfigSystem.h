@@ -8,6 +8,8 @@
 
 LIVECONFIG_API DECLARE_LOG_CATEGORY_EXTERN(LogLiveConfig, Log, All);
 
+DECLARE_MULTICAST_DELEGATE(FOnLiveConfigPropertiesUpdated);
+
 UENUM(BlueprintType)
 enum class ELiveConfigPropertyType : uint8
 {
@@ -22,19 +24,19 @@ struct FLiveConfigPropertyDefinition
 {
     GENERATED_BODY()
 
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Property")
+    UPROPERTY(Config, BlueprintReadWrite, EditAnywhere, Category = "Property")
     FLiveConfigProperty PropertyName;
 
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Property")
+    UPROPERTY(Config, BlueprintReadWrite, EditAnywhere, Category = "Property")
     FString Description;
 
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Property")
+    UPROPERTY(Config, BlueprintReadWrite, EditAnywhere, Category = "Property")
     ELiveConfigPropertyType PropertyType = ELiveConfigPropertyType::String;
 
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Property")
+    UPROPERTY(Config, BlueprintReadWrite, EditAnywhere, Category = "Property")
     TArray<FName> Tags;
 
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Property")
+    UPROPERTY(Config, BlueprintReadWrite, EditAnywhere, Category = "Property")
     FString Value;
 };
 
@@ -92,6 +94,8 @@ public:
 
     /** Refresh properties from editor settings */
     void RefreshFromSettings();
+
+    FOnLiveConfigPropertiesUpdated OnPropertiesUpdated;
 
     /** Get all available row names (public for editor access) */
     UFUNCTION(BlueprintCallable, Category = "Live Config")

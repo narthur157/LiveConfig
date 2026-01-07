@@ -27,7 +27,7 @@ void ULiveConfigSystem::Initialize(FSubsystemCollectionBase& Collection)
 
 void ULiveConfigSystem::RefreshFromSettings()
 {
-    // No-op now as we use settings directly
+    OnPropertiesUpdated.Broadcast();
 }
 
 
@@ -147,6 +147,8 @@ void ULiveConfigSystem::OnSheetDownloadComplete(FHttpRequestPtr Request, FHttpRe
     
     bIsDataReady = true;
     UE_LOG(LogLiveConfig, Log, TEXT("LiveConfigSystem:Successfully loaded %d key-value pairs"), GameSettings->PropertyDefinitions.Num());
+
+    OnPropertiesUpdated.Broadcast();
 }
 
 TArray<FLiveConfigProperty> ULiveConfigSystem::GetAllProperties() const

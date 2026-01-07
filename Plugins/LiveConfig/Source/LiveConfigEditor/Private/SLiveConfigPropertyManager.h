@@ -21,10 +21,11 @@ private:
 	void RefreshList();
 	void OnAddNewProperty();
 	void OnFilterTextChanged(const FText& InFilterText);
-	FReply OnSave();
+	void Save();
 
 	TArray<TSharedPtr<FLiveConfigPropertyDefinition>> FullPropertyList;
 	TArray<TSharedPtr<FLiveConfigPropertyDefinition>> FilteredPropertyList;
 	TSharedPtr<SListView<TSharedPtr<FLiveConfigPropertyDefinition>>> PropertyListView;
 	TSharedPtr<class SSearchBox> SearchBox;
+	bool bIsSaving = false;
 };

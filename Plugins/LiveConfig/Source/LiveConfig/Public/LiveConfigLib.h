@@ -14,21 +14,21 @@ class LIVECONFIG_API ULiveConfigLib : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 public:
-	UFUNCTION(BlueprintPure, Category = "Live Config")
+	UFUNCTION()
 	static bool IsFeatureEnabled(FLiveConfigProperty Property);
-	
-	UFUNCTION(BlueprintPure, Category = "Live Config")
+
+	UFUNCTION()
 	static float GetValue(FLiveConfigProperty Property);
 
-	UFUNCTION(BlueprintPure, Category = "Live Config")
+	UFUNCTION()
 	static int32 GetIntValue(FLiveConfigProperty Property);
-	
-	UFUNCTION(BlueprintPure, Category = "Live Config")
+
+	UFUNCTION()
 	static FString GetStringValue(FLiveConfigProperty Property);
-	
-	UFUNCTION(BlueprintPure, Category = "Live Config", meta = (BlueprintThreadSafe))
+
+	UFUNCTION()
 	static FName GetPropertyName(const FLiveConfigProperty& Property);
 
-	UFUNCTION(BlueprintPure, Category = "Live Config", meta = (BlueprintThreadSafe))
+	UFUNCTION()
 	static FLiveConfigProperty MakeLiteralLiveConfigProperty(FLiveConfigProperty Property);
 };

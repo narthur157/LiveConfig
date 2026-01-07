@@ -15,6 +15,11 @@ BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SLiveConfigPropertyPin::Construct(const FArguments& InArgs, UEdGraphPin* InGraphPinObj)
 {
     SGraphPinStructInstance::Construct(SGraphPinStructInstance::FArguments(), InGraphPinObj);
+
+    if (GraphPinObj)
+    {
+        FLiveConfigProperty::StaticStruct()->ImportText(*GraphPinObj->DefaultValue, &CurrentProperty, nullptr, 0, nullptr, FLiveConfigProperty::StaticStruct()->GetName());
+    }
 }
 
 TSharedRef<SWidget> SLiveConfigPropertyPin::GetDefaultValueWidget()
@@ -27,35 +32,28 @@ TSharedRef<SWidget> SLiveConfigPropertyPin::GetDefaultValueWidget()
     TOptional<ELiveConfigPropertyType> FilterType;
     if (UEdGraphNode* Node = GraphPinObj->GetOwningNode())
     {
-        if (UK2Node_CallFunction* CallFunctionNode = Cast<UK2Node_CallFunction>(Node))
+        if (UK2Node_LiveConfigLookup* LookupNode = Cast<UK2Node_LiveConfigLookup>(Node))
         {
-            if (UFunction* TargetFunction = CallFunctionNode->GetTargetFunction())
+            if (UEdGraphPin* ValuePin = LookupNode->GetValuePin())
             {
-                if (TargetFunction->GetOutermost()->GetName().Contains(TEXT("LiveConfig")))
+                if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Boolean)
                 {
-                    FName FunctionName = TargetFunction->GetFName();
-                    if (FunctionName == TEXT("IsFeatureEnabled"))
-                    {
-                        FilterType = ELiveConfigPropertyType::Bool;
-                    }
-                    else if (FunctionName == TEXT("GetValue"))
-                    {
-                        FilterType = ELiveConfigPropertyType::Float;
-                    }
-                    else if (FunctionName == TEXT("GetIntValue"))
-                    {
-                        FilterType = ELiveConfigPropertyType::Int;
-                    }
-                    else if (FunctionName == TEXT("GetStringValue"))
-                    {
-                        FilterType = ELiveConfigPropertyType::String;
-                    }
+                    FilterType = ELiveConfigPropertyType::Bool;
+                }
+                else if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Int)
+                {
+                    FilterType = ELiveConfigPropertyType::Int;
+                }
+                else if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Float || 
+                    ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Real || ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Double)
+                {
+                    FilterType = ELiveConfigPropertyType::Float;
+                }
+                else if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_String)
+                {
+                    FilterType = ELiveConfigPropertyType::String;
                 }
             }
-        }
-        else if (UK2Node_LiveConfigLookup* LookupNode = Cast<UK2Node_LiveConfigLookup>(Node))
-        {
-            // No filter for the lookup node itself as it handles all types
         }
     }
     
@@ -64,7 +62,7 @@ TSharedRef<SWidget> SLiveConfigPropertyPin::GetDefaultValueWidget()
         .ReadOnly(false)
         .FilterType(FilterType)
         .OnPropertyChanged(this, &SLiveConfigPropertyPin::OnPropertyChanged)
-        .Property(this , &SLiveConfigPropertyPin::GetCurrentProperty);
+        .Property(this, &SLiveConfigPropertyPin::GetCurrentProperty);
 
 }
 
@@ -75,23 +73,30 @@ void SLiveConfigPropertyPin::OnPropertyChanged(FLiveConfigProperty NewProperty)
 
 FLiveConfigProperty SLiveConfigPropertyPin::GetCurrentProperty() const
 {
-    return CurrentProperty;
-
+    FLiveConfigProperty Property;
+    if (GraphPinObj)
+    {
+        FLiveConfigProperty::StaticStruct()->ImportText(*GraphPinObj->DefaultValue, &Property, nullptr, 0, nullptr, FLiveConfigProperty::StaticStruct()->GetName());
+    }
+    return Property;
 }
 
 void SLiveConfigPropertyPin::SetProperty(FLiveConfigProperty NewProperty)
 {
-    if (NewProperty == CurrentProperty)
+    if (!GraphPinObj)
     {
         return;
     }
-
-    CurrentProperty = NewProperty;
 
     FLiveConfigProperty LiveConfigProperty(NewProperty);
     
     FString DefaultValue;
     FLiveConfigProperty::StaticStruct()->ExportText(DefaultValue, &LiveConfigProperty, &LiveConfigProperty, nullptr, 0, nullptr);
+
+    if (GraphPinObj->DefaultValue == DefaultValue)
+    {
+        return;
+    }
 
     // Undo/redo support
     const FScopedTransaction Transaction(LOCTEXT("ChangeDefaultValue", "Change Pin Default Value"));
@@ -99,6 +104,8 @@ void SLiveConfigPropertyPin::SetProperty(FLiveConfigProperty NewProperty)
     // Format the struct default value
     GraphPinObj->Modify();
     GraphPinObj->GetSchema()->TrySetDefaultValue(*GraphPinObj, DefaultValue);
+    
+    CurrentProperty = NewProperty;
 }
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION

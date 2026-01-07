@@ -18,21 +18,24 @@ UK2Node_LiveConfigLookup::UK2Node_LiveConfigLookup()
 
 void UK2Node_LiveConfigLookup::AllocateDefaultPins()
 {
-	// Clear existing pins to avoid duplicates during reconstruction
-	Pins.Empty();
-
 	// Add property pin
-	UEdGraphPin* PropertyPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Struct, FLiveConfigProperty::StaticStruct(), PropertyPinName);
+	if (!FindPin(PropertyPinName))
+	{
+		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Struct, FLiveConfigProperty::StaticStruct(), PropertyPinName);
+	}
 	
 	// Add value pin
-	if (DefaultPinType.PinCategory != NAME_None)
+	if (!FindPin(ValuePinName))
 	{
-		CreatePin(EGPD_Output, DefaultPinType.PinCategory, DefaultPinType.PinSubCategory, ValuePinName);
-	}
-	else
-	{
-		// Default to double-precision float for UE5
-		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Real, UEdGraphSchema_K2::PC_Double, ValuePinName);
+		if (DefaultPinType.PinCategory != NAME_None)
+		{
+			CreatePin(EGPD_Output, DefaultPinType.PinCategory, DefaultPinType.PinSubCategory, ValuePinName);
+		}
+		else
+		{
+			// Default to double-precision float for UE5
+			CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Real, UEdGraphSchema_K2::PC_Double, ValuePinName);
+		}
 	}
 
 	UpdateOutputPinType();
@@ -99,7 +102,9 @@ void UK2Node_LiveConfigLookup::PinDefaultValueChanged(UEdGraphPin* Pin)
 					{
 						NewDef.PropertyType = ELiveConfigPropertyType::Int;
 					}
-					else if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Float || ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Real)
+					else if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Float || 
+						ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Real || 
+						ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Double)
 					{
 						NewDef.PropertyType = ELiveConfigPropertyType::Float;
 					}

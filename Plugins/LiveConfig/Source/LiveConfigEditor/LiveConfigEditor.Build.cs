@@ -29,7 +29,8 @@ public class LiveConfigEditor : ModuleRules
                 "KismetCompiler",
                 "EditorStyle",
                 "InputCore",
-                "ToolMenus"
+                "ToolMenus",
+                "ApplicationCore"
             }
         );
     }
