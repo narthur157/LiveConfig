@@ -7,8 +7,6 @@
 #include "SlateOptMacros.h"
 
 #define LOCTEXT_NAMESPACE "LiveConfigPropertyChip"
-BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
-
 SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyChip);
 
 void SLiveConfigPropertyChip::PrivateRegisterAttributes(FSlateAttributeInitializer& AttributeInitializer)
@@ -24,7 +22,7 @@ void SLiveConfigPropertyChip::PrivateRegisterAttributes(FSlateAttributeInitializ
 		}));
 }
 
-SLiveConfigPropertyChip::SLiveConfigPropertyChip() : ToolTipTextAttribute(*this), TextAttribute(*this), ShowClearButtonAttribute(*this), IsSelectedAttribute(*this)
+SLiveConfigPropertyChip::SLiveConfigPropertyChip() : ToolTipTextAttribute(*this), TextAttribute(*this), IsSelectedAttribute(*this), ShowClearButtonAttribute(*this)
 {
 }
 
@@ -154,8 +152,5 @@ void SLiveConfigPropertyChip::UpdatePillStyle()
 		bLastHasIsSelected = bIsSelected;
 	}	
 }
-
-
-END_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 #undef LOCTEXT_NAMESPACE

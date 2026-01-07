@@ -29,4 +29,8 @@ public:
 
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General")
 	TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition> PropertyDefinitions;
+
+	/** Global list of tags that can be assigned to properties. */
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General")
+	TArray<FName> KnownTags;
 };

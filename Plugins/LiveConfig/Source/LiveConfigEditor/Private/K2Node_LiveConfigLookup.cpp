@@ -116,7 +116,7 @@ void UK2Node_LiveConfigLookup::PinDefaultValueChanged(UEdGraphPin* Pin)
 
 				MutableSettings->PropertyDefinitions.Add(SelectedProperty, NewDef);
 				MutableSettings->SaveConfig();
-				MutableSettings->UpdateDefaultConfigFile();
+				MutableSettings->TryUpdateDefaultConfigFile();
 
 				if (ULiveConfigSystem* System = GEngine->GetEngineSubsystem<ULiveConfigSystem>())
 				{

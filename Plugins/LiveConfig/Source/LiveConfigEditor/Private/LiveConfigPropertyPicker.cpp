@@ -336,7 +336,7 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
                                     if (bChanged)
                                     {
                                         GameSettings->SaveConfig();
-                                        GameSettings->UpdateDefaultConfigFile();
+                                        GameSettings->TryUpdateDefaultConfigFile();
                                         if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
                                         {
                                             System->RefreshFromSettings();
@@ -368,7 +368,7 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
                                 {
                                     Def->Value = NewState == ECheckBoxState::Checked ? TEXT("true") : TEXT("false");
                                     GameSettings->SaveConfig();
-                                    GameSettings->UpdateDefaultConfigFile();
+                                    GameSettings->TryUpdateDefaultConfigFile();
                                     if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
                                     {
                                         System->RefreshFromSettings();
@@ -497,7 +497,7 @@ void SLiveConfigPropertyPicker::OnCommitNewProperty(const FText& InText, ETextCo
 
             GameSettings->PropertyDefinitions.Add(NewPropertyName, NewDef);
             GameSettings->SaveConfig();
-            GameSettings->UpdateDefaultConfigFile();
+            GameSettings->TryUpdateDefaultConfigFile();
 
             if (ULiveConfigSystem* System = GEngine->GetEngineSubsystem<ULiveConfigSystem>())
             {
@@ -565,6 +565,12 @@ void SLiveConfigPropertyPicker::SetSelectedProperty(FLiveConfigProperty InProper
         }
     }
 }
+
+void SLiveConfigPropertyPicker::PrivateRegisterAttributes(FSlateAttributeInitializer& AttributeInitializer)
+{
+}
+
+SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyPicker);
 
 #undef LOCTEXT_NAMESPACE
 

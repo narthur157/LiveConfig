@@ -1,18 +1,9 @@
-﻿Support metadata tags in the property ui directly
+﻿## Console command / cvar-like integration
+- Add a console command to set properties by name and value. eg `liveconfig set MyProperty 10`
 
-Tags should be helpful for organizing properties, and constructing ad-hoc types
-
-Getting all properties with a given tag ought to be useful for some more specific editor UI's
-
-
-## Property Manager UI
-Similar in concept to the gameplay tag manager, but with a more prominent menu entry near the play button. Should support CRUD operations on properties, and their tags. You should also be able to edit values here
-
-The property customization UI should have a way to "open property in manager" to customize its tags/values in a more full UI setup
-
-UX tricks for converting a project to use live config
-- Add a menu entry next to "promote to variable". This should auto-fill as much as possible, eg the property name, a tag, the type, and value
-- Curve table integration
+## Config replication
+Create an actor that replicates the config from server to clients
+If console commands are used to change values, they should be replicated (optionally)
 
 
 ## Curve table integration
