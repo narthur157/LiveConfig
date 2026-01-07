@@ -44,6 +44,27 @@ void SLiveConfigPropertyRow::Construct(const FArguments& InArgs, const TSharedRe
 	{
 		SetBorderImage(FAppStyle::GetBrush("NoBorder"));
 	}
+
+	// If the name is empty, it's a new property, request focus
+	if (!Item->PropertyName.IsValid())
+	{
+		bNeedsFocus = true;
+	}
+}
+
+void SLiveConfigPropertyRow::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
+{
+	SPropertyRowParent::Tick(AllottedGeometry, InCurrentTime, InDeltaTime);
+
+	if (bNeedsFocus)
+	{
+		if (NameTextBox.IsValid())
+		{
+			TSharedRef<SEditableTextBox> NameTextBoxRef = NameTextBox.ToSharedRef();
+			FSlateApplication::Get().SetKeyboardFocus(NameTextBoxRef, EFocusCause::SetDirectly);
+			bNeedsFocus = false;
+		}
+	}
 }
 
 TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateWidgetForColumn(const FName& ColumnName)
@@ -84,10 +105,13 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateWidgetForColumn(const FName&
 					.FillWidth(1.0f)
 					.VAlign(VAlign_Center)
 					[
-						SNew(SEditableTextBox)
+						SAssignNew(NameTextBox, SEditableTextBox)
 						.Font(FAppStyle::GetFontStyle("BoldFont"))
 						.ForegroundColor(FLinearColor::Black)
-						.Text(FText::FromName(Item->PropertyName.GetName()))
+						.Text_Lambda([this]()
+						{
+							return Item->PropertyName.IsValid() ? FText::FromName(Item->PropertyName.GetName()) : FText::GetEmpty();
+						})
 						.OnVerifyTextChanged_Lambda([](const FText& NewText, FText& OutError)
 						{
 							FString TextStr = NewText.ToString();

@@ -26,6 +26,8 @@ public:
 
 	void Construct(const FArguments& InArgs, const TSharedRef<STableViewBase>& InOwnerTable, TSharedPtr<FLiveConfigPropertyDefinition> InItem, int32 InIndex);
 
+	virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
+
 	virtual TSharedRef<SWidget> GenerateWidgetForColumn(const FName& ColumnName) override;
 
 private:
@@ -38,6 +40,8 @@ private:
 	FSimpleDelegate OnChanged;
 	TFunction<FSlateColor(FName)> GetTagColor;
 	TSharedPtr<class SWrapBox> TagWrapBox;
+	TSharedPtr<class SEditableTextBox> NameTextBox;
 	TSlateAttribute<TArray<FName>, EInvalidateWidgetReason::Layout> KnownTagsAttribute;
 	bool bShowDescription = false;
+	bool bNeedsFocus = false;
 };

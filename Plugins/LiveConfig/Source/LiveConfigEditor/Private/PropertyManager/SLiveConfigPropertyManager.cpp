@@ -493,10 +493,20 @@ void SLiveConfigPropertyManager::ScrollToProperty(FLiveConfigProperty Property)
 void SLiveConfigPropertyManager::OnAddNewProperty()
 {
 	TSharedPtr<FLiveConfigPropertyDefinition> NewProp = MakeShared<FLiveConfigPropertyDefinition>();
-	NewProp->PropertyName = FLiveConfigProperty(FName(TEXT("NewProperty")));
+	NewProp->PropertyName = FLiveConfigProperty(NAME_None);
+	
+	if (!SelectedTag.IsNone())
+	{
+		NewProp->Tags.Add(SelectedTag);
+	}
+
 	FullPropertyList.Add(NewProp);
 	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
 	Save();
+
+	// Focus the new property
+	PropertyListView->SetSelection(NewProp);
+	PropertyListView->RequestScrollIntoView(NewProp);
 }
 
 void SLiveConfigPropertyManager::Save()
@@ -537,3 +547,5 @@ bool SLiveConfigPropertyManager::IsNameDuplicate(FName Name) const
 	}
 	return Count > 1;
 }
+
+#undef LOCTEXT_NAMESPACE
