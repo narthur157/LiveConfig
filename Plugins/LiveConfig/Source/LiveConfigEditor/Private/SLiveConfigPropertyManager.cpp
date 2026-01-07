@@ -41,6 +41,16 @@ public:
 			[
 				SNew(SEditableTextBox)
 				.Text(FText::FromName(Item->Tags[Index]))
+				.OnVerifyTextChanged_Lambda([](const FText& NewText, FText& OutError)
+				{
+					FString TextStr = NewText.ToString();
+					if (TextStr.Contains(TEXT(" ")))
+					{
+						OutError = LOCTEXT("TagNameSpaceError", "Tag names cannot contain spaces.");
+						return false;
+					}
+					return true;
+				})
 				.OnTextCommitted_Lambda([this](const FText& NewText, ETextCommit::Type)
 				{
 					Item->Tags[Index] = FName(*NewText.ToString());
@@ -136,6 +146,16 @@ public:
 				[
 					SNew(SEditableTextBox)
 					.Text(FText::FromName(Item->PropertyName.GetName()))
+					.OnVerifyTextChanged_Lambda([](const FText& NewText, FText& OutError)
+					{
+						FString TextStr = NewText.ToString();
+						if (TextStr.Contains(TEXT(" ")))
+						{
+							OutError = LOCTEXT("PropertyNameSpaceError", "Property names cannot contain spaces.");
+							return false;
+						}
+						return true;
+					})
 					.OnTextCommitted_Lambda([this](const FText& NewText, ETextCommit::Type)
 					{
 						Item->PropertyName = FLiveConfigProperty(FName(*NewText.ToString()));
@@ -242,17 +262,49 @@ public:
 					[
 						SNew(SEditableTextBox)
 						.Text_Lambda([this]() { return FText::FromString(Item->Value); })
+						.OnVerifyTextChanged_Lambda([this](const FText& NewText, FText& OutError)
+						{
+							FString NewVal = NewText.ToString();
+							if (Item->PropertyType == ELiveConfigPropertyType::Int)
+							{
+								if (NewVal.IsEmpty() || NewVal == TEXT("-")) return true;
+								
+								// Must be numeric
+								if (!NewVal.IsNumeric())
+								{
+									OutError = LOCTEXT("ValueIntError", "Value must be a valid integer.");
+									return false;
+								}
+								
+								// Additionally check if it contains a decimal point which IsNumeric might allow depending on platform but we don't want for Int
+								if (NewVal.Contains(TEXT(".")))
+								{
+									OutError = LOCTEXT("ValueIntDecimalError", "Integers cannot have decimal points.");
+									return false;
+								}
+							}
+							else if (Item->PropertyType == ELiveConfigPropertyType::Float)
+							{
+								if (NewVal.IsEmpty() || NewVal == TEXT("-") || NewVal == TEXT(".") || NewVal == TEXT("-.")) return true;
+								if (!NewVal.IsNumeric())
+								{
+									OutError = LOCTEXT("ValueFloatError", "Value must be a valid number.");
+									return false;
+								}
+							}
+							return true;
+						})
 						.OnTextCommitted_Lambda([this](const FText& NewText, ETextCommit::Type CommitType)
 						{
 							FString NewVal = NewText.ToString();
 							if (Item->PropertyType == ELiveConfigPropertyType::Int)
 							{
-								if (NewVal.IsEmpty() || NewVal == TEXT("-")) { Item->Value = NewVal; return; }
+								if (NewVal.IsEmpty() || NewVal == TEXT("-")) { Item->Value = "0"; OnChanged.ExecuteIfBound(); return; }
 								if (NewVal.IsNumeric()) { Item->Value = NewVal; OnChanged.ExecuteIfBound(); }
 							}
 							else if (Item->PropertyType == ELiveConfigPropertyType::Float)
 							{
-								if (NewVal.IsEmpty() || NewVal == TEXT("-") || NewVal == TEXT(".") || NewVal == TEXT("-.")) { Item->Value = NewVal; return; }
+								if (NewVal.IsEmpty() || NewVal == TEXT("-") || NewVal == TEXT(".") || NewVal == TEXT("-.")) { Item->Value = "0"; OnChanged.ExecuteIfBound(); return; }
 								if (NewVal.IsNumeric()) { Item->Value = NewVal; OnChanged.ExecuteIfBound(); }
 							}
 							else

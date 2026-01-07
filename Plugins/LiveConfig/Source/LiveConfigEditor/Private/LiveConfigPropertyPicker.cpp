@@ -9,6 +9,8 @@
 #include "Widgets/Input/SSearchBox.h"
 #include "Widgets/Input/SEditableTextBox.h"
 #include "Widgets/Input/SButton.h"
+#include "Widgets/Input/SCheckBox.h"
+#include "Widgets/Layout/SWidgetSwitcher.h"
 #include "Widgets/Views/SListView.h"
 #include "Widgets/Views/STableRow.h"
 #include "Widgets/Text/STextBlock.h"
@@ -204,38 +206,7 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
 {
     TSharedPtr<SHorizontalBox> ContentBox;
     TSharedPtr<SHorizontalBox> TagsBox;
-    FText ValueText = LOCTEXT("ValueUnknown", "Unknown");
-
-    if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
-    {
-        if (const FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(*InItem))
-        {
-            ValueText = FText::FromString(Def->Value);
-            
-            if (Def->Tags.Num() > 0)
-            {
-                SAssignNew(TagsBox, SHorizontalBox);
-                for (const FName& PropertyTag : Def->Tags)
-                {
-                    TagsBox->AddSlot()
-                    .AutoWidth()
-                    .Padding(2, 0)
-                    [
-                        SNew(SBorder)
-                        .BorderImage(FAppStyle::GetBrush("Graph.Node.Body"))
-                        .BorderBackgroundColor(FLinearColor(0.2f, 0.2f, 0.2f, 0.5f))
-                        .Padding(FMargin(4, 0))
-                        [
-                            SNew(STextBlock)
-                            .Text(FText::FromName(PropertyTag))
-                            .Font(FAppStyle::GetFontStyle("SmallFont"))
-                        ]
-                    ];
-                }
-            }
-        }
-    }
-
+    
     TSharedRef<STableRow<TSharedPtr<FLiveConfigProperty>>> Row = SNew(STableRow<TSharedPtr<FLiveConfigProperty>>, OwnerTable);
     
     Row->SetContent(
@@ -283,8 +254,129 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
                 SNew(SBox)
                 .WidthOverride(100.0f)
                 [
-                    SNew(STextBlock)
-                    .Text(ValueText)
+                    SNew(SWidgetSwitcher)
+                    .WidgetIndex_Lambda([InItem]()
+                    {
+                        if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
+                        {
+                            if (const FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(*InItem))
+                            {
+                                return Def->PropertyType == ELiveConfigPropertyType::Bool ? 1 : 0;
+                            }
+                        }
+                        return 0;
+                    })
+                    + SWidgetSwitcher::Slot()
+                    [
+                        SNew(SEditableTextBox)
+                        .Text_Lambda([InItem]()
+                        {
+                            if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
+                            {
+                                if (const FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(*InItem))
+                                {
+                                    return FText::FromString(Def->Value);
+                                }
+                            }
+                            return FText::GetEmpty();
+                        })
+                        .OnVerifyTextChanged_Lambda([InItem](const FText& NewText, FText& OutError)
+                        {
+                            if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
+                            {
+                                if (const FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(*InItem))
+                                {
+                                    FString NewVal = NewText.ToString();
+                                    if (Def->PropertyType == ELiveConfigPropertyType::Int)
+                                    {
+                                        if (NewVal.IsEmpty() || NewVal == TEXT("-")) return true;
+                                        if (!NewVal.IsNumeric() || NewVal.Contains(TEXT(".")))
+                                        {
+                                            OutError = LOCTEXT("ValueIntError", "Value must be a valid integer.");
+                                            return false;
+                                        }
+                                    }
+                                    else if (Def->PropertyType == ELiveConfigPropertyType::Float)
+                                    {
+                                        if (NewVal.IsEmpty() || NewVal == TEXT("-") || NewVal == TEXT(".") || NewVal == TEXT("-.")) return true;
+                                        if (!NewVal.IsNumeric())
+                                        {
+                                            OutError = LOCTEXT("ValueFloatError", "Value must be a valid number.");
+                                            return false;
+                                        }
+                                    }
+                                }
+                            }
+                            return true;
+                        })
+                        .OnTextCommitted_Lambda([InItem](const FText& NewText, ETextCommit::Type CommitType)
+                        {
+                            if (ULiveConfigGameSettings* GameSettings = GetMutableDefault<ULiveConfigGameSettings>())
+                            {
+                                if (FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(*InItem))
+                                {
+                                    FString NewVal = NewText.ToString();
+                                    bool bChanged = false;
+                                    if (Def->PropertyType == ELiveConfigPropertyType::Int)
+                                    {
+                                        if (NewVal.IsEmpty() || NewVal == TEXT("-")) { Def->Value = "0"; bChanged = true; }
+                                        else if (NewVal.IsNumeric() && !NewVal.Contains(TEXT("."))) { Def->Value = NewVal; bChanged = true; }
+                                    }
+                                    else if (Def->PropertyType == ELiveConfigPropertyType::Float)
+                                    {
+                                        if (NewVal.IsEmpty() || NewVal == TEXT("-") || NewVal == TEXT(".") || NewVal == TEXT("-.")) { Def->Value = "0"; bChanged = true; }
+                                        else if (NewVal.IsNumeric()) { Def->Value = NewVal; bChanged = true; }
+                                    }
+                                    else
+                                    {
+                                        Def->Value = NewVal;
+                                        bChanged = true;
+                                    }
+
+                                    if (bChanged)
+                                    {
+                                        GameSettings->SaveConfig();
+                                        GameSettings->UpdateDefaultConfigFile();
+                                        if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
+                                        {
+                                            System->RefreshFromSettings();
+                                        }
+                                    }
+                                }
+                            }
+                        })
+                    ]
+                    + SWidgetSwitcher::Slot()
+                    [
+                        SNew(SCheckBox)
+                        .IsChecked_Lambda([InItem]()
+                        {
+                            if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
+                            {
+                                if (const FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(*InItem))
+                                {
+                                    return Def->Value.ToBool() ? ECheckBoxState::Checked : ECheckBoxState::Unchecked;
+                                }
+                            }
+                            return ECheckBoxState::Unchecked;
+                        })
+                        .OnCheckStateChanged_Lambda([InItem](ECheckBoxState NewState)
+                        {
+                            if (ULiveConfigGameSettings* GameSettings = GetMutableDefault<ULiveConfigGameSettings>())
+                            {
+                                if (FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(*InItem))
+                                {
+                                    Def->Value = NewState == ECheckBoxState::Checked ? TEXT("true") : TEXT("false");
+                                    GameSettings->SaveConfig();
+                                    GameSettings->UpdateDefaultConfigFile();
+                                    if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
+                                    {
+                                        System->RefreshFromSettings();
+                                    }
+                                }
+                            }
+                        })
+                    ]
                 ]
             ]
         ]
@@ -311,15 +403,40 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
         ]
     );
 
-    if (TagsBox.IsValid())
+    if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
     {
-        ContentBox->AddSlot()
-        .AutoWidth()
-        .VAlign(VAlign_Center)
-        .Padding(8.0f, 0.0f, 0.0f, 0.0f)
-        [
-            TagsBox.ToSharedRef()
-        ];
+        if (const FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(*InItem))
+        {
+            if (Def->Tags.Num() > 0)
+            {
+                SAssignNew(TagsBox, SHorizontalBox);
+                for (const FName& PropertyTag : Def->Tags)
+                {
+                    TagsBox->AddSlot()
+                    .AutoWidth()
+                    .Padding(2, 0)
+                    [
+                        SNew(SBorder)
+                        .BorderImage(FAppStyle::GetBrush("Graph.Node.Body"))
+                        .BorderBackgroundColor(FLinearColor(0.2f, 0.2f, 0.2f, 0.5f))
+                        .Padding(FMargin(4, 0))
+                        [
+                            SNew(STextBlock)
+                            .Text(FText::FromName(PropertyTag))
+                            .Font(FAppStyle::GetFontStyle("SmallFont"))
+                        ]
+                    ];
+                }
+
+                ContentBox->AddSlot()
+                .AutoWidth()
+                .VAlign(VAlign_Center)
+                .Padding(8.0f, 0.0f, 0.0f, 0.0f)
+                [
+                    TagsBox.ToSharedRef()
+                ];
+            }
+        }
     }
 
     return Row;
