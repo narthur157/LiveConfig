@@ -13,6 +13,7 @@ public:
 	SLATE_END_ARGS();
 
 	void Construct(const FArguments& InArgs);
+	virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
 	void RemoveProperty(TSharedPtr<FLiveConfigPropertyDefinition> InItem);
 	void RemoveTag(FName TagName);
 	void ScrollToProperty(FLiveConfigProperty Property);
@@ -42,4 +43,5 @@ private:
 	TSharedPtr<class SVerticalBox> TagFilterBox;
 	TSharedPtr<SWindow> NewTagWindow;
 	bool bIsSaving = false;
+	bool bNeedsInitialRefresh = true;
 };

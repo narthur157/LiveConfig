@@ -61,6 +61,17 @@ bool FLiveConfigJsonOperationsTest::RunTest(const FString& Parameters)
 	JsonSystem->DeletePropertyFile(PropertyName);
 	TestFalse(TEXT("Property file should not exist after deletion"), FPaths::FileExists(ExpectedPath));
 
+	// Test skipping FromCurveTable properties
+	FName CurveTableName = TEXT("Test.CurveTable.Property");
+	FLiveConfigPropertyDefinition CurveTableDef;
+	CurveTableDef.PropertyName = FLiveConfigProperty(CurveTableName);
+	CurveTableDef.Value = TEXT("CurveValue");
+	CurveTableDef.Tags.Add(TEXT("FromCurveTable"));
+	
+	JsonSystem->SavePropertyToFile(CurveTableDef);
+	FString CurveTablePath = JsonSystem->GetPropertyPath(CurveTableName);
+	TestFalse(TEXT("CurveTable property file should NOT exist after saving"), FPaths::FileExists(CurveTablePath));
+
 	// Restore original settings
 	Settings->PropertyDefinitions = OriginalDefinitions;
 

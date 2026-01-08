@@ -113,6 +113,13 @@ void ULiveConfigJsonSystem::SaveJsonToFiles()
 		TSet<FString> CurrentPropertyPaths;
 		for (const auto& Pair : Settings->PropertyDefinitions)
 		{
+			// Skip properties imported from curve tables
+			static const FName FromCurveTableTag = TEXT("FromCurveTable");
+			if (Pair.Value.Tags.Contains(FromCurveTableTag))
+			{
+				continue;
+			}
+
 			CurrentPropertyPaths.Add(FPaths::ConvertRelativePathToFull(GetPropertyPath(Pair.Value.PropertyName.GetName())));
 			SavePropertyToFile(Pair.Value);
 		}
@@ -140,6 +147,13 @@ void ULiveConfigJsonSystem::SaveJsonToFiles()
 
 void ULiveConfigJsonSystem::SavePropertyToFile(const FLiveConfigPropertyDefinition& PropertyDefinition)
 {
+	// Skip properties imported from curve tables
+	static const FName FromCurveTableTag = TEXT("FromCurveTable");
+	if (PropertyDefinition.Tags.Contains(FromCurveTableTag))
+	{
+		return;
+	}
+
 	FString ActualPath = GetPropertyPath(PropertyDefinition.PropertyName.GetName());
 
 	TSharedPtr<FJsonObject> JsonObject = FJsonObjectConverter::UStructToJsonObject(PropertyDefinition);

@@ -185,29 +185,42 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 					.HeaderRow(
 						SNew(SHeaderRow)
 						.Style(FAppStyle::Get(), "TableView.Header")
-						+ SHeaderRow::Column("Actions").DefaultLabel(LOCTEXT("ActionsColumn", "")).FixedWidth(30.0f)
-					+ SHeaderRow::Column("Name")
-					.DefaultLabel(LOCTEXT("NameColumn", "Name"))
-					.FillWidth(0.35f)
-					.HeaderContentPadding(FMargin(4.0f, 0.0f))
-					+ SHeaderRow::Column("Type")
-					.DefaultLabel(LOCTEXT("TypeColumn", "Type"))
-					.FillWidth(0.15f)
-					.HeaderContentPadding(FMargin(4.0f, 0.0f))
-					+ SHeaderRow::Column("Value")
-					.DefaultLabel(LOCTEXT("ValueColumn", "Value"))
-					.FillWidth(0.2f)
-					.HeaderContentPadding(FMargin(4.0f, 0.0f))
-					+ SHeaderRow::Column("Tags")
-					.DefaultLabel(LOCTEXT("TagsColumn", "Tags"))
-					.FillWidth(0.3f)
-					.HeaderContentPadding(FMargin(4.0f, 0.0f))
+					+ SHeaderRow::Column(SLiveConfigPropertyRow::ColumnNames::Name)
+						.DefaultLabel(LOCTEXT("NameColumn", "Name"))
+						.FillWidth(0.35f)
+						.HeaderContentPadding(FMargin(4.0f, 0.0f))
+					+ SHeaderRow::Column(SLiveConfigPropertyRow::ColumnNames::Type)
+						.DefaultLabel(LOCTEXT("TypeColumn", "Type"))
+						.FillWidth(0.1f)
+						.HeaderContentPadding(FMargin(4.0f, 0.0f))
+					+ SHeaderRow::Column(SLiveConfigPropertyRow::ColumnNames::Value)
+						.DefaultLabel(LOCTEXT("ValueColumn", "Value"))
+						.FillWidth(0.2f)
+						.HeaderContentPadding(FMargin(4.0f, 0.0f))
+					+ SHeaderRow::Column(SLiveConfigPropertyRow::ColumnNames::Tags)
+						.DefaultLabel(LOCTEXT("TagsColumn", "Tags"))
+						.FillWidth(0.35f)
+						.HeaderContentPadding(FMargin(4.0f, 0.0f))
+					+ SHeaderRow::Column(SLiveConfigPropertyRow::ColumnNames::Actions)
+						.DefaultLabel(LOCTEXT("ActionsColumn", ""))
+						.FixedWidth(120.0f)
 				)
 			]
 		]
 	];
 
-	RefreshList();
+	// RefreshList(); // Removed to allow Tick to handle it once geometry is valid
+}
+
+void SLiveConfigPropertyManager::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
+{
+	SCompoundWidget::Tick(AllottedGeometry, InCurrentTime, InDeltaTime);
+
+	if (bNeedsInitialRefresh)
+	{
+		RefreshList();
+		bNeedsInitialRefresh = false;
+	}
 }
 
 TSharedRef<ITableRow> SLiveConfigPropertyManager::OnGenerateRow(TSharedPtr<FLiveConfigPropertyDefinition> InItem, const TSharedRef<STableViewBase>& OwnerTable)
@@ -217,6 +230,7 @@ TSharedRef<ITableRow> SLiveConfigPropertyManager::OnGenerateRow(TSharedPtr<FLive
 		.OnDeleteProperty(this, &SLiveConfigPropertyManager::RemoveProperty)
 		.IsNameDuplicate(this, &SLiveConfigPropertyManager::IsNameDuplicate)
 		.OnChanged(FSimpleDelegate::CreateSP(this, &SLiveConfigPropertyManager::Save))
+		.OnRequestRefresh_Lambda([this]() { if (PropertyListView.IsValid()) PropertyListView->RequestListRefresh(); })
 		.GetTagColor(TFunction<FSlateColor(FName)>([this](FName InTag) { return GetTagColor(InTag); }))
 		.KnownTags_Lambda([this]() { return KnownTags; });
 }

@@ -11,15 +11,27 @@ class SLiveConfigPropertyRow : public SPropertyRowParent
 {
 	SLATE_DECLARE_WIDGET(SLiveConfigPropertyRow, SPropertyRowParent);
 public:
+	struct ColumnNames
+	{
+		static const FName Name;
+		static const FName Description;
+		static const FName Type;
+		static const FName Value;
+		static const FName Tags;
+		static const FName Actions;
+	};
+
 	SLiveConfigPropertyRow() : KnownTagsAttribute(*this) {}
 	
 	DECLARE_DELEGATE_OneParam(FOnDeleteProperty, TSharedPtr<FLiveConfigPropertyDefinition>);
 	DECLARE_DELEGATE_RetVal_OneParam(bool, FIsNameDuplicate, FName);
+	DECLARE_DELEGATE(FOnRequestRefresh);
 
 	SLATE_BEGIN_ARGS(SLiveConfigPropertyRow) {}
 		SLATE_EVENT(FOnDeleteProperty, OnDeleteProperty);
 		SLATE_EVENT(FIsNameDuplicate, IsNameDuplicate);
 		SLATE_EVENT(FSimpleDelegate, OnChanged);
+		SLATE_EVENT(FOnRequestRefresh, OnRequestRefresh);
 		SLATE_ARGUMENT(TFunction<FSlateColor(FName)>, GetTagColor);
 		SLATE_ATTRIBUTE(TArray<FName>, KnownTags);
 	SLATE_END_ARGS();
@@ -30,7 +42,16 @@ public:
 
 	virtual TSharedRef<SWidget> GenerateWidgetForColumn(const FName& ColumnName) override;
 
+	static constexpr float RowHeight = 32.0f;
+
 private:
+	TSharedRef<SWidget> GenerateNameColumnWidget();
+	TSharedRef<SWidget> GenerateDescriptionColumnWidget();
+	TSharedRef<SWidget> GenerateTypeColumnWidget();
+	TSharedRef<SWidget> GenerateValueColumnWidget();
+	TSharedRef<SWidget> GenerateTagsColumnWidget();
+	TSharedRef<SWidget> GenerateActionsColumnWidget();
+
 	void RefreshTags();
 	void OnTagChanged();
 
@@ -38,10 +59,10 @@ private:
 	FOnDeleteProperty OnDeleteProperty;
 	FIsNameDuplicate OnIsNameDuplicate;
 	FSimpleDelegate OnChanged;
+	FOnRequestRefresh OnRequestRefresh;
 	TFunction<FSlateColor(FName)> GetTagColor;
 	TSharedPtr<class SWrapBox> TagWrapBox;
 	TSharedPtr<class SEditableTextBox> NameTextBox;
 	TSlateAttribute<TArray<FName>, EInvalidateWidgetReason::Layout> KnownTagsAttribute;
-	bool bShowDescription = false;
 	bool bNeedsFocus = false;
 };
