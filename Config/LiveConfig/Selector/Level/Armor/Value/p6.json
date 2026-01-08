@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Selector.Level.Armor.Value.p6"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Tiers"
+	],
+	"value": "4.5"
+}

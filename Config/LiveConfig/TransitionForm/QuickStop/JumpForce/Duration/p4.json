@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "TransitionForm.QuickStop.JumpForce.Duration.p4"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Tiers"
+	],
+	"value": "0.5"
+}

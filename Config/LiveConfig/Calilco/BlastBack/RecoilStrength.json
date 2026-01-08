@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Calilco.BlastBack.RecoilStrength"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "2"
+}

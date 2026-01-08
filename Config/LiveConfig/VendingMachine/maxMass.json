@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "VendingMachine.maxMass"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Attributes"
+	],
+	"value": "25"
+}

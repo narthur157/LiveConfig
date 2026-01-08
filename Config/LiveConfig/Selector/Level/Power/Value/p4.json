@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Selector.Level.Power.Value.p4"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Tiers"
+	],
+	"value": "10.5"
+}

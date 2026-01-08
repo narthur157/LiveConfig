@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Arms.Parry.EnemyTrappedEffectDuration.p4"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "1"
+}

@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "MTRB.Maps.ReconPVE"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "false"
+}

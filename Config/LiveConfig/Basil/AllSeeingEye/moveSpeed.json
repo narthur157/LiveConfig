@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Basil.AllSeeingEye.moveSpeed"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Attributes"
+	],
+	"value": "3000"
+}

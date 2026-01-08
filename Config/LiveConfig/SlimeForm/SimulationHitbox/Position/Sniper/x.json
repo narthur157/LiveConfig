@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "SlimeForm.SimulationHitbox.Position.Sniper.x"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Vector"
+	],
+	"value": "0"
+}

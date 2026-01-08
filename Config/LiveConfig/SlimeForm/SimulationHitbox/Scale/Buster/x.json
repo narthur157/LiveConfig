@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "SlimeForm.SimulationHitbox.Scale.Buster.x"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Vector"
+	],
+	"value": "1"
+}

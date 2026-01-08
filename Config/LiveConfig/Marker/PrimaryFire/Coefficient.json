@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Marker.PrimaryFire.Coefficient"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0.25"
+}

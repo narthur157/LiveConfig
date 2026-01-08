@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "SlimeDodge.DodgesEverything"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

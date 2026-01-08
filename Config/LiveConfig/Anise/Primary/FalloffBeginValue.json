@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Anise.Primary.FalloffBeginValue"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0.800000011920929"
+}

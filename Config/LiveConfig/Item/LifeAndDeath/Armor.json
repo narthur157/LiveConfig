@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Item.LifeAndDeath.Armor"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "5"
+}

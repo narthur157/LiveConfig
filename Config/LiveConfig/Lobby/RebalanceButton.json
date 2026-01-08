@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Lobby.RebalanceButton"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

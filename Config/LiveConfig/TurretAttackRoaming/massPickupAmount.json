@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "TurretAttackRoaming.massPickupAmount"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Mode"
+	],
+	"value": "5"
+}

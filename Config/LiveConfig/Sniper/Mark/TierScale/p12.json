@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Sniper.Mark.TierScale.p12"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "1"
+}

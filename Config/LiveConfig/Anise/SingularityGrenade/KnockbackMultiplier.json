@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Anise.SingularityGrenade.KnockbackMultiplier"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "-4000"
+}

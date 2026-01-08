@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Anise.MIRVGrenade.Cluster.SelfDamageMultiplier"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0"
+}

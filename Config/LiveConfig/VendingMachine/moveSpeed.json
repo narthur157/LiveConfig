@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "VendingMachine.moveSpeed"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Attributes"
+	],
+	"value": "0"
+}

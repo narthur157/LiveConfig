@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "VendingMachine.Mass.p4"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Generic"
+	],
+	"value": "10"
+}

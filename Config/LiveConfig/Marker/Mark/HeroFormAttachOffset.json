@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Marker.Mark.HeroFormAttachOffset"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "30"
+}

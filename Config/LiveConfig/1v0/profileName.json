@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "1v0.profileName"
+	},
+	"description": "",
+	"propertyType": "String",
+	"tags": [
+		"Matchmaking"
+	],
+	"value": "TestMatchmaking"
+}

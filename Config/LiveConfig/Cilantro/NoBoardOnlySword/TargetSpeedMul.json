@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Cilantro.NoBoardOnlySword.TargetSpeedMul"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0.07999999821186066"
+}

@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "SlimeForm.Propulsion.PressPrimaryFireToLaunchForward"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "false"
+}

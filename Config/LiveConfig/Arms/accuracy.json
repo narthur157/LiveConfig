@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Arms.accuracy"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Weapon"
+	],
+	"value": "0.9300000071525574"
+}

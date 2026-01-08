@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "SlimeAccelerationMultiplier.p1"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Tiers"
+	],
+	"value": "0.8999999761581421"
+}

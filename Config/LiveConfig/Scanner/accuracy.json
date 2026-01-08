@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Scanner.accuracy"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Weapon"
+	],
+	"value": "0.8899999856948853"
+}

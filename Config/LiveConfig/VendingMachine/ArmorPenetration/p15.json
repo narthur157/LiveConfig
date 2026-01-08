@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "VendingMachine.ArmorPenetration.p15"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Generic"
+	],
+	"value": "0"
+}

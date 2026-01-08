@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Scanner.Augment.HyperfusionCoil.NumberTakedownsRequired"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "9"
+}

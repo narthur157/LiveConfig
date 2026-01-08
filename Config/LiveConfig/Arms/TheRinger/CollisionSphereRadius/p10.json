@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Arms.TheRinger.CollisionSphereRadius.p10"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "200"
+}

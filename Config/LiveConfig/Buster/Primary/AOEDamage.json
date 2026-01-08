@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Buster.Primary.AOEDamage"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "25"
+}

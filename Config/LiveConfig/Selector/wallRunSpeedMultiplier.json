@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Selector.wallRunSpeedMultiplier"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Movement"
+	],
+	"value": "1"
+}

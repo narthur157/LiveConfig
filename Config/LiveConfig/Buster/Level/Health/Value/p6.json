@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Buster.Level.Health.Value.p6"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "36"
+}

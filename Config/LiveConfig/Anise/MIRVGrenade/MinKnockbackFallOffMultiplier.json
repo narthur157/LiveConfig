@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Anise.MIRVGrenade.MinKnockbackFallOffMultiplier"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0.800000011920929"
+}

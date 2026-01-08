@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "SlimeForm.Propulsion.PowerUp.SpeedMultiplier"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0.800000011920929"
+}

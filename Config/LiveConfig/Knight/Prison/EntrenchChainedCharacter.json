@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Knight.Prison.EntrenchChainedCharacter"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "false"
+}

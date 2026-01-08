@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "SlimeForm.Propulsion.LaunchUpIsAdditive"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "false"
+}

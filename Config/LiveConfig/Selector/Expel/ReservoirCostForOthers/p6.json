@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Selector.Expel.ReservoirCostForOthers.p6"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "25"
+}

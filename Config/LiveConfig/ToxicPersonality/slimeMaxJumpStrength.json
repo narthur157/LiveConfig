@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "ToxicPersonality.slimeMaxJumpStrength"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Movement"
+	],
+	"value": "1450"
+}

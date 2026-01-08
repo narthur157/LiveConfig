@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "SlimeForm.NiagaraSystem.IsWallRunActive"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

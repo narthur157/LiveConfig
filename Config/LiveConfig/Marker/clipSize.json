@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Marker.clipSize"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Weapon"
+	],
+	"value": "9"
+}

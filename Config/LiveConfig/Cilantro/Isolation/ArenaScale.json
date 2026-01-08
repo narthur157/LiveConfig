@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Cilantro.Isolation.ArenaScale"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "40"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Arms.TheSlam.ProjectileScale.p12"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "5"
+}

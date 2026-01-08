@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "UI.HUDPlayerMetersSafetyReset"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

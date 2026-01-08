@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Arms.armor"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Attributes"
+	],
+	"value": "40"
+}

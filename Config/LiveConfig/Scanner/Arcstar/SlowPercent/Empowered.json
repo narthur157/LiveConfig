@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Scanner.Arcstar.SlowPercent.Empowered"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "-0.5"
+}

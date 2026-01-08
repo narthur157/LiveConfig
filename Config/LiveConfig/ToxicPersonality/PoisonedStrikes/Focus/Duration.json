@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "ToxicPersonality.PoisonedStrikes.Focus.Duration"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "1"
+}

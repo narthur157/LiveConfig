@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Arms.miscParameter1"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Weapon"
+	],
+	"value": "5000"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Anise.propulsionMaxForwardStrength"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Movement"
+	],
+	"value": "2500"
+}

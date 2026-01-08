@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Operator.heroSpeed"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Movement"
+	],
+	"value": "560"
+}

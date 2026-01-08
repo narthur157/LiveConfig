@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Item.Cannon.FlatPen"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "3"
+}

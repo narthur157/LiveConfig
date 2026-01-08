@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Marker.Displacement.Radius"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "650"
+}

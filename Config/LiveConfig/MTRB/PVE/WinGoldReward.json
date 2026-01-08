@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "MTRB.PVE.WinGoldReward"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "5"
+}

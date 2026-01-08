@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Knight.FirstStrike.ApplyKnockback"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "false"
+}

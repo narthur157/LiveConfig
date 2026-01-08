@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "PlayableMaps"
+	},
+	"description": "",
+	"propertyType": "String",
+	"tags": [
+		"String",
+		"string"
+	],
+	"value": "Meta_MTRB, Meta_MTRB_4Team, Meta_MTRB_2Team, BloodArena_P, Ancestral_MTRB_P, Chasm_MTRB_P, Underpass_MTRB_P, Recon_MTRB_P, Squishy_MTRB_P, BasicTestArea_P, Basic_Training_P, Recon_MTRB_P_Artpass01"
+}

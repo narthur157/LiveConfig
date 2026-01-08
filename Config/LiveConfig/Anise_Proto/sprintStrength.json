@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Anise_Proto.sprintStrength"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Movement"
+	],
+	"value": "700"
+}

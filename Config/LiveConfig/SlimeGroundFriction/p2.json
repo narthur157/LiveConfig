@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "SlimeGroundFriction.p2"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Tiers"
+	],
+	"value": "0.699999988079071"
+}

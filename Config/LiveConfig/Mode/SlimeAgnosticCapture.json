@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Mode.SlimeAgnosticCapture"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

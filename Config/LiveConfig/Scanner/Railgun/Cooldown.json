@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Scanner.Railgun.Cooldown"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "11"
+}

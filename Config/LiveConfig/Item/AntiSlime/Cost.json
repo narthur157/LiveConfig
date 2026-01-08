@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Item.AntiSlime.Cost"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "3"
+}

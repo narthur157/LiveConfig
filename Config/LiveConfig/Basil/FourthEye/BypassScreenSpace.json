@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Basil.FourthEye.BypassScreenSpace"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

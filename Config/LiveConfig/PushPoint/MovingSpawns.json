@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "PushPoint.MovingSpawns"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

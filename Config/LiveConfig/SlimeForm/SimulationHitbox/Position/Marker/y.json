@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "SlimeForm.SimulationHitbox.Position.Marker.y"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Vector"
+	],
+	"value": "0"
+}

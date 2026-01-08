@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "MenuV3.ShowPartyBar"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

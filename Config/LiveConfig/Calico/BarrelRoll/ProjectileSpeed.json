@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Calico.BarrelRoll.ProjectileSpeed"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "2000"
+}

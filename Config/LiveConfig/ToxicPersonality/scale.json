@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "ToxicPersonality.scale"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Attributes"
+	],
+	"value": "1"
+}

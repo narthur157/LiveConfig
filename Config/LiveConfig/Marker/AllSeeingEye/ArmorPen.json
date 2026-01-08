@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Marker.AllSeeingEye.ArmorPen"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0"
+}

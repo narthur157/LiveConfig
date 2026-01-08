@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "MTRB.Item.ReloadSpeed"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "false"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Scanner.CameraOffset.y"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Vector"
+	],
+	"value": "40"
+}

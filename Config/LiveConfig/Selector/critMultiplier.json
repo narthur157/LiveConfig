@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Selector.critMultiplier"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Weapon"
+	],
+	"value": "0"
+}

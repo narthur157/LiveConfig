@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Item.Vamp.MaximumTempHPQ3"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "250"
+}

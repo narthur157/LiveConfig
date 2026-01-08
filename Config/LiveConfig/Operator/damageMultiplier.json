@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Operator.damageMultiplier"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Attributes"
+	],
+	"value": "1"
+}

@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "MTRB.Item.TheThirst"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

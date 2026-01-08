@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "TestingPushpoint.scoreToWin"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Mode"
+	],
+	"value": "3"
+}

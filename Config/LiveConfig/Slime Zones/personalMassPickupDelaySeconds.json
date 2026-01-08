@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Slime Zones.personalMassPickupDelaySeconds"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Mode"
+	],
+	"value": "5"
+}

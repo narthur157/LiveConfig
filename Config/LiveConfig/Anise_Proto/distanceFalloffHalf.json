@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Anise_Proto.distanceFalloffHalf"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Weapon"
+	],
+	"value": "6000"
+}

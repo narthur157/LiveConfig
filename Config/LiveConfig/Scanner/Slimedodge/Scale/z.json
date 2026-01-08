@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Scanner.Slimedodge.Scale.z"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Vector"
+	],
+	"value": "1.25"
+}

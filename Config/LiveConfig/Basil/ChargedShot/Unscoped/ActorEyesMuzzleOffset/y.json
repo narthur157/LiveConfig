@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Basil.ChargedShot.Unscoped.ActorEyesMuzzleOffset.y"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Vector"
+	],
+	"value": "40"
+}

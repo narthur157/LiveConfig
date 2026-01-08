@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Basil.FourthEye.MeshScale.z"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Vector"
+	],
+	"value": "6"
+}

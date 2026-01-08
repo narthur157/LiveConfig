@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Selector.Augment.Mixer.SlowPercentage"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0.8999999761581421"
+}

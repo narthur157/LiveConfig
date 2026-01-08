@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Marker.damage"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Weapon"
+	],
+	"value": "25"
+}

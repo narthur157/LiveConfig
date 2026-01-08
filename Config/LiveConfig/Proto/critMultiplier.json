@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Proto.critMultiplier"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Weapon"
+	],
+	"value": "1.5"
+}

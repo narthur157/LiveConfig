@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Scanner.Arcstar.Velocity"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "4000"
+}

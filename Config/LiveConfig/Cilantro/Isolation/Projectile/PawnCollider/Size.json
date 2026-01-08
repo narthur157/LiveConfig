@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Cilantro.Isolation.Projectile.PawnCollider.Size"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "130"
+}

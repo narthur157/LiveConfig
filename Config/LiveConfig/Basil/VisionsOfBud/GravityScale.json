@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Basil.VisionsOfBud.GravityScale"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "1"
+}

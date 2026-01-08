@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "HMG.BigOne.Lifespan"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "4"
+}

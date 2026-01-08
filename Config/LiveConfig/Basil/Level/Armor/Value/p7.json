@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Basil.Level.Armor.Value.p7"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "7"
+}

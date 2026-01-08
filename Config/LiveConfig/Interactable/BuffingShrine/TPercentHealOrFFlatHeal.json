@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Interactable.BuffingShrine.TPercentHealOrFFlatHeal"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "false"
+}

@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Interactable.Slime.Medium.MassAmount"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "5"
+}

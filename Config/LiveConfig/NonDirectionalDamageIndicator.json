@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "NonDirectionalDamageIndicator"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

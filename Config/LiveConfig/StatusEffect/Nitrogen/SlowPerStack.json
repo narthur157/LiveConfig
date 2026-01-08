@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "StatusEffect.Nitrogen.SlowPerStack"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0.5"
+}

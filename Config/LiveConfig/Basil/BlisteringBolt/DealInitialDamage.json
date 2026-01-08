@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Basil.BlisteringBolt.DealInitialDamage"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Toxic.VenomRoad.ScalingCoeffecient"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0.6000000238418579"
+}

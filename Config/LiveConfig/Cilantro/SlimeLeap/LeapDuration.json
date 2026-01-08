@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Cilantro.SlimeLeap.LeapDuration"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0.6499999761581421"
+}

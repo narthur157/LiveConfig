@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Movement.Slime.AccelerationMultiplier"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "1.25"
+}

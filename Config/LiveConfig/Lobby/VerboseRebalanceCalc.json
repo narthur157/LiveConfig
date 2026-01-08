@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Lobby.VerboseRebalanceCalc"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

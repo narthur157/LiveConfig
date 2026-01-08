@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Buff.RedBuff.DamageMultiplier"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0.30000001192092896"
+}

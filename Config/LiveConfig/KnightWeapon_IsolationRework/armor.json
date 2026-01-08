@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "KnightWeapon_IsolationRework.armor"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Attributes"
+	],
+	"value": "30"
+}

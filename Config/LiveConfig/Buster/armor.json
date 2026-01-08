@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Buster.armor"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Attributes"
+	],
+	"value": "5"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Calico.Level.Power.Value.p9"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "12"
+}

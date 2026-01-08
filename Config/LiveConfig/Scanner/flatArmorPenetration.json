@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Scanner.flatArmorPenetration"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Attributes"
+	],
+	"value": "0"
+}

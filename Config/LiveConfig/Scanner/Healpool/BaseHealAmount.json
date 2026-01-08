@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Scanner.Healpool.BaseHealAmount"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "20"
+}

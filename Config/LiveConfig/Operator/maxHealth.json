@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Operator.maxHealth"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Attributes"
+	],
+	"value": "320"
+}

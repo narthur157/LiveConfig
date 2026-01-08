@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Toxic.Level.Armor.Value.p2"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Tiers"
+	],
+	"value": "5.25"
+}

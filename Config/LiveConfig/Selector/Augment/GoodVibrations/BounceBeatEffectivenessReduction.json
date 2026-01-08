@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Selector.Augment.GoodVibrations.BounceBeatEffectivenessReduction"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0.5"
+}

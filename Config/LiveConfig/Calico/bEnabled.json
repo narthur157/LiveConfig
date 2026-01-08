@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Calico.bEnabled"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Weapon"
+	],
+	"value": "true"
+}

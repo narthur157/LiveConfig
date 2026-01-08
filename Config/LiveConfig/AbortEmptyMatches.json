@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "AbortEmptyMatches"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "false"
+}

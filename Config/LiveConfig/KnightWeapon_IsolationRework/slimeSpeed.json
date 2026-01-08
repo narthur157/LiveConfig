@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "KnightWeapon_IsolationRework.slimeSpeed"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Movement"
+	],
+	"value": "1040"
+}

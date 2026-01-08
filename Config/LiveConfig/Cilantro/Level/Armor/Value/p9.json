@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Cilantro.Level.Armor.Value.p9"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "5"
+}

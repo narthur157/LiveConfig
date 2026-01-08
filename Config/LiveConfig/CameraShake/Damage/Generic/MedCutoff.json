@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "CameraShake.Damage.Generic.MedCutoff"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "50"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Anise_Proto.heroSpeed"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Movement"
+	],
+	"value": "600"
+}

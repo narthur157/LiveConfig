@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "CanFireBeyondMaxFalloffRange"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "false"
+}

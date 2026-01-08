@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Spectator.HoldMouseNavigation"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "false"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Proto.reloadTime"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Weapon"
+	],
+	"value": "2"
+}

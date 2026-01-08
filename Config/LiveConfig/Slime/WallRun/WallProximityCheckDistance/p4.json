@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Slime.WallRun.WallProximityCheckDistance.p4"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "250"
+}

@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "ServerAutoProfile"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

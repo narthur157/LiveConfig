@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "KnightWeapon_IsolationRework.ammoCost"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Weapon"
+	],
+	"value": "0"
+}

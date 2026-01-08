@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Calico.BlastUp.BlastAngle"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "30"
+}

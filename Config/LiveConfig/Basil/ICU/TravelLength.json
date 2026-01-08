@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Basil.ICU.TravelLength"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "2"
+}

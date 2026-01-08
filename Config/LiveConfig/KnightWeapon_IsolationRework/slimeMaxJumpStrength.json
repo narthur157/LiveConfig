@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "KnightWeapon_IsolationRework.slimeMaxJumpStrength"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Movement"
+	],
+	"value": "1450"
+}

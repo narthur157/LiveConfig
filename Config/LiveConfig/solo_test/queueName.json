@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "solo_test.queueName"
+	},
+	"description": "",
+	"propertyType": "String",
+	"tags": [
+		"Matchmaking"
+	],
+	"value": "Play!"
+}

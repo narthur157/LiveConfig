@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Basil.heroJumpStrength"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Movement"
+	],
+	"value": "1150"
+}

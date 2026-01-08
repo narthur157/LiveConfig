@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Hero.Camera.SocketOffsetZ.ScaleMultiplier"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "-25"
+}

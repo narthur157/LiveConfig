@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "TestHero.propulsionMaxForwardStrength"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Movement"
+	],
+	"value": "2500"
+}

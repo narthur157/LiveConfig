@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Monster.MeleeSwipeMonster.damageMultiplier"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Attributes"
+	],
+	"value": "1"
+}

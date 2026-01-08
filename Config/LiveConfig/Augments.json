@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Augments"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

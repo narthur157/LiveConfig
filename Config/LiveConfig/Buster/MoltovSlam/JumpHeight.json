@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Buster.MoltovSlam.JumpHeight"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "450"
+}

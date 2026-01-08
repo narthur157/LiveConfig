@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "SlimeCollection.scoreToWin"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Mode"
+	],
+	"value": "6000"
+}

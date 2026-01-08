@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Toxic.VenomRoad.Height"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "800"
+}

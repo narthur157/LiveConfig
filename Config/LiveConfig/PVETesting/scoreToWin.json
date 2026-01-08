@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "PVETesting.scoreToWin"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Mode"
+	],
+	"value": "3"
+}

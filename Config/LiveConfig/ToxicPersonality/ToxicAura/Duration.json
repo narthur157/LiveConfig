@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "ToxicPersonality.ToxicAura.Duration"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "7"
+}

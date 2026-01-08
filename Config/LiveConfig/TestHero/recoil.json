@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "TestHero.recoil"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Weapon"
+	],
+	"value": "0.5"
+}

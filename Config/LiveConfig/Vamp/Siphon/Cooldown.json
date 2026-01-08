@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Vamp.Siphon.Cooldown"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "12"
+}

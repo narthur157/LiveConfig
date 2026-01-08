@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Movement.WallRun.DirectionForce"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0"
+}

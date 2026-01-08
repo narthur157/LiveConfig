@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "SetByCaller.Talent.Operator.SlimeCharge.Magnatize.Duration"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "5"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "MTRB.deathRespawnPenaltySeconds"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Mode"
+	],
+	"value": "0"
+}

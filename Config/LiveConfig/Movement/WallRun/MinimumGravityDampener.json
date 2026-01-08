@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Movement.WallRun.MinimumGravityDampener"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "1"
+}

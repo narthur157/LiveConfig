@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Monster.Drake.damageMultiplier"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Attributes"
+	],
+	"value": "1"
+}

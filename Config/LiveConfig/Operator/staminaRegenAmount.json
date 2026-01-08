@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Operator.staminaRegenAmount"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Movement"
+	],
+	"value": "2"
+}

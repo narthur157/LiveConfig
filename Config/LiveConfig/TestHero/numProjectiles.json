@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "TestHero.numProjectiles"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Weapon"
+	],
+	"value": "1"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Sniper.distanceFalloffZero"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Weapon"
+	],
+	"value": "30000"
+}

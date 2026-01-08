@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Operator.armor"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Attributes"
+	],
+	"value": "20"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "MobaTurret.armorPerLevel"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Attributes"
+	],
+	"value": "0"
+}

@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Knight.Prison.AlwaysRootShackledCharacter"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

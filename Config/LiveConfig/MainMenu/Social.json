@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "MainMenu.Social"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

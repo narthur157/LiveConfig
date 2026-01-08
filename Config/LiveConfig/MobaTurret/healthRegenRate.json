@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "MobaTurret.healthRegenRate"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Attributes"
+	],
+	"value": "0"
+}

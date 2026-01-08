@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Calico.BouncyBomb.BaseDamage"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "60"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Default.wallRunMaxJumpStrength"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Movement"
+	],
+	"value": "2000"
+}

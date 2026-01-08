@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "TransitionForm.QuickStop.JumpForce.Height.p7"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "200"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "HeroJumpZVelocity.p1"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "1350"
+}

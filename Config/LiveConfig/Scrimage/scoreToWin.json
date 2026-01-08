@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Scrimage.scoreToWin"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Mode"
+	],
+	"value": "5"
+}

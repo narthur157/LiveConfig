@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "ToxicPersonality.MedusasGaze.ChannelDuration"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0.75"
+}

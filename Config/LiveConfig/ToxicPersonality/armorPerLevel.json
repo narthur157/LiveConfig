@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "ToxicPersonality.armorPerLevel"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Attributes"
+	],
+	"value": "2.200000047683716"
+}

@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Cheats"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Buster.slimeSpeed"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Movement"
+	],
+	"value": "924"
+}

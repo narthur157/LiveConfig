@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "HMG.BigOne.CollisionSize"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "30"
+}

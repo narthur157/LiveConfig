@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Sniper.fireRatePerSecond"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Weapon"
+	],
+	"value": "2.75"
+}

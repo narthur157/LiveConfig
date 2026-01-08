@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Calico.BlastUp.ArmorPen"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0"
+}

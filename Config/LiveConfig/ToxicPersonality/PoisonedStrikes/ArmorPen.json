@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "ToxicPersonality.PoisonedStrikes.ArmorPen"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0"
+}

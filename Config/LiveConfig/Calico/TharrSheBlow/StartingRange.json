@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Calico.TharrSheBlow.StartingRange"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "2500"
+}

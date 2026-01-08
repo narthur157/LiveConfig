@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "HMG.BigOne.Cooldown"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "6"
+}

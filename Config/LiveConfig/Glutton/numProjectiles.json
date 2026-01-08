@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Glutton.numProjectiles"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Weapon"
+	],
+	"value": "0"
+}

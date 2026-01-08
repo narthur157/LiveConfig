@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Calico.moveSpeed"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Attributes"
+	],
+	"value": "700"
+}

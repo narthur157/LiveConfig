@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "SelectorWeapon.reloadTime"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Weapon"
+	],
+	"value": "0.25"
+}

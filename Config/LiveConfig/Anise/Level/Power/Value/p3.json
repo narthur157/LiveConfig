@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Anise.Level.Power.Value.p3"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "5"
+}

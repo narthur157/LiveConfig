@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Movement.SlopeForce.IsActive"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "false"
+}

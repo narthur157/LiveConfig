@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "TransitionForm.QuickStop.ManualDeceleration.Duration.p6"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Tiers"
+	],
+	"value": "0.25"
+}

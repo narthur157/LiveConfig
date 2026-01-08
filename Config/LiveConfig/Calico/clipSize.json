@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Calico.clipSize"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Weapon"
+	],
+	"value": "5"
+}

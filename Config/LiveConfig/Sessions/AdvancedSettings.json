@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Sessions.AdvancedSettings"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

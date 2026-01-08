@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "TestHero.ammoCost"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Weapon"
+	],
+	"value": "1"
+}

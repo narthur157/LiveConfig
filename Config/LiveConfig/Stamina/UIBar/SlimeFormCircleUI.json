@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Stamina.UIBar.SlimeFormCircleUI"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "HitConfirm.CritSpike.MinLength"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "24"
+}

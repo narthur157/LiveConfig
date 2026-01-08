@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Monster.Slasher.armor"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Attributes"
+	],
+	"value": "10"
+}

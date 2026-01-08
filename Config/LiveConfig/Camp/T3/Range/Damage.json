@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Camp.T3.Range.Damage"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "50"
+}

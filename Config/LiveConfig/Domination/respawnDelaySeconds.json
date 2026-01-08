@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Domination.respawnDelaySeconds"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Mode"
+	],
+	"value": "4"
+}

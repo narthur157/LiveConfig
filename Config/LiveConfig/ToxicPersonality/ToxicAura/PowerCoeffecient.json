@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "ToxicPersonality.ToxicAura.PowerCoeffecient"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0.15000000596046448"
+}

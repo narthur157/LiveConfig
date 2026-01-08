@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Sniper.armorPenetration"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Weapon"
+	],
+	"value": "0"
+}

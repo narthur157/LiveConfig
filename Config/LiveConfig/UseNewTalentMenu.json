@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "UseNewTalentMenu"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

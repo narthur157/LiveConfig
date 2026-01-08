@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "UseMultiplierBasedStatIncreases"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "false"
+}

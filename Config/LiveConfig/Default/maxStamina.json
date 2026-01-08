@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Default.maxStamina"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Movement"
+	],
+	"value": "63"
+}

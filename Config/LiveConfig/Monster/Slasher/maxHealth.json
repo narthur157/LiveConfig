@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Monster.Slasher.maxHealth"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Attributes"
+	],
+	"value": "85"
+}

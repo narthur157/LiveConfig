@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Buster.SlimeMeteor.AOEDamage.PowerCof"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0.125"
+}

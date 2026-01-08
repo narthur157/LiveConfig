@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "KnightWeapon_IsolationRework.bEnabled"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Weapon"
+	],
+	"value": "true"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "HMG.AmmoScaling.p4"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "0"
+}

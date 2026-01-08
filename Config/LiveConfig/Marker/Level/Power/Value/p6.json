@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Marker.Level.Power.Value.p6"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "15"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Proto.armorPenetration"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Weapon"
+	],
+	"value": "0"
+}

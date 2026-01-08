@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Misc.AutoProfilerStartIntervalTime.Max"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "780"
+}

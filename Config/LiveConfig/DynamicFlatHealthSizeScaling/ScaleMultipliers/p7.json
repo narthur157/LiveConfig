@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "DynamicFlatHealthSizeScaling.ScaleMultipliers.p7"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "1"
+}

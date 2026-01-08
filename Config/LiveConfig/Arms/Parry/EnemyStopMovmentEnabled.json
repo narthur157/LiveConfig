@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Arms.Parry.EnemyStopMovmentEnabled"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Calico.damage"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Weapon"
+	],
+	"value": "20"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "tutorial.queueName"
+	},
+	"description": "",
+	"propertyType": "String",
+	"tags": [
+		"Matchmaking"
+	],
+	"value": "tutorial"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "ExperienceThresholds.p10"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "1000000"
+}

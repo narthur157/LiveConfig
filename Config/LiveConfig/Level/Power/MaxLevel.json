@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Level.Power.MaxLevel"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "10"
+}

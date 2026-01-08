@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "VendingMachine.ArmorPenetration.p2"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Generic"
+	],
+	"value": "90"
+}

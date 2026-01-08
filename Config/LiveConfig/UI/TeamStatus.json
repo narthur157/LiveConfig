@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "UI.TeamStatus"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "NewObjectiveSounds"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

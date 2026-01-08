@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Cilantro.Level.Health.Value.p4"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "49"
+}

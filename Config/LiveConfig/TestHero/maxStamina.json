@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "TestHero.maxStamina"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Movement"
+	],
+	"value": "63"
+}

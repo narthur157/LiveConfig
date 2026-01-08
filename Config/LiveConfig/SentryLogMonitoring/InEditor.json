@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "SentryLogMonitoring.InEditor"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "false"
+}

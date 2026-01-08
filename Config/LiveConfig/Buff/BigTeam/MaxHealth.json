@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Buff.BigTeam.MaxHealth"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "100"
+}

@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "DebugMenu"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

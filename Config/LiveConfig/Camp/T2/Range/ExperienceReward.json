@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Camp.T2.Range.ExperienceReward"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "200"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "TestingPushpoint.massToUltEnergyRatioAsPercentage"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Mode"
+	],
+	"value": "100"
+}

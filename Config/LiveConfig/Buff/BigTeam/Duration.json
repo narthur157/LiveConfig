@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Buff.BigTeam.Duration"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "60"
+}

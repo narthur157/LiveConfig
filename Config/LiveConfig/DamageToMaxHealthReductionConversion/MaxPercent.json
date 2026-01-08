@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "DamageToMaxHealthReductionConversion.MaxPercent"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0.699999988079071"
+}

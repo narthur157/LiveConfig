@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "MinMovespeedAttribute"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "250"
+}

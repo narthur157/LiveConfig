@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "SelectorWeapon.distanceFalloffZero"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Weapon"
+	],
+	"value": "20000"
+}

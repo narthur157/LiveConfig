@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Monster.Drake.armor"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Attributes"
+	],
+	"value": "10"
+}

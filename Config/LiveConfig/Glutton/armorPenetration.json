@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Glutton.armorPenetration"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Weapon"
+	],
+	"value": "0.20000000298023224"
+}

@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "MPv2.EnableRestoreActiveSessions"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

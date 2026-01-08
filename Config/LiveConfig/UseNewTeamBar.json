@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "UseNewTeamBar"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

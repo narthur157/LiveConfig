@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "HeroBrakingDecelerationWalking.p3"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "4000"
+}

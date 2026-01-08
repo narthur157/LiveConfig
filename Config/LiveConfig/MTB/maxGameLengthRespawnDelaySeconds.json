@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "MTB.maxGameLengthRespawnDelaySeconds"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Mode"
+	],
+	"value": "15"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "DynamicFlatHealthSizeScaling.DamageMultiplier.p10"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "1"
+}

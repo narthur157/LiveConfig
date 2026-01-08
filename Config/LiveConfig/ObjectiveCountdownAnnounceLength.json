@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "ObjectiveCountdownAnnounceLength"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "5"
+}

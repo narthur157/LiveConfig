@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Sessions"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

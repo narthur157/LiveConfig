@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Proto.clipSize"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Weapon"
+	],
+	"value": "20"
+}

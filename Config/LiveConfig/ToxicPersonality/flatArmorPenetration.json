@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "ToxicPersonality.flatArmorPenetration"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Attributes"
+	],
+	"value": "0"
+}

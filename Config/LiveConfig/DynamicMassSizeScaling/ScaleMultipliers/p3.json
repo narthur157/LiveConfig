@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "DynamicMassSizeScaling.ScaleMultipliers.p3"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "1"
+}

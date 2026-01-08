@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "TurretAttack.respawnDelaySeconds"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Mode"
+	],
+	"value": "4"
+}

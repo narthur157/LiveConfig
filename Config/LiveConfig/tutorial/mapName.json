@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "tutorial.mapName"
+	},
+	"description": "",
+	"propertyType": "String",
+	"tags": [
+		"Matchmaking"
+	],
+	"value": "Basic_Training_P"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Operator.bEnabled"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Weapon"
+	],
+	"value": "false"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Slime Zones.valuePerUltimatePip"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Mode"
+	],
+	"value": "125"
+}

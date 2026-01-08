@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Proto.bEnabled"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Weapon"
+	],
+	"value": "false"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "MTB.maxGameLengthSeconds"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Mode"
+	],
+	"value": "6000"
+}

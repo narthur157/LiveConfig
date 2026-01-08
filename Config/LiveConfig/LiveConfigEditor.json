@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "LiveConfigEditor"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

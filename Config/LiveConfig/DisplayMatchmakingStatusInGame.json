@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "DisplayMatchmakingStatusInGame"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

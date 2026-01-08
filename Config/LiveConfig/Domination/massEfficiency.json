@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Domination.massEfficiency"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Mode"
+	],
+	"value": "1"
+}

@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "DamageToMassMultiplier"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0.5"
+}

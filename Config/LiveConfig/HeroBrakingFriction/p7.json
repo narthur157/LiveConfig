@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "HeroBrakingFriction.p7"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Tiers"
+	],
+	"value": "0.800000011920929"
+}

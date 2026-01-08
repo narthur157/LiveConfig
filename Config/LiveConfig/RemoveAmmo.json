@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "RemoveAmmo"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "false"
+}

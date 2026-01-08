@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "UI.HomeScreen.IntroAnimation.Toggle"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "false"
+}

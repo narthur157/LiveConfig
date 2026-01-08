@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Knight.Isolation.IWantMVP"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "false"
+}

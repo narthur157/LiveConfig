@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "LiveConfig.NeverLoadMidMatch"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

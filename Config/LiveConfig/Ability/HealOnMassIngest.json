@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Ability.HealOnMassIngest"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "false"
+}

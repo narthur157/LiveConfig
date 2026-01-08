@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "LiveConfig.PollingInterval"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "15"
+}

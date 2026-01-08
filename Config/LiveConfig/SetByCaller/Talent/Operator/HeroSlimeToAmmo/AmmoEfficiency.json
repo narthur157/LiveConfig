@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "SetByCaller.Talent.Operator.HeroSlimeToAmmo.AmmoEfficiency"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "1"
+}

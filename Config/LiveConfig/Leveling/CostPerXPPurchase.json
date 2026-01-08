@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Leveling.CostPerXPPurchase"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "1"
+}

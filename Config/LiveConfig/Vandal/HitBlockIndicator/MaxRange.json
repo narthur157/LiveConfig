@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Vandal.HitBlockIndicator.MaxRange"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "450"
+}

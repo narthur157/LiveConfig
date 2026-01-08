@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "unranked.profileName"
+	},
+	"description": "",
+	"propertyType": "String",
+	"tags": [
+		"Matchmaking"
+	],
+	"value": ""
+}

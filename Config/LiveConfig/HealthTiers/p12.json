@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "HealthTiers.p12"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Tiers"
+	],
+	"value": "20000"
+}

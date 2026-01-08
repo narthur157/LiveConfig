@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Toxic.VenomRoad.LeapDuration"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "1"
+}

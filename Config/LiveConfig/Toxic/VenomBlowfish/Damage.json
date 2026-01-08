@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Toxic.VenomBlowfish.Damage"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "60"
+}

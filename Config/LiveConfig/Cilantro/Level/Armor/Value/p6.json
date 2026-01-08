@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Cilantro.Level.Armor.Value.p6"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Tiers"
+	],
+	"value": "4.25"
+}

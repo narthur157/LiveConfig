@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "VersionChecking"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

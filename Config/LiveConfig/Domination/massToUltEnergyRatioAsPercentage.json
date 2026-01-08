@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Domination.massToUltEnergyRatioAsPercentage"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Mode"
+	],
+	"value": "100"
+}

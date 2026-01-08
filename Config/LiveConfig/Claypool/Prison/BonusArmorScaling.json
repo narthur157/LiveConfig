@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Claypool.Prison.BonusArmorScaling"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0.4000000059604645"
+}

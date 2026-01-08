@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "BigTeamBuff.ProgressPerTick"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "30"
+}

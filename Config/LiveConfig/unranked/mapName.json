@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "unranked.mapName"
+	},
+	"description": "",
+	"propertyType": "String",
+	"tags": [
+		"Matchmaking"
+	],
+	"value": "Meta_MTRB"
+}

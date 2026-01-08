@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Operator.ReverseSpread"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

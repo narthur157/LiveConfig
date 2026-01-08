@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "InactivePlayerStateLifeSpan"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "1"
+}

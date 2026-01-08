@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "PickupRipple"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

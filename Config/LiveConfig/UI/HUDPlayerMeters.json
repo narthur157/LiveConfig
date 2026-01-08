@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "UI.HUDPlayerMeters"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "MTB.respawnDelaySeconds"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Mode"
+	],
+	"value": "400000"
+}

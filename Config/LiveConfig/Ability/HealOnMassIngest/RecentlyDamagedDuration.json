@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Ability.HealOnMassIngest.RecentlyDamagedDuration"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "9999123"
+}

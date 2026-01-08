@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "NumPresentedItems"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "3"
+}

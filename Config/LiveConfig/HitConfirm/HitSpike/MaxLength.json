@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "HitConfirm.HitSpike.MaxLength"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "64"
+}

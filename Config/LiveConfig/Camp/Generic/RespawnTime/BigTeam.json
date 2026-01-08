@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Camp.Generic.RespawnTime.BigTeam"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "240"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Selector.armorPerLevel"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Attributes"
+	],
+	"value": "2.4000000953674316"
+}

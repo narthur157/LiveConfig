@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Camp.RedBuff.ExperienceReward"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "500"
+}

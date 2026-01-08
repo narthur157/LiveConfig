@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "MaximumHealthReductionPercent"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "0.800000011920929"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "1v1.mapName"
+	},
+	"description": "",
+	"propertyType": "String",
+	"tags": [
+		"Matchmaking"
+	],
+	"value": "Basic_Training_P"
+}

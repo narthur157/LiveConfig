@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Camp.BlueBuff.MassReward"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "150"
+}

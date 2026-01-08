@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Slime Zones.maxGameLengthRespawnDelaySeconds"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Mode"
+	],
+	"value": "15"
+}

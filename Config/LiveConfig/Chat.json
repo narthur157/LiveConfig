@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Chat"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

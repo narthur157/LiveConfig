@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Monster.MeleeSwipeMonster.maxHealth"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Attributes"
+	],
+	"value": "137.5"
+}

@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "SelectorWeapon.bEnabled"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Weapon"
+	],
+	"value": "false"
+}

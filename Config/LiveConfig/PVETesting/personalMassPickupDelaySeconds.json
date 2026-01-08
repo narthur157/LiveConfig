@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "PVETesting.personalMassPickupDelaySeconds"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Mode"
+	],
+	"value": "5"
+}

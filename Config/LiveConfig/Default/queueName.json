@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Default.queueName"
+	},
+	"description": "",
+	"propertyType": "String",
+	"tags": [
+		"Matchmaking"
+	],
+	"value": "Play!"
+}

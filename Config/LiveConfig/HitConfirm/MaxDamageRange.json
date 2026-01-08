@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "HitConfirm.MaxDamageRange"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "150"
+}

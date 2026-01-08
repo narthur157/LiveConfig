@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "SlimeForm.SimulationHitbox.Position.Scanner.z"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Vector"
+	],
+	"value": "-47.5"
+}

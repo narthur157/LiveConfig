@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "duo_test.message"
+	},
+	"description": "",
+	"propertyType": "String",
+	"tags": [
+		"Matchmaking"
+	],
+	"value": "Wait for Matchmaking Queue in Slime Hub"
+}

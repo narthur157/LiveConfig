@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Default.maxMass"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Attributes"
+	],
+	"value": "99999"
+}

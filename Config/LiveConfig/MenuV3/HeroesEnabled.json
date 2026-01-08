@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "MenuV3.HeroesEnabled"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "false"
+}

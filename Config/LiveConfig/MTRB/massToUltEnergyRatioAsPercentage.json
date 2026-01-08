@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "MTRB.massToUltEnergyRatioAsPercentage"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Mode"
+	],
+	"value": "100"
+}

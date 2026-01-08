@@ -5,8 +5,6 @@
 	},
 	"description": "User-added property: NewInt",
 	"propertyType": "Int",
-	"tags": [
-		"test"
-	],
+	"tags": [],
 	"value": "1234"
 }

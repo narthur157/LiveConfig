@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Ping.Lifetime"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Value",
+		"number"
+	],
+	"value": "5"
+}

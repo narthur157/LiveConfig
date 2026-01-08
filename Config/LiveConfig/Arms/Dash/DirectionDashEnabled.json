@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Arms.Dash.DirectionDashEnabled"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "Lobby.EnforceLobby"
+	},
+	"description": "",
+	"propertyType": "Bool",
+	"tags": [
+		"Feature",
+		"bool"
+	],
+	"value": "true"
+}

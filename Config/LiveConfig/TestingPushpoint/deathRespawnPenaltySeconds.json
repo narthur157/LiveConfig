@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "TestingPushpoint.deathRespawnPenaltySeconds"
+	},
+	"description": "",
+	"propertyType": "Int",
+	"tags": [
+		"Mode"
+	],
+	"value": "0"
+}
