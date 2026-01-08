@@ -6,8 +6,7 @@
 	"description": "",
 	"propertyType": "String",
 	"tags": [
-		"String",
-		"string"
+		"String"
 	],
 	"value": "Mass.Transfer,Mass.Create,Mass.Destroy,VendingMachine.Opened,VendingMachine.Closed,ResetTalents,Effect"
 }

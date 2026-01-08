@@ -5,6 +5,8 @@
 	},
 	"description": "Some comment",
 	"propertyType": "String",
-	"tags": [],
+	"tags": [
+		"Hero"
+	],
 	"value": "0"
 }

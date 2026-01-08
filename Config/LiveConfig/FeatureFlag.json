@@ -5,6 +5,8 @@
 	},
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [],
+	"tags": [
+		"Hero"
+	],
 	"value": "TRUE"
 }

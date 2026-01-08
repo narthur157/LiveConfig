@@ -3,7 +3,7 @@
 	{
 		"propertyName": "1v0.mapName"
 	},
-	"description": "",
+	"description": "some description\r\n",
 	"propertyType": "String",
 	"tags": [
 		"Matchmaking"
