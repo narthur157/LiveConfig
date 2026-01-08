@@ -19,6 +19,12 @@ void ULiveConfigSystem::Initialize(FSubsystemCollectionBase& Collection)
 
     RefreshFromSettings();
 
+    // Register "FromCurveTable" as a known tag if it's not already there
+    if (ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>())
+    {
+        Settings->KnownTags.AddUnique(TEXT("FromCurveTable"));
+    }
+
     DownloadConfig();
 
     FWorldDelegates::OnPostWorldInitialization.AddUObject(this, &ThisClass::OnTravel);

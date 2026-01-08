@@ -33,4 +33,16 @@ public:
 	/** Global list of tags that can be assigned to properties. */
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General")
 	TArray<FName> KnownTags;
+
+	/** The curve table to update with live config values (Export TO). */
+	UPROPERTY(Config, EditAnywhere, Category = "CurveTable", Meta = (AllowedClasses = "/Script/Engine.CurveTable"))
+	FSoftObjectPath ExportCurveTable;
+
+	/** List of curve tables that provide live config values (Import FROM). */
+	UPROPERTY(Config, EditAnywhere, Category = "CurveTable", Meta = (AllowedClasses = "/Script/Engine.CurveTable"))
+	TArray<FSoftObjectPath> ImportCurveTables;
+
+	/** Whether to automatically create new rows in the ExportCurveTable for all Float properties. */
+	UPROPERTY(Config, EditAnywhere, Category = "CurveTable")
+	bool bAutoCreateRowsInExportTable = true;
 };

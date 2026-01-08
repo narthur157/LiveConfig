@@ -14,6 +14,7 @@ public:
 
 	void Construct(const FArguments& InArgs);
 	void RemoveProperty(TSharedPtr<FLiveConfigPropertyDefinition> InItem);
+	void RemoveTag(FName TagName);
 	void ScrollToProperty(FLiveConfigProperty Property);
 	bool IsNameDuplicate(FName Name) const;
 

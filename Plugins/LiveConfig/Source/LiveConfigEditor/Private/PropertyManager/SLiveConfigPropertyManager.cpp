@@ -77,32 +77,61 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 					.AutoHeight()
 					.Padding(0, 10, 0, 0)
 					[
-						SNew(SButton)
-						.ButtonStyle(FAppStyle::Get(), "PrimaryButton")
-						.HAlign(HAlign_Center)
-						.OnClicked_Lambda([this]()
-						{
-							OnAddNewTag();
-							return FReply::Handled();
-						})
+						SNew(SHorizontalBox)
+						+ SHorizontalBox::Slot()
+						.FillWidth(1.0f)
+						.Padding(0, 0, 4, 0)
 						[
-							SNew(SHorizontalBox)
-							+ SHorizontalBox::Slot()
-							.AutoWidth()
-							.VAlign(VAlign_Center)
-							.Padding(0, 0, 4, 0)
+							SNew(SButton)
+							.ButtonStyle(FAppStyle::Get(), "PrimaryButton")
+							.HAlign(HAlign_Center)
+							.OnClicked_Lambda([this]()
+							{
+								OnAddNewTag();
+								return FReply::Handled();
+							})
 							[
-								SNew(SImage)
-								.Image(FAppStyle::GetBrush("EditableComboBox.Add"))
-								.ColorAndOpacity(FSlateColor::UseForeground())
+								SNew(SHorizontalBox)
+								+ SHorizontalBox::Slot()
+								.AutoWidth()
+								.VAlign(VAlign_Center)
+								.Padding(0, 0, 4, 0)
+								[
+									SNew(SImage)
+									.Image(FAppStyle::GetBrush("EditableComboBox.Add"))
+								]
+								+ SHorizontalBox::Slot()
+								.AutoWidth()
+								.VAlign(VAlign_Center)
+								[
+									SNew(STextBlock)
+									.Text(LOCTEXT("CreateNewTag", "Add Tag"))
+									.Font(FAppStyle::GetFontStyle("BoldFont"))
+									.ToolTipText(LOCTEXT("CreateNewTagToolTip", "Create a new tag"))
+								]
 							]
-							+ SHorizontalBox::Slot()
-							.AutoWidth()
-							.VAlign(VAlign_Center)
+						]
+						+ SHorizontalBox::Slot()
+						.AutoWidth()
+						.VAlign(VAlign_Center)
+						[
+							SNew(SBox)
+							.Padding(2.0f)
 							[
-								SNew(STextBlock)
-								.Text(LOCTEXT("CreateNewTag", "Create New Tag"))
-								.Font(FAppStyle::GetFontStyle("BoldFont"))
+								SNew(SButton)
+								.ButtonStyle(FAppStyle::Get(), "SimpleButton")
+								.ContentPadding(FMargin(4, 2))
+								.IsEnabled_Lambda([this]() { return !SelectedTag.IsNone() && SelectedTag != TEXT("FromCurveTable"); })
+								.OnClicked_Lambda([this]()
+								{
+									RemoveTag(SelectedTag);
+									return FReply::Handled();
+								})
+								.ToolTipText(LOCTEXT("DeleteSelectedTagToolTip", "Delete the currently selected tag"))
+								[
+									SNew(SImage)
+									.Image(FAppStyle::GetBrush("Icons.Delete"))
+								]
 							]
 						]
 					]
@@ -248,7 +277,7 @@ void SLiveConfigPropertyManager::UpdateAllTags()
 	{
 		TagFilterBox->ClearChildren();
 
-		auto CreateTagWidget = [this](FName TagName, FText DisplayName, bool bIsFilter)
+		auto CreateTagWidget = [this](FName TagName, FText DisplayName, bool bIsFilter) -> TSharedRef<SWidget>
 		{
 			int32 Count = GetTagCount(TagName);
 			FText FullDisplayName = TagName.IsNone() ? DisplayName : FText::Format(LOCTEXT("TagWithCount", "{0} ({1})"), DisplayName, FText::AsNumber(Count));
@@ -526,6 +555,8 @@ void SLiveConfigPropertyManager::Save()
 		System->RefreshFromSettings();
 		bIsSaving = false;
 	}
+
+	UpdateAllTags();
 }
 
 void SLiveConfigPropertyManager::RemoveProperty(TSharedPtr<FLiveConfigPropertyDefinition> InItem)
@@ -533,6 +564,54 @@ void SLiveConfigPropertyManager::RemoveProperty(TSharedPtr<FLiveConfigPropertyDe
 	FullPropertyList.Remove(InItem);
 	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
 	Save();
+}
+
+void SLiveConfigPropertyManager::RemoveTag(FName TagName)
+{
+	if (TagName.IsNone() || TagName == TEXT("FromCurveTable"))
+	{
+		return;
+	}
+
+	int32 Count = GetTagCount(TagName);
+	if (Count > 0)
+	{
+		FText ConfirmMessage = FText::Format(
+			LOCTEXT("DeleteTagInUseConfirm", "The tag '{0}' is in use by {1} property(s). Deleting it will remove it from all properties. Are you sure?"),
+			FText::FromName(TagName),
+			FText::AsNumber(Count)
+		);
+
+		if (FMessageDialog::Open(EAppMsgType::YesNo, ConfirmMessage, LOCTEXT("DeleteTagTitle", "Delete Tag")) != EAppReturnType::Yes)
+		{
+			return;
+		}
+
+		// Remove from properties
+		for (const auto& PropDef : FullPropertyList)
+		{
+			PropDef->Tags.Remove(TagName);
+		}
+	}
+
+	KnownTags.Remove(TagName);
+	if (SelectedTag == TagName)
+	{
+		SelectedTag = NAME_None;
+	}
+
+	// Persist KnownTags first
+	SaveKnownTags();
+	
+	// Persist property changes (tag removals)
+	Save();
+
+	// Force a full refresh from the settings to ensure everything is in sync
+	// Use a temporary flag to avoid early exit in RefreshList if called from within a save notification
+	bool bOldIsSaving = bIsSaving;
+	bIsSaving = false;
+	RefreshList();
+	bIsSaving = bOldIsSaving;
 }
 
 bool SLiveConfigPropertyManager::IsNameDuplicate(FName Name) const
