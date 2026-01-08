@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "NewInt"
+	},
+	"description": "User-added property: NewInt",
+	"propertyType": "Int",
+	"tags": [
+		"test"
+	],
+	"value": "1234"
+}

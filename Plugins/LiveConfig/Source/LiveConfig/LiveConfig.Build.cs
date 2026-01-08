@@ -6,9 +6,14 @@ public class LiveConfig : ModuleRules
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		
-		PublicDependencyModuleNames.AddRange( new string[] { "Core", "HTTP" } );
+		PublicDependencyModuleNames.AddRange( new string[] { "Core", "HTTP", "Json", "JsonUtilities" } );
 			
 		
 		PrivateDependencyModuleNames.AddRange( new string[] { "CoreUObject", "Engine", "Slate", "SlateCore", "DeveloperSettings" } );
+
+		if (Target.bBuildEditor)
+		{
+			PrivateDependencyModuleNames.Add("SourceControl");
+		}
 	}
 }

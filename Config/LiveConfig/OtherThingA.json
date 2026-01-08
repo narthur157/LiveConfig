@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "OtherThingA"
+	},
+	"description": "",
+	"propertyType": "String",
+	"tags": [
+		"Movement"
+	],
+	"value": "0"
+}

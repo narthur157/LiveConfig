@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "ThingB"
+	},
+	"description": "Some comment",
+	"propertyType": "String",
+	"tags": [
+		"Hero"
+	],
+	"value": "0"
+}

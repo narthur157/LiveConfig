@@ -19,6 +19,7 @@
 #include "Widgets/Layout/SWrapBox.h"
 #include "Widgets/Layout/SScrollBox.h"
 #include "LiveConfigGameSettings.h"
+#include "LiveConfigJson.h"
 #include "Misc/MessageDialog.h"
 #include "Styling/SlateStyleMacros.h"
 
@@ -547,6 +548,11 @@ void SLiveConfigPropertyManager::Save()
 		Settings->PropertyDefinitions.Add(PropDef->PropertyName, *PropDef);
 	}
 	Settings->SaveConfig();
+
+	if (ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get())
+	{
+		JsonSystem->SaveJsonToFiles();
+	}
 
 	// Notify system to refresh its base values
 	if (ULiveConfigSystem* System = ULiveConfigSystem::Get())

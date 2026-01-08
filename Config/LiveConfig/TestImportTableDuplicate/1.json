@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "TestImportTableDuplicate.1"
+	},
+	"description": "Imported from CurveTable_TestImport",
+	"propertyType": "Float",
+	"tags": [
+		"FromCurveTable",
+		"CurveTable_TestImport"
+	],
+	"value": "0.1"
+}

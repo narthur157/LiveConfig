@@ -1,0 +1,12 @@
+{
+	"propertyName":
+	{
+		"propertyName": "ThingC"
+	},
+	"description": "",
+	"propertyType": "String",
+	"tags": [
+		"Mode"
+	],
+	"value": "1"
+}

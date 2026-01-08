@@ -27,7 +27,7 @@ public:
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "GoogleSheets")
 	float PollingRate = 30;
 
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
 	TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition> PropertyDefinitions;
 
 	/** Global list of tags that can be assigned to properties. */

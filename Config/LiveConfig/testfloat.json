@@ -1,0 +1,10 @@
+{
+	"propertyName":
+	{
+		"propertyName": "testfloat"
+	},
+	"description": "User-added property: testfloat",
+	"propertyType": "Float",
+	"tags": [],
+	"value": "1.23"
+}

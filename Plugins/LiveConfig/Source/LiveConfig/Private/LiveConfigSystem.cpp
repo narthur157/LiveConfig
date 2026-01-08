@@ -6,6 +6,8 @@
 #include "Interfaces/IHttpResponse.h"
 #include "Serialization/Csv/CsvParser.h"
 
+#include "LiveConfigJson.h"
+
 DEFINE_LOG_CATEGORY(LogLiveConfig);
 
 ULiveConfigSystem* ULiveConfigSystem::Get()
@@ -16,6 +18,11 @@ ULiveConfigSystem* ULiveConfigSystem::Get()
 void ULiveConfigSystem::Initialize(FSubsystemCollectionBase& Collection)
 {
     SheetUrl = ULiveConfigGameSettings::StaticClass()->GetDefaultObject<ULiveConfigGameSettings>()->SheetUrl;
+
+    if (ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get())
+    {
+        JsonSystem->LoadJsonFromFiles();
+    }
 
     RefreshFromSettings();
 
