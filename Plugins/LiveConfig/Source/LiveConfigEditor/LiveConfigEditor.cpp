@@ -9,8 +9,10 @@
 #include "LiveConfigBlueprintExtensions.h"
 #include "GraphEditorModule.h"
 #include "PropertyManager/SLiveConfigPropertyManager.h"
+#include "LiveConfigGameSettings.h"
 #include "Widgets/Docking/SDockTab.h"
-#include "ToolMenus.h"
+#include "Logging/MessageLog.h"
+#include "Logging/TokenizedMessage.h"
 
 #define LOCTEXT_NAMESPACE "FLiveConfigEditorModule"
 
@@ -43,6 +45,50 @@ void FLiveConfigEditorModule::StartupModule()
 	RegisterTabSpawners();
 
 	UToolMenus::RegisterStartupCallback(FSimpleMulticastDelegate::FDelegate::CreateRaw(this, &FLiveConfigEditorModule::RegisterMenus));
+
+	CheckForMissingTags();
+}
+
+void FLiveConfigEditorModule::CheckForMissingTags()
+{
+	TArray<FName> MissingTags;
+	SLiveConfigPropertyManager::GetMissingTags(MissingTags);
+
+	if (MissingTags.Num() > 0)
+	{
+		FMessageLog LiveConfigLog("LiveConfig");
+		
+		TSharedRef<FTokenizedMessage> Message = LiveConfigLog.Warning();
+		Message->AddToken(FTextToken::Create(FText::Format(
+			LOCTEXT("MissingTagsWarning", "Found {0} tags used in properties that are not in the Known Tags list."),
+			FText::AsNumber(MissingTags.Num())
+		)));
+		
+		Message->AddToken(FActionToken::Create(
+			LOCTEXT("FixMissingTags", "Fix"),
+			LOCTEXT("FixMissingTagsToolTip", "Import missing tags into the Known Tags list"),
+			FOnActionTokenExecuted::CreateRaw(this, &FLiveConfigEditorModule::FixMissingTags, MissingTags),
+			true
+		));
+
+		LiveConfigLog.Open(EMessageSeverity::Warning, true);
+	}
+}
+
+void FLiveConfigEditorModule::FixMissingTags(TArray<FName> MissingTags)
+{
+	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
+	if (Settings)
+	{
+		TArray<FName> NewKnownTags = Settings->KnownTags;
+		for (const FName& Tag : MissingTags)
+		{
+			NewKnownTags.AddUnique(Tag);
+		}
+		SLiveConfigPropertyManager::SaveKnownTags(NewKnownTags);
+		
+		FMessageLog("LiveConfig").Info(LOCTEXT("MissingTagsFixed", "Successfully imported missing tags."));
+	}
 }
 
 void FLiveConfigEditorModule::ShutdownModule()
@@ -62,10 +108,13 @@ void FLiveConfigEditorModule::OpenPropertyManager(FLiveConfigProperty FocusPrope
 {
 	PropertyToFocus = FocusProperty;
 	TSharedPtr<SDockTab> Tab = FGlobalTabmanager::Get()->TryInvokeTab(LiveConfigPropertyManagerTabId);
-	if (Tab.IsValid() && PropertyToFocus.IsValid())
+	if (Tab.IsValid())
 	{
 		TSharedRef<SLiveConfigPropertyManager> Manager = StaticCastSharedRef<SLiveConfigPropertyManager>(Tab->GetContent());
-		Manager->ScrollToProperty(PropertyToFocus);
+		if (PropertyToFocus.IsValid())
+		{
+			Manager->ScrollToProperty(PropertyToFocus);
+		}
 		PropertyToFocus = FLiveConfigProperty();
 	}
 }

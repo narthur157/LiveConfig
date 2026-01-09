@@ -2,7 +2,21 @@
 
 #include "CoreMinimal.h"
 #include "Widgets/SCompoundWidget.h"
+#include "Widgets/Views/STreeView.h"
 #include "LiveConfigSystem.h"
+
+struct FLiveConfigPropertyTreeNode : public TSharedFromThis<FLiveConfigPropertyTreeNode>
+{
+	FString DisplayName;
+	FString FullPath;
+	TSharedPtr<FLiveConfigPropertyDefinition> PropertyDefinition;
+	TArray<TSharedRef<FLiveConfigPropertyTreeNode>> Children;
+	TWeakPtr<FLiveConfigPropertyTreeNode> Parent;
+	bool bIsExpanded = true;
+	bool bNeedsFocus = false;
+
+	bool IsProperty() const { return PropertyDefinition.IsValid(); }
+};
 
 class SLiveConfigPropertyManager : public SCompoundWidget
 {
@@ -19,10 +33,15 @@ public:
 	void ScrollToProperty(FLiveConfigProperty Property);
 	bool IsNameDuplicate(FName Name) const;
 
+	static void SaveKnownTags(const TArray<FName>& InKnownTags);
+	static void GetMissingTags(TArray<FName>& OutMissingTags);
+
 private:
-	TSharedRef<ITableRow> OnGenerateRow(TSharedPtr<FLiveConfigPropertyDefinition> InItem, const TSharedRef<STableViewBase>& OwnerTable);
+	TSharedRef<ITableRow> OnGenerateRow(TSharedRef<FLiveConfigPropertyTreeNode> InItem, const TSharedRef<STableViewBase>& OwnerTable);
+	void OnGetChildren(TSharedRef<FLiveConfigPropertyTreeNode> InItem, TArray<TSharedRef<FLiveConfigPropertyTreeNode>>& OutChildren);
 	void RefreshList();
 	void OnAddNewProperty();
+	void OnAddPropertyAtFolder(FString FolderPath);
 	void OnAddNewTag();
 	void OnFilterTextChanged(const FText& InFilterText);
 	void UpdateAllTags();
@@ -30,18 +49,18 @@ private:
 	int32 GetTagCount(FName InTag) const;
 	FSlateColor GetTagColor(FName InTag) const;
 	void Save();
+	void OnPropertyRowChanged(TSharedPtr<FLiveConfigPropertyDefinition> OldDef, TSharedPtr<FLiveConfigPropertyDefinition> NewDef, ELiveConfigPropertyChangeType ChangeType);
 	void SaveKnownTags();
-	void CheckForMissingTags();
 
-	TArray<TSharedPtr<FLiveConfigPropertyDefinition>> FullPropertyList;
-	TArray<TSharedPtr<FLiveConfigPropertyDefinition>> FilteredPropertyList;
+	TArray<TSharedPtr<FLiveConfigPropertyDefinition>> RawPropertyList;
+	TArray<TSharedRef<FLiveConfigPropertyTreeNode>> RootNodes;
 	TArray<FName> AllTags;
 	TArray<FName> KnownTags;
 	FName SelectedTag;
-	TSharedPtr<SListView<TSharedPtr<FLiveConfigPropertyDefinition>>> PropertyListView;
+	TSharedPtr<STreeView<TSharedRef<FLiveConfigPropertyTreeNode>>> PropertyTreeView;
 	TSharedPtr<SSearchBox> SearchBox;
 	TSharedPtr<class SVerticalBox> TagFilterBox;
 	TSharedPtr<SWindow> NewTagWindow;
-	bool bIsSaving = false;
 	bool bNeedsInitialRefresh = true;
+	FLiveConfigProperty PendingScrollProperty;
 };

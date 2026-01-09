@@ -18,6 +18,7 @@
 #include "Widgets/Layout/SBox.h"
 #include "Engine/Engine.h"
 #include "UObject/UObjectGlobals.h"
+#include "Misc/ComparisonUtility.h"
 
 #define LOCTEXT_NAMESPACE "LiveConfigPropertyPicker"
 
@@ -154,7 +155,7 @@ void SLiveConfigPropertyPicker::RefreshPropertyList()
     // Remove duplicates and sort
     AllProperties.Sort([](const FLiveConfigProperty& A, const FLiveConfigProperty& B)
     {
-        return A.ToString() < B.ToString();
+        return UE::ComparisonUtility::CompareNaturalOrder(A.ToString(), B.ToString()) < 0;
     });
 
     for (const FLiveConfigProperty& Property : AllProperties)

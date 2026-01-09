@@ -3,9 +3,9 @@
 #include "CoreMinimal.h"
 #include "Widgets/Views/SListView.h"
 #include "Widgets/Views/STableRow.h"
-#include "LiveConfigSystem.h"
+#include "SLiveConfigPropertyManager.h"
 
-typedef SMultiColumnTableRow<TSharedPtr<FLiveConfigPropertyDefinition>> SPropertyRowParent;
+typedef SMultiColumnTableRow<TSharedRef<FLiveConfigPropertyTreeNode>> SPropertyRowParent;
 
 class SLiveConfigPropertyRow : public SPropertyRowParent
 {
@@ -23,20 +23,24 @@ public:
 
 	SLiveConfigPropertyRow() : KnownTagsAttribute(*this) {}
 	
+	DECLARE_DELEGATE_ThreeParams(FOnPropertyPropertyChanged, TSharedPtr<FLiveConfigPropertyDefinition>, TSharedPtr<FLiveConfigPropertyDefinition>, ELiveConfigPropertyChangeType);
 	DECLARE_DELEGATE_OneParam(FOnDeleteProperty, TSharedPtr<FLiveConfigPropertyDefinition>);
+	DECLARE_DELEGATE_OneParam(FOnAddPropertyAtFolder, FString);
 	DECLARE_DELEGATE_RetVal_OneParam(bool, FIsNameDuplicate, FName);
 	DECLARE_DELEGATE(FOnRequestRefresh);
 
 	SLATE_BEGIN_ARGS(SLiveConfigPropertyRow) {}
 		SLATE_EVENT(FOnDeleteProperty, OnDeleteProperty);
+		SLATE_EVENT(FOnAddPropertyAtFolder, OnAddPropertyAtFolder);
 		SLATE_EVENT(FIsNameDuplicate, IsNameDuplicate);
-		SLATE_EVENT(FSimpleDelegate, OnChanged);
+		SLATE_EVENT(FOnPropertyPropertyChanged, OnChanged);
 		SLATE_EVENT(FOnRequestRefresh, OnRequestRefresh);
 		SLATE_ARGUMENT(TFunction<FSlateColor(FName)>, GetTagColor);
 		SLATE_ATTRIBUTE(TArray<FName>, KnownTags);
 	SLATE_END_ARGS();
 
-	void Construct(const FArguments& InArgs, const TSharedRef<STableViewBase>& InOwnerTable, TSharedPtr<FLiveConfigPropertyDefinition> InItem, int32 InIndex);
+	void Construct(const FArguments& InArgs, const TSharedRef<STableViewBase>& InOwnerTable, TSharedPtr<FLiveConfigPropertyTreeNode>
+	               InItem, int32 InIndex);
 
 	virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
 
@@ -55,10 +59,11 @@ private:
 	void RefreshTags();
 	void OnTagChanged();
 
-	TSharedPtr<FLiveConfigPropertyDefinition> Item;
+	TSharedPtr<FLiveConfigPropertyTreeNode> Item;
 	FOnDeleteProperty OnDeleteProperty;
+	FOnAddPropertyAtFolder OnAddPropertyAtFolder;
 	FIsNameDuplicate OnIsNameDuplicate;
-	FSimpleDelegate OnChanged;
+	FOnPropertyPropertyChanged OnChanged;
 	FOnRequestRefresh OnRequestRefresh;
 	TFunction<FSlateColor(FName)> GetTagColor;
 	TSharedPtr<class SWrapBox> TagWrapBox;

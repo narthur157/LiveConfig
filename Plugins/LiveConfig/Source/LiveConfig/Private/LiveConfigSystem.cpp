@@ -26,11 +26,11 @@ void ULiveConfigSystem::Initialize(FSubsystemCollectionBase& Collection)
 
     RefreshFromSettings();
 
-    // Register "FromCurveTable" as a known tag if it's not already there
-    if (ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>())
-    {
-        Settings->KnownTags.AddUnique(TEXT("FromCurveTable"));
-    }
+   	// Register "FromCurveTable" as a known tag if it's not already there
+   	if (ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>())
+   	{
+   		Settings->KnownTags.AddUnique(LiveConfigTags::FromCurveTable);
+   	}
 
     DownloadConfig();
 
@@ -150,6 +150,13 @@ void ULiveConfigSystem::OnSheetDownloadComplete(FHttpRequestPtr Request, FHttpRe
             }
 
             Def.Description = Columns[3];
+
+            // If it's a float, sanitize it to float precision to avoid double precision artifacts
+            if (Def.PropertyType == ELiveConfigPropertyType::Float && !Def.Value.IsEmpty())
+            {
+                float FloatVal = FCString::Atof(*Def.Value);
+                Def.Value = FString::SanitizeFloat(FloatVal);
+            }
             
             if (Key != NAME_None && !Def.Value.IsEmpty())
             {

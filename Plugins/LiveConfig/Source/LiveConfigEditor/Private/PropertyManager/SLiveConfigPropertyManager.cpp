@@ -12,16 +12,12 @@
 #include "Widgets/Input/SComboButton.h"
 #include "Widgets/Input/SSearchBox.h"
 #include "Framework/MultiBox/MultiBoxBuilder.h"
-#include "Widgets/Layout/SWidgetSwitcher.h"
-#include "LiveConfigEditorSettings.h"
-#include "ISettingsModule.h"
 #include "Modules/ModuleManager.h"
-#include "Widgets/Layout/SWrapBox.h"
 #include "Widgets/Layout/SScrollBox.h"
 #include "LiveConfigGameSettings.h"
 #include "LiveConfigJson.h"
 #include "Misc/MessageDialog.h"
-#include "Styling/SlateStyleMacros.h"
+#include "Misc/ComparisonUtility.h"
 
 #define LOCTEXT_NAMESPACE "SLiveConfigPropertyManager"
 
@@ -122,7 +118,7 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 								SNew(SButton)
 								.ButtonStyle(FAppStyle::Get(), "SimpleButton")
 								.ContentPadding(FMargin(4, 2))
-								.IsEnabled_Lambda([this]() { return !SelectedTag.IsNone() && SelectedTag != TEXT("FromCurveTable"); })
+								.IsEnabled_Lambda([this]() { return !SelectedTag.IsNone() && SelectedTag != LiveConfigTags::FromCurveTable; })
 								.OnClicked_Lambda([this]()
 								{
 									RemoveTag(SelectedTag);
@@ -162,7 +158,11 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 						SNew(SButton)
 						.ButtonStyle(FAppStyle::Get(), "PrimaryButton")
 						.Text(LOCTEXT("AddProperty", "+ Add Property"))
-						.OnClicked_Lambda([this]() { OnAddNewProperty(); return FReply::Handled(); })
+						.OnClicked_Lambda([this]()
+						{
+							OnAddNewProperty(); 
+							return FReply::Handled();
+						})
 					]
 					+ SHorizontalBox::Slot()
 					.Padding(5, 0)
@@ -179,31 +179,32 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 			+ SVerticalBox::Slot()
 			.FillHeight(1.0f)
 			[
-				SAssignNew(PropertyListView, SListView<TSharedPtr<FLiveConfigPropertyDefinition>>)
-				.ListItemsSource(&FilteredPropertyList)
+				SAssignNew(PropertyTreeView, STreeView<TSharedRef<FLiveConfigPropertyTreeNode>>)
+				.TreeItemsSource(&RootNodes)
 				.OnGenerateRow(this, &SLiveConfigPropertyManager::OnGenerateRow)
-					.HeaderRow(
-						SNew(SHeaderRow)
-						.Style(FAppStyle::Get(), "TableView.Header")
+				.OnGetChildren(this, &SLiveConfigPropertyManager::OnGetChildren)
+				.HeaderRow(
+					SNew(SHeaderRow)
+					.Style(FAppStyle::Get(), "TableView.Header")
 					+ SHeaderRow::Column(SLiveConfigPropertyRow::ColumnNames::Name)
-						.DefaultLabel(LOCTEXT("NameColumn", "Name"))
-						.FillWidth(0.35f)
-						.HeaderContentPadding(FMargin(4.0f, 0.0f))
+					.DefaultLabel(LOCTEXT("NameColumn", "Name"))
+					.FillWidth(0.35f)
+					.HeaderContentPadding(FMargin(4.0f, 0.0f))
 					+ SHeaderRow::Column(SLiveConfigPropertyRow::ColumnNames::Type)
-						.DefaultLabel(LOCTEXT("TypeColumn", "Type"))
-						.FillWidth(0.1f)
-						.HeaderContentPadding(FMargin(4.0f, 0.0f))
+					.DefaultLabel(LOCTEXT("TypeColumn", "Type"))
+					.FillWidth(0.1f)
+					.HeaderContentPadding(FMargin(4.0f, 0.0f))
 					+ SHeaderRow::Column(SLiveConfigPropertyRow::ColumnNames::Value)
-						.DefaultLabel(LOCTEXT("ValueColumn", "Value"))
-						.FillWidth(0.2f)
-						.HeaderContentPadding(FMargin(4.0f, 0.0f))
+					.DefaultLabel(LOCTEXT("ValueColumn", "Value"))
+					.FillWidth(0.2f)
+					.HeaderContentPadding(FMargin(4.0f, 0.0f))
 					+ SHeaderRow::Column(SLiveConfigPropertyRow::ColumnNames::Tags)
-						.DefaultLabel(LOCTEXT("TagsColumn", "Tags"))
-						.FillWidth(0.35f)
-						.HeaderContentPadding(FMargin(4.0f, 0.0f))
+					.DefaultLabel(LOCTEXT("TagsColumn", "Tags"))
+					.FillWidth(0.35f)
+					.HeaderContentPadding(FMargin(4.0f, 0.0f))
 					+ SHeaderRow::Column(SLiveConfigPropertyRow::ColumnNames::Actions)
-						.DefaultLabel(LOCTEXT("ActionsColumn", ""))
-						.FixedWidth(120.0f)
+					.DefaultLabel(LOCTEXT("ActionsColumn", ""))
+					.FixedWidth(120.0f)
 				)
 			]
 		]
@@ -221,52 +222,103 @@ void SLiveConfigPropertyManager::Tick(const FGeometry& AllottedGeometry, const d
 		RefreshList();
 		bNeedsInitialRefresh = false;
 	}
+
+	if (PendingScrollProperty.IsValid())
+	{
+		ScrollToProperty(PendingScrollProperty);
+		PendingScrollProperty = FLiveConfigProperty();
+	}
 }
 
-TSharedRef<ITableRow> SLiveConfigPropertyManager::OnGenerateRow(TSharedPtr<FLiveConfigPropertyDefinition> InItem, const TSharedRef<STableViewBase>& OwnerTable)
+TSharedRef<ITableRow> SLiveConfigPropertyManager::OnGenerateRow(TSharedRef<FLiveConfigPropertyTreeNode> InItem, const TSharedRef<STableViewBase>& OwnerTable)
 {
-	int32 Index = FilteredPropertyList.IndexOfByKey(InItem);
-	return SNew(SLiveConfigPropertyRow, OwnerTable, InItem, Index)
+	return SNew(SLiveConfigPropertyRow, OwnerTable, InItem, 0)
 		.OnDeleteProperty(this, &SLiveConfigPropertyManager::RemoveProperty)
+		.OnAddPropertyAtFolder(this, &SLiveConfigPropertyManager::OnAddPropertyAtFolder)
 		.IsNameDuplicate(this, &SLiveConfigPropertyManager::IsNameDuplicate)
-		.OnChanged(FSimpleDelegate::CreateSP(this, &SLiveConfigPropertyManager::Save))
-		.OnRequestRefresh_Lambda([this]() { if (PropertyListView.IsValid()) PropertyListView->RequestListRefresh(); })
+		.OnChanged(this, &SLiveConfigPropertyManager::OnPropertyRowChanged)
+		.OnRequestRefresh_Lambda([this]() { if (PropertyTreeView.IsValid()) PropertyTreeView->RequestTreeRefresh(); })
 		.GetTagColor(TFunction<FSlateColor(FName)>([this](FName InTag) { return GetTagColor(InTag); }))
 		.KnownTags_Lambda([this]() { return KnownTags; });
 }
 
+void SLiveConfigPropertyManager::OnGetChildren(TSharedRef<FLiveConfigPropertyTreeNode> InItem, TArray<TSharedRef<FLiveConfigPropertyTreeNode>>& OutChildren)
+{
+	OutChildren.Append(InItem->Children);
+}
+
 void SLiveConfigPropertyManager::RefreshList()
 {
-	if (bIsSaving)
-	{
-		return;
-	}
-
-	FullPropertyList.Empty();
+	RawPropertyList.Empty();
 	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
 	for (auto& Pair : Settings->PropertyDefinitions)
 	{
-		FullPropertyList.Add(MakeShared<FLiveConfigPropertyDefinition>(Pair.Value));
+		RawPropertyList.Add(MakeShared<FLiveConfigPropertyDefinition>(Pair.Value));
 	}
 
 	KnownTags = Settings->KnownTags;
 
-	FullPropertyList.Sort([](const TSharedPtr<FLiveConfigPropertyDefinition>& A, const TSharedPtr<FLiveConfigPropertyDefinition>& B)
+	RawPropertyList.Sort([](const TSharedPtr<FLiveConfigPropertyDefinition>& A, const TSharedPtr<FLiveConfigPropertyDefinition>& B)
 	{
-		return A->PropertyName.ToString() < B->PropertyName.ToString();
+		return UE::ComparisonUtility::CompareNaturalOrder(A->PropertyName.ToString(), B->PropertyName.ToString()) < 0;
 	});
 	
 	UpdateAllTags();
 	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
-	CheckForMissingTags();
 }
 
 void SLiveConfigPropertyManager::OnFilterTextChanged(const FText& InFilterText)
 {
-	FilteredPropertyList.Empty();
+	TSet<FString> ExpandedPaths;
+	if (PropertyTreeView.IsValid())
+	{
+		TSet<TSharedRef<FLiveConfigPropertyTreeNode>> ExpandedItems;
+		PropertyTreeView->GetExpandedItems(ExpandedItems);
+		for (const auto& ItemPtr : ExpandedItems)
+		{
+			ExpandedPaths.Add(ItemPtr->FullPath);
+		}
+	}
+
+	RootNodes.Empty();
 	FString FilterString = InFilterText.ToString();
 
-	for (const auto& PropDef : FullPropertyList)
+	TMap<FString, TSharedPtr<FLiveConfigPropertyTreeNode>> FolderMap;
+	TFunction<TSharedPtr<FLiveConfigPropertyTreeNode>(FString)> GetOrCreateFolder;
+	GetOrCreateFolder = [&](FString FolderPath) -> TSharedPtr<FLiveConfigPropertyTreeNode>
+	{
+		if (TSharedPtr<FLiveConfigPropertyTreeNode>* FoundFolder = FolderMap.Find(FolderPath))
+		{
+			return *FoundFolder;
+		}
+
+		TSharedRef<FLiveConfigPropertyTreeNode> NewFolder = MakeShared<FLiveConfigPropertyTreeNode>();
+		NewFolder->FullPath = FolderPath;
+		
+		int32 LastDot;
+		if (FolderPath.FindLastChar('.', LastDot))
+		{
+			NewFolder->DisplayName = FolderPath.RightChop(LastDot + 1);
+			FString ParentPath = FolderPath.Left(LastDot);
+			TSharedPtr<FLiveConfigPropertyTreeNode> ParentFolder = GetOrCreateFolder(ParentPath);
+			if (ParentFolder.IsValid())
+			{
+				ParentFolder->Children.Add(NewFolder);
+				NewFolder->Parent = ParentFolder;
+			}
+		}
+		else
+		{
+			NewFolder->DisplayName = FolderPath;
+			RootNodes.Add(NewFolder);
+		}
+
+		TSharedPtr<FLiveConfigPropertyTreeNode> NewFolderPtr = NewFolder;
+		FolderMap.Add(FolderPath, NewFolderPtr);
+		return NewFolderPtr;
+	};
+
+	for (const auto& PropDef : RawPropertyList)
 	{
 		bool bPassesTextFilter = FilterString.IsEmpty() || 
 			PropDef->PropertyName.ToString().Contains(FilterString) || 
@@ -276,13 +328,50 @@ void SLiveConfigPropertyManager::OnFilterTextChanged(const FText& InFilterText)
 
 		if (bPassesTextFilter && bPassesTagFilter)
 		{
-			FilteredPropertyList.Add(PropDef);
+			FString FullName = PropDef->PropertyName.ToString();
+			int32 LastDot;
+			if (FullName.FindLastChar('.', LastDot))
+			{
+				FString FolderPath = FullName.Left(LastDot);
+				FString DisplayName = FullName.RightChop(LastDot + 1);
+
+				TSharedPtr<FLiveConfigPropertyTreeNode> ParentFolder = GetOrCreateFolder(FolderPath);
+				
+				TSharedRef<FLiveConfigPropertyTreeNode> NewNode = MakeShared<FLiveConfigPropertyTreeNode>();
+				NewNode->DisplayName = DisplayName;
+				NewNode->FullPath = FullName;
+				NewNode->PropertyDefinition = PropDef;
+				
+				if (ParentFolder.IsValid())
+				{
+					NewNode->Parent = ParentFolder;
+					ParentFolder->Children.Add(NewNode);
+				}
+			}
+			else
+			{
+				TSharedRef<FLiveConfigPropertyTreeNode> NewNode = MakeShared<FLiveConfigPropertyTreeNode>();
+				NewNode->DisplayName = FullName;
+				NewNode->FullPath = FullName;
+				NewNode->PropertyDefinition = PropDef;
+				RootNodes.Add(NewNode);
+			}
 		}
 	}
 
-	if (PropertyListView.IsValid())
+	if (PropertyTreeView.IsValid())
 	{
-		PropertyListView->RequestListRefresh();
+		PropertyTreeView->RequestTreeRefresh();
+		
+		// Restore expansion state or auto-expand all nodes when filtering
+		for (auto& FolderPair : FolderMap)
+		{
+			bool bShouldExpand = !FilterString.IsEmpty() || ExpandedPaths.Contains(FolderPair.Key);
+			if (bShouldExpand && FolderPair.Value.IsValid())
+			{
+				PropertyTreeView->SetItemExpansion(FolderPair.Value.ToSharedRef(), true);
+			}
+		}
 	}
 }
 
@@ -367,10 +456,10 @@ void SLiveConfigPropertyManager::UpdateAllTags()
 
 int32 SLiveConfigPropertyManager::GetTagCount(FName InTag) const
 {
-	if (InTag.IsNone()) return FullPropertyList.Num();
+	if (InTag.IsNone()) return RawPropertyList.Num();
 	
 	int32 Count = 0;
-	for (const auto& PropDef : FullPropertyList)
+	for (const auto& PropDef : RawPropertyList)
 	{
 		if (PropDef->Tags.Contains(InTag))
 		{
@@ -428,50 +517,39 @@ void SLiveConfigPropertyManager::OnAddNewTag()
 	FSlateApplication::Get().AddWindow(NewTagWindow.ToSharedRef());
 }
 
-void SLiveConfigPropertyManager::CheckForMissingTags()
+void SLiveConfigPropertyManager::SaveKnownTags()
 {
+	SaveKnownTags(KnownTags);
+}
+
+void SLiveConfigPropertyManager::GetMissingTags(TArray<FName>& OutMissingTags)
+{
+	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
+	if (!Settings) return;
+
 	TSet<FName> UsedTags;
-	for (const auto& PropDef : FullPropertyList)
+	for (const auto& Pair : Settings->PropertyDefinitions)
 	{
-		for (const FName& PropertyTag : PropDef->Tags)
+		for (const FName& PropertyTag : Pair.Value.Tags)
 		{
 			UsedTags.Add(PropertyTag);
 		}
 	}
 
-	TArray<FName> MissingTags;
+	TSet<FName> KnownTagsSet(Settings->KnownTags);
 	for (const FName& PropertyTag : UsedTags)
 	{
-		if (!KnownTags.Contains(PropertyTag))
+		if (!KnownTagsSet.Contains(PropertyTag))
 		{
-			MissingTags.Add(PropertyTag);
-		}
-	}
-
-	if (MissingTags.Num() > 0)
-	{
-		FText Message = FText::Format(
-			LOCTEXT("MissingTagsPrompt", "Found {0} tags used in properties that are not in the Known Tags list. Would you like to import them?\n\nMissing Tags: {1}"),
-			FText::AsNumber(MissingTags.Num()),
-			FText::FromString(FString::JoinBy(MissingTags, TEXT(", "), [](const FName& TagItem) { return TagItem.ToString(); }))
-		);
-
-		if (FMessageDialog::Open(EAppMsgType::YesNo, Message, LOCTEXT("ImportTagsTitle", "Import Missing Tags")) == EAppReturnType::Yes)
-		{
-			for (const FName& PropertyTag : MissingTags)
-			{
-				KnownTags.Add(PropertyTag);
-			}
-			SaveKnownTags();
-			UpdateAllTags();
+			OutMissingTags.Add(PropertyTag);
 		}
 	}
 }
 
-void SLiveConfigPropertyManager::SaveKnownTags()
+void SLiveConfigPropertyManager::SaveKnownTags(const TArray<FName>& InKnownTags)
 {
 	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
-	Settings->KnownTags = KnownTags;
+	Settings->KnownTags = InKnownTags;
 	Settings->SaveConfig();
 	Settings->TryUpdateDefaultConfigFile();
 }
@@ -518,19 +596,47 @@ FSlateColor SLiveConfigPropertyManager::GetTagColor(FName InTag) const
 
 void SLiveConfigPropertyManager::ScrollToProperty(FLiveConfigProperty Property)
 {
+	UE_LOG(LogLiveConfig, Log, TEXT("Scrolling to property: %s"), *Property.ToString());
+
 	if (SearchBox.IsValid())
 	{
 		SearchBox->SetText(FText::GetEmpty());
 	}
 
-	for (const auto& PropDef : FullPropertyList)
+	struct FLocal
 	{
-		if (PropDef->PropertyName == Property)
+		static TSharedPtr<FLiveConfigPropertyTreeNode> FindNode(const TArray<TSharedRef<FLiveConfigPropertyTreeNode>>& Nodes, const FString& FullPath)
 		{
-			PropertyListView->SetSelection(PropDef);
-			PropertyListView->RequestScrollIntoView(PropDef);
-			break;
+			for (const auto& Node : Nodes)
+			{
+				if (Node->FullPath == FullPath)
+				{
+					return Node;
+				}
+				if (FullPath.StartsWith(Node->FullPath + TEXT(".")))
+				{
+					TSharedPtr<FLiveConfigPropertyTreeNode> Found = FindNode(Node->Children, FullPath);
+					if (Found.IsValid()) return Found;
+				}
+			}
+			return nullptr;
 		}
+	};
+
+	TSharedPtr<FLiveConfigPropertyTreeNode> TargetNode = FLocal::FindNode(RootNodes, Property.ToString());
+	if (TargetNode.IsValid() && PropertyTreeView.IsValid())
+	{
+		// Expand all parents
+		TSharedPtr<FLiveConfigPropertyTreeNode> Parent = TargetNode->Parent.Pin();
+		while (Parent.IsValid())
+		{
+			PropertyTreeView->SetItemExpansion(Parent.ToSharedRef(), true);
+			Parent = Parent->Parent.Pin();
+		}
+
+		PropertyTreeView->RequestScrollIntoView(TargetNode.ToSharedRef());
+		PropertyTreeView->SetSelection(TargetNode.ToSharedRef());
+		TargetNode->bNeedsFocus = true;
 	}
 }
 
@@ -544,20 +650,36 @@ void SLiveConfigPropertyManager::OnAddNewProperty()
 		NewProp->Tags.Add(SelectedTag);
 	}
 
-	FullPropertyList.Add(NewProp);
+	RawPropertyList.Add(NewProp);
 	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
-	Save();
+	
+	ScrollToProperty(NewProp->PropertyName);
+	UpdateAllTags();
+}
 
-	// Focus the new property
-	PropertyListView->SetSelection(NewProp);
-	PropertyListView->RequestScrollIntoView(NewProp);
+void SLiveConfigPropertyManager::OnAddPropertyAtFolder(FString FolderPath)
+{
+	TSharedPtr<FLiveConfigPropertyDefinition> NewProp = MakeShared<FLiveConfigPropertyDefinition>();
+	FString NewName = FolderPath + TEXT(".");
+	NewProp->PropertyName = FLiveConfigProperty(FName(*NewName));
+	
+	if (!SelectedTag.IsNone())
+	{
+		NewProp->Tags.Add(SelectedTag);
+	}
+
+	RawPropertyList.Add(NewProp);
+	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
+
+	ScrollToProperty(NewProp->PropertyName);
+	UpdateAllTags();
 }
 
 void SLiveConfigPropertyManager::Save()
 {
 	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
 	Settings->PropertyDefinitions.Empty();
-	for (const auto& PropDef : FullPropertyList)
+	for (const auto& PropDef : RawPropertyList)
 	{
 		Settings->PropertyDefinitions.Add(PropDef->PropertyName, *PropDef);
 	}
@@ -571,24 +693,97 @@ void SLiveConfigPropertyManager::Save()
 	// Notify system to refresh its base values
 	if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
 	{
-		bIsSaving = true;
 		System->RefreshFromSettings();
-		bIsSaving = false;
 	}
 
 	UpdateAllTags();
 }
 
+void SLiveConfigPropertyManager::OnPropertyRowChanged(TSharedPtr<FLiveConfigPropertyDefinition> OldDef, TSharedPtr<FLiveConfigPropertyDefinition> NewDef, ELiveConfigPropertyChangeType ChangeType)
+{
+	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
+	ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get();
+
+	auto IsValidPropertyName = [](const FLiveConfigProperty& Prop)
+	{
+		FString Str = Prop.ToString();
+		return Prop.IsValid() && !Str.EndsWith(TEXT("."));
+	};
+
+	if (ChangeType == ELiveConfigPropertyChangeType::Name)
+	{
+		// If the name changed, we need to handle the old key in the settings
+		if (OldDef.IsValid() && IsValidPropertyName(OldDef->PropertyName))
+		{
+			Settings->PropertyDefinitions.Remove(OldDef->PropertyName);
+			if (JsonSystem)
+			{
+				JsonSystem->DeletePropertyFile(OldDef->PropertyName.GetName());
+			}
+		}
+	}
+	
+	if (NewDef.IsValid() && IsValidPropertyName(NewDef->PropertyName))
+	{
+		Settings->PropertyDefinitions.Add(NewDef->PropertyName, *NewDef);
+		if (JsonSystem)
+		{
+			JsonSystem->SavePropertyToFile(*NewDef);
+		}
+	}
+
+	Settings->SaveConfig();
+
+	if (ChangeType == ELiveConfigPropertyChangeType::Name)
+	{
+		OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
+	}
+
+	// Notify system to refresh its base values
+	if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
+	{
+		System->RefreshFromSettings();
+	}
+
+	UpdateAllTags();
+	
+	if (ChangeType == ELiveConfigPropertyChangeType::Name)
+	{
+		PendingScrollProperty = NewDef->PropertyName;
+	}
+}
+
 void SLiveConfigPropertyManager::RemoveProperty(TSharedPtr<FLiveConfigPropertyDefinition> InItem)
 {
-	FullPropertyList.Remove(InItem);
+	if (!InItem.IsValid())
+	{
+		return;
+	}
+
+	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
+	Settings->PropertyDefinitions.Remove(InItem->PropertyName);
+	Settings->SaveConfig();
+
+	if (ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get())
+	{
+		JsonSystem->DeletePropertyFile(InItem->PropertyName.GetName());
+	}
+
+	RawPropertyList.Remove(InItem);
 	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
-	Save();
+
+	// Notify system to refresh its base values
+	if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
+	{
+		System->RefreshFromSettings();
+	}
+
+	UpdateAllTags();
 }
 
 void SLiveConfigPropertyManager::RemoveTag(FName TagName)
 {
-	if (TagName.IsNone() || TagName == TEXT("FromCurveTable"))
+	if (TagName.IsNone() || TagName == LiveConfigTags::FromCurveTable)
 	{
 		return;
 	}
@@ -608,9 +803,19 @@ void SLiveConfigPropertyManager::RemoveTag(FName TagName)
 		}
 
 		// Remove from properties
-		for (const auto& PropDef : FullPropertyList)
+		ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get();
+		ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
+
+		for (const auto& PropDef : RawPropertyList)
 		{
-			PropDef->Tags.Remove(TagName);
+			if (PropDef->Tags.Remove(TagName) > 0)
+			{
+				Settings->PropertyDefinitions.Add(PropDef->PropertyName, *PropDef);
+				if (JsonSystem)
+				{
+					JsonSystem->SavePropertyToFile(*PropDef);
+				}
+			}
 		}
 	}
 
@@ -623,21 +828,20 @@ void SLiveConfigPropertyManager::RemoveTag(FName TagName)
 	// Persist KnownTags first
 	SaveKnownTags();
 	
-	// Persist property changes (tag removals)
-	Save();
+	// Notify system to refresh its base values
+	if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
+	{
+		System->RefreshFromSettings();
+	}
 
 	// Force a full refresh from the settings to ensure everything is in sync
-	// Use a temporary flag to avoid early exit in RefreshList if called from within a save notification
-	bool bOldIsSaving = bIsSaving;
-	bIsSaving = false;
 	RefreshList();
-	bIsSaving = bOldIsSaving;
 }
 
 bool SLiveConfigPropertyManager::IsNameDuplicate(FName Name) const
 {
 	int32 Count = 0;
-	for (const auto& PropDef : FullPropertyList)
+	for (const auto& PropDef : RawPropertyList)
 	{
 		if (PropDef->PropertyName.GetName() == Name)
 		{

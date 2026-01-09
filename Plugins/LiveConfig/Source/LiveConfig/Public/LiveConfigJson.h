@@ -24,6 +24,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SaveJsonToFiles();
 
+	UFUNCTION(Exec)
+	void VerifyJsonIntegrity();
+
 	void SavePropertyToFile(const FLiveConfigPropertyDefinition& PropertyDefinition);
 	void DeletePropertyFile(FName PropertyName);
 

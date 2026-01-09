@@ -17,6 +17,14 @@
 #include "ISourceControlModule.h"
 #endif
 
+#include "HAL/IConsoleManager.h"
+
+static TAutoConsoleVariable<int32> CVarVerifyJsonOnSave(
+	TEXT("LiveConfig.VerifyJsonOnSave"),
+	0,
+	TEXT("If enabled, verify JSON integrity of data vs. folders/files on every save.\n0: Disabled\n1: Enabled"),
+	ECVF_Default);
+
 ULiveConfigJsonSystem* ULiveConfigJsonSystem::Get()
 {
 	if (!GEngine)
@@ -31,6 +39,13 @@ void ULiveConfigJsonSystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
 	LoadJsonFromFiles();
+
+	IConsoleManager::Get().RegisterConsoleCommand(
+		TEXT("LiveConfig.VerifyJson"),
+		TEXT("Verify JSON integrity of data vs. folders/files."),
+		FConsoleCommandDelegate::CreateUObject(this, &ULiveConfigJsonSystem::VerifyJsonIntegrity),
+		ECVF_Default
+	);
 }
 
 void ULiveConfigJsonSystem::LoadJsonFromFiles()
@@ -105,17 +120,76 @@ void ULiveConfigJsonSystem::LoadJsonFromFile(const FString& Path, const FString&
 	}
 }
 
+void ULiveConfigJsonSystem::VerifyJsonIntegrity()
+{
+	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
+	if (!Settings)
+	{
+		return;
+	}
+
+	FString LiveConfigDir = GetLiveConfigDirectory();
+	TArray<FString> AllJsonFiles;
+	IFileManager::Get().FindFilesRecursive(AllJsonFiles, *LiveConfigDir, TEXT("*.json"), true, false);
+
+	TSet<FString> FilesOnDisk;
+	for (const FString& FilePath : AllJsonFiles)
+	{
+		FilesOnDisk.Add(FPaths::ConvertRelativePathToFull(FilePath));
+	}
+
+	TSet<FString> ExpectedFiles;
+	int32 MissingFilesCount = 0;
+	int32 TotalProperties = 0;
+
+	for (const auto& Pair : Settings->PropertyDefinitions)
+	{
+		if (Pair.Value.Tags.Contains(LiveConfigTags::FromCurveTable))
+		{
+			continue;
+		}
+
+		TotalProperties++;
+		FString ExpectedPath = FPaths::ConvertRelativePathToFull(GetPropertyPath(Pair.Value.PropertyName.GetName()));
+		ExpectedFiles.Add(ExpectedPath);
+
+		if (!FilesOnDisk.Contains(ExpectedPath))
+		{
+			UE_LOG(LogLiveConfig, Warning, TEXT("Integrity Check: Missing JSON file for property %s. Expected at: %s"), *Pair.Value.PropertyName.ToString(), *ExpectedPath);
+			MissingFilesCount++;
+		}
+	}
+
+	int32 OrphanedFilesCount = 0;
+	for (const FString& FilePath : FilesOnDisk)
+	{
+		if (!ExpectedFiles.Contains(FilePath))
+		{
+			UE_LOG(LogLiveConfig, Warning, TEXT("Integrity Check: Orphaned JSON file found: %s"), *FilePath);
+			OrphanedFilesCount++;
+		}
+	}
+
+	if (MissingFilesCount == 0 && OrphanedFilesCount == 0)
+	{
+		UE_LOG(LogLiveConfig, Log, TEXT("Integrity Check Passed: %d properties verified, no discrepancies found."), TotalProperties);
+	}
+	else
+	{
+		UE_LOG(LogLiveConfig, Error, TEXT("Integrity Check Failed: %d Missing Files, %d Orphaned Files."), MissingFilesCount, OrphanedFilesCount);
+	}
+}
+
 void ULiveConfigJsonSystem::SaveJsonToFiles()
 {
 	if (ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>())
 	{
-		// 1. Collect all current property paths
+		// Collect all current property paths
 		TSet<FString> CurrentPropertyPaths;
 		for (const auto& Pair : Settings->PropertyDefinitions)
 		{
 			// Skip properties imported from curve tables
-			static const FName FromCurveTableTag = TEXT("FromCurveTable");
-			if (Pair.Value.Tags.Contains(FromCurveTableTag))
+			if (Pair.Value.Tags.Contains(LiveConfigTags::FromCurveTable))
 			{
 				continue;
 			}
@@ -124,7 +198,7 @@ void ULiveConfigJsonSystem::SaveJsonToFiles()
 			SavePropertyToFile(Pair.Value);
 		}
 
-		// 2. Clean up files that are no longer in the map
+		// Clean up files that are no longer in the map
 		TArray<FString> AllFiles;
 		IFileManager::Get().FindFilesRecursive(AllFiles, *GetLiveConfigDirectory(), TEXT("*.json"), true, false);
 
@@ -143,20 +217,35 @@ void ULiveConfigJsonSystem::SaveJsonToFiles()
 			}
 		}
 	}
+	if (CVarVerifyJsonOnSave.GetValueOnGameThread() != 0)
+	{
+		VerifyJsonIntegrity();
+	}
 }
 
 void ULiveConfigJsonSystem::SavePropertyToFile(const FLiveConfigPropertyDefinition& PropertyDefinition)
 {
+	if (!PropertyDefinition.PropertyName.IsValid() || PropertyDefinition.PropertyName.ToString().EndsWith(TEXT(".")))
+	{
+		return;
+	}
+
 	// Skip properties imported from curve tables
-	static const FName FromCurveTableTag = TEXT("FromCurveTable");
-	if (PropertyDefinition.Tags.Contains(FromCurveTableTag))
+	if (PropertyDefinition.Tags.Contains(LiveConfigTags::FromCurveTable))
 	{
 		return;
 	}
 
 	FString ActualPath = GetPropertyPath(PropertyDefinition.PropertyName.GetName());
 
-	TSharedPtr<FJsonObject> JsonObject = FJsonObjectConverter::UStructToJsonObject(PropertyDefinition);
+	FLiveConfigPropertyDefinition DefCopy = PropertyDefinition;
+	if (DefCopy.PropertyType == ELiveConfigPropertyType::Float && !DefCopy.Value.IsEmpty())
+	{
+		float FloatVal = FCString::Atof(*DefCopy.Value);
+		DefCopy.Value = FString::SanitizeFloat(FloatVal);
+	}
+
+	TSharedPtr<FJsonObject> JsonObject = FJsonObjectConverter::UStructToJsonObject(DefCopy);
 	if (JsonObject.IsValid())
 	{
 		FString JsonString;
@@ -174,10 +263,20 @@ void ULiveConfigJsonSystem::SavePropertyToFile(const FLiveConfigPropertyDefiniti
 
 		PendingCheckoutFiles.Add(ActualPath);
 	}
+
+	if (CVarVerifyJsonOnSave.GetValueOnGameThread() != 0)
+	{
+		VerifyJsonIntegrity();
+	}
 }
 
 void ULiveConfigJsonSystem::DeletePropertyFile(FName PropertyName)
 {
+	if (PropertyName.IsNone() || PropertyName.ToString().EndsWith(TEXT(".")))
+	{
+		return;
+	}
+
 	FString ActualPath = GetPropertyPath(PropertyName);
 	if (FPaths::FileExists(ActualPath))
 	{
@@ -186,6 +285,11 @@ void ULiveConfigJsonSystem::DeletePropertyFile(FName PropertyName)
 			UE_LOG(LogLiveConfig, Log, TEXT("Deleted property file %s"), *ActualPath);
 			PendingCheckoutFiles.Add(ActualPath);
 		}
+	}
+
+	if (CVarVerifyJsonOnSave.GetValueOnGameThread() != 0)
+	{
+		VerifyJsonIntegrity();
 	}
 }
 

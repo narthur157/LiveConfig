@@ -8,7 +8,22 @@
 
 LIVECONFIG_API DECLARE_LOG_CATEGORY_EXTERN(LogLiveConfig, Log, All);
 
+namespace LiveConfigTags
+{
+	static const FName FromCurveTable = TEXT("FromCurveTable");
+}
+
 DECLARE_MULTICAST_DELEGATE(FOnLiveConfigPropertiesUpdated);
+
+UENUM(BlueprintType)
+enum class ELiveConfigPropertyChangeType : uint8
+{
+	Name,
+	Description,
+	Type,
+	Value,
+	Tags
+};
 
 UENUM(BlueprintType)
 enum class ELiveConfigPropertyType : uint8

@@ -31,7 +31,14 @@ void SLiveConfigTagRow::Construct(const FArguments& InArgs, TSharedPtr<FLiveConf
 			[
 				SNew(SBorder)
 				.BorderImage(FAppStyle::GetBrush("WhiteBrush"))
-				.BorderBackgroundColor_Lambda([InGetTagColor, this]() { return InGetTagColor(Item->Tags[Index]); })
+				.BorderBackgroundColor_Lambda([InGetTagColor, this]() 
+				{ 
+					if (Item.IsValid() && Item->Tags.IsValidIndex(Index))
+					{
+						return InGetTagColor(Item->Tags[Index]);
+					}
+					return FSlateColor(FLinearColor::White);
+				})
 				[
 					SNew(SBox)
 					.WidthOverride(8.0f)
@@ -44,7 +51,14 @@ void SLiveConfigTagRow::Construct(const FArguments& InArgs, TSharedPtr<FLiveConf
 			.Padding(0, 0, 4, 0)
 			[
 				SNew(STextBlock)
-				.Text(FText::FromName(Item->Tags[Index]))
+				.Text_Lambda([this]()
+				{
+					if (Item.IsValid() && Item->Tags.IsValidIndex(Index))
+					{
+						return FText::FromName(Item->Tags[Index]);
+					}
+					return FText::GetEmpty();
+				})
 				.Font(FAppStyle::GetFontStyle("NormalFont"))
 				.ColorAndOpacity(FLinearColor(0.8f, 0.8f, 0.8f, 1.0f))
 			]

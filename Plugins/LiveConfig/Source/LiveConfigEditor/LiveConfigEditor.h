@@ -14,6 +14,9 @@ public:
 	void OpenPropertyManager(FLiveConfigProperty FocusProperty = FLiveConfigProperty());
 
 private:
+	void CheckForMissingTags();
+	void FixMissingTags(TArray<FName> MissingTags);
+
 	FLiveConfigProperty PropertyToFocus;
 	void RegisterTabSpawners();
 	void UnregisterTabSpawners();

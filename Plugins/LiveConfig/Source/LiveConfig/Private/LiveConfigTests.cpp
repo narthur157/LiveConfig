@@ -6,7 +6,7 @@
 #include "Serialization/JsonSerializer.h"
 #include "JsonObjectConverter.h"
 
-IMPLEMENT_SIMPLE_AUTOMATION_TEST(FLiveConfigJsonOperationsTest, "LiveConfig.JsonOperations", EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FLiveConfigJsonOperationsTest, "LiveConfig.JsonOperations", EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter);
 
 bool FLiveConfigJsonOperationsTest::RunTest(const FString& Parameters)
 {
@@ -66,11 +66,49 @@ bool FLiveConfigJsonOperationsTest::RunTest(const FString& Parameters)
 	FLiveConfigPropertyDefinition CurveTableDef;
 	CurveTableDef.PropertyName = FLiveConfigProperty(CurveTableName);
 	CurveTableDef.Value = TEXT("CurveValue");
-	CurveTableDef.Tags.Add(TEXT("FromCurveTable"));
+	CurveTableDef.Tags.Add(LiveConfigTags::FromCurveTable);
 	
 	JsonSystem->SavePropertyToFile(CurveTableDef);
 	FString CurveTablePath = JsonSystem->GetPropertyPath(CurveTableName);
 	TestFalse(TEXT("CurveTable property file should NOT exist after saving"), FPaths::FileExists(CurveTablePath));
+
+	// Test Float Precision
+	FName FloatPropName = TEXT("Test.Float.Precision");
+	FLiveConfigPropertyDefinition FloatDef;
+	FloatDef.PropertyName = FLiveConfigProperty(FloatPropName);
+	FloatDef.PropertyType = ELiveConfigPropertyType::Float;
+	FloatDef.Value = TEXT("0.20000000298023224");
+
+	JsonSystem->SavePropertyToFile(FloatDef);
+	FString FloatPath = JsonSystem->GetPropertyPath(FloatPropName);
+	TestTrue(TEXT("Float property file should exist"), FPaths::FileExists(FloatPath));
+
+	FString FloatSavedJson;
+	FFileHelper::LoadFileToString(FloatSavedJson, *FloatPath);
+	TSharedPtr<FJsonObject> FloatJsonObject;
+	TSharedRef<TJsonReader<>> FloatReader = TJsonReaderFactory<>::Create(FloatSavedJson);
+	FJsonSerializer::Deserialize(FloatReader, FloatJsonObject);
+	
+	FLiveConfigPropertyDefinition FloatLoadedDef;
+	FJsonObjectConverter::JsonObjectToUStruct(FloatJsonObject.ToSharedRef(), &FloatLoadedDef);
+	
+	// Should be sanitized to "0.2"
+	TestEqual(TEXT("Float value should be sanitized to float precision"), FloatLoadedDef.Value, TEXT("0.2"));
+
+	JsonSystem->DeletePropertyFile(FloatPropName);
+
+	// Test invalid names (empty and trailing dot)
+	FLiveConfigPropertyDefinition EmptyNameDef;
+	EmptyNameDef.PropertyName = FLiveConfigProperty(NAME_None);
+	JsonSystem->SavePropertyToFile(EmptyNameDef);
+	FString EmptyPath = JsonSystem->GetPropertyPath(NAME_None);
+	TestFalse(TEXT("Empty name property file should NOT exist"), FPaths::FileExists(EmptyPath));
+
+	FLiveConfigPropertyDefinition TrailingDotDef;
+	TrailingDotDef.PropertyName = FLiveConfigProperty(FName(TEXT("Folder.")));
+	JsonSystem->SavePropertyToFile(TrailingDotDef);
+	FString TrailingDotPath = JsonSystem->GetPropertyPath(FName(TEXT("Folder.")));
+	TestFalse(TEXT("Trailing dot property file should NOT exist"), FPaths::FileExists(TrailingDotPath));
 
 	// Restore original settings
 	Settings->PropertyDefinitions = OriginalDefinitions;

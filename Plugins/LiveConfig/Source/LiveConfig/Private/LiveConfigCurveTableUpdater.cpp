@@ -63,8 +63,6 @@ void ULiveConfigCurveTableUpdater::ImportFromCurveTables()
 		return;
 	}
 
-	static const FName FromCurveTableTag = TEXT("FromCurveTable");
-
 	for (UCurveTable* CurveTable : ImportActiveCurveTables)
 	{
 		FName TableTag = CurveTable->GetFName();
@@ -91,16 +89,19 @@ void ULiveConfigCurveTableUpdater::ImportFromCurveTables()
 					
 					FLiveConfigPropertyDefinition& Def = Settings->PropertyDefinitions.FindOrAdd(PropName);
 					
-					if (Def.PropertyName != PropName || Def.PropertyType != ELiveConfigPropertyType::Float || Def.Value != FString::SanitizeFloat(Key.Value))
+					if (Def.PropertyName != PropName || (Def.PropertyType != ELiveConfigPropertyType::Float && Def.PropertyType != ELiveConfigPropertyType::Int) || Def.Value != FString::SanitizeFloat(Key.Value))
 					{
 						bSettingsChanged = true;
 					}
 
 					Def.PropertyName = PropName;
-					Def.PropertyType = ELiveConfigPropertyType::Float;
+					if (Def.PropertyType != ELiveConfigPropertyType::Int)
+					{
+						Def.PropertyType = ELiveConfigPropertyType::Float;
+					}
 					Def.Value = FString::SanitizeFloat(Key.Value);
 					
-					Def.Tags.AddUnique(FromCurveTableTag);
+					Def.Tags.AddUnique(LiveConfigTags::FromCurveTable);
 					Def.Tags.AddUnique(TableTag);
 
 					if (Def.Description.IsEmpty())
@@ -127,12 +128,13 @@ void ULiveConfigCurveTableUpdater::ExportToCurveTables()
 void ULiveConfigCurveTableUpdater::FillCurveTables()
 {
 	const ULiveConfigGameSettings* Settings = GetDefault<ULiveConfigGameSettings>();
-	static const FName FromCurveTableTag = TEXT("FromCurveTable");
 
 	if (!ExportActiveCurveTable)
 	{
 		return;
 	}
+
+	bool bAnythingChanged = false;
 
 	// 1. Update existing rows in the Export Table
 	for (const TTuple<FName, FSimpleCurve*>& Pair : ExportActiveCurveTable->GetSimpleCurveRowMap())
@@ -144,24 +146,29 @@ void ULiveConfigCurveTableUpdater::FillCurveTables()
 		if (const FLiveConfigPropertyDefinition* Def = Settings->PropertyDefinitions.Find(RowName))
 		{
 			// Skip properties imported from curve tables
-			if (Def->Tags.Contains(FromCurveTableTag))
+			if (Def->Tags.Contains(LiveConfigTags::FromCurveTable))
 			{
 				continue;
 			}
 
-			if (Def->PropertyType == ELiveConfigPropertyType::Float)
+			if (Def->PropertyType == ELiveConfigPropertyType::Float || Def->PropertyType == ELiveConfigPropertyType::Int)
 			{
-				float Value = FCString::Atof(*Def->Value);
+				float Value = Def->PropertyType == ELiveConfigPropertyType::Float ? FCString::Atof(*Def->Value) : static_cast<float>(FCString::Atoi(*Def->Value));
 				if (Curve->Keys.Num() > 0)
 				{
 					for (FSimpleCurveKey& Key : Curve->Keys)
 					{
-						Key.Value = Value;
+						if (!FMath::IsNearlyEqual(Key.Value, Value))
+						{
+							Key.Value = Value;
+							bAnythingChanged = true;
+						}
 					}
 				}
 				else
 				{
 					Curve->AddKey(0.f, Value);
+					bAnythingChanged = true;
 				}
 			}
 		}
@@ -172,31 +179,36 @@ void ULiveConfigCurveTableUpdater::FillCurveTables()
 			FName ConfigKey = FName(FString::Printf(TEXT("%s.%d"), *RowName.ToString(), FMath::RoundToInt(Key.Time)));
 			if (const FLiveConfigPropertyDefinition* Def = Settings->PropertyDefinitions.Find(ConfigKey))
 			{
-				if (Def->Tags.Contains(FromCurveTableTag))
+				if (Def->Tags.Contains(LiveConfigTags::FromCurveTable))
 				{
 					continue;
 				}
 
-				if (Def->PropertyType == ELiveConfigPropertyType::Float)
+				if (Def->PropertyType == ELiveConfigPropertyType::Float || Def->PropertyType == ELiveConfigPropertyType::Int)
 				{
-					Key.Value = FCString::Atof(*Def->Value);
+					float Value = Def->PropertyType == ELiveConfigPropertyType::Float ? FCString::Atof(*Def->Value) : static_cast<float>(FCString::Atoi(*Def->Value));
+					if (!FMath::IsNearlyEqual(Key.Value, Value))
+					{
+						Key.Value = Value;
+						bAnythingChanged = true;
+					}
 				}
 			}
 		}
 	}
 
-	// 2. Add/Update rows for all float properties in PropertyDefinitions
+	// 2. Add/Update rows for all float and int properties in PropertyDefinitions
 	for (const auto& Pair : Settings->PropertyDefinitions)
 	{
 		const FLiveConfigPropertyDefinition& Def = Pair.Value;
 		
 		// Skip properties imported from curve tables
-		if (Def.Tags.Contains(FromCurveTableTag))
+		if (Def.Tags.Contains(LiveConfigTags::FromCurveTable))
 		{
 			continue;
 		}
 
-		if (Def.PropertyType == ELiveConfigPropertyType::Float)
+		if (Def.PropertyType == ELiveConfigPropertyType::Float || Def.PropertyType == ELiveConfigPropertyType::Int)
 		{
 			FName FullName = Def.PropertyName.GetName();
 			
@@ -217,29 +229,15 @@ void ULiveConfigCurveTableUpdater::FillCurveTables()
 			}
 			
 			FName RowName = bHasIndex ? FName(*BaseNameStr) : FullName;
-			float Value = FCString::Atof(*Def.Value);
+			float Value = Def.PropertyType == ELiveConfigPropertyType::Float ? FCString::Atof(*Def.Value) : static_cast<float>(FCString::Atoi(*Def.Value));
 			
 			FSimpleCurve* Curve = ExportActiveCurveTable->GetSimpleCurveRowMap().FindRef(RowName);
 			if (!Curve)
 			{
 				if (Settings->bAutoCreateRowsInExportTable)
 				{
-					Curve = new FSimpleCurve();
-					// Create a mutable copy of the map, add the item, and then assign it back if possible.
-					// However, GetSimpleCurveRowMap() in UCurveTable usually returns a reference to the internal map.
-					// The error "function is missing const qualifier" suggests GetSimpleCurveRowMap() might be returning a const reference.
-					// Let's check how to get a mutable map or use a different approach.
-					// In UE, UCurveTable::GetSimpleCurveRowMap() returns TMap<FName, FSimpleCurve*>&.
-					
-					// Let's try casting away const if it's indeed returning const for some reason, 
-					// but wait, I am calling it on a non-const pointer ExportActiveCurveTable.
-					
-					// Re-reading the error: "function is missing const qualifier" on TMapBase::Add.
-					// This is strange. Usually it means the TMap itself is const.
-					
-					// Let's try this:
-					TMap<FName, FSimpleCurve*>& RowMap = const_cast<TMap<FName, FSimpleCurve*>&>(ExportActiveCurveTable->GetSimpleCurveRowMap());
-					RowMap.Add(RowName, Curve);
+					Curve = &ExportActiveCurveTable->AddSimpleCurve(RowName);
+					bAnythingChanged = true;
 				}
 				else
 				{
@@ -255,7 +253,11 @@ void ULiveConfigCurveTableUpdater::FillCurveTables()
 				{
 					if (FMath::IsNearlyEqual(Key.Time, static_cast<float>(Index)))
 					{
-						Key.Value = Value;
+						if (!FMath::IsNearlyEqual(Key.Value, Value))
+						{
+							Key.Value = Value;
+							bAnythingChanged = true;
+						}
 						bKeyUpdated = true;
 						break;
 					}
@@ -263,6 +265,7 @@ void ULiveConfigCurveTableUpdater::FillCurveTables()
 				if (!bKeyUpdated)
 				{
 					Curve->AddKey(static_cast<float>(Index), Value);
+					bAnythingChanged = true;
 				}
 			}
 			else
@@ -272,16 +275,26 @@ void ULiveConfigCurveTableUpdater::FillCurveTables()
 				{
 					Curve->AddKey(0.f, Value);
 					Curve->AddKey(1.f, Value);
+					bAnythingChanged = true;
 				}
 				else
 				{
 					for (FSimpleCurveKey& Key : Curve->Keys)
 					{
-						Key.Value = Value;
+						if (!FMath::IsNearlyEqual(Key.Value, Value))
+						{
+							Key.Value = Value;
+							bAnythingChanged = true;
+						}
 					}
 				}
 			}
 		}
+	}
+
+	if (!bAnythingChanged)
+	{
+		return;
 	}
 
 	ExportActiveCurveTable->Modify();

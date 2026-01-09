@@ -11,7 +11,7 @@ public class LiveConfigEditor : ModuleRules
             {
                 "Core",
                 "LiveConfig", 
-                "SourceControl",
+                "SourceControl"
             }
         );
 

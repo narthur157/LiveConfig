@@ -42,7 +42,7 @@ public:
 	UPROPERTY(Config, EditAnywhere, Category = "CurveTable", Meta = (AllowedClasses = "/Script/Engine.CurveTable"))
 	TArray<FSoftObjectPath> ImportCurveTables;
 
-	/** Whether to automatically create new rows in the ExportCurveTable for all Float properties. */
+	/** Whether to automatically create new rows in the ExportCurveTable for all Float and Int properties. */
 	UPROPERTY(Config, EditAnywhere, Category = "CurveTable")
 	bool bAutoCreateRowsInExportTable = true;
 };
