@@ -1,12 +1,12 @@
 {
 	"propertyName":
 	{
-		"propertyName": "VendingMachine.p5"
+		"propertyName": "VendingMachine.9"
 	},
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
 		"Generic"
 	],
-	"value": "25"
+	"value": "9"
 }
