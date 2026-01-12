@@ -10,7 +10,7 @@ LIVECONFIG_API DECLARE_LOG_CATEGORY_EXTERN(LogLiveConfig, Log, All);
 
 namespace LiveConfigTags
 {
-	static const FName FromCurveTable = TEXT("FromCurveTable");
+	const LIVECONFIG_API extern FName FromCurveTable;
 }
 
 DECLARE_MULTICAST_DELEGATE(FOnLiveConfigPropertiesUpdated);

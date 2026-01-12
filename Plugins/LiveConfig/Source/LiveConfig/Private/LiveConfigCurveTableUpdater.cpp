@@ -303,7 +303,7 @@ void ULiveConfigCurveTableUpdater::FillCurveTables()
 
 	// Automatically save the asset in the editor
 	UPackage* Package = ExportActiveCurveTable->GetOutermost();
-	if (Package)
+	if (Package && !Package->HasAnyFlags(RF_Transient) && !Package->GetName().StartsWith(TEXT("/Temp/")))
 	{
 		FString PackageFileName = FPackageName::LongPackageNameToFilename(Package->GetName(), FPackageName::GetAssetPackageExtension());
 		

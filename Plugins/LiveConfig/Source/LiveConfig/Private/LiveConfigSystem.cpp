@@ -10,6 +10,11 @@
 
 DEFINE_LOG_CATEGORY(LogLiveConfig);
 
+namespace LiveConfigTags
+{
+	const FName FromCurveTable = TEXT("FromCurveTable");
+}
+
 ULiveConfigSystem* ULiveConfigSystem::Get()
 {
     return GEngine->GetEngineSubsystem<ULiveConfigSystem>();
