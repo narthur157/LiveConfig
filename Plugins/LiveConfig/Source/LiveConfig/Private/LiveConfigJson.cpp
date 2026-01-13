@@ -1,6 +1,7 @@
 ﻿// All rights reserved - Genpop
 
 #include "LiveConfigJson.h"
+#include "LiveConfigSystem.h"
 #include "LiveConfigGameSettings.h"
 #include "Dom/JsonObject.h"
 #include "Misc/FileHelper.h"
@@ -38,7 +39,9 @@ ULiveConfigJsonSystem* ULiveConfigJsonSystem::Get()
 void ULiveConfigJsonSystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
-	LoadJsonFromFiles();
+	
+	// ULiveConfigSystem will call this itself
+	//	LoadJsonFromFiles();
 
 	IConsoleManager::Get().RegisterConsoleCommand(
 		TEXT("LiveConfig.VerifyJson"),
@@ -112,9 +115,9 @@ void ULiveConfigJsonSystem::LoadJsonFromFile(const FString& Path, const FString&
 		FLiveConfigPropertyDefinition PropertyDefinition;
 		if (FJsonObjectConverter::JsonObjectToUStruct(JsonObject.ToSharedRef(), &PropertyDefinition))
 		{
-			if (ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>())
+			if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
 			{
-				Settings->PropertyDefinitions.Add(PropertyDefinition.PropertyName, PropertyDefinition);
+				System->PropertyDefinitions.Add(PropertyDefinition.PropertyName, PropertyDefinition);
 			}
 		}
 	}
@@ -142,7 +145,9 @@ void ULiveConfigJsonSystem::VerifyJsonIntegrity()
 	int32 MissingFilesCount = 0;
 	int32 TotalProperties = 0;
 
-	for (const auto& Pair : Settings->PropertyDefinitions)
+	const ULiveConfigSystem* System = ULiveConfigSystem::Get();
+
+	for (const auto& Pair : System->PropertyDefinitions)
 	{
 		if (Pair.Value.Tags.Contains(LiveConfigTags::FromCurveTable))
 		{
@@ -182,11 +187,11 @@ void ULiveConfigJsonSystem::VerifyJsonIntegrity()
 
 void ULiveConfigJsonSystem::SaveJsonToFiles()
 {
-	if (ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>())
+	if (const ULiveConfigSystem* System = ULiveConfigSystem::Get())
 	{
 		// Collect all current property paths
 		TSet<FString> CurrentPropertyPaths;
-		for (const auto& Pair : Settings->PropertyDefinitions)
+		for (const auto& Pair : System->PropertyDefinitions)
 		{
 			// Skip properties imported from curve tables
 			if (Pair.Value.Tags.Contains(LiveConfigTags::FromCurveTable))

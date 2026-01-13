@@ -12,11 +12,11 @@ bool FLiveConfigSystemValueTest::RunTest(const FString& Parameters)
 		return false;
 	}
 
-	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
+	ULiveConfigSystem* MutableSystem = ULiveConfigSystem::Get();
 	
 	// Backup original settings
-	TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition> OriginalDefinitions = Settings->PropertyDefinitions;
-	Settings->PropertyDefinitions.Empty();
+	TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition> OriginalDefinitions = MutableSystem->PropertyDefinitions;
+	MutableSystem->PropertyDefinitions.Empty();
 
 	// Setup test data
 	{
@@ -24,36 +24,39 @@ bool FLiveConfigSystemValueTest::RunTest(const FString& Parameters)
 		Def.PropertyName = FLiveConfigProperty(FName(TEXT("Test.String")));
 		Def.Value = TEXT("Hello World");
 		Def.PropertyType = ELiveConfigPropertyType::String;
-		Settings->PropertyDefinitions.Add(Def.PropertyName, Def);
+		MutableSystem->PropertyDefinitions.Add(Def.PropertyName, Def);
 	}
 	{
 		FLiveConfigPropertyDefinition Def;
 		Def.PropertyName = FLiveConfigProperty(FName(TEXT("Test.Int")));
 		Def.Value = TEXT("42");
 		Def.PropertyType = ELiveConfigPropertyType::Int;
-		Settings->PropertyDefinitions.Add(Def.PropertyName, Def);
+		MutableSystem->PropertyDefinitions.Add(Def.PropertyName, Def);
 	}
 	{
 		FLiveConfigPropertyDefinition Def;
 		Def.PropertyName = FLiveConfigProperty(FName(TEXT("Test.Float")));
 		Def.Value = TEXT("3.14");
 		Def.PropertyType = ELiveConfigPropertyType::Float;
-		Settings->PropertyDefinitions.Add(Def.PropertyName, Def);
+		MutableSystem->PropertyDefinitions.Add(Def.PropertyName, Def);
 	}
 	{
 		FLiveConfigPropertyDefinition Def;
 		Def.PropertyName = FLiveConfigProperty(FName(TEXT("Test.BoolTrue")));
 		Def.Value = TEXT("true");
 		Def.PropertyType = ELiveConfigPropertyType::Bool;
-		Settings->PropertyDefinitions.Add(Def.PropertyName, Def);
+		MutableSystem->PropertyDefinitions.Add(Def.PropertyName, Def);
 	}
 	{
 		FLiveConfigPropertyDefinition Def;
 		Def.PropertyName = FLiveConfigProperty(FName(TEXT("Test.BoolFalse")));
 		Def.Value = TEXT("false");
 		Def.PropertyType = ELiveConfigPropertyType::Bool;
-		Settings->PropertyDefinitions.Add(Def.PropertyName, Def);
+		MutableSystem->PropertyDefinitions.Add(Def.PropertyName, Def);
 	}
+
+	// Rebuild cache for test data
+	System->RefreshFromSettings();
 
 	// Test valid keys
 	TestEqual(TEXT("String value should match"), System->GetStringValue(FLiveConfigProperty(FName(TEXT("Test.String")))), TEXT("Hello World"));
@@ -74,7 +77,8 @@ bool FLiveConfigSystemValueTest::RunTest(const FString& Parameters)
 	TestFalse(TEXT("Bool from string should be false"), System->GetBoolValue(FLiveConfigProperty(FName(TEXT("Test.String")))));
 	
 	// Restore original settings
-	Settings->PropertyDefinitions = OriginalDefinitions;
+	MutableSystem->PropertyDefinitions = OriginalDefinitions;
+	System->RefreshFromSettings();
 
 	return true;
 }

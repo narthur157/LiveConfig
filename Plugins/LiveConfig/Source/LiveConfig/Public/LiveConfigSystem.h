@@ -6,6 +6,7 @@
 #include "LiveConfigTypes.h"
 #include "LiveConfigPropertyName.h"
 #include "Profiles/LiveConfigProfile.h"
+#include "ConsoleSettings.h"
 #include "LiveConfigSystem.generated.h"
 DECLARE_MULTICAST_DELEGATE(FOnLiveConfigPropertiesUpdated);
 
@@ -25,7 +26,7 @@ class LIVECONFIG_API ULiveConfigSystem : public UEngineSubsystem
 
 public:
     static ULiveConfigSystem* Get();
-    
+
     // USubsystem
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void Deinitialize() override;
@@ -56,12 +57,6 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Live Config")
     bool IsDataReady() const { return bIsDataReady; }
 
-    /**
-     * Download the config
-     */
-    UFUNCTION(BlueprintCallable)
-    void CheckUpdate();
-    
     void DownloadConfig();
 
     /** Refresh properties from editor settings */
@@ -71,10 +66,13 @@ public:
     FOnLiveConfigPropertiesUpdated OnPropertiesUpdated;
 
     /** Get all available row names (public for editor access) */
-    UFUNCTION(BlueprintCallable, Category = "Live Config")
-    TArray<FLiveConfigProperty> GetAllProperties() const;
+	UFUNCTION(BlueprintCallable, Category = "Live Config")
+	const TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition>& GetAllProperties() const;
 
-    bool DoesPropertyNameExist(FLiveConfigProperty PropertyName) const;
+    static bool DoesPropertyNameExist(FLiveConfigProperty PropertyName);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition> PropertyDefinitions;
 
 
 private:
@@ -103,6 +101,8 @@ private:
      */
 	UFUNCTION()
     void BuildCache();
+	
+	void PopulateAutoCompleteEntries(TArray<FAutoCompleteCommand>& AutoCompleteCommands);
 
     /** Flag to indicate if the download and parsing were successful. */
     bool bIsDataReady = false;

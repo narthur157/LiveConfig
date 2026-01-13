@@ -76,9 +76,9 @@ void SLiveConfigPropertyCombo::Construct(const FArguments& InArgs)
                 if (CurrentProperty.IsValid())
                 {
                     FString DisplayString = CurrentProperty.GetName().ToString();
-                    if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
+                    if (const ULiveConfigSystem* System = ULiveConfigSystem::Get())
                     {
-                        if (const FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(CurrentProperty))
+                        if (const FLiveConfigPropertyDefinition* Def = System->PropertyDefinitions.Find(CurrentProperty))
                         {
                             DisplayString += FString::Printf(TEXT(": %s"), *Def->Value);
                         }

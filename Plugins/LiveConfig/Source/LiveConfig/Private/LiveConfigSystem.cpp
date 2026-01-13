@@ -9,6 +9,8 @@
 #include "Serialization/Csv/CsvParser.h"
 
 #include "LiveConfigJson.h"
+#include "ConsoleSettings.h"
+#include "Engine/Console.h"
 
 namespace LiveConfigTags
 {
@@ -22,7 +24,12 @@ ULiveConfigSystem* ULiveConfigSystem::Get()
 
 void ULiveConfigSystem::Initialize(FSubsystemCollectionBase& Collection)
 {
-    SheetUrl = ULiveConfigGameSettings::StaticClass()->GetDefaultObject<ULiveConfigGameSettings>()->SheetUrl;
+    Collection.InitializeDependency(ULiveConfigProfileSystem::StaticClass());
+    Collection.InitializeDependency(ULiveConfigJsonSystem::StaticClass());
+    
+    SheetUrl = GetDefault<ULiveConfigGameSettings>()->SheetUrl;
+
+    UConsole::RegisterConsoleAutoCompleteEntries.AddUObject(this, &ThisClass::PopulateAutoCompleteEntries);
 
     if (ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get())
     {
@@ -44,12 +51,13 @@ void ULiveConfigSystem::Initialize(FSubsystemCollectionBase& Collection)
 
     if (ULiveConfigProfileSystem* ProfileSystem = ULiveConfigProfileSystem::Get())
     {
-        ProfileSystem->OnProfileChanged.AddUObject(this, static_cast<void (ULiveConfigSystem::*)(const FLiveConfigProfile&)>(&ULiveConfigSystem::RefreshFromSettings));
+        ProfileSystem->OnProfileChanged.AddUObject(this, &ThisClass::RefreshFromSettings);
     }
 }
 
 void ULiveConfigSystem::RefreshFromSettings()
 {
+    BuildCache();
     OnPropertiesUpdated.Broadcast();
 }
 
@@ -57,7 +65,6 @@ void ULiveConfigSystem::RefreshFromSettings(const FLiveConfigProfile& Profile)
 {
     RefreshFromSettings();
 }
-
 
 void ULiveConfigSystem::Deinitialize()
 {
@@ -113,11 +120,6 @@ void ULiveConfigSystem::DownloadConfig()
     TimeLoadStarted = FPlatformTime::Seconds();
 }
 
-void ULiveConfigSystem::CheckUpdate()
-{
-    DownloadConfig();
-}
-
 void ULiveConfigSystem::OnSheetDownloadComplete(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
 {
     if (!bWasSuccessful || !Response.IsValid())
@@ -151,13 +153,13 @@ void ULiveConfigSystem::OnSheetDownloadComplete(FHttpRequestPtr Request, FHttpRe
             
             // Try to find existing definition to preserve its metadata if needed, 
             // but actually we want to override values from the sheet.
-            if (!GameSettings->PropertyDefinitions.Contains(Key))
+            if (!PropertyDefinitions.Contains(Key))
             {
                 UE_LOG(LogLiveConfig, Warning, TEXT("Skipping remote property with invalid key: %s"), *Key.ToString());
                 continue;
             }
             
-            FLiveConfigPropertyDefinition& Def = GameSettings->PropertyDefinitions[Key];
+            FLiveConfigPropertyDefinition Def = PropertyDefinitions[Key];
             Def.PropertyName = Key;
             Def.Value = Columns[1];
             
@@ -177,30 +179,26 @@ void ULiveConfigSystem::OnSheetDownloadComplete(FHttpRequestPtr Request, FHttpRe
     }
     
     bIsDataReady = true;
-    UE_LOG(LogLiveConfig, Log, TEXT("Successfully loaded %d key-value pairs"), GameSettings->PropertyDefinitions.Num());
+    UE_LOG(LogLiveConfig, Log, TEXT("Successfully loaded %d key-value pairs"), PropertyDefinitions.Num());
     
     if (NewEnvProfile != EnvironmentOverrides)
     {   
         UE_LOG(LogLiveConfig, Log, TEXT("LiveConfigSystem:Environment profile changed, rebuilding cache"));
-        OnPropertiesUpdated.Broadcast();
+        EnvironmentOverrides = NewEnvProfile;
+        RefreshFromSettings();
     }
 }
 
-TArray<FLiveConfigProperty> ULiveConfigSystem::GetAllProperties() const
+const TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition>& ULiveConfigSystem::GetAllProperties() const
 {
-    TArray<FLiveConfigProperty> Properties;
-    if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
-    {
-        GameSettings->PropertyDefinitions.GetKeys(Properties);
-    }
-    return Properties;
+    return PropertyDefinitions;
 }
 
-bool ULiveConfigSystem::DoesPropertyNameExist(FLiveConfigProperty PropertyName) const
+bool ULiveConfigSystem::DoesPropertyNameExist(FLiveConfigProperty PropertyName)
 {
-    if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
+    if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
     {
-        return GameSettings->PropertyDefinitions.Contains(PropertyName);
+        return System->PropertyDefinitions.Contains(PropertyName);
     }
     return false;
 }
@@ -226,10 +224,16 @@ void ULiveConfigSystem::OnStartGameInstance(UGameInstance* GameInstance)
 
 void ULiveConfigSystem::BuildCache()
 {
-    auto ProfileSystem = ULiveConfigProfileSystem::Get();
-    auto GameSettings = GetDefault<ULiveConfigGameSettings>();
+    ULiveConfigProfileSystem* ProfileSystem = ULiveConfigProfileSystem::Get();
     
-    FLiveConfigCache::BuildConfig(GameSettings->PropertyDefinitions, EnvironmentOverrides, ProfileSystem->GetActiveProfile(), Cache);
+    if (ProfileSystem)
+    {
+        FLiveConfigCache::BuildConfig(PropertyDefinitions, EnvironmentOverrides, ProfileSystem->GetActiveProfile(), Cache);
+    }
+    else
+    {
+        FLiveConfigCache::BuildConfig(PropertyDefinitions, EnvironmentOverrides, {}, Cache);
+    }
 }
 
 FString ULiveConfigSystem::GetStringValue(FLiveConfigProperty Key)
@@ -250,4 +254,17 @@ int32 ULiveConfigSystem::GetIntValue(FLiveConfigProperty Key)
 bool ULiveConfigSystem::GetBoolValue(FLiveConfigProperty Key)
 {
     return Cache.GetValue<bool>(Key);
+}
+
+void ULiveConfigSystem::PopulateAutoCompleteEntries(TArray<FAutoCompleteCommand>& Entries)
+{
+    // Use iterator to avoid copying the full property list 
+    for (auto Iter = PropertyDefinitions.CreateConstIterator(); Iter; ++Iter)
+    {
+        const FLiveConfigProperty& Prop = Iter->Key;
+        FAutoCompleteCommand Command;
+        Command.Command = FString::Printf(TEXT("LiveConfig.SetOverride %s"), *Prop.ToString());
+        Command.Desc = FString::Printf(TEXT("Set live config override for %s (current %s)"), *Prop.ToString(), *GetStringValue(Prop));
+        Entries.Add(Command);
+    }
 }

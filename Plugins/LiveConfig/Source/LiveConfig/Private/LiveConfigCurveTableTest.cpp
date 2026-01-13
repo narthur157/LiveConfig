@@ -12,13 +12,14 @@ bool FLiveConfigCurveTableTest::RunTest(const FString& Parameters)
 {
 	ULiveConfigCurveTableUpdater* Updater = NewObject<ULiveConfigCurveTableUpdater>();
 	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
+	ULiveConfigSystem* System = ULiveConfigSystem::Get();
 
 	// Backup original settings
-	TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition> OriginalDefinitions = Settings->PropertyDefinitions;
+	TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition> OriginalDefinitions = System->PropertyDefinitions;
 	FSoftObjectPath OriginalExportTable = Settings->ExportCurveTable;
 	bool bOriginalAutoCreate = Settings->bAutoCreateRowsInExportTable;
 
-	Settings->PropertyDefinitions.Empty();
+	System->PropertyDefinitions.Empty();
 	Settings->bAutoCreateRowsInExportTable = true;
 
 	// Create a temporary CurveTable for testing
@@ -38,7 +39,7 @@ bool FLiveConfigCurveTableTest::RunTest(const FString& Parameters)
 		Def.PropertyName = FLiveConfigProperty(FName(TEXT("TestFloat")));
 		Def.Value = TEXT("123.45");
 		Def.PropertyType = ELiveConfigPropertyType::Float;
-		Settings->PropertyDefinitions.Add(Def.PropertyName, Def);
+		System->PropertyDefinitions.Add(Def.PropertyName, Def);
 	}
 
 	AddInfo(TEXT("Starting FillCurveTables"));
@@ -70,13 +71,13 @@ bool FLiveConfigCurveTableTest::RunTest(const FString& Parameters)
 		Def.PropertyName = FLiveConfigProperty(FName(TEXT("TestArray.0")));
 		Def.Value = TEXT("10");
 		Def.PropertyType = ELiveConfigPropertyType::Int;
-		Settings->PropertyDefinitions.Add(Def.PropertyName, Def);
+		System->PropertyDefinitions.Add(Def.PropertyName, Def);
 
 		FLiveConfigPropertyDefinition Def1;
 		Def1.PropertyName = FLiveConfigProperty(FName(TEXT("TestArray.1")));
 		Def1.Value = TEXT("20");
 		Def1.PropertyType = ELiveConfigPropertyType::Int;
-		Settings->PropertyDefinitions.Add(Def1.PropertyName, Def1);
+		System->PropertyDefinitions.Add(Def1.PropertyName, Def1);
 	}
 
 	PublicUpdater->ExportToCurveTables();
@@ -101,7 +102,7 @@ bool FLiveConfigCurveTableTest::RunTest(const FString& Parameters)
 		CurveDef.Value = TEXT("999");
 		CurveDef.PropertyType = ELiveConfigPropertyType::Float;
 		CurveDef.Tags.Add(LiveConfigTags::FromCurveTable);
-		Settings->PropertyDefinitions.Add(CurveDef.PropertyName, CurveDef);
+		System->PropertyDefinitions.Add(CurveDef.PropertyName, CurveDef);
 	}
 
 	PublicUpdater->ExportToCurveTables();
@@ -112,7 +113,7 @@ bool FLiveConfigCurveTableTest::RunTest(const FString& Parameters)
 	}
 
 	// Restore original settings
-	Settings->PropertyDefinitions = OriginalDefinitions;
+	System->PropertyDefinitions = OriginalDefinitions;
 	Settings->ExportCurveTable = OriginalExportTable;
 	Settings->bAutoCreateRowsInExportTable = bOriginalAutoCreate;
 

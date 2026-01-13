@@ -1,5 +1,7 @@
 ﻿#include "LiveConfigTypes.h"
 
+#include "LiveConfigLib.h"
+
 DEFINE_LOG_CATEGORY(LogLiveConfig);
 
 bool FLiveConfigPropertyDefinition::IsValid() const
@@ -47,8 +49,8 @@ void FLiveConfigCache::BuildConfig(const TMap<FLiveConfigProperty, FLiveConfigPr
 	{
 		for (const TPair<FLiveConfigProperty, FString>& Pair : Profile.Overrides)
 		{
-			FLiveConfigPropertyDefinition TempDef;
-			TempDef.PropertyName = Pair.Key;
+			// Use the actual definition so that we get the type from our config
+			FLiveConfigPropertyDefinition TempDef = ULiveConfigLib::GetLiveConfigPropertyDefinition(Pair.Key);
 			TempDef.Value = Pair.Value;
 			OutCache.SetValue(TempDef);
 		}

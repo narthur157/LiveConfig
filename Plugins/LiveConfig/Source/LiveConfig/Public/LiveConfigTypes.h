@@ -27,7 +27,7 @@ enum class ELiveConfigPropertyType : uint8
 };
 
 USTRUCT(BlueprintType)
-struct FLiveConfigPropertyDefinition
+struct LIVECONFIG_API FLiveConfigPropertyDefinition
 {
 	GENERATED_BODY()
 

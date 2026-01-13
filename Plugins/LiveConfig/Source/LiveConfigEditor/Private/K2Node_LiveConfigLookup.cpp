@@ -84,11 +84,15 @@ void UK2Node_LiveConfigLookup::PinDefaultValueChanged(UEdGraphPin* Pin)
 
 	if (SelectedProperty.IsValid())
 	{
-		if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
+		FLiveConfigPropertyDefinition Def = ULiveConfigLib::GetLiveConfigPropertyDefinition(SelectedProperty);
+		if (Def.IsValid())
 		{
-			if (!GameSettings->PropertyDefinitions.Contains(SelectedProperty))
+		}
+		if (const ULiveConfigSystem* System = ULiveConfigSystem::Get())
+		{
+			if (!System->PropertyDefinitions.Contains(SelectedProperty))
 			{
-				ULiveConfigGameSettings* MutableSettings = GetMutableDefault<ULiveConfigGameSettings>();
+				ULiveConfigSystem* MutableSystem = ULiveConfigSystem::Get();
 				FLiveConfigPropertyDefinition NewDef;
 				NewDef.PropertyName = SelectedProperty;
 				
@@ -116,14 +120,11 @@ void UK2Node_LiveConfigLookup::PinDefaultValueChanged(UEdGraphPin* Pin)
 					}
 				}
 
-				MutableSettings->PropertyDefinitions.Add(SelectedProperty, NewDef);
-				MutableSettings->SaveConfig();
-				MutableSettings->TryUpdateDefaultConfigFile();
+				MutableSystem->PropertyDefinitions.Add(SelectedProperty, NewDef);
+				MutableSystem->SaveConfig();
+				MutableSystem->TryUpdateDefaultConfigFile();
 
-				if (ULiveConfigSystem* System = GEngine->GetEngineSubsystem<ULiveConfigSystem>())
-				{
-					System->RefreshFromSettings();
-				}
+				MutableSystem->RefreshFromSettings();
 			}
 		}
 	}
@@ -199,20 +200,51 @@ void UK2Node_LiveConfigLookup::ExpandNode(FKismetCompilerContext& CompilerContex
 	FLiveConfigProperty SelectedProperty;
 	FLiveConfigProperty::StaticStruct()->ImportText(*PropertyPin->DefaultValue, &SelectedProperty, nullptr, 0, nullptr, FLiveConfigProperty::StaticStruct()->GetName());
 
-	if (!SelectedProperty.IsValid())
+	bool bInputIsConnected = PropertyPin->LinkedTo.Num() > 0;
+	bool bOutputIsConnected = ValuePin->LinkedTo.Num() > 0;
+
+	if (!SelectedProperty.IsValid() && !bInputIsConnected)
 	{
 		CompilerContext.MessageLog.Error(*LOCTEXT("InvalidProperty", "No property selected in UK2Node_LiveConfigLookup").ToString());
 		BreakAllNodeLinks();
 		return;
 	}
 
+	// this may not be valid
+	FLiveConfigPropertyDefinition Def = ULiveConfigLib::GetLiveConfigPropertyDefinition(SelectedProperty);
+	
 	ELiveConfigPropertyType PropType = ELiveConfigPropertyType::Float;
-	if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
+	if (bOutputIsConnected)
 	{
-		if (const FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(SelectedProperty))
+		// if the output is connected, we must match that type
+		if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Boolean)
 		{
-			PropType = Def->PropertyType;
+			PropType = ELiveConfigPropertyType::Bool;
 		}
+		else if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Int)
+		{
+			PropType = ELiveConfigPropertyType::Int;
+		}
+		else if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_String)
+		{
+			PropType = ELiveConfigPropertyType::String;
+		}
+		else
+		{
+			PropType = ELiveConfigPropertyType::Float;
+		}
+	}
+	else if (SelectedProperty.IsValid() && !bInputIsConnected)
+	{
+		// if we are using a literal property and we aren't connected to an output yet, we're using the property as our type
+		PropType = Def.PropertyType;
+	}
+	
+	if (SelectedProperty.IsValid() && PropType != Def.PropertyType)
+	{
+		CompilerContext.MessageLog.Error(*LOCTEXT("InvalidProperty", "Property in UK2Node_LiveConfigLookup must match output type").ToString());
+		BreakAllNodeLinks();
+		return;	
 	}
 
 	FName FunctionName;
@@ -280,6 +312,13 @@ void UK2Node_LiveConfigLookup::UpdateOutputPinType()
 
 	if (!SelectedProperty.IsValid())
 	{
+		// If the property pin is connected, we don't want to reset the output pin type
+		// as it might have been set by the user or from a previous connection.
+		if (PropertyPin->LinkedTo.Num() > 0)
+		{
+			return;
+		}
+
 		// Fallback to default type if set
 		if (DefaultPinType.PinCategory != NAME_None && ValuePin->PinType != DefaultPinType)
 		{
@@ -295,7 +334,7 @@ void UK2Node_LiveConfigLookup::UpdateOutputPinType()
 
 	ELiveConfigPropertyType PropType = ELiveConfigPropertyType::Float;
 	
-	FLiveConfigPropertyDefinition Def = ULiveConfigLib::GetLiveConfigPropertyDefinition(SelectedProperty)
+	FLiveConfigPropertyDefinition Def = ULiveConfigLib::GetLiveConfigPropertyDefinition(SelectedProperty);
 	if (Def.IsValid())
 	{
 		PropType = Def.PropertyType;
@@ -349,6 +388,10 @@ void UK2Node_LiveConfigLookup::NotifyPinConnectionListChanged(UEdGraphPin* Pin)
 		{
 			Pin->PinType = OtherPin->PinType;
 		}
+	}
+	else if (Pin == GetPropertyPin())
+	{
+		UpdateOutputPinType();
 	}
 }
 

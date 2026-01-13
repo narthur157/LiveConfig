@@ -8,8 +8,17 @@
 
 FLiveConfigPropertyDefinition ULiveConfigLib::GetLiveConfigPropertyDefinition(FLiveConfigProperty Property)
 {
-	const FLiveConfigPropertyDefinition* Prop = GetDefault<ULiveConfigGameSettings>()->PropertyDefinitions.Find(Property);
-	if (!Prop) { return {}; }
+	if (!Property.IsValid())
+	{
+		return {};
+	}
+	const FLiveConfigPropertyDefinition* Prop = ULiveConfigSystem::Get()->PropertyDefinitions.Find(Property);
+	
+	if (!Prop)
+	{
+		return {};
+	}
+	
 	return *Prop; 
 }
 

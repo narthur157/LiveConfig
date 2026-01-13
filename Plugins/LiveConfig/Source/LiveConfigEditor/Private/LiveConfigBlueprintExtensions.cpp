@@ -202,10 +202,10 @@ void FLiveConfigBlueprintExtensions::PromotePinToLiveConfig(UEdGraphPin* Pin)
 		PropertyPin->DefaultValue = FString::Printf(TEXT("(PropertyName=\"%s\")"), *PropertyNameSuggestion);
 		
 		// Add this property to the game settings if it doesn't exist
-		ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
+		ULiveConfigSystem* System = ULiveConfigSystem::Get();
 		FLiveConfigProperty PropertyKey;
 		PropertyKey.PropertyName = FName(*PropertyNameSuggestion);
-		if (!Settings->PropertyDefinitions.Contains(PropertyKey))
+		if (!System->PropertyDefinitions.Contains(PropertyKey))
 		{
 			FLiveConfigPropertyDefinition NewDef;
 			NewDef.PropertyName = PropertyKey;
@@ -229,8 +229,9 @@ void FLiveConfigBlueprintExtensions::PromotePinToLiveConfig(UEdGraphPin* Pin)
 				NewDef.PropertyType = ELiveConfigPropertyType::String;
 			}
 			
-			Settings->PropertyDefinitions.Add(PropertyKey, NewDef);
-			Settings->SaveConfig();
+			System->PropertyDefinitions.Add(PropertyKey, NewDef);
+			System->SaveConfig();
+			System->TryUpdateDefaultConfigFile();
 		}
 	}
 

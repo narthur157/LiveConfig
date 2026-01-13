@@ -1,4 +1,5 @@
 ﻿#include "LiveConfigJson.h"
+#include "LiveConfigSystem.h"
 #include "LiveConfigGameSettings.h"
 #include "Misc/AutomationTest.h"
 #include "Misc/Paths.h"
@@ -16,11 +17,11 @@ bool FLiveConfigJsonOperationsTest::RunTest(const FString& Parameters)
 		return false;
 	}
 
-	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
+	ULiveConfigSystem* System = ULiveConfigSystem::Get();
 	
 	// Backup original settings
-	TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition> OriginalDefinitions = Settings->PropertyDefinitions;
-	Settings->PropertyDefinitions.Empty();
+	TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition> OriginalDefinitions = System->PropertyDefinitions;
+	System->PropertyDefinitions.Empty();
 
 	FName PropertyName = TEXT("Test.Property.Unit");
 	FString TestValue = TEXT("UnitTestValue");
@@ -111,7 +112,7 @@ bool FLiveConfigJsonOperationsTest::RunTest(const FString& Parameters)
 	TestFalse(TEXT("Trailing dot property file should NOT exist"), FPaths::FileExists(TrailingDotPath));
 
 	// Restore original settings
-	Settings->PropertyDefinitions = OriginalDefinitions;
+	System->PropertyDefinitions = OriginalDefinitions;
 
 	return true;
 }

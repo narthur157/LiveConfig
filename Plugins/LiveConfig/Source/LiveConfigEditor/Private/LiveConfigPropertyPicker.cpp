@@ -5,6 +5,7 @@
 #include "LiveConfigSystem.h"
 #include "LiveConfigEditorSettings.h"
 #include "LiveConfigGameSettings.h"
+#include "LiveConfigLib.h"
 #include "PropertyHandle.h"
 #include "Widgets/Input/SSearchBox.h"
 #include "Widgets/Input/SEditableTextBox.h"
@@ -150,7 +151,10 @@ void SLiveConfigPropertyPicker::RefreshPropertyList()
     FilteredProperties.Empty();
 
     // Get all propertys from the system - now consolidated
-    TArray<FLiveConfigProperty> AllProperties = ULiveConfigSystem::Get()->GetAllProperties();
+    auto AllDefinitions = ULiveConfigSystem::Get()->GetAllProperties();
+    
+    TArray<FLiveConfigProperty> AllProperties;
+    AllDefinitions.GetKeys(AllProperties);
 
     // Remove duplicates and sort
     AllProperties.Sort([](const FLiveConfigProperty& A, const FLiveConfigProperty& B)
@@ -164,15 +168,15 @@ void SLiveConfigPropertyPicker::RefreshPropertyList()
         {
             if (FilterType.IsSet())
             {
-                if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
+                FLiveConfigPropertyDefinition Def = ULiveConfigLib::GetLiveConfigPropertyDefinition(Property);
+                if (!Def.IsValid())
                 {
-                    if (const FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(Property))
-                    {
-                        if (Def->PropertyType != FilterType.GetValue())
-                        {
-                            continue;
-                        }
-                    }
+                    continue;
+                }
+                
+                if (Def.PropertyType != FilterType.GetValue())
+                {
+                    continue;
                 }
             }
             AvailablePropertyNames.Add(MakeShareable(new FLiveConfigProperty(Property.GetName())));
@@ -258,9 +262,9 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
                     SNew(SWidgetSwitcher)
                     .WidgetIndex_Lambda([InItem]()
                     {
-                        if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
+                        if (const ULiveConfigSystem* System = ULiveConfigSystem::Get())
                         {
-                            if (const FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(*InItem))
+                            if (const FLiveConfigPropertyDefinition* Def = System->PropertyDefinitions.Find(*InItem))
                             {
                                 return Def->PropertyType == ELiveConfigPropertyType::Bool ? 1 : 0;
                             }
@@ -272,9 +276,9 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
                         SNew(SEditableTextBox)
                         .Text_Lambda([InItem]()
                         {
-                            if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
+                            if (const ULiveConfigSystem* System = ULiveConfigSystem::Get())
                             {
-                                if (const FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(*InItem))
+                                if (const FLiveConfigPropertyDefinition* Def = System->PropertyDefinitions.Find(*InItem))
                                 {
                                     return FText::FromString(Def->Value);
                                 }
@@ -283,9 +287,9 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
                         })
                         .OnVerifyTextChanged_Lambda([InItem](const FText& NewText, FText& OutError)
                         {
-                            if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
+                            if (const ULiveConfigSystem* System = ULiveConfigSystem::Get())
                             {
-                                if (const FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(*InItem))
+                                if (const FLiveConfigPropertyDefinition* Def = System->PropertyDefinitions.Find(*InItem))
                                 {
                                     FString NewVal = NewText.ToString();
                                     if (Def->PropertyType == ELiveConfigPropertyType::Int)
@@ -312,9 +316,9 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
                         })
                         .OnTextCommitted_Lambda([InItem](const FText& NewText, ETextCommit::Type CommitType)
                         {
-                            if (ULiveConfigGameSettings* GameSettings = GetMutableDefault<ULiveConfigGameSettings>())
+                            if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
                             {
-                                if (FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(*InItem))
+                                if (FLiveConfigPropertyDefinition* Def = System->PropertyDefinitions.Find(*InItem))
                                 {
                                     FString NewVal = NewText.ToString();
                                     bool bChanged = false;
@@ -336,12 +340,9 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
 
                                     if (bChanged)
                                     {
-                                        GameSettings->SaveConfig();
-                                        GameSettings->TryUpdateDefaultConfigFile();
-                                        if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
-                                        {
-                                            System->RefreshFromSettings();
-                                        }
+                                        System->SaveConfig();
+                                        System->TryUpdateDefaultConfigFile();
+                                        System->RefreshFromSettings();
                                     }
                                 }
                             }
@@ -352,9 +353,9 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
                         SNew(SCheckBox)
                         .IsChecked_Lambda([InItem]()
                         {
-                            if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
+                            if (const ULiveConfigSystem* System = ULiveConfigSystem::Get())
                             {
-                                if (const FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(*InItem))
+                                if (const FLiveConfigPropertyDefinition* Def = System->PropertyDefinitions.Find(*InItem))
                                 {
                                     return Def->Value.ToBool() ? ECheckBoxState::Checked : ECheckBoxState::Unchecked;
                                 }
@@ -363,17 +364,14 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
                         })
                         .OnCheckStateChanged_Lambda([InItem](ECheckBoxState NewState)
                         {
-                            if (ULiveConfigGameSettings* GameSettings = GetMutableDefault<ULiveConfigGameSettings>())
+                            if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
                             {
-                                if (FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(*InItem))
+                                if (FLiveConfigPropertyDefinition* Def = System->PropertyDefinitions.Find(*InItem))
                                 {
                                     Def->Value = NewState == ECheckBoxState::Checked ? TEXT("true") : TEXT("false");
-                                    GameSettings->SaveConfig();
-                                    GameSettings->TryUpdateDefaultConfigFile();
-                                    if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
-                                    {
-                                        System->RefreshFromSettings();
-                                    }
+                                    System->SaveConfig();
+                                    System->TryUpdateDefaultConfigFile();
+                                    System->RefreshFromSettings();
                                 }
                             }
                         })
@@ -404,9 +402,9 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
         ]
     );
 
-    if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
+    if (const ULiveConfigSystem* System = ULiveConfigSystem::Get())
     {
-        if (const FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(*InItem))
+        if (const FLiveConfigPropertyDefinition* Def = System->PropertyDefinitions.Find(*InItem))
         {
             if (Def->Tags.Num() > 0)
             {
@@ -483,9 +481,9 @@ void SLiveConfigPropertyPicker::OnCommitNewProperty(const FText& InText, ETextCo
 
     // Add to property definitions if in editor
 #if WITH_EDITOR
-    if (ULiveConfigGameSettings* GameSettings = GetMutableDefault<ULiveConfigGameSettings>())
+    if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
     {
-        if (!GameSettings->PropertyDefinitions.Contains(NewPropertyName))
+        if (!System->PropertyDefinitions.Contains(NewPropertyName))
         {
             FLiveConfigPropertyDefinition NewDef;
             NewDef.PropertyName = NewPropertyName;
@@ -496,14 +494,11 @@ void SLiveConfigPropertyPicker::OnCommitNewProperty(const FText& InText, ETextCo
                 NewDef.PropertyType = FilterType.GetValue();
             }
 
-            GameSettings->PropertyDefinitions.Add(NewPropertyName, NewDef);
-            GameSettings->SaveConfig();
-            GameSettings->TryUpdateDefaultConfigFile();
+            System->PropertyDefinitions.Add(NewPropertyName, NewDef);
+            System->SaveConfig();
+            System->TryUpdateDefaultConfigFile();
 
-            if (ULiveConfigSystem* System = GEngine->GetEngineSubsystem<ULiveConfigSystem>())
-            {
-                System->RefreshFromSettings();
-            }
+            System->RefreshFromSettings();
         }
     }
 #endif
@@ -537,9 +532,9 @@ FText SLiveConfigPropertyPicker::GetPropertyDescription(FLiveConfigProperty Prop
     }
 
 #if WITH_EDITOR
-    if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
+    if (const ULiveConfigSystem* System = ULiveConfigSystem::Get())
     {
-        if (const FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(Property))
+        if (const FLiveConfigPropertyDefinition* Def = System->PropertyDefinitions.Find(Property))
         {
             return FText::FromString(Def->Description);
         }

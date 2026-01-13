@@ -5,15 +5,12 @@
 #include "HAL/FileManager.h"
 #include "JsonObjectConverter.h"
 #include "LiveConfigGameSettings.h"
-#include "LiveConfigLib.h"
 #include "Dom/JsonObject.h"
 #include "Serialization/JsonWriter.h"
 #include "Serialization/JsonReader.h"
 #include "Serialization/JsonSerializer.h"
 #include "HAL/IConsoleManager.h"
-#include "Engine/Console.h"
 #include "Engine/Engine.h"
-#include "Profiles/LiveConfigProfileActor.h"
 #include "Profiles/LiveConfigProfileReplicationSystem.h"
 
 DEFINE_LOG_CATEGORY(LogLiveConfigProfile);
@@ -26,8 +23,6 @@ ULiveConfigProfileSystem* ULiveConfigProfileSystem::Get()
 void ULiveConfigProfileSystem::Initialize(FSubsystemCollectionBase& Collection)
 {
     Super::Initialize(Collection);
-
-    UConsole::RegisterConsoleAutoCompleteEntries.AddUObject(this, &ThisClass::PopulateAutoCompleteEntries);
 
     IConsoleManager::Get().RegisterConsoleCommand(
         TEXT("LiveConfig.SaveProfile"),
@@ -251,23 +246,4 @@ FString ULiveConfigProfileSystem::GetProfilesDirectory()
 FString ULiveConfigProfileSystem::GetProfilePath(FName ProfileName)
 {
     return GetProfilesDirectory() / ProfileName.ToString() + TEXT(".json");
-}
-
-void ULiveConfigProfileSystem::PopulateAutoCompleteEntries(TArray<FAutoCompleteCommand>& Entries)
-{
-    if (ULiveConfigSystem* ConfigSystem = ULiveConfigSystem::Get())
-    {
-        if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
-        {
-            // Use iterator to avoid copying the full property list 
-            for (auto Iter = GameSettings->PropertyDefinitions.CreateConstIterator(); Iter; ++Iter)
-            {
-                const FLiveConfigProperty& Prop = Iter->Key;
-                FAutoCompleteCommand Command;
-                Command.Command = FString::Printf(TEXT("LiveConfig.SetOverride %s"), *Prop.ToString());
-                Command.Desc = FString::Printf(TEXT("Set live config override for %s (current %s)"), *Prop.ToString(), *ConfigSystem->GetStringValue(Prop));
-                Entries.Add(Command);
-            }
-        }
-    }
 }

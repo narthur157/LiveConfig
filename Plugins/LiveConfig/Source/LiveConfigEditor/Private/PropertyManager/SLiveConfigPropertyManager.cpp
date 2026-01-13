@@ -16,6 +16,7 @@
 #include "Widgets/Layout/SScrollBox.h"
 #include "LiveConfigGameSettings.h"
 #include "LiveConfigJson.h"
+#include "LiveConfigSystem.h"
 #include "Misc/MessageDialog.h"
 #include "Misc/ComparisonUtility.h"
 
@@ -250,12 +251,13 @@ void SLiveConfigPropertyManager::OnGetChildren(TSharedRef<FLiveConfigPropertyTre
 void SLiveConfigPropertyManager::RefreshList()
 {
 	RawPropertyList.Empty();
-	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
-	for (auto& Pair : Settings->PropertyDefinitions)
+	ULiveConfigSystem* System = ULiveConfigSystem::Get();
+	for (auto& Pair : System->PropertyDefinitions)
 	{
 		RawPropertyList.Add(MakeShared<FLiveConfigPropertyDefinition>(Pair.Value));
 	}
 
+	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
 	KnownTags = Settings->KnownTags;
 
 	RawPropertyList.Sort([](const TSharedPtr<FLiveConfigPropertyDefinition>& A, const TSharedPtr<FLiveConfigPropertyDefinition>& B)
@@ -524,17 +526,19 @@ void SLiveConfigPropertyManager::SaveKnownTags()
 
 void SLiveConfigPropertyManager::GetMissingTags(TArray<FName>& OutMissingTags)
 {
-	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
-	if (!Settings) return;
+	ULiveConfigSystem* System = ULiveConfigSystem::Get();
+	if (!System) return;
 
 	TSet<FName> UsedTags;
-	for (const auto& Pair : Settings->PropertyDefinitions)
+	for (const auto& Pair : System->PropertyDefinitions)
 	{
 		for (const FName& PropertyTag : Pair.Value.Tags)
 		{
 			UsedTags.Add(PropertyTag);
 		}
 	}
+
+	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
 
 	TSet<FName> KnownTagsSet(Settings->KnownTags);
 	for (const FName& PropertyTag : UsedTags)
@@ -677,13 +681,14 @@ void SLiveConfigPropertyManager::OnAddPropertyAtFolder(FString FolderPath)
 
 void SLiveConfigPropertyManager::Save()
 {
-	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
-	Settings->PropertyDefinitions.Empty();
+	ULiveConfigSystem* System = ULiveConfigSystem::Get();
+	System->PropertyDefinitions.Empty();
 	for (const auto& PropDef : RawPropertyList)
 	{
-		Settings->PropertyDefinitions.Add(PropDef->PropertyName, *PropDef);
+		System->PropertyDefinitions.Add(PropDef->PropertyName, *PropDef);
 	}
-	Settings->SaveConfig();
+	System->SaveConfig();
+	System->TryUpdateDefaultConfigFile();
 
 	if (ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get())
 	{
@@ -691,9 +696,9 @@ void SLiveConfigPropertyManager::Save()
 	}
 
 	// Notify system to refresh its base values
-	if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
+	if (ULiveConfigSystem* LiveConfigSystem = ULiveConfigSystem::Get())
 	{
-		System->RefreshFromSettings();
+		LiveConfigSystem->RefreshFromSettings();
 	}
 
 	UpdateAllTags();
@@ -701,7 +706,7 @@ void SLiveConfigPropertyManager::Save()
 
 void SLiveConfigPropertyManager::OnPropertyRowChanged(TSharedPtr<FLiveConfigPropertyDefinition> OldDef, TSharedPtr<FLiveConfigPropertyDefinition> NewDef, ELiveConfigPropertyChangeType ChangeType)
 {
-	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
+	ULiveConfigSystem* LiveConfigSystem = ULiveConfigSystem::Get();
 	ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get();
 
 	auto IsValidPropertyName = [](const FLiveConfigProperty& Prop)
@@ -715,7 +720,7 @@ void SLiveConfigPropertyManager::OnPropertyRowChanged(TSharedPtr<FLiveConfigProp
 		// If the name changed, we need to handle the old key in the settings
 		if (OldDef.IsValid() && IsValidPropertyName(OldDef->PropertyName))
 		{
-			Settings->PropertyDefinitions.Remove(OldDef->PropertyName);
+			LiveConfigSystem->PropertyDefinitions.Remove(OldDef->PropertyName);
 			if (JsonSystem)
 			{
 				JsonSystem->DeletePropertyFile(OldDef->PropertyName.GetName());
@@ -725,25 +730,19 @@ void SLiveConfigPropertyManager::OnPropertyRowChanged(TSharedPtr<FLiveConfigProp
 	
 	if (NewDef.IsValid() && IsValidPropertyName(NewDef->PropertyName))
 	{
-		Settings->PropertyDefinitions.Add(NewDef->PropertyName, *NewDef);
+		LiveConfigSystem->PropertyDefinitions.Add(NewDef->PropertyName, *NewDef);
 		if (JsonSystem)
 		{
 			JsonSystem->SavePropertyToFile(*NewDef);
 		}
 	}
 
-	Settings->SaveConfig();
-
 	if (ChangeType == ELiveConfigPropertyChangeType::Name)
 	{
 		OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
 	}
 
-	// Notify system to refresh its base values
-	if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
-	{
-		System->RefreshFromSettings();
-	}
+	LiveConfigSystem->RefreshFromSettings();
 
 	UpdateAllTags();
 	
@@ -760,9 +759,8 @@ void SLiveConfigPropertyManager::RemoveProperty(TSharedPtr<FLiveConfigPropertyDe
 		return;
 	}
 
-	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
-	Settings->PropertyDefinitions.Remove(InItem->PropertyName);
-	Settings->SaveConfig();
+	ULiveConfigSystem* System = ULiveConfigSystem::Get();
+	System->PropertyDefinitions.Remove(InItem->PropertyName);
 
 	if (ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get())
 	{
@@ -772,11 +770,7 @@ void SLiveConfigPropertyManager::RemoveProperty(TSharedPtr<FLiveConfigPropertyDe
 	RawPropertyList.Remove(InItem);
 	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
 
-	// Notify system to refresh its base values
-	if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
-	{
-		System->RefreshFromSettings();
-	}
+	System->RefreshFromSettings();
 
 	UpdateAllTags();
 }
@@ -804,19 +798,21 @@ void SLiveConfigPropertyManager::RemoveTag(FName TagName)
 
 		// Remove from properties
 		ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get();
-		ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
+		ULiveConfigSystem* System = ULiveConfigSystem::Get();
 
 		for (const auto& PropDef : RawPropertyList)
 		{
 			if (PropDef->Tags.Remove(TagName) > 0)
 			{
-				Settings->PropertyDefinitions.Add(PropDef->PropertyName, *PropDef);
+				System->PropertyDefinitions.Add(PropDef->PropertyName, *PropDef);
 				if (JsonSystem)
 				{
 					JsonSystem->SavePropertyToFile(*PropDef);
 				}
 			}
 		}
+		System->SaveConfig();
+		System->TryUpdateDefaultConfigFile();
 	}
 
 	KnownTags.Remove(TagName);
