@@ -1,5 +1,6 @@
 ﻿#include "LiveConfigCurveTableUpdater.h"
 #include "LiveConfigSystem.h"
+#include "LiveConfigTypes.h"
 #include "LiveConfigGameSettings.h"
 #include "Engine/CurveTable.h"
 #include "Misc/AutomationTest.h"
@@ -25,7 +26,7 @@ bool FLiveConfigCurveTableTest::RunTest(const FString& Parameters)
 	struct FPublicCurveTableUpdater : public ULiveConfigCurveTableUpdater
 	{
 		using ULiveConfigCurveTableUpdater::ExportActiveCurveTable;
-		using ULiveConfigCurveTableUpdater::FillCurveTables;
+		using ULiveConfigCurveTableUpdater::ExportToCurveTables;
 	};
 
 	FPublicCurveTableUpdater* PublicUpdater = static_cast<FPublicCurveTableUpdater*>(Updater);
@@ -41,7 +42,7 @@ bool FLiveConfigCurveTableTest::RunTest(const FString& Parameters)
 	}
 
 	AddInfo(TEXT("Starting FillCurveTables"));
-	PublicUpdater->FillCurveTables();
+	PublicUpdater->ExportToCurveTables();
 	AddInfo(TEXT("Finished FillCurveTables"));
 
 	if (TestCurveTable->GetSimpleCurveRowMap().Num() == 0)
@@ -78,7 +79,7 @@ bool FLiveConfigCurveTableTest::RunTest(const FString& Parameters)
 		Settings->PropertyDefinitions.Add(Def1.PropertyName, Def1);
 	}
 
-	PublicUpdater->FillCurveTables();
+	PublicUpdater->ExportToCurveTables();
 
 	FSimpleCurve* ArrayCurve = TestCurveTable->GetSimpleCurveRowMap().FindRef(TEXT("TestArray"));
 	if (!ArrayCurve)
@@ -103,7 +104,7 @@ bool FLiveConfigCurveTableTest::RunTest(const FString& Parameters)
 		Settings->PropertyDefinitions.Add(CurveDef.PropertyName, CurveDef);
 	}
 
-	PublicUpdater->FillCurveTables();
+	PublicUpdater->ExportToCurveTables();
 	if (TestCurveTable->GetSimpleCurveRowMap().Contains(TEXT("InboundProp")))
 	{
 		AddError(TEXT("InboundProp should NOT be exported"));

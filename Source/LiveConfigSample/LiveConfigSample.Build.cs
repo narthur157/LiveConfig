@@ -6,7 +6,7 @@ public class LiveConfigSample : ModuleRules
 {
 	public LiveConfigSample(ReadOnlyTargetRules Target) : base(Target)
 	{
-		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+		bUseUnity = false;
 	
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
 

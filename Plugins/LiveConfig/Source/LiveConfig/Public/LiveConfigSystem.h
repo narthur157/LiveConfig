@@ -3,59 +3,16 @@
 #include "Subsystems/EngineSubsystem.h"
 #include "Interfaces/IHttpRequest.h"
 #include "CoreMinimal.h"
+#include "LiveConfigTypes.h"
 #include "LiveConfigPropertyName.h"
+#include "Profiles/LiveConfigProfile.h"
 #include "LiveConfigSystem.generated.h"
-
-LIVECONFIG_API DECLARE_LOG_CATEGORY_EXTERN(LogLiveConfig, Log, All);
+DECLARE_MULTICAST_DELEGATE(FOnLiveConfigPropertiesUpdated);
 
 namespace LiveConfigTags
 {
 	const LIVECONFIG_API extern FName FromCurveTable;
 }
-
-DECLARE_MULTICAST_DELEGATE(FOnLiveConfigPropertiesUpdated);
-
-UENUM(BlueprintType)
-enum class ELiveConfigPropertyChangeType : uint8
-{
-	Name,
-	Description,
-	Type,
-	Value,
-	Tags
-};
-
-UENUM(BlueprintType)
-enum class ELiveConfigPropertyType : uint8
-{
-	String,
-	Int,
-	Float,
-	Bool
-};
-
-USTRUCT(BlueprintType)
-struct FLiveConfigPropertyDefinition
-{
-    GENERATED_BODY()
-
-    UPROPERTY(Config, BlueprintReadWrite, EditAnywhere, Category = "Property")
-    FLiveConfigProperty PropertyName;
-
-    UPROPERTY(Config, BlueprintReadWrite, EditAnywhere, Category = "Property")
-    FString Description;
-
-    UPROPERTY(Config, BlueprintReadWrite, EditAnywhere, Category = "Property")
-    ELiveConfigPropertyType PropertyType = ELiveConfigPropertyType::String;
-
-    UPROPERTY(Config, BlueprintReadWrite, EditAnywhere, Category = "Property")
-    TArray<FName> Tags;
-
-    UPROPERTY(Config, BlueprintReadWrite, EditAnywhere, Category = "Property")
-    FString Value;
-};
-
-
 
 /**
  * A subsystem to download configuration data from a public Google Sheet URL (published as CSV).
@@ -109,6 +66,7 @@ public:
 
     /** Refresh properties from editor settings */
     void RefreshFromSettings();
+    void RefreshFromSettings(const FLiveConfigProfile& Profile);
 
     FOnLiveConfigPropertiesUpdated OnPropertiesUpdated;
 
@@ -126,6 +84,12 @@ private:
     FTimerHandle PollingTimer;
     FTSTicker::FDelegateHandle TimeoutTimer;
     TSharedPtr<IHttpRequest> CurrentRequest;
+	
+	UPROPERTY()
+	FLiveConfigCache Cache;
+    
+	// Environment config is treated as a layer below more specific profiles
+	FLiveConfigProfile EnvironmentOverrides;
     
     float TimeoutDuration;
     /** Callback function for when the HTTP request completes. */
@@ -133,6 +97,12 @@ private:
 
     void OnTravel(UWorld* World, FWorldInitializationValues WorldInitializationValues);
     void OnStartGameInstance(UGameInstance* GameInstance);
+
+    /**
+     * Called to rebuild the lookup tables whenever a layer or the base config changes
+     */
+	UFUNCTION()
+    void BuildCache();
 
     /** Flag to indicate if the download and parsing were successful. */
     bool bIsDataReady = false;

@@ -3,7 +3,15 @@
 
 #include "LiveConfigLib.h"
 
+#include "LiveConfigGameSettings.h"
 #include "LiveConfigSystem.h"
+
+FLiveConfigPropertyDefinition ULiveConfigLib::GetLiveConfigPropertyDefinition(FLiveConfigProperty Property)
+{
+	const FLiveConfigPropertyDefinition* Prop = GetDefault<ULiveConfigGameSettings>()->PropertyDefinitions.Find(Property);
+	if (!Prop) { return {}; }
+	return *Prop; 
+}
 
 bool ULiveConfigLib::IsFeatureEnabled(FLiveConfigProperty Property)
 {

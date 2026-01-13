@@ -4,7 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DeveloperSettings.h"
-#include "LiveConfigSystem.h"
+#include "LiveConfigTypes.h"
+#include "LiveConfigPropertyName.h"
 #include "LiveConfigGameSettings.generated.h"
 
 /**
@@ -45,4 +46,12 @@ public:
 	/** Whether to automatically create new rows in the ExportCurveTable for all Float and Int properties. */
 	UPROPERTY(Config, EditAnywhere, Category = "CurveTable")
 	bool bAutoCreateRowsInExportTable = true;
+
+	/** Whether to enable profile replication via a spawned actor. */
+	UPROPERTY(Config, EditAnywhere, Category = "Profiles")
+	bool bEnableProfileReplication = true;
+
+	/** The class of the actor used for profile replication. */
+	UPROPERTY(Config, EditAnywhere, Category = "Profiles", Meta = (MetaClass = "/Script/LiveConfig.LiveConfigProfileActor"))
+	FSoftClassPath ProfileActorClass;
 };

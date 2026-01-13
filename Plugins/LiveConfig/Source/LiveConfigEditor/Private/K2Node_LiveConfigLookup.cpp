@@ -6,6 +6,8 @@
 #include "K2Node_CallFunction.h"
 #include "BlueprintActionDatabaseRegistrar.h"
 #include "BlueprintNodeSpawner.h"
+#include "LiveConfigSystem.h"
+#include "LiveConfigTypes.h"
 
 #define LOCTEXT_NAMESPACE "K2Node_LiveConfigLookup"
 
@@ -64,7 +66,7 @@ FText UK2Node_LiveConfigLookup::GetTooltipText() const
 
 FLinearColor UK2Node_LiveConfigLookup::GetNodeTitleColor() const
 {
-	return FLinearColor(0.0f, 0.5f, 1.0f);
+	return FLinearColor(0.5f, 1.0f, .5f);
 }
 
 FText UK2Node_LiveConfigLookup::GetMenuCategory() const
@@ -292,12 +294,11 @@ void UK2Node_LiveConfigLookup::UpdateOutputPinType()
 	}
 
 	ELiveConfigPropertyType PropType = ELiveConfigPropertyType::Float;
-	if (const ULiveConfigGameSettings* GameSettings = GetDefault<ULiveConfigGameSettings>())
+	
+	FLiveConfigPropertyDefinition Def = ULiveConfigLib::GetLiveConfigPropertyDefinition(SelectedProperty)
+	if (Def.IsValid())
 	{
-		if (const FLiveConfigPropertyDefinition* Def = GameSettings->PropertyDefinitions.Find(SelectedProperty))
-		{
-			PropType = Def->PropertyType;
-		}
+		PropType = Def.PropertyType;
 	}
 
 	FEdGraphPinType NewType;

@@ -5,7 +5,7 @@
 #include "LiveConfigPropertyStyle.h"
 #include "LiveConfigPropertyCustomization.h"
 #include "LiveConfigPropertyPinFactory.h"
-#include "LiveConfigSystem.h"
+#include "LiveConfigTypes.h"
 #include "LiveConfigBlueprintExtensions.h"
 #include "GraphEditorModule.h"
 #include "PropertyManager/SLiveConfigPropertyManager.h"

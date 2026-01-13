@@ -21,12 +21,8 @@ public:
 	void UpdateCurveTables();
 	
 protected:
-	UFUNCTION()
-	void OnPropertiesUpdated();
-
 	void ImportFromCurveTables();
 	void ExportToCurveTables();
-	void FillCurveTables();
 
 	UPROPERTY()
 	UCurveTable* ExportActiveCurveTable;

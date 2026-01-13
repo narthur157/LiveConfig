@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "LiveConfigTypes.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "LiveConfigLib.generated.h"
 
@@ -14,6 +15,9 @@ class LIVECONFIG_API ULiveConfigLib : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 public:
+	UFUNCTION(BlueprintCallable)
+	static FLiveConfigPropertyDefinition GetLiveConfigPropertyDefinition(FLiveConfigProperty Property);
+	
 	UFUNCTION()
 	static bool IsFeatureEnabled(FLiveConfigProperty Property);
 

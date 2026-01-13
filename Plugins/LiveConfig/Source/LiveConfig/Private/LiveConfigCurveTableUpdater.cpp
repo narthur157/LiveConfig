@@ -16,11 +16,10 @@ void ULiveConfigCurveTableUpdater::Initialize(FSubsystemCollectionBase& Collecti
 	Collection.InitializeDependency(ULiveConfigSystem::StaticClass());
 
 	UpdateCurveTables();
-	
-	ULiveConfigSystem* System = ULiveConfigSystem::Get();
-	if (System)
+
+	if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
 	{
-		System->OnPropertiesUpdated.AddUObject(this, &ThisClass::OnPropertiesUpdated);
+		System->OnPropertiesUpdated.AddUObject(this, &ThisClass::ExportToCurveTables);
 	}
 }
 
@@ -47,11 +46,6 @@ void ULiveConfigCurveTableUpdater::UpdateCurveTables()
 	}
 
 	ImportFromCurveTables();
-	ExportToCurveTables();
-}
-
-void ULiveConfigCurveTableUpdater::OnPropertiesUpdated()
-{
 	ExportToCurveTables();
 }
 
@@ -120,12 +114,8 @@ void ULiveConfigCurveTableUpdater::ImportFromCurveTables()
 	}
 }
 
+// ReSharper disable once CppMemberFunctionMayBeConst
 void ULiveConfigCurveTableUpdater::ExportToCurveTables()
-{
-	FillCurveTables();
-}
-
-void ULiveConfigCurveTableUpdater::FillCurveTables()
 {
 	const ULiveConfigGameSettings* Settings = GetDefault<ULiveConfigGameSettings>();
 
