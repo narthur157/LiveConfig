@@ -1,7 +1,7 @@
 {
 	"propertyName":
 	{
-		"propertyName": "TeamColorIsAlwaysConsistent"
+		"propertyName": "AbortEmptyMatches33"
 	},
 	"description": "",
 	"propertyType": "Bool",
@@ -9,5 +9,5 @@
 		"Feature",
 		"bool"
 	],
-	"value": "true"
+	"value": "false"
 }

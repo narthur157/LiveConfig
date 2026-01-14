@@ -1,0 +1,13 @@
+{
+	"propertyName":
+	{
+		"propertyName": "SomeNewProp"
+	},
+	"description": "",
+	"propertyType": "Float",
+	"tags": [
+		"Movement",
+		"Vector"
+	],
+	"value": "0.123457"
+}

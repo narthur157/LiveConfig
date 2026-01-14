@@ -1,0 +1,8 @@
+{
+	"profileName": "TestProfile",
+	"overrides":
+	{
+		"(PropertyName=\"1v0.mapName\")": "TEst"
+	},
+	"replicatedOverrides": []
+}
