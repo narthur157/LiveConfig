@@ -84,6 +84,8 @@ inline float FLiveConfigCache::GetValue<float>(const FLiveConfigProperty& Proper
 	{
 		return *Value;
 	}
+	
+	UE_LOG(LogLiveConfig, Warning, TEXT("Failed to find float value for property: %s"), *Property.ToString());
 	return 0.0f;
 }
 
@@ -94,6 +96,8 @@ inline int32 FLiveConfigCache::GetValue<int32>(const FLiveConfigProperty& Proper
 	{
 		return *Value;
 	}
+	
+	UE_LOG(LogLiveConfig, Warning, TEXT("Failed to find int32 value for property: %s"), *Property.ToString());
 	return 0;
 }
 
@@ -104,6 +108,8 @@ inline FString FLiveConfigCache::GetValue<FString>(const FLiveConfigProperty& Pr
 	{
 		return *Value;
 	}
+	
+	UE_LOG(LogLiveConfig, Warning, TEXT("Failed to find string value for property: %s"), *Property.ToString());
 	return FString();
 }
 
@@ -114,6 +120,8 @@ inline bool FLiveConfigCache::GetValue<bool>(const FLiveConfigProperty& Property
 	{
 		return *Value;
 	}
+	
+	UE_LOG(LogLiveConfig, Warning, TEXT("Failed to find bool value for property: %s"), *Property.ToString());
 	return false;
 }
 

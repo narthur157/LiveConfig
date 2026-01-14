@@ -10,6 +10,7 @@
 
 #include "LiveConfigJson.h"
 #include "ConsoleSettings.h"
+#include "LiveConfigLib.h"
 #include "Engine/Console.h"
 
 namespace LiveConfigTags
@@ -264,7 +265,8 @@ void ULiveConfigSystem::PopulateAutoCompleteEntries(TArray<FAutoCompleteCommand>
         const FLiveConfigProperty& Prop = Iter->Key;
         FAutoCompleteCommand Command;
         Command.Command = FString::Printf(TEXT("LiveConfig.SetOverride %s"), *Prop.ToString());
-        Command.Desc = FString::Printf(TEXT("Set live config override for %s (current %s)"), *Prop.ToString(), *GetStringValue(Prop));
+        auto Def = ULiveConfigLib::GetLiveConfigPropertyDefinition(Prop);
+        Command.Desc = FString::Printf(TEXT("Set live config override for %s (current %s)"), *Prop.ToString(), *Def.Value);
         Entries.Add(Command);
     }
 }

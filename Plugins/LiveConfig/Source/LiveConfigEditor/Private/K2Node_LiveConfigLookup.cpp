@@ -210,41 +210,39 @@ void UK2Node_LiveConfigLookup::ExpandNode(FKismetCompilerContext& CompilerContex
 		return;
 	}
 
-	// this may not be valid
+	// this may not be valid at compile/cook time
 	FLiveConfigPropertyDefinition Def = ULiveConfigLib::GetLiveConfigPropertyDefinition(SelectedProperty);
 	
 	ELiveConfigPropertyType PropType = ELiveConfigPropertyType::Float;
-	if (bOutputIsConnected)
+	
+	// Determine the property type based on the value pin's current type.
+	// We trust the pin type because it's what the user sees and what was set during UpdateOutputPinType.
+	if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Boolean)
 	{
-		// if the output is connected, we must match that type
-		if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Boolean)
-		{
-			PropType = ELiveConfigPropertyType::Bool;
-		}
-		else if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Int)
-		{
-			PropType = ELiveConfigPropertyType::Int;
-		}
-		else if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_String)
-		{
-			PropType = ELiveConfigPropertyType::String;
-		}
-		else
-		{
-			PropType = ELiveConfigPropertyType::Float;
-		}
+		PropType = ELiveConfigPropertyType::Bool;
 	}
-	else if (SelectedProperty.IsValid() && !bInputIsConnected)
+	else if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Int)
 	{
-		// if we are using a literal property and we aren't connected to an output yet, we're using the property as our type
-		PropType = Def.PropertyType;
+		PropType = ELiveConfigPropertyType::Int;
+	}
+	else if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_String)
+	{
+		PropType = ELiveConfigPropertyType::String;
+	}
+	else
+	{
+		PropType = ELiveConfigPropertyType::Float;
 	}
 	
-	if (SelectedProperty.IsValid() && PropType != Def.PropertyType)
+	// If we have a valid definition, we can do a sanity check, but only in editor or if it's available.
+	if (Def.IsValid() && PropType != Def.PropertyType)
 	{
-		CompilerContext.MessageLog.Error(*LOCTEXT("InvalidProperty", "Property in UK2Node_LiveConfigLookup must match output type").ToString());
-		BreakAllNodeLinks();
-		return;	
+		FFormatNamedArguments Args;
+		Args.Add(TEXT("PropertyName"), FText::FromString(SelectedProperty.ToString()));
+		Args.Add(TEXT("ExpectedType"), UEnum::GetDisplayValueAsText(Def.PropertyType));
+		Args.Add(TEXT("ActualType"), UEnum::GetDisplayValueAsText(PropType));
+
+		CompilerContext.MessageLog.Warning(*FText::Format(LOCTEXT("PropertyTypeMismatch", "Property type mismatch for '{PropertyName}'. Expected {ExpectedType}, but node is configured as {ActualType}."), Args).ToString());
 	}
 
 	FName FunctionName;

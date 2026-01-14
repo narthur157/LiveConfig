@@ -40,13 +40,16 @@ void FLiveConfigCache::BuildConfig(const TMap<FLiveConfigProperty, FLiveConfigPr
 {
 	OutCache.Reset();
 	
+
 	for (const TPair<FLiveConfigProperty, FLiveConfigPropertyDefinition>& Pair : PropertyDefinitions)
 	{
 		OutCache.SetValue(Pair.Value);	
 	}
-	
+
 	auto AddProfileLayer = [&](const FLiveConfigProfile& Profile)
 	{
+		UE_LOG(LogLiveConfig, Log, TEXT("Applying profile layer with %d overrides"), Profile.Overrides.Num());
+
 		for (const TPair<FLiveConfigProperty, FString>& Pair : Profile.Overrides)
 		{
 			// Use the actual definition so that we get the type from our config
@@ -59,4 +62,6 @@ void FLiveConfigCache::BuildConfig(const TMap<FLiveConfigProperty, FLiveConfigPr
 	// We could add more layers here/support custom layering, but complex layering creates UX issues
 	AddProfileLayer(EnvironmentProfile);
 	AddProfileLayer(ActiveProfile);
+	
+	UE_LOG(LogLiveConfig, Log, TEXT("Built config cache with %d base property definitions, %d env overrides, %d active overrides"), PropertyDefinitions.Num(), EnvironmentProfile.Overrides.Num(), ActiveProfile.Overrides.Num());
 }

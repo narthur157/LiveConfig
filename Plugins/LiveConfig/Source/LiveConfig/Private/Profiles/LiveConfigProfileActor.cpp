@@ -72,7 +72,12 @@ void ALiveConfigProfileActor::ServerSetActiveProfile(FName ProfileName)
 void ALiveConfigProfileActor::ServerSetActiveProfileData_Implementation(const FLiveConfigProfile& Profile)
 {
     ReplicatedActiveProfile = Profile;
+    
+    // If we're coming from the PlayerControllerComponent, the data is already unpacked into Overrides (via OnAfterReplication)
+    // but ReplicatedActiveProfile.ReplicatedOverrides is what actually replicates to OTHER clients.
+    // So we need to ensure ReplicatedOverrides is populated.
     ReplicatedActiveProfile.PrepareForReplication();
+    
     ApplyProfileToSystem();
 }
 
