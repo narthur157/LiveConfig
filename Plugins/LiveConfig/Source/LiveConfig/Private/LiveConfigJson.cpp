@@ -93,7 +93,7 @@ void ULiveConfigJsonSystem::LoadJsonFromDirectory(const FString& Dir)
 void ULiveConfigJsonSystem::LoadJsonFromFile(const FString& Path, const FString& FileName)
 {
 	FString FullPath = Path / FileName;
-	if (FPaths::FileExists(FullPath))
+	if (!FPaths::FileExists(FullPath))
 	{
 		UE_LOG(LogLiveConfig, Warning, TEXT("File %s doesn't exist"), *FullPath);
 		return;
