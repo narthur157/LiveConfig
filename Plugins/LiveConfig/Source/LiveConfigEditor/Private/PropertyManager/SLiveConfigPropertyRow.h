@@ -28,6 +28,8 @@ public:
 	DECLARE_DELEGATE_OneParam(FOnAddPropertyAtFolder, FString);
 	DECLARE_DELEGATE_RetVal_OneParam(bool, FIsNameDuplicate, FName);
 	DECLARE_DELEGATE(FOnRequestRefresh);
+	DECLARE_DELEGATE_OneParam(FOnNavigatePropertyName, TSharedPtr<FLiveConfigPropertyTreeNode>);
+	DECLARE_DELEGATE_OneParam(FOnNavigateValue, TSharedPtr<FLiveConfigPropertyTreeNode>);
 
 	SLATE_BEGIN_ARGS(SLiveConfigPropertyRow) {}
 		SLATE_EVENT(FOnDeleteProperty, OnDeleteProperty);
@@ -35,12 +37,17 @@ public:
 		SLATE_EVENT(FIsNameDuplicate, IsNameDuplicate);
 		SLATE_EVENT(FOnPropertyPropertyChanged, OnChanged);
 		SLATE_EVENT(FOnRequestRefresh, OnRequestRefresh);
+		SLATE_EVENT(FOnNavigatePropertyName, OnNavigateDown);
+		SLATE_EVENT(FOnNavigatePropertyName, OnNavigateUp);
+		SLATE_EVENT(FOnNavigateValue, OnNavigateValue);
 		SLATE_ARGUMENT(TFunction<FSlateColor(FName)>, GetTagColor);
 		SLATE_ATTRIBUTE(TArray<FName>, KnownTags);
 	SLATE_END_ARGS();
 
 	void Construct(const FArguments& InArgs, const TSharedRef<STableViewBase>& InOwnerTable, TSharedPtr<FLiveConfigPropertyTreeNode>
 	               InItem, int32 InIndex);
+
+	void RequestValueFocus() { bNeedsValueFocus = true; }
 
 	virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
 
@@ -58,6 +65,8 @@ private:
 
 	void RefreshTags();
 	void OnTagChanged();
+	bool VerifyValueText(const FText& NewText, FText& OutError);
+	void ValueTextCommitted(const FText& NewText, ETextCommit::Type CommitType);
 
 	TSharedPtr<FLiveConfigPropertyTreeNode> Item;
 	FOnDeleteProperty OnDeleteProperty;
@@ -65,9 +74,17 @@ private:
 	FIsNameDuplicate OnIsNameDuplicate;
 	FOnPropertyPropertyChanged OnChanged;
 	FOnRequestRefresh OnRequestRefresh;
+	FOnNavigatePropertyName OnNavigateDown;
+	FOnNavigatePropertyName OnNavigateUp;
+	FOnNavigateValue OnNavigateValue;
 	TFunction<FSlateColor(FName)> GetTagColor;
 	TSharedPtr<class SWrapBox> TagWrapBox;
 	TSharedPtr<class SEditableTextBox> NameTextBox;
+	TSharedPtr<class SEditableTextBox> ValueTextBox;
+	TSharedPtr<class SCheckBox> ValueCheckBox;
 	TSlateAttribute<TArray<FName>, EInvalidateWidgetReason::Layout> KnownTagsAttribute;
 	bool bNeedsFocus = false;
+	bool bNeedsValueFocus = false;
+	bool bIsCommitting = false;
+	bool bJustFinishedEnterCommit = false;
 };

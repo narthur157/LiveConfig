@@ -41,6 +41,9 @@ void SLiveConfigPropertyRow::Construct(const FArguments& InArgs, const TSharedRe
 	OnIsNameDuplicate = InArgs._IsNameDuplicate;
 	OnChanged = InArgs._OnChanged;
 	OnRequestRefresh = InArgs._OnRequestRefresh;
+	OnNavigateDown = InArgs._OnNavigateDown;
+	OnNavigateUp = InArgs._OnNavigateUp;
+	OnNavigateValue = InArgs._OnNavigateValue;
 	GetTagColor = InArgs._GetTagColor;
 	KnownTagsAttribute.Assign(*this, InArgs._KnownTags);
 	
@@ -85,6 +88,20 @@ void SLiveConfigPropertyRow::Tick(const FGeometry& AllottedGeometry, const doubl
 			TSharedRef<SEditableTextBox> NameTextBoxRef = NameTextBox.ToSharedRef();
 			FSlateApplication::Get().SetKeyboardFocus(NameTextBoxRef, EFocusCause::SetDirectly);
 			bNeedsFocus = false;
+		}
+	}
+
+	if (bNeedsValueFocus)
+	{
+		if (ValueTextBox.IsValid())
+		{
+			FSlateApplication::Get().SetKeyboardFocus(ValueTextBox.ToSharedRef(), EFocusCause::SetDirectly);
+			bNeedsValueFocus = false;
+		}
+		else if (ValueCheckBox.IsValid())
+		{
+			FSlateApplication::Get().SetKeyboardFocus(ValueCheckBox.ToSharedRef(), EFocusCause::SetDirectly);
+			bNeedsValueFocus = false;
 		}
 	}
 }
@@ -157,6 +174,7 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateActionsColumnWidget()
 			.AutoWidth()
 			[
 				SNew(SComboButton)
+				.IsFocusable(false)
 				.ComboButtonStyle(FAppStyle::Get(), "SimpleComboButton")
 				.HasDownArrow(false)
 				.ButtonStyle(FAppStyle::Get(), "NoBorder")
@@ -217,6 +235,7 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateActionsColumnWidget()
 				.AutoWidth()
 			[
 				SNew(SButton)
+				.IsFocusable(false)
 				.ButtonStyle(FAppStyle::Get(), "SimpleButton")
 				.OnClicked_Lambda([this]()
 				{
@@ -281,17 +300,62 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateNameColumnWidget()
 				}
 				return true;
 			})
-			.OnTextCommitted_Lambda([this](const FText& NewText, ETextCommit::Type)
+			.OnTextCommitted_Lambda([this](const FText& NewText, ETextCommit::Type CommitType)
 			{
+				// If we are already committing, ignore this event.
+				if (bIsCommitting)
+				{
+					return;
+				}
+
+				// If it's a focus loss, but we just handled an Enter commit, ignore it.
+				if (CommitType == ETextCommit::OnUserMovedFocus && bJustFinishedEnterCommit)
+				{
+					return;
+				}
+
+				if (CommitType == ETextCommit::Default)
+				{
+					return;
+				}
+
 				FString NewFullName = NewText.ToString();
 				if (NewFullName == Item->PropertyDefinition->PropertyName.ToString())
 				{
+					if (CommitType == ETextCommit::OnEnter)
+					{
+						OnNavigateValue.ExecuteIfBound(Item);
+					}
 					return;
 				}
 				
 				TSharedPtr<FLiveConfigPropertyDefinition> OldDef = MakeShared<FLiveConfigPropertyDefinition>(*Item->PropertyDefinition);
+				
+				// Temporarily set the name on the Item so that the Refresh triggered by OnChanged
+				// knows about the new name immediately.
 				Item->PropertyDefinition->PropertyName = FLiveConfigProperty(FName(*NewFullName));
-				OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Name);
+				Item->FullPath = NewFullName; // Update the path too as it's used in the lambda
+
+				{
+					TGuardValue<bool> CommitGuard(bIsCommitting, true);
+					OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Name);
+				}
+
+				if (CommitType == ETextCommit::OnEnter)
+				{
+					bJustFinishedEnterCommit = true;
+					OnNavigateValue.ExecuteIfBound(Item);
+				}
+			})
+			.OnKeyDownHandler_Lambda([this](const FGeometry&, const FKeyEvent& InKeyEvent)
+			{
+				const FKey Key = InKeyEvent.GetKey();
+				if (Key == EKeys::Down || Key == EKeys::Up)
+				{
+					(Key == EKeys::Down ? OnNavigateDown : OnNavigateUp).ExecuteIfBound(Item);
+					return FReply::Handled();
+				}
+				return FReply::Unhandled();
 			})
 			.ForegroundColor_Lambda([this]()
 			{
@@ -310,6 +374,7 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateNameColumnWidget()
 		.Padding(4, 0, 0, 0)
 		[
 			SNew(SButton)
+			.IsFocusable(false)
 			.ButtonStyle(FAppStyle::Get(), "SimpleButton")
 			.ToolTipText(LOCTEXT("EditDescriptionToolTip", "Edit Description"))
 			.OnClicked_Lambda([this]()
@@ -425,6 +490,7 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateTypeColumnWidget()
 		.VAlign(VAlign_Center)
 		[
 			SNew(SComboBox<TSharedPtr<ELiveConfigPropertyType>>)
+			.IsFocusable(false)
 			.OptionsSource(&TypeOptions)
 			.OnGenerateWidget_Lambda([](TSharedPtr<ELiveConfigPropertyType> InType)
 			{
@@ -478,89 +544,14 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateValueColumnWidget()
 			})
 			+ SWidgetSwitcher::Slot()
 			[
-				SNew(SEditableTextBox)
+				SAssignNew(ValueTextBox, SEditableTextBox)
 				.Text_Lambda([this]() { return FText::FromString(Item->PropertyDefinition->Value); })
-				.OnVerifyTextChanged_Lambda([this](const FText& NewText, FText& OutError)
-				{
-					FString NewVal = NewText.ToString();
-					if (Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Int)
-					{
-						if (NewVal.IsEmpty() || NewVal == TEXT("-")) return true;
-						
-						// Must be numeric
-						if (!NewVal.IsNumeric())
-						{
-							OutError = LOCTEXT("ValueIntError", "Value must be a valid integer.");
-							return false;
-						}
-						
-						// Additionally check if it contains a decimal point which IsNumeric might allow depending on platform but we don't want for Int
-						if (NewVal.Contains(TEXT(".")))
-						{
-							OutError = LOCTEXT("ValueIntDecimalError", "Integers cannot have decimal points.");
-							return false;
-						}
-					}
-					else if (Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Float)
-					{
-						if (NewVal.IsEmpty() || NewVal == TEXT("-") || NewVal == TEXT(".") || NewVal == TEXT("-.")) return true;
-						if (!NewVal.IsNumeric())
-						{
-							OutError = LOCTEXT("ValueFloatError", "Value must be a valid number.");
-							return false;
-						}
-					}
-					return true;
-				})
-				.OnTextCommitted_Lambda([this](const FText& NewText, ETextCommit::Type CommitType)
-				{
-					FString NewVal = NewText.ToString();
-					if (NewVal == Item->PropertyDefinition.Get()->PropertyName.ToString())
-					{
-						return;
-					}
-					
-					TSharedPtr<FLiveConfigPropertyDefinition> OldDef = MakeShared<FLiveConfigPropertyDefinition>(*Item->PropertyDefinition);
-					if (Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Int)
-					{
-						if (NewVal.IsEmpty() || NewVal == TEXT("-"))
-						{
-							Item->PropertyDefinition->Value = "0"; 
-							OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value); 
-							return;
-						}
-						if (NewVal.IsNumeric())
-						{
-							Item->PropertyDefinition->Value = NewVal; 
-							OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value);
-						}
-					}
-					else if (Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Float)
-					{
-						if (NewVal.IsEmpty() || NewVal == TEXT("-") || NewVal == TEXT(".") || NewVal == TEXT("-."))
-						{
-							Item->PropertyDefinition->Value = "0"; 
-							OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value); 
-							return;
-						}
-						
-						if (NewVal.IsNumeric())
-						{
-							float FloatVal = FCString::Atof(*NewVal);
-							Item->PropertyDefinition->Value = FString::SanitizeFloat(FloatVal); 
-							OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value);
-						}
-					}
-					else
-					{
-						Item->PropertyDefinition->Value = NewVal;
-						OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value);
-					}
-				})
+				.OnVerifyTextChanged(this, &SLiveConfigPropertyRow::VerifyValueText)
+				.OnTextCommitted(this, &SLiveConfigPropertyRow::ValueTextCommitted)
 			]
 			+ SWidgetSwitcher::Slot()
 			[
-				SNew(SCheckBox)
+				SAssignNew(ValueCheckBox, SCheckBox)
 				.IsChecked_Lambda([this]()
 				{
 					return Item->PropertyDefinition->Value.ToBool() ? ECheckBoxState::Checked : ECheckBoxState::Unchecked;
@@ -618,6 +609,111 @@ void SLiveConfigPropertyRow::OnTagChanged()
 	Invalidate(EInvalidateWidgetReason::Layout);
 	OnRequestRefresh.ExecuteIfBound();
 	OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Tags);
+}
+
+bool SLiveConfigPropertyRow::VerifyValueText(const FText& NewText, FText& OutError)
+{
+	FString NewVal = NewText.ToString();
+	if (Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Int)
+	{
+		if (NewVal.IsEmpty() || NewVal == TEXT("-"))
+		{
+			return true;
+		}
+
+		// Must be numeric
+		if (!NewVal.IsNumeric())
+		{
+			OutError = LOCTEXT("ValueIntError", "Value must be a valid integer.");
+			return false;
+		}
+						
+		// Additionally check if it contains a decimal point which IsNumeric might allow depending on platform but we don't want for Int
+		if (NewVal.Contains(TEXT(".")))
+		{
+			OutError = LOCTEXT("ValueIntDecimalError", "Integers cannot have decimal points.");
+			return false;
+		}
+	}
+	else if (Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Float)
+	{
+		if (NewVal.IsEmpty() || NewVal == TEXT("-") || NewVal == TEXT(".") || NewVal == TEXT("-.")) return true;
+		if (!NewVal.IsNumeric())
+		{
+			OutError = LOCTEXT("ValueFloatError", "Value must be a valid number.");
+			return false;
+		}
+	}
+	return true;
+}
+
+void SLiveConfigPropertyRow::ValueTextCommitted(const FText& NewText, ETextCommit::Type CommitType)
+{
+	if (bIsCommitting)
+	{
+		return;
+	}
+
+	if (CommitType == ETextCommit::OnUserMovedFocus && bJustFinishedEnterCommit)
+	{
+		return;
+	}
+
+	if (CommitType == ETextCommit::Default)
+	{
+		return;
+	}
+	
+	FString NewVal = NewText.ToString();
+	if (NewVal == Item->PropertyDefinition->Value)
+	{
+		return;
+	}
+	
+	TSharedPtr<FLiveConfigPropertyDefinition> OldDef = MakeShared<FLiveConfigPropertyDefinition>(*Item->PropertyDefinition);
+	
+	TGuardValue<bool> CommitGuard(bIsCommitting, true);
+	
+	if (CommitType == ETextCommit::OnEnter)
+	{
+		bJustFinishedEnterCommit = true;
+	}
+
+	if (Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Int)
+	{
+		if (NewVal.IsEmpty() || NewVal == TEXT("-"))
+		{
+			Item->PropertyDefinition->Value = "0"; 
+			OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value); 
+			return;
+		}
+		if (NewVal.IsNumeric())
+		{
+			Item->PropertyDefinition->Value = NewVal; 
+			OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value);
+		}
+	}
+	else if (Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Float)
+	{
+		if (NewVal.IsEmpty() || NewVal == TEXT("-") || NewVal == TEXT(".") || NewVal == TEXT("-."))
+		{
+			Item->PropertyDefinition->Value = "0"; 
+			OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value); 
+			return;
+		}
+		
+		if (NewVal.IsNumeric())
+		{
+			float FloatVal = FCString::Atof(*NewVal);
+			Item->PropertyDefinition->Value = FString::SanitizeFloat(FloatVal); 
+			OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value);
+		}
+	}
+	else
+	{
+		Item->PropertyDefinition->Value = NewVal;
+		OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value);
+	}
 }
 
 #undef LOCTEXT_NAMESPACE

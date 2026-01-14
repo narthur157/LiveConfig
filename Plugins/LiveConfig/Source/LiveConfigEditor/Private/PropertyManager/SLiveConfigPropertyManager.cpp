@@ -239,6 +239,35 @@ TSharedRef<ITableRow> SLiveConfigPropertyManager::OnGenerateRow(TSharedRef<FLive
 		.IsNameDuplicate(this, &SLiveConfigPropertyManager::IsNameDuplicate)
 		.OnChanged(this, &SLiveConfigPropertyManager::OnPropertyRowChanged)
 		.OnRequestRefresh_Lambda([this]() { if (PropertyTreeView.IsValid()) PropertyTreeView->RequestTreeRefresh(); })
+		.OnNavigateDown_Lambda([this](TSharedPtr<FLiveConfigPropertyTreeNode> Item)
+		{
+			NavigateToProperty(Item, 1);
+		})
+		.OnNavigateUp_Lambda([this](TSharedPtr<FLiveConfigPropertyTreeNode> Item)
+		{
+			NavigateToProperty(Item, -1);
+		})
+		.OnNavigateValue_Lambda([this](TSharedPtr<FLiveConfigPropertyTreeNode> Item)
+		{
+			// Defer to next tick to ensure any tree refresh has stabilized
+			FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([this, Item](float)
+			{
+				if (PropertyTreeView.IsValid())
+				{
+					TSharedPtr<ITableRow> Row = PropertyTreeView->WidgetFromItem(Item.ToSharedRef());
+					if (Row.IsValid())
+					{
+						TSharedRef<SWidget> RowWidget = Row->AsWidget();
+						SLiveConfigPropertyRow* PropRow = static_cast<SLiveConfigPropertyRow*>(&RowWidget.Get());
+						if (PropRow)
+						{
+							PropRow->RequestValueFocus();
+						}
+					}
+				}
+				return false;
+			}));
+		})
 		.GetTagColor(TFunction<FSlateColor(FName)>([this](FName InTag) { return GetTagColor(InTag); }))
 		.KnownTags_Lambda([this]() { return KnownTags; });
 }
@@ -359,6 +388,24 @@ void SLiveConfigPropertyManager::OnFilterTextChanged(const FText& InFilterText)
 				RootNodes.Add(NewNode);
 			}
 		}
+	}
+
+	auto SortNodes = [](TArray<TSharedRef<FLiveConfigPropertyTreeNode>>& Nodes)
+	{
+		Nodes.Sort([](const TSharedRef<FLiveConfigPropertyTreeNode>& A, const TSharedRef<FLiveConfigPropertyTreeNode>& B)
+		{
+			if (A->IsProperty() != B->IsProperty())
+			{
+				return !A->IsProperty(); // Folders (not property) first
+			}
+			return UE::ComparisonUtility::CompareNaturalOrder(A->DisplayName, B->DisplayName) < 0;
+		});
+	};
+
+	SortNodes(RootNodes);
+	for (auto& FolderPair : FolderMap)
+	{
+		SortNodes(FolderPair.Value->Children);
 	}
 
 	if (PropertyTreeView.IsValid())
@@ -517,6 +564,63 @@ void SLiveConfigPropertyManager::OnAddNewTag()
 		];
 
 	FSlateApplication::Get().AddWindow(NewTagWindow.ToSharedRef());
+}
+
+void SLiveConfigPropertyManager::GetFlatVisibleProperties(TArray<TSharedRef<FLiveConfigPropertyTreeNode>>& OutFlatList) const
+{
+	struct FLocal
+	{
+		static void Flatten(const TArray<TSharedRef<FLiveConfigPropertyTreeNode>>& Nodes, TArray<TSharedRef<FLiveConfigPropertyTreeNode>>& OutFlatList, TSharedPtr<STreeView<TSharedRef<FLiveConfigPropertyTreeNode>>> InTreeView)
+		{
+			for (auto& Node : Nodes)
+			{
+				OutFlatList.Add(Node);
+				if (InTreeView.IsValid() && InTreeView->IsItemExpanded(Node))
+				{
+					Flatten(Node->Children, OutFlatList, InTreeView);
+				}
+			}
+		}
+	};
+	FLocal::Flatten(RootNodes, OutFlatList, PropertyTreeView);
+}
+
+void SLiveConfigPropertyManager::NavigateToProperty(TSharedPtr<FLiveConfigPropertyTreeNode> CurrentItem, int32 Direction)
+{
+	TArray<TSharedRef<FLiveConfigPropertyTreeNode>> FlatList;
+	GetFlatVisibleProperties(FlatList);
+
+	const int32 ItemCount = FlatList.Num();
+	const int32 CurrentIndex = FlatList.IndexOfByPredicate([&CurrentItem](const TSharedRef<FLiveConfigPropertyTreeNode>& Node)
+	{
+		return Node == CurrentItem.ToSharedRef();
+	});
+
+	if (CurrentIndex != INDEX_NONE)
+	{
+		for (int32 i = CurrentIndex + Direction; i >= 0 && i < ItemCount; i += Direction)
+		{
+			if (FlatList[i]->IsProperty())
+			{
+				FlatList[i]->bNeedsFocus = true;
+				if (PropertyTreeView.IsValid())
+				{
+					PropertyTreeView->RequestScrollIntoView(FlatList[i]);
+					
+					TSharedPtr<ITableRow> Row = PropertyTreeView->WidgetFromItem(FlatList[i]);
+					if (Row.IsValid())
+					{
+						SLiveConfigPropertyRow* PropRow = static_cast<SLiveConfigPropertyRow*>(&Row->AsWidget().Get());
+						if (PropRow)
+						{
+							PropRow->Tick(FGeometry(), 0, 0); // Force tick to apply focus
+						}
+					}
+				}
+				break;
+			}
+		}
+	}
 }
 
 void SLiveConfigPropertyManager::SaveKnownTags()

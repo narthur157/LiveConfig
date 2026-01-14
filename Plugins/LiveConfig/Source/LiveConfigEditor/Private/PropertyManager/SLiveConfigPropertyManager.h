@@ -51,6 +51,8 @@ private:
 	void Save();
 	void OnPropertyRowChanged(TSharedPtr<FLiveConfigPropertyDefinition> OldDef, TSharedPtr<FLiveConfigPropertyDefinition> NewDef, ELiveConfigPropertyChangeType ChangeType);
 	void SaveKnownTags();
+	void GetFlatVisibleProperties(TArray<TSharedRef<FLiveConfigPropertyTreeNode>>& OutFlatList) const;
+	void NavigateToProperty(TSharedPtr<FLiveConfigPropertyTreeNode> CurrentItem, int32 Direction);
 
 	TArray<TSharedPtr<FLiveConfigPropertyDefinition>> RawPropertyList;
 	TArray<TSharedRef<FLiveConfigPropertyTreeNode>> RootNodes;

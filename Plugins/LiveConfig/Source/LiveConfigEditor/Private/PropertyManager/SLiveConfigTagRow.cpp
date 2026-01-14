@@ -67,6 +67,7 @@ void SLiveConfigTagRow::Construct(const FArguments& InArgs, TSharedPtr<FLiveConf
 			.VAlign(VAlign_Center)
 			[
 				SNew(SButton)
+				.IsFocusable(false)
 				.ButtonStyle(FAppStyle::Get(), "SimpleButton")
 				.ContentPadding(0)
 				.OnClicked_Lambda([this]()
