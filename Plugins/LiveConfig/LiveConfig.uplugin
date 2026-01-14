@@ -22,7 +22,7 @@
 		},
 		{
 			"Name": "LiveConfigEditor",
-			"Type": "Editor",
+			"Type": "UncookedOnly",
 			"LoadingPhase": "PostEngineInit"
 		}
 	]
