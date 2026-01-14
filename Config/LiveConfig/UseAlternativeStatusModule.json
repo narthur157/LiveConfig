@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "UseAlternativeStatusModule"
-	},
+	"propertyName": "UseAlternativeStatusModule",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

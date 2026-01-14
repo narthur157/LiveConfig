@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "UploadStatsV2"
-	},
+	"propertyName": "UploadStatsV2",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

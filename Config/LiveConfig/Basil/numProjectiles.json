@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.numProjectiles"
-	},
+	"propertyName": "Basil.numProjectiles",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "BasicTraining.scoreToWin"
-	},
+	"propertyName": "BasicTraining.scoreToWin",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "StartingTalentPoints"
-	},
+	"propertyName": "StartingTalentPoints",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

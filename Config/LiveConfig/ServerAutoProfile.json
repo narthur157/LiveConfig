@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ServerAutoProfile"
-	},
+	"propertyName": "ServerAutoProfile",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

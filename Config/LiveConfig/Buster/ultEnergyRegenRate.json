@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.ultEnergyRegenRate"
-	},
+	"propertyName": "Buster.ultEnergyRegenRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

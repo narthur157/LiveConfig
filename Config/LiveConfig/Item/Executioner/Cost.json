@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Executioner.Cost"
-	},
+	"propertyName": "Item.Executioner.Cost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.ExplosiveBarrel.maxHealthPerLevel"
-	},
+	"propertyName": "Calico.ExplosiveBarrel.maxHealthPerLevel",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.scale"
-	},
+	"propertyName": "Arms.scale",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.reloadTime"
-	},
+	"propertyName": "Buster.reloadTime",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

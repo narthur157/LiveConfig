@@ -29,6 +29,9 @@ struct LIVECONFIG_API FLiveConfigProperty
 	bool operator==(const FLiveConfigProperty& Other) const { return PropertyName == Other.PropertyName; }
 	bool operator!=(const FLiveConfigProperty& Other) const { return PropertyName != Other.PropertyName; }
 
+	bool ExportTextItem(FString& ValueStr, FLiveConfigProperty const& DefaultValue, UObject* Parent, int32 PortFlags, UObject* ExportRootScope) const;
+	bool ImportTextItem(const TCHAR*& Buffer, int32 PortFlags, UObject* Parent, FOutputDevice* ErrorText);
+
 	FORCEINLINE friend uint32 GetTypeHash(const FLiveConfigProperty& Prop)
 	{
 		return GetTypeHash(Prop.GetName());
@@ -36,5 +39,15 @@ struct LIVECONFIG_API FLiveConfigProperty
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (Categories = "LiveConfig"))
 	FName PropertyName;
+};
+
+template<>
+struct TStructOpsTypeTraits<FLiveConfigProperty> : public TStructOpsTypeTraitsBase2<FLiveConfigProperty>
+{
+	enum
+	{
+		WithExportTextItem = true,
+		WithImportTextItem = true,
+	};
 };
 

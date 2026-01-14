@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.RootSlam.PowerCoeffecient"
-	},
+	"propertyName": "Cilantro.RootSlam.PowerCoeffecient",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

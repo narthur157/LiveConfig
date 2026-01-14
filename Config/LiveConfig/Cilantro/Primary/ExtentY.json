@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.Primary.ExtentY"
-	},
+	"propertyName": "Cilantro.Primary.ExtentY",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

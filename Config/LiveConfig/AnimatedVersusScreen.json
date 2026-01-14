@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "AnimatedVersusScreen"
-	},
+	"propertyName": "AnimatedVersusScreen",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

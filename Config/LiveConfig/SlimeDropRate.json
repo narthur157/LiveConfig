@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeDropRate"
-	},
+	"propertyName": "SlimeDropRate",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

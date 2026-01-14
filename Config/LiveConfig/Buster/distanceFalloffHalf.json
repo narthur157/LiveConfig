@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.distanceFalloffHalf"
-	},
+	"propertyName": "Buster.distanceFalloffHalf",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.healthRegenRate"
-	},
+	"propertyName": "Default.healthRegenRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

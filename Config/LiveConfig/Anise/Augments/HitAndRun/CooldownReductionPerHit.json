@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augments.HitAndRun.CooldownReductionPerHit"
-	},
+	"propertyName": "Anise.Augments.HitAndRun.CooldownReductionPerHit",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

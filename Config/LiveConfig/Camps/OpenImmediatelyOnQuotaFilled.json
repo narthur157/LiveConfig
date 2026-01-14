@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camps.OpenImmediatelyOnQuotaFilled"
-	},
+	"propertyName": "Camps.OpenImmediatelyOnQuotaFilled",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

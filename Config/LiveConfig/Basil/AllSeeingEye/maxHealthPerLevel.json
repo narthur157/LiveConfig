@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.AllSeeingEye.maxHealthPerLevel"
-	},
+	"propertyName": "Basil.AllSeeingEye.maxHealthPerLevel",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

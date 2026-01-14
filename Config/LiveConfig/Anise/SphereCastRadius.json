@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.SphereCastRadius"
-	},
+	"propertyName": "Anise.SphereCastRadius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

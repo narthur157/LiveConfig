@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.SingularityGrenade.MinFalloffRadius"
-	},
+	"propertyName": "Anise.SingularityGrenade.MinFalloffRadius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

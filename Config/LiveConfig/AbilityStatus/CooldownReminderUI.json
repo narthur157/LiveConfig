@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "AbilityStatus.CooldownReminderUI"
-	},
+	"propertyName": "AbilityStatus.CooldownReminderUI",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

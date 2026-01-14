@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HitConfirm.CritSpike.MinLength"
-	},
+	"propertyName": "HitConfirm.CritSpike.MinLength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

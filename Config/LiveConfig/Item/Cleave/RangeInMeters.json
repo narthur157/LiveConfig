@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Cleave.RangeInMeters"
-	},
+	"propertyName": "Item.Cleave.RangeInMeters",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

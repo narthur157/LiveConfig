@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Glutton.clipSize"
-	},
+	"propertyName": "Glutton.clipSize",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

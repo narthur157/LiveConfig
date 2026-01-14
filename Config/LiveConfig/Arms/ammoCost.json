@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.ammoCost"
-	},
+	"propertyName": "Arms.ammoCost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

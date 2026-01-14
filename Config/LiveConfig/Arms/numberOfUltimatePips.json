@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.numberOfUltimatePips"
-	},
+	"propertyName": "Arms.numberOfUltimatePips",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

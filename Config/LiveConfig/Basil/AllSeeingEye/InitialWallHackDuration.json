@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.AllSeeingEye.InitialWallHackDuration"
-	},
+	"propertyName": "Basil.AllSeeingEye.InitialWallHackDuration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

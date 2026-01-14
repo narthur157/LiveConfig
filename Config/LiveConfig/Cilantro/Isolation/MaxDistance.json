@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.Isolation.MaxDistance"
-	},
+	"propertyName": "Cilantro.Isolation.MaxDistance",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

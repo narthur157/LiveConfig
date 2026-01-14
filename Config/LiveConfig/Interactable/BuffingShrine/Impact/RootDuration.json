@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.BuffingShrine.Impact.RootDuration"
-	},
+	"propertyName": "Interactable.BuffingShrine.Impact.RootDuration",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

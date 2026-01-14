@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augment.Relativity.ShieldAmountPerStack"
-	},
+	"propertyName": "Anise.Augment.Relativity.ShieldAmountPerStack",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

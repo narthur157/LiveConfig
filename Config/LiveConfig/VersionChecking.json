@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "VersionChecking"
-	},
+	"propertyName": "VersionChecking",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

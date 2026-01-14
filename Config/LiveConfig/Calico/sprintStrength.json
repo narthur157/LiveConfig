@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.sprintStrength"
-	},
+	"propertyName": "Calico.sprintStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

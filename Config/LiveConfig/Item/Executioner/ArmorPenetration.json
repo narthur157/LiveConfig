@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Executioner.ArmorPenetration"
-	},
+	"propertyName": "Item.Executioner.ArmorPenetration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

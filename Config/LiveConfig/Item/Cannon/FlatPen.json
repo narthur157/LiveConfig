@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Cannon.FlatPen"
-	},
+	"propertyName": "Item.Cannon.FlatPen",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

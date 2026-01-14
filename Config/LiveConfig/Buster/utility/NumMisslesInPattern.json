@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Utility.NumMisslesInPattern"
-	},
+	"propertyName": "Buster.Utility.NumMisslesInPattern",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

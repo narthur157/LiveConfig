@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.propulsionMaxUpStrength"
-	},
+	"propertyName": "Anise.propulsionMaxUpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

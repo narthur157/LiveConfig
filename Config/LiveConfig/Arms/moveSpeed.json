@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.moveSpeed"
-	},
+	"propertyName": "Arms.moveSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

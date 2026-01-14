@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.Mark.MassTransfer.IsReservoirTransferActive"
-	},
+	"propertyName": "Basil.Mark.MassTransfer.IsReservoirTransferActive",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

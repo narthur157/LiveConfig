@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.numProjectiles"
-	},
+	"propertyName": "Arms.numProjectiles",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

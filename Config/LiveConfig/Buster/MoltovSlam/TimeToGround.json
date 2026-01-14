@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.MoltovSlam.TimeToGround"
-	},
+	"propertyName": "Buster.MoltovSlam.TimeToGround",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

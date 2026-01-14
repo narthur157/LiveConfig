@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.MIRVGrenade.Damage"
-	},
+	"propertyName": "Anise.MIRVGrenade.Damage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

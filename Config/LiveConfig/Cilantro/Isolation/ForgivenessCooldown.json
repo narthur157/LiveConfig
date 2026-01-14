@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.Isolation.ForgivenessCooldown"
-	},
+	"propertyName": "Cilantro.Isolation.ForgivenessCooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

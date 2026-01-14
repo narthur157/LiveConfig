@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.numProjectiles"
-	},
+	"propertyName": "Buster.numProjectiles",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

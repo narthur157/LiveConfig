@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "LowHealthIndicationDisplayPercent"
-	},
+	"propertyName": "LowHealthIndicationDisplayPercent",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

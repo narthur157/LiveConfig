@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.GlassCannon.DefenseMod.Epic"
-	},
+	"propertyName": "Item.GlassCannon.DefenseMod.Epic",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.SingularityGrenade.TimeToDetonate"
-	},
+	"propertyName": "Anise.SingularityGrenade.TimeToDetonate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

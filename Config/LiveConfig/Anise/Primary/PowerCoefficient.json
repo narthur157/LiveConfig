@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Primary.PowerCoefficient"
-	},
+	"propertyName": "Anise.Primary.PowerCoefficient",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

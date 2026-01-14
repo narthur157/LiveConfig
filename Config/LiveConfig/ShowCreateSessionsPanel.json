@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ShowCreateSessionsPanel"
-	},
+	"propertyName": "ShowCreateSessionsPanel",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

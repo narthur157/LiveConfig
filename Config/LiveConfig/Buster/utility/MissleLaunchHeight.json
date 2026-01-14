@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Utility.MissleLaunchHeight"
-	},
+	"propertyName": "Buster.Utility.MissleLaunchHeight",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

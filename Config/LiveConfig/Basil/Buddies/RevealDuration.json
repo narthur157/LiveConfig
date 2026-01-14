@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.Buddies.RevealDuration"
-	},
+	"propertyName": "Basil.Buddies.RevealDuration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

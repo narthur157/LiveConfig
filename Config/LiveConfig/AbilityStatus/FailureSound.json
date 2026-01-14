@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "AbilityStatus.FailureSound"
-	},
+	"propertyName": "AbilityStatus.FailureSound",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

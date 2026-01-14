@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.Level.Health.Value.p3"
-	},
+	"propertyName": "Calico.Level.Health.Value.p3",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

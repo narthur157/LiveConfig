@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "DynamicMassSizeScaling.ArmorMultiplier.p5"
-	},
+	"propertyName": "DynamicMassSizeScaling.ArmorMultiplier.p5",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

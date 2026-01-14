@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Brawler.Dash.ReloadDelay"
-	},
+	"propertyName": "Brawler.Dash.ReloadDelay",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

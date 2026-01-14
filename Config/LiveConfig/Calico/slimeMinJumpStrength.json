@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.slimeMinJumpStrength"
-	},
+	"propertyName": "Calico.slimeMinJumpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

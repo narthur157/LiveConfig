@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddies.TimeToReacquireTargetOrReset"
-	},
+	"propertyName": "Basil.TurretBuddies.TimeToReacquireTargetOrReset",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

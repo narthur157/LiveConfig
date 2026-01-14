@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Brawler.Dash.Strength"
-	},
+	"propertyName": "Brawler.Dash.Strength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

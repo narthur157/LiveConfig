@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BlastUp.Duration"
-	},
+	"propertyName": "Calico.BlastUp.Duration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

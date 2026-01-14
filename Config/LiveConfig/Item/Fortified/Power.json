@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Fortified.Power"
-	},
+	"propertyName": "Item.Fortified.Power",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

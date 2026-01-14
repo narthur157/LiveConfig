@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "PlayableMaps"
-	},
+	"propertyName": "PlayableMaps",
 	"description": "",
 	"propertyType": "String",
 	"tags": [

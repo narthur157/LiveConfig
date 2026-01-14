@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddies.GravityScale"
-	},
+	"propertyName": "Basil.TurretBuddies.GravityScale",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

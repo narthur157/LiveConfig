@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.TharrSheBlow.Radius"
-	},
+	"propertyName": "Calico.TharrSheBlow.Radius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

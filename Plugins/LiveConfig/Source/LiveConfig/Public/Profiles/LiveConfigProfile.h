@@ -24,7 +24,7 @@ struct FLiveConfigProfile
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Live Config")
     FName ProfileName;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Live Config", NotReplicated)
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Live Config", NotReplicated, SkipSerialization)
     TMap<FLiveConfigProperty, FString> Overrides;
 
     bool IsValid() const { return ProfileName != NAME_None; }
@@ -52,7 +52,7 @@ struct FLiveConfigProfile
 
 private:
     /** For replication as TMap doesn't replicate */
-    UPROPERTY()
+    UPROPERTY(meta = (SkipSerialization))
     TArray<FLiveConfigOverride> ReplicatedOverrides;
 
 };

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buff.RedBuff.Duration"
-	},
+	"propertyName": "Buff.RedBuff.Duration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

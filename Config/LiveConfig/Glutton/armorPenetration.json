@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Glutton.armorPenetration"
-	},
+	"propertyName": "Glutton.armorPenetration",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

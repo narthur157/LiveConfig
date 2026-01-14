@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augments.StaticSlime.Interval"
-	},
+	"propertyName": "Anise.Augments.StaticSlime.Interval",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

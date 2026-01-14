@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.ammoCost"
-	},
+	"propertyName": "Anise_Proto.ammoCost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

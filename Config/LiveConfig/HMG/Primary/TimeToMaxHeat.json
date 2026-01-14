@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.Primary.TimeToMaxHeat"
-	},
+	"propertyName": "HMG.Primary.TimeToMaxHeat",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.ChainLightning.Cost"
-	},
+	"propertyName": "Item.ChainLightning.Cost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

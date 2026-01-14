@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.AFairTrade.Armor"
-	},
+	"propertyName": "Item.AFairTrade.Armor",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

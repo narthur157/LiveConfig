@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camp.Buff.BigTeam.maxHealth"
-	},
+	"propertyName": "Camp.Buff.BigTeam.maxHealth",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.ExplosiveChugging.PlayRateMultiplier"
-	},
+	"propertyName": "Anise.ExplosiveChugging.PlayRateMultiplier",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HealthBarTickSize"
-	},
+	"propertyName": "HealthBarTickSize",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

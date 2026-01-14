@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Glutton.bEnabled"
-	},
+	"propertyName": "Glutton.bEnabled",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

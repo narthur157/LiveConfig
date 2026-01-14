@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Bloom.MaxSpread"
-	},
+	"propertyName": "Anise.Bloom.MaxSpread",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

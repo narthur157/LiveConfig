@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Claypool.Prison.BonusMaxHealthScaling"
-	},
+	"propertyName": "Claypool.Prison.BonusMaxHealthScaling",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

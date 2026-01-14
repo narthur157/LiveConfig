@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.flatArmorPenetration"
-	},
+	"propertyName": "Calico.flatArmorPenetration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

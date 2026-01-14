@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.Slime.Median.CombinedTicks"
-	},
+	"propertyName": "Interactable.Slime.Median.CombinedTicks",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

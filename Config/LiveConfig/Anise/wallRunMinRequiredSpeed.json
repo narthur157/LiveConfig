@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.wallRunMinRequiredSpeed"
-	},
+	"propertyName": "Anise.wallRunMinRequiredSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

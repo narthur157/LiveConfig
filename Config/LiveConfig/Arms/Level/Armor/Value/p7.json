@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.Level.Armor.Value.p7"
-	},
+	"propertyName": "Arms.Level.Armor.Value.p7",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

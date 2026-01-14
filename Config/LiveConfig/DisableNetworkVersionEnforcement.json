@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "DisableNetworkVersionEnforcement"
-	},
+	"propertyName": "DisableNetworkVersionEnforcement",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

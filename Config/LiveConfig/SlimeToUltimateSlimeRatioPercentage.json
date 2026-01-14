@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeToUltimateSlimeRatioPercentage"
-	},
+	"propertyName": "SlimeToUltimateSlimeRatioPercentage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

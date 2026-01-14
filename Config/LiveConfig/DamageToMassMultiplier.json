@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "DamageToMassMultiplier"
-	},
+	"propertyName": "DamageToMassMultiplier",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

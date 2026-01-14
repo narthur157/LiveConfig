@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.Isolation.ArenaScale"
-	},
+	"propertyName": "Cilantro.Isolation.ArenaScale",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

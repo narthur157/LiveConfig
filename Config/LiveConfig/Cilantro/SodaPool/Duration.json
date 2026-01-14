@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.SodaPool.Duration"
-	},
+	"propertyName": "Cilantro.SodaPool.Duration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

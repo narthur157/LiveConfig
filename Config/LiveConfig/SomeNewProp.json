@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SomeNewProp"
-	},
+	"propertyName": "SomeNewProp",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

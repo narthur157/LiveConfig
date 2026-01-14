@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HealthReductionMaxHPScalar"
-	},
+	"propertyName": "HealthReductionMaxHPScalar",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

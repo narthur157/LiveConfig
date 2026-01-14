@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.numberOfUltimatePips"
-	},
+	"propertyName": "Basil.numberOfUltimatePips",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Primary.UseWeaponConfigForFalloff"
-	},
+	"propertyName": "Anise.Primary.UseWeaponConfigForFalloff",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

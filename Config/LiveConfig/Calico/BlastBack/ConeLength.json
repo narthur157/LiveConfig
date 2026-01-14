@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BlastBack.ConeLength"
-	},
+	"propertyName": "Calico.BlastBack.ConeLength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

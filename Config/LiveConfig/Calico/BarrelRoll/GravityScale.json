@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BarrelRoll.GravityScale"
-	},
+	"propertyName": "Calico.BarrelRoll.GravityScale",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

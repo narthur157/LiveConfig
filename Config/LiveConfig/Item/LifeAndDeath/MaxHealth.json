@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.LifeAndDeath.MaxHealth"
-	},
+	"propertyName": "Item.LifeAndDeath.MaxHealth",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.SodaFrag.MinDamageFallOffMultiplier"
-	},
+	"propertyName": "Anise.SodaFrag.MinDamageFallOffMultiplier",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

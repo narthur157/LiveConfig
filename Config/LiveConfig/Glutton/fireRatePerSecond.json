@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Glutton.fireRatePerSecond"
-	},
+	"propertyName": "Glutton.fireRatePerSecond",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

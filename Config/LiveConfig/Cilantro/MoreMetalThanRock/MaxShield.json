@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.MoreMetalThanRock.MaxShield"
-	},
+	"propertyName": "Cilantro.MoreMetalThanRock.MaxShield",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

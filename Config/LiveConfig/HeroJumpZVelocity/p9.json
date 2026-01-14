@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HeroJumpZVelocity.p9"
-	},
+	"propertyName": "HeroJumpZVelocity.p9",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

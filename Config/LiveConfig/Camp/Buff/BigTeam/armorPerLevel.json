@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camp.Buff.BigTeam.armorPerLevel"
-	},
+	"propertyName": "Camp.Buff.BigTeam.armorPerLevel",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

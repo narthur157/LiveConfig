@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.LargeHealthPack.HealPercent"
-	},
+	"propertyName": "Interactable.LargeHealthPack.HealPercent",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

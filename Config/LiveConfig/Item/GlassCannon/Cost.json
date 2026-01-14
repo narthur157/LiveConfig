@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.GlassCannon.Cost"
-	},
+	"propertyName": "Item.GlassCannon.Cost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

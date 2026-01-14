@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.Slime.Large.CombinedTicks"
-	},
+	"propertyName": "Interactable.Slime.Large.CombinedTicks",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

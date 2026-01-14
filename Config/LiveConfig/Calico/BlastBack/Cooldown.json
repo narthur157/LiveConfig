@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BlastBack.Cooldown"
-	},
+	"propertyName": "Calico.BlastBack.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

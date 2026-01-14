@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BlimeyBomber.MuzzleOffsetPitch"
-	},
+	"propertyName": "Calico.BlimeyBomber.MuzzleOffsetPitch",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

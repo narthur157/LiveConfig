@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.heroSpeed"
-	},
+	"propertyName": "Basil.heroSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

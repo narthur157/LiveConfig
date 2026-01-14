@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.AllSeeingEye.NumShots"
-	},
+	"propertyName": "Basil.AllSeeingEye.NumShots",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.staminaRegenAmount"
-	},
+	"propertyName": "Basil.staminaRegenAmount",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

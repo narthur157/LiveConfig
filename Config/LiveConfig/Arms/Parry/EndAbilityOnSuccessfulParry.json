@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.Parry.EndAbilityOnSuccessfulParry"
-	},
+	"propertyName": "Arms.Parry.EndAbilityOnSuccessfulParry",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

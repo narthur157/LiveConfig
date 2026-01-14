@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Banquet.HealingConversion.Quality1"
-	},
+	"propertyName": "Item.Banquet.HealingConversion.Quality1",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

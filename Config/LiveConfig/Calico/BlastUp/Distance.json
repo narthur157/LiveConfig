@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BlastUp.Distance"
-	},
+	"propertyName": "Calico.BlastUp.Distance",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

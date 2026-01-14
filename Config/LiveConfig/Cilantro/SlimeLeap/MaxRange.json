@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.SlimeLeap.MaxRange"
-	},
+	"propertyName": "Cilantro.SlimeLeap.MaxRange",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

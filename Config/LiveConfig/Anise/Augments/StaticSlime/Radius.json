@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augments.StaticSlime.Radius"
-	},
+	"propertyName": "Anise.Augments.StaticSlime.Radius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

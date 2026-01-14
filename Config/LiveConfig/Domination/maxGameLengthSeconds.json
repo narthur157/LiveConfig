@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Domination.maxGameLengthSeconds"
-	},
+	"propertyName": "Domination.maxGameLengthSeconds",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

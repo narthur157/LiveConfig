@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.maxHealth"
-	},
+	"propertyName": "Basil.maxHealth",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

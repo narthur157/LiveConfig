@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.ChargedNova.MinRadius"
-	},
+	"propertyName": "Cilantro.ChargedNova.MinRadius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

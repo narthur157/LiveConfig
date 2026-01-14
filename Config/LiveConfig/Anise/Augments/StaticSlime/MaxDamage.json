@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augments.StaticSlime.MaxDamage"
-	},
+	"propertyName": "Anise.Augments.StaticSlime.MaxDamage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

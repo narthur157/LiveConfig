@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BlimeyBomber.FuseTimer"
-	},
+	"propertyName": "Calico.BlimeyBomber.FuseTimer",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

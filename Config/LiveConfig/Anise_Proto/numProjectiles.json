@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.numProjectiles"
-	},
+	"propertyName": "Anise_Proto.numProjectiles",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

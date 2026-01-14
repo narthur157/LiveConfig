@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.wallRunMinRequiredSpeed"
-	},
+	"propertyName": "Default.wallRunMinRequiredSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

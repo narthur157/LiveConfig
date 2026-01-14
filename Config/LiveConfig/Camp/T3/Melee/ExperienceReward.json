@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camp.T3.Melee.ExperienceReward"
-	},
+	"propertyName": "Camp.T3.Melee.ExperienceReward",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

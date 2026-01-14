@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.GooeyGrenade.StickyRadius"
-	},
+	"propertyName": "Anise.GooeyGrenade.StickyRadius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

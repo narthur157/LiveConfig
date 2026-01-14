@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Glutton.miscParameter1"
-	},
+	"propertyName": "Glutton.miscParameter1",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

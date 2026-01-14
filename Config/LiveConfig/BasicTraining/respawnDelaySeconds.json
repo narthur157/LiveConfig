@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "BasicTraining.respawnDelaySeconds"
-	},
+	"propertyName": "BasicTraining.respawnDelaySeconds",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

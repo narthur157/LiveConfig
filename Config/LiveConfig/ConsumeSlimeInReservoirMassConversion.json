@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ConsumeSlimeInReservoirMassConversion"
-	},
+	"propertyName": "ConsumeSlimeInReservoirMassConversion",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

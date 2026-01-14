@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.TrueSentience.Cooldown"
-	},
+	"propertyName": "Anise.TrueSentience.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

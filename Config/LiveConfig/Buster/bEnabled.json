@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.bEnabled"
-	},
+	"propertyName": "Buster.bEnabled",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.miscParameter1"
-	},
+	"propertyName": "Buster.miscParameter1",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

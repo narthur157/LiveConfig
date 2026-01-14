@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "BasicTraining.valuePerUltimatePip"
-	},
+	"propertyName": "BasicTraining.valuePerUltimatePip",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

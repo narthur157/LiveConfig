@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.scale"
-	},
+	"propertyName": "Calico.scale",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.wallRunSpeedMultiplier"
-	},
+	"propertyName": "Anise.wallRunSpeedMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

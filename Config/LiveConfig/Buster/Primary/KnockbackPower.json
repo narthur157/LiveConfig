@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Primary.KnockbackPower"
-	},
+	"propertyName": "Buster.Primary.KnockbackPower",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

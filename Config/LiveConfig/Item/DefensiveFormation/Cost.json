@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.DefensiveFormation.Cost"
-	},
+	"propertyName": "Item.DefensiveFormation.Cost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -132,10 +132,15 @@ void ULiveConfigProfileSystem::SaveProfile(const FLiveConfigProfile& Profile)
     TSharedPtr<FJsonObject> JsonObject = FJsonObjectConverter::UStructToJsonObject(Profile);
     if (JsonObject.IsValid())
     {
-        FString JsonString;
-        TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&JsonString);
-        FJsonSerializer::Serialize(JsonObject.ToSharedRef(), Writer);
-        FFileHelper::SaveStringToFile(JsonString, *Path);
+        // New format: content is just the overrides
+        TSharedPtr<FJsonObject> OverridesObject = JsonObject->GetObjectField(TEXT("overrides"));
+        if (OverridesObject.IsValid())
+        {
+            FString JsonString;
+            TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&JsonString);
+            FJsonSerializer::Serialize(OverridesObject.ToSharedRef(), Writer);
+            FFileHelper::SaveStringToFile(JsonString, *Path);
+        }
     }
 }
 
@@ -155,7 +160,11 @@ bool ULiveConfigProfileSystem::LoadProfile(FName ProfileName, FLiveConfigProfile
         TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(JsonString);
         if (FJsonSerializer::Deserialize(Reader, JsonObject) && JsonObject.IsValid())
         {
-            return FJsonObjectConverter::JsonObjectToUStruct(JsonObject.ToSharedRef(), &OutProfile);
+            OutProfile.ProfileName = ProfileName;
+            
+            // New format: the root object is the overrides map
+            return FJsonObjectConverter::JsonValueToUProperty(MakeShared<FJsonValueObject>(JsonObject), 
+                FLiveConfigProfile::StaticStruct()->FindPropertyByName(TEXT("overrides")), &OutProfile.Overrides);
         }
         
         UE_LOG(LogLiveConfig, Error, TEXT("Failed to deserialize JSON for profile %s"), *ProfileName.ToString()); 

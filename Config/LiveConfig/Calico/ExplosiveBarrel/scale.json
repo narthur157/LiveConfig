@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.ExplosiveBarrel.scale"
-	},
+	"propertyName": "Calico.ExplosiveBarrel.scale",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

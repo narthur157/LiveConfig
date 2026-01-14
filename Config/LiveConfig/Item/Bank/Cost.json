@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Bank.Cost"
-	},
+	"propertyName": "Item.Bank.Cost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

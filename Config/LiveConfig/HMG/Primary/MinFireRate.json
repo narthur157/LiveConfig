@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.Primary.MinFireRate"
-	},
+	"propertyName": "HMG.Primary.MinFireRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

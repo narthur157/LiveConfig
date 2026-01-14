@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.DoubleCast.DoublingChancePerStack.Common"
-	},
+	"propertyName": "Item.DoubleCast.DoublingChancePerStack.Common",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

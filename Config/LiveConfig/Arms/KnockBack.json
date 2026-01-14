@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.KnockBack"
-	},
+	"propertyName": "Arms.KnockBack",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

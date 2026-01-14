@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.armorPenetration"
-	},
+	"propertyName": "Anise_Proto.armorPenetration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.BootsOfBattle.Cost"
-	},
+	"propertyName": "Item.BootsOfBattle.Cost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

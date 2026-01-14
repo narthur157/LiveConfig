@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.SlimeMeteor.AOEDamage.CritMultiplier"
-	},
+	"propertyName": "Buster.SlimeMeteor.AOEDamage.CritMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

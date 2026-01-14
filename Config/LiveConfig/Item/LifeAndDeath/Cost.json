@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.LifeAndDeath.Cost"
-	},
+	"propertyName": "Item.LifeAndDeath.Cost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

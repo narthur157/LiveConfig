@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.GooeyGrenade.MinDamageFallOffMultiplier"
-	},
+	"propertyName": "Anise.GooeyGrenade.MinDamageFallOffMultiplier",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

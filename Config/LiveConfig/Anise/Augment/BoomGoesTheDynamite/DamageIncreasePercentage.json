@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augment.BoomGoesTheDynamite.DamageIncreasePercentage"
-	},
+	"propertyName": "Anise.Augment.BoomGoesTheDynamite.DamageIncreasePercentage",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

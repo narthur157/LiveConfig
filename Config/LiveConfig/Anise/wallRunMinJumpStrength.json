@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.wallRunMinJumpStrength"
-	},
+	"propertyName": "Anise.wallRunMinJumpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

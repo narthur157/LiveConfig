@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.Isolation.MaintainDistanceInIsolation"
-	},
+	"propertyName": "Cilantro.Isolation.MaintainDistanceInIsolation",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

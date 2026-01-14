@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.TimeTrial"
-	},
+	"propertyName": "Item.TimeTrial",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

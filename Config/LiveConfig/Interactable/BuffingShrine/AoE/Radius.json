@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.BuffingShrine.AoE.Radius"
-	},
+	"propertyName": "Interactable.BuffingShrine.AoE.Radius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

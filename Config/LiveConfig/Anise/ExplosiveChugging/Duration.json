@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.ExplosiveChugging.Duration"
-	},
+	"propertyName": "Anise.ExplosiveChugging.Duration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.VisionsOfBud.maxHealth"
-	},
+	"propertyName": "Basil.VisionsOfBud.maxHealth",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

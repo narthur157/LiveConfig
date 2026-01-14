@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.SlimeMeteor.AOEDamage.KnockbackPower"
-	},
+	"propertyName": "Buster.SlimeMeteor.AOEDamage.KnockbackPower",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

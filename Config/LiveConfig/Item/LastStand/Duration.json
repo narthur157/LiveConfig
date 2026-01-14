@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.LastStand.Duration"
-	},
+	"propertyName": "Item.LastStand.Duration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

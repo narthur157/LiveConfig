@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeBoost"
-	},
+	"propertyName": "SlimeBoost",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

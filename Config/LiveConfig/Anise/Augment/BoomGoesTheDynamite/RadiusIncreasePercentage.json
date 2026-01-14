@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augment.BoomGoesTheDynamite.RadiusIncreasePercentage"
-	},
+	"propertyName": "Anise.Augment.BoomGoesTheDynamite.RadiusIncreasePercentage",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

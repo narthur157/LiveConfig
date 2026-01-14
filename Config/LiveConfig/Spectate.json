@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Spectate"
-	},
+	"propertyName": "Spectate",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

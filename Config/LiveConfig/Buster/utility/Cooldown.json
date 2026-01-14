@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Utility.Cooldown"
-	},
+	"propertyName": "Buster.Utility.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

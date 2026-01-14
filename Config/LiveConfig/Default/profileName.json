@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.profileName"
-	},
+	"propertyName": "Default.profileName",
 	"description": "",
 	"propertyType": "String",
 	"tags": [

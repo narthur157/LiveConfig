@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.BootsOfBattle.PctDmg.Epic"
-	},
+	"propertyName": "Item.BootsOfBattle.PctDmg.Epic",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

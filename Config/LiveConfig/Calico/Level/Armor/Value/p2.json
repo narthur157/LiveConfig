@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.Level.Armor.Value.p2"
-	},
+	"propertyName": "Calico.Level.Armor.Value.p2",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

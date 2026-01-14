@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.FourthEye.BypassScreenSpace"
-	},
+	"propertyName": "Basil.FourthEye.BypassScreenSpace",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

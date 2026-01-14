@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.DoubleCast.CDR"
-	},
+	"propertyName": "Item.DoubleCast.CDR",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

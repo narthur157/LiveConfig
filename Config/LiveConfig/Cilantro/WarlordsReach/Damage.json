@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.WarlordsReach.Damage"
-	},
+	"propertyName": "Cilantro.WarlordsReach.Damage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

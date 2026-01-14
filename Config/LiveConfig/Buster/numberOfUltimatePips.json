@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.numberOfUltimatePips"
-	},
+	"propertyName": "Buster.numberOfUltimatePips",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

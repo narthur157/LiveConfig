@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.distanceFalloffBegin"
-	},
+	"propertyName": "Anise_Proto.distanceFalloffBegin",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

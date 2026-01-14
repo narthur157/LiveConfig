@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "NewProperty"
-	},
+	"propertyName": "NewProperty",
 	"description": "",
 	"propertyType": "String",
 	"tags": [],

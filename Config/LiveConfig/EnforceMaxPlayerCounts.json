@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "EnforceMaxPlayerCounts"
-	},
+	"propertyName": "EnforceMaxPlayerCounts",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

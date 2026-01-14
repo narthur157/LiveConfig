@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cheats"
-	},
+	"propertyName": "Cheats",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

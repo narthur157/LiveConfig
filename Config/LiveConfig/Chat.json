@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Chat"
-	},
+	"propertyName": "Chat",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

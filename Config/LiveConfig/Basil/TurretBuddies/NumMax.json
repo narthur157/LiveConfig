@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddies.NumMax"
-	},
+	"propertyName": "Basil.TurretBuddies.NumMax",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

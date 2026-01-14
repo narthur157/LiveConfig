@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.Primary.DOT.Duration"
-	},
+	"propertyName": "Basil.Primary.DOT.Duration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

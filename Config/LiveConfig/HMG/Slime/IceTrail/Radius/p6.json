@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.Slime.IceTrail.Radius.p6"
-	},
+	"propertyName": "HMG.Slime.IceTrail.Radius.p6",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.TrueSentience.PrepLaunchDelay"
-	},
+	"propertyName": "Anise.TrueSentience.PrepLaunchDelay",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

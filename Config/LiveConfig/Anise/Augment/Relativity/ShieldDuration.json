@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augment.Relativity.ShieldDuration"
-	},
+	"propertyName": "Anise.Augment.Relativity.ShieldDuration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

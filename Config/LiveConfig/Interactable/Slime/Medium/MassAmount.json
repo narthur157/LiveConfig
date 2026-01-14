@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.Slime.Medium.MassAmount"
-	},
+	"propertyName": "Interactable.Slime.Medium.MassAmount",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

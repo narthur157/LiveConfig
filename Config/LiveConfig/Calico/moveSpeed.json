@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.moveSpeed"
-	},
+	"propertyName": "Calico.moveSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

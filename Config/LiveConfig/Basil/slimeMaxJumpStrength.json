@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.slimeMaxJumpStrength"
-	},
+	"propertyName": "Basil.slimeMaxJumpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

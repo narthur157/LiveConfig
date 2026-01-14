@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.BootsOfGreed.GoldPerGoldHeldPerRound.Quality3"
-	},
+	"propertyName": "Item.BootsOfGreed.GoldPerGoldHeldPerRound.Quality3",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

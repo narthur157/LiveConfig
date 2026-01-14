@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.wallRunMaxJumpStrength"
-	},
+	"propertyName": "Buster.wallRunMaxJumpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

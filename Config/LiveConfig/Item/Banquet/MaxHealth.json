@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Banquet.MaxHealth"
-	},
+	"propertyName": "Item.Banquet.MaxHealth",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

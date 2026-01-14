@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Domination.personalMassPickupDelaySeconds"
-	},
+	"propertyName": "Domination.personalMassPickupDelaySeconds",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

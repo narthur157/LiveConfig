@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Utility.MissleArcAmount"
-	},
+	"propertyName": "Buster.Utility.MissleArcAmount",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

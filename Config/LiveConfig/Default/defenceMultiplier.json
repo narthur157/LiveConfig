@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.defenceMultiplier"
-	},
+	"propertyName": "Default.defenceMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

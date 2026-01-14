@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Molly.ActorDuration"
-	},
+	"propertyName": "Buster.Molly.ActorDuration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

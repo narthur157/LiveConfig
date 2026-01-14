@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddy.healthRegenRate"
-	},
+	"propertyName": "Basil.TurretBuddy.healthRegenRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

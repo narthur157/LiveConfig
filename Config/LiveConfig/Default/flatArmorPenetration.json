@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.flatArmorPenetration"
-	},
+	"propertyName": "Default.flatArmorPenetration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

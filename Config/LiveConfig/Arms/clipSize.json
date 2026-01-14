@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.clipSize"
-	},
+	"propertyName": "Arms.clipSize",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

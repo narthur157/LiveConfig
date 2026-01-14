@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.SlimeLeap.Radius"
-	},
+	"propertyName": "Cilantro.SlimeLeap.Radius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

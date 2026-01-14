@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.MoltovSlam.Cooldown"
-	},
+	"propertyName": "Buster.MoltovSlam.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

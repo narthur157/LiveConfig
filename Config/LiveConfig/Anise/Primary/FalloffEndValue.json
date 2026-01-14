@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Primary.FalloffEndValue"
-	},
+	"propertyName": "Anise.Primary.FalloffEndValue",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.BuffingShrine.EnableText"
-	},
+	"propertyName": "Interactable.BuffingShrine.EnableText",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

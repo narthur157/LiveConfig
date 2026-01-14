@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.armor"
-	},
+	"propertyName": "Default.armor",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

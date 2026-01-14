@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.BigOne.Cooldown"
-	},
+	"propertyName": "HMG.BigOne.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

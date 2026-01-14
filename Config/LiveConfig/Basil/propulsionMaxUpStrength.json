@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.propulsionMaxUpStrength"
-	},
+	"propertyName": "Basil.propulsionMaxUpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

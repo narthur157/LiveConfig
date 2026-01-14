@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.propulsionMinForwardStrength"
-	},
+	"propertyName": "Basil.propulsionMinForwardStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

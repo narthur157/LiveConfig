@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.VisionsOfBud.Cooldown"
-	},
+	"propertyName": "Basil.VisionsOfBud.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

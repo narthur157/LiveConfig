@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "CameraShake.Damage.Generic.HighCutoff"
-	},
+	"propertyName": "CameraShake.Damage.Generic.HighCutoff",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

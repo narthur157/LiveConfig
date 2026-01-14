@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Domination.deathRespawnPenaltySeconds"
-	},
+	"propertyName": "Domination.deathRespawnPenaltySeconds",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

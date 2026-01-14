@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BouncyBomb.GravityScale"
-	},
+	"propertyName": "Calico.BouncyBomb.GravityScale",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

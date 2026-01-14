@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.HealingWounds.PercentHeal.Quality2"
-	},
+	"propertyName": "Item.HealingWounds.PercentHeal.Quality2",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

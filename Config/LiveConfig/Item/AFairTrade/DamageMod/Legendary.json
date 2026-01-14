@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.AFairTrade.DamageMod.Legendary"
-	},
+	"propertyName": "Item.AFairTrade.DamageMod.Legendary",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

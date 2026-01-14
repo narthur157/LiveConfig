@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.AllSeeingEye.AttackDelay"
-	},
+	"propertyName": "Basil.AllSeeingEye.AttackDelay",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

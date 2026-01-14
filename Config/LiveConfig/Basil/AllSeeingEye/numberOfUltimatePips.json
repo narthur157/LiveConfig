@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.AllSeeingEye.numberOfUltimatePips"
-	},
+	"propertyName": "Basil.AllSeeingEye.numberOfUltimatePips",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

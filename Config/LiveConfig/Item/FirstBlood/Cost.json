@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.FirstBlood.Cost"
-	},
+	"propertyName": "Item.FirstBlood.Cost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

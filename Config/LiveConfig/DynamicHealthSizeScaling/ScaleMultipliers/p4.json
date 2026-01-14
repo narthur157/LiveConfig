@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "DynamicHealthSizeScaling.ScaleMultipliers.p4"
-	},
+	"propertyName": "DynamicHealthSizeScaling.ScaleMultipliers.p4",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

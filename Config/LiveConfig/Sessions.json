@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Sessions"
-	},
+	"propertyName": "Sessions",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.ExpansiveNova.NovaChargeTime"
-	},
+	"propertyName": "Cilantro.ExpansiveNova.NovaChargeTime",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

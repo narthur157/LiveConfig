@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.heroJumpStrength"
-	},
+	"propertyName": "Buster.heroJumpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

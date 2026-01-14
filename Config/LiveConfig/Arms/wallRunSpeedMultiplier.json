@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.wallRunSpeedMultiplier"
-	},
+	"propertyName": "Arms.wallRunSpeedMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.sprintStrength"
-	},
+	"propertyName": "Buster.sprintStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.FourthEye.MeshScale.y"
-	},
+	"propertyName": "Basil.FourthEye.MeshScale.y",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

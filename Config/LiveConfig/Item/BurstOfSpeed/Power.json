@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.BurstOfSpeed.Power"
-	},
+	"propertyName": "Item.BurstOfSpeed.Power",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

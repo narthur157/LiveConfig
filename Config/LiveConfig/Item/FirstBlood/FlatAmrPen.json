@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.FirstBlood.FlatAmrPen"
-	},
+	"propertyName": "Item.FirstBlood.FlatAmrPen",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

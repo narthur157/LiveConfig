@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.message"
-	},
+	"propertyName": "Default.message",
 	"description": "",
 	"propertyType": "String",
 	"tags": [

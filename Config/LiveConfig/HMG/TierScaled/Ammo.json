@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.TierScaled.Ammo"
-	},
+	"propertyName": "HMG.TierScaled.Ammo",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

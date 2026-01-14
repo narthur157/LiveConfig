@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.bEnabled"
-	},
+	"propertyName": "Anise_Proto.bEnabled",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

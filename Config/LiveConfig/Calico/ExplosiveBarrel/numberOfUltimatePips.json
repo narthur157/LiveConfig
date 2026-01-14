@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.ExplosiveBarrel.numberOfUltimatePips"
-	},
+	"propertyName": "Calico.ExplosiveBarrel.numberOfUltimatePips",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

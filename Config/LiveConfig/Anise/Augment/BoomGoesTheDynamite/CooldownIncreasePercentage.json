@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augment.BoomGoesTheDynamite.CooldownIncreasePercentage"
-	},
+	"propertyName": "Anise.Augment.BoomGoesTheDynamite.CooldownIncreasePercentage",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

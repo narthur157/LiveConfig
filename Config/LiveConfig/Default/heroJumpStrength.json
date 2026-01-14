@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.heroJumpStrength"
-	},
+	"propertyName": "Default.heroJumpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

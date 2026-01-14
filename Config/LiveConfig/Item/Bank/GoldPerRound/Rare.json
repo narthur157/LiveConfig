@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Bank.GoldPerRound.Rare"
-	},
+	"propertyName": "Item.Bank.GoldPerRound.Rare",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

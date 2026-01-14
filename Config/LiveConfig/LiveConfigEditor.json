@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "LiveConfigEditor"
-	},
+	"propertyName": "LiveConfigEditor",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

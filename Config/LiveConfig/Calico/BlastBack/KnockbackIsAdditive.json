@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BlastBack.KnockbackIsAdditive"
-	},
+	"propertyName": "Calico.BlastBack.KnockbackIsAdditive",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Immolation.TickRate"
-	},
+	"propertyName": "Item.Immolation.TickRate",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

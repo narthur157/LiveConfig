@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "DynamicFlatHealthSizeScaling.ArmorMultiplier.p5"
-	},
+	"propertyName": "DynamicFlatHealthSizeScaling.ArmorMultiplier.p5",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

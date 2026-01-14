@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.utility.ChannelSclaesBasedOnRockets"
-	},
+	"propertyName": "Buster.utility.ChannelSclaesBasedOnRockets",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

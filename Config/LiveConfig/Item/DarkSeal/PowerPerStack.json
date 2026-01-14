@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.DarkSeal.PowerPerStack"
-	},
+	"propertyName": "Item.DarkSeal.PowerPerStack",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

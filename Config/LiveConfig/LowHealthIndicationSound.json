@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "LowHealthIndicationSound"
-	},
+	"propertyName": "LowHealthIndicationSound",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

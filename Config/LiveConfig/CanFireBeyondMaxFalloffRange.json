@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "CanFireBeyondMaxFalloffRange"
-	},
+	"propertyName": "CanFireBeyondMaxFalloffRange",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

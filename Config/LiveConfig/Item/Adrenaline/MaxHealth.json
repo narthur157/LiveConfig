@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Adrenaline.MaxHealth"
-	},
+	"propertyName": "Item.Adrenaline.MaxHealth",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

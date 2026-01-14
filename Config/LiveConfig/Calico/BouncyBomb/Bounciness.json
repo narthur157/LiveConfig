@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BouncyBomb.Bounciness"
-	},
+	"propertyName": "Calico.BouncyBomb.Bounciness",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

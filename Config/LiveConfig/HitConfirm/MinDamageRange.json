@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HitConfirm.MinDamageRange"
-	},
+	"propertyName": "HitConfirm.MinDamageRange",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

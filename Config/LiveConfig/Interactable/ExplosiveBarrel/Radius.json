@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.ExplosiveBarrel.Radius"
-	},
+	"propertyName": "Interactable.ExplosiveBarrel.Radius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

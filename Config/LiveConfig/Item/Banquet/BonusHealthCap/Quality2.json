@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Banquet.BonusHealthCap.Quality2"
-	},
+	"propertyName": "Item.Banquet.BonusHealthCap.Quality2",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

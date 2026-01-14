@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Bank.GoldPerRound.Epic"
-	},
+	"propertyName": "Item.Bank.GoldPerRound.Epic",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

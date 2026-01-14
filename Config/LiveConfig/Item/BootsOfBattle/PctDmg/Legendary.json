@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.BootsOfBattle.PctDmg.Legendary"
-	},
+	"propertyName": "Item.BootsOfBattle.PctDmg.Legendary",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

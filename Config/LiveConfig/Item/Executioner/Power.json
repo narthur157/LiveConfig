@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Executioner.Power"
-	},
+	"propertyName": "Item.Executioner.Power",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

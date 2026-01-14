@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buff.BigTeam.Armor"
-	},
+	"propertyName": "Buff.BigTeam.Armor",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

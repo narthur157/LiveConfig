@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.scale"
-	},
+	"propertyName": "Buster.scale",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

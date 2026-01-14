@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.slimeMinJumpStrength"
-	},
+	"propertyName": "Default.slimeMinJumpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

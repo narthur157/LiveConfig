@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.Parry.EnemyTrappedEffectDuration.p2"
-	},
+	"propertyName": "Arms.Parry.EnemyTrappedEffectDuration.p2",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

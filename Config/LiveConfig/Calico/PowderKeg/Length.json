@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.PowderKeg.Length"
-	},
+	"propertyName": "Calico.PowderKeg.Length",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

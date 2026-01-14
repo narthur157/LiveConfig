@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.Primary.DOT.DamagePerTick"
-	},
+	"propertyName": "Basil.Primary.DOT.DamagePerTick",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

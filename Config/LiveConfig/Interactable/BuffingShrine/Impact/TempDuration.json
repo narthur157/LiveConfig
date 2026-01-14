@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.BuffingShrine.Impact.TempDuration"
-	},
+	"propertyName": "Interactable.BuffingShrine.Impact.TempDuration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

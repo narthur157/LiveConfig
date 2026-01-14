@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buff.BlueBuff.Movespeed"
-	},
+	"propertyName": "Buff.BlueBuff.Movespeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

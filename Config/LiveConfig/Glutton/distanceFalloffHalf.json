@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Glutton.distanceFalloffHalf"
-	},
+	"propertyName": "Glutton.distanceFalloffHalf",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

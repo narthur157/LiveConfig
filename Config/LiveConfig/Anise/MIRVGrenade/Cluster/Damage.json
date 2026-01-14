@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.MIRVGrenade.Cluster.Damage"
-	},
+	"propertyName": "Anise.MIRVGrenade.Cluster.Damage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camp.T3.Range.MassReward"
-	},
+	"propertyName": "Camp.T3.Range.MassReward",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

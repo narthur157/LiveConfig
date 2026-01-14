@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "DamageToMaxHealthReductionConversion"
-	},
+	"propertyName": "DamageToMaxHealthReductionConversion",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

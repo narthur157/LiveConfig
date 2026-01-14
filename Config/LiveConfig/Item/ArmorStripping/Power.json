@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.ArmorStripping.Power"
-	},
+	"propertyName": "Item.ArmorStripping.Power",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

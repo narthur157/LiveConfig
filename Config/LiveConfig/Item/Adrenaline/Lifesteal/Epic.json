@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Adrenaline.Lifesteal.Epic"
-	},
+	"propertyName": "Item.Adrenaline.Lifesteal.Epic",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

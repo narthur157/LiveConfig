@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.AllSeeingEye.Duration"
-	},
+	"propertyName": "Basil.AllSeeingEye.Duration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

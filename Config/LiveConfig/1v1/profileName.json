@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "1v1.profileName"
-	},
+	"propertyName": "1v1.profileName",
 	"description": "",
 	"propertyType": "String",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BlastBack.ActorEyesMuzzleOffset"
-	},
+	"propertyName": "Calico.BlastBack.ActorEyesMuzzleOffset",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "NonDirectionalDamageIndicator"
-	},
+	"propertyName": "NonDirectionalDamageIndicator",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

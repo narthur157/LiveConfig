@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MinMovespeedAttribute"
-	},
+	"propertyName": "MinMovespeedAttribute",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

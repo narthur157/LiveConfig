@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.ArmorStripping.ArmorReductionPerHit.Rare"
-	},
+	"propertyName": "Item.ArmorStripping.ArmorReductionPerHit.Rare",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

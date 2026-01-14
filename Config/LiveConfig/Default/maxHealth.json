@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.maxHealth"
-	},
+	"propertyName": "Default.maxHealth",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

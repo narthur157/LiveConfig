@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.MIRVGrenade.Cluster.MinDamageFallOffMultiplier"
-	},
+	"propertyName": "Anise.MIRVGrenade.Cluster.MinDamageFallOffMultiplier",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

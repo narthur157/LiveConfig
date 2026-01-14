@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.ExplosiveBarrel.armor"
-	},
+	"propertyName": "Calico.ExplosiveBarrel.armor",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

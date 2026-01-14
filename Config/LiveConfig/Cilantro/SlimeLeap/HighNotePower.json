@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.SlimeLeap.HighNotePower"
-	},
+	"propertyName": "Cilantro.SlimeLeap.HighNotePower",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

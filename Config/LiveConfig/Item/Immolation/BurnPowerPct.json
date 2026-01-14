@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Immolation.BurnPowerPct"
-	},
+	"propertyName": "Item.Immolation.BurnPowerPct",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

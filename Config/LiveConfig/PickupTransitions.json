@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "PickupTransitions"
-	},
+	"propertyName": "PickupTransitions",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

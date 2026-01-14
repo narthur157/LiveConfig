@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.PowerChord.RingDamageMul1"
-	},
+	"propertyName": "Cilantro.PowerChord.RingDamageMul1",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

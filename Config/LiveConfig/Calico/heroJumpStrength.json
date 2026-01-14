@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.heroJumpStrength"
-	},
+	"propertyName": "Calico.heroJumpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

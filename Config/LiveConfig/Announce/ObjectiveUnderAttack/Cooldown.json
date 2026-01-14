@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Announce.ObjectiveUnderAttack.Cooldown"
-	},
+	"propertyName": "Announce.ObjectiveUnderAttack.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

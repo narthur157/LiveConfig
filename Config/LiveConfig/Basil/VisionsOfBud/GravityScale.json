@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.VisionsOfBud.GravityScale"
-	},
+	"propertyName": "Basil.VisionsOfBud.GravityScale",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

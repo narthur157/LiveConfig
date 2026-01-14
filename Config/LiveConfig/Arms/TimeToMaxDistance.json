@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.TimeToMaxDistance"
-	},
+	"propertyName": "Arms.TimeToMaxDistance",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.queueName"
-	},
+	"propertyName": "Default.queueName",
 	"description": "",
 	"propertyType": "String",
 	"tags": [

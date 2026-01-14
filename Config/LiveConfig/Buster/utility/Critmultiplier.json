@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Utility.Critmultiplier"
-	},
+	"propertyName": "Buster.Utility.Critmultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

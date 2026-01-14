@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.Level.Power.Value.p8"
-	},
+	"propertyName": "Basil.Level.Power.Value.p8",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

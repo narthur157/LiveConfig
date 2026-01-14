@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.SingularityGrenade.Cooldown"
-	},
+	"propertyName": "Anise.SingularityGrenade.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

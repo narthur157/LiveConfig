@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BarrelRoll.PowerCof"
-	},
+	"propertyName": "Calico.BarrelRoll.PowerCof",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

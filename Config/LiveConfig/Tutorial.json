@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Tutorial"
-	},
+	"propertyName": "Tutorial",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

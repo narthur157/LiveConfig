@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.ultEnergyRegenRate"
-	},
+	"propertyName": "Arms.ultEnergyRegenRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

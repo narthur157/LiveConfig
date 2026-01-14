@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Bloom.Bloom.DecayLength"
-	},
+	"propertyName": "Anise.Bloom.Bloom.DecayLength",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

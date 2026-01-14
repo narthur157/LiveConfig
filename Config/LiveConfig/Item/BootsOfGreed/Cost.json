@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.BootsOfGreed.Cost"
-	},
+	"propertyName": "Item.BootsOfGreed.Cost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

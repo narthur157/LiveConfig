@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.SlimeLeap.Damage"
-	},
+	"propertyName": "Cilantro.SlimeLeap.Damage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

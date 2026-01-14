@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.MoltovSlam.JumpHeight"
-	},
+	"propertyName": "Buster.MoltovSlam.JumpHeight",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

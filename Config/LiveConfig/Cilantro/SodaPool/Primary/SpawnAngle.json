@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.SodaPool.Primary.SpawnAngle"
-	},
+	"propertyName": "Cilantro.SodaPool.Primary.SpawnAngle",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

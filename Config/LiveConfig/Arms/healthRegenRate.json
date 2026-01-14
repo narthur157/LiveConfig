@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.healthRegenRate"
-	},
+	"propertyName": "Arms.healthRegenRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.BigOne.AOEDamage"
-	},
+	"propertyName": "HMG.BigOne.AOEDamage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

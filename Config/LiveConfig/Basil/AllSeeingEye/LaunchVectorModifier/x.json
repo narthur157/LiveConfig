@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.AllSeeingEye.LaunchVectorModifier.x"
-	},
+	"propertyName": "Basil.AllSeeingEye.LaunchVectorModifier.x",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.staminaRegenAmount"
-	},
+	"propertyName": "Default.staminaRegenAmount",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

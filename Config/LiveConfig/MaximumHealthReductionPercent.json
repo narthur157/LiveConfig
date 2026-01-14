@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MaximumHealthReductionPercent"
-	},
+	"propertyName": "MaximumHealthReductionPercent",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

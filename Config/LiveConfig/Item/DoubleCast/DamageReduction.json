@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.DoubleCast.DamageReduction"
-	},
+	"propertyName": "Item.DoubleCast.DamageReduction",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

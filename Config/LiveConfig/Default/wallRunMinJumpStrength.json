@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.wallRunMinJumpStrength"
-	},
+	"propertyName": "Default.wallRunMinJumpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

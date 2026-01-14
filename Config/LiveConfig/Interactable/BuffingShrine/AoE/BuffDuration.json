@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.BuffingShrine.AoE.BuffDuration"
-	},
+	"propertyName": "Interactable.BuffingShrine.AoE.BuffDuration",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

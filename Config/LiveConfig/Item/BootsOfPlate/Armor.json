@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.BootsOfPlate.Armor"
-	},
+	"propertyName": "Item.BootsOfPlate.Armor",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.HitBlockIndicator.MaxRange"
-	},
+	"propertyName": "Buster.HitBlockIndicator.MaxRange",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

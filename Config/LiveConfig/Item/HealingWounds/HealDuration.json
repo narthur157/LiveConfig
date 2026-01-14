@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.HealingWounds.HealDuration"
-	},
+	"propertyName": "Item.HealingWounds.HealDuration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

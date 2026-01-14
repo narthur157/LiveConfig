@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "NumPresentedItems"
-	},
+	"propertyName": "NumPresentedItems",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

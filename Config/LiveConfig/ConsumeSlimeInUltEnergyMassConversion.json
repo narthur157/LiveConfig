@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ConsumeSlimeInUltEnergyMassConversion"
-	},
+	"propertyName": "ConsumeSlimeInUltEnergyMassConversion",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

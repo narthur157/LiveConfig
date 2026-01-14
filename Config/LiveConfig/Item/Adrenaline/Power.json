@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Adrenaline.Power"
-	},
+	"propertyName": "Item.Adrenaline.Power",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

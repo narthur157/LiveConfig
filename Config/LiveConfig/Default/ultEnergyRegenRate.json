@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.ultEnergyRegenRate"
-	},
+	"propertyName": "Default.ultEnergyRegenRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

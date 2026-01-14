@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BlastUp.CritMultiplier"
-	},
+	"propertyName": "Calico.BlastUp.CritMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

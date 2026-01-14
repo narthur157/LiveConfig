@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "FriendlyOutlineIsActive"
-	},
+	"propertyName": "FriendlyOutlineIsActive",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

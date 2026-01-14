@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.TrueSentience.Spawned.TimeToDetonate"
-	},
+	"propertyName": "Anise.TrueSentience.Spawned.TimeToDetonate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

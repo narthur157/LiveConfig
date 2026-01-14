@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Glutton.reloadTime"
-	},
+	"propertyName": "Glutton.reloadTime",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

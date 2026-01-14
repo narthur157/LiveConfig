@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camp.T1.RangeCluster.Damage"
-	},
+	"propertyName": "Camp.T1.RangeCluster.Damage",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

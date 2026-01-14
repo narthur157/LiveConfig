@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "PlayerEliminationGoldReward"
-	},
+	"propertyName": "PlayerEliminationGoldReward",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

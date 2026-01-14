@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camp.T3.Melee.Damage"
-	},
+	"propertyName": "Camp.T3.Melee.Damage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

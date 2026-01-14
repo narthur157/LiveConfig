@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "CameraShake.Damage.Generic.MedCutoff"
-	},
+	"propertyName": "CameraShake.Damage.Generic.MedCutoff",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

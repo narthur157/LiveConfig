@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.miscParameter3"
-	},
+	"propertyName": "Calico.miscParameter3",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

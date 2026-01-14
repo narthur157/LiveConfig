@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.TheSlam.MoveToImpactSpeed.p12"
-	},
+	"propertyName": "Arms.TheSlam.MoveToImpactSpeed.p12",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

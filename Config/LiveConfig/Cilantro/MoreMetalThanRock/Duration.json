@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.MoreMetalThanRock.Duration"
-	},
+	"propertyName": "Cilantro.MoreMetalThanRock.Duration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

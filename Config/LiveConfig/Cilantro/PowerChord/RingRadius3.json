@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.PowerChord.RingRadius3"
-	},
+	"propertyName": "Cilantro.PowerChord.RingRadius3",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.GooeyGrenade.SelfDamageMultiplier"
-	},
+	"propertyName": "Anise.GooeyGrenade.SelfDamageMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

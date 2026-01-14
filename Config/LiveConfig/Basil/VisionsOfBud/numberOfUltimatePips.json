@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.VisionsOfBud.numberOfUltimatePips"
-	},
+	"propertyName": "Basil.VisionsOfBud.numberOfUltimatePips",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

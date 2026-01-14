@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.ICU.Cooldown"
-	},
+	"propertyName": "Basil.ICU.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

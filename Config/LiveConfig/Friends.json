@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Friends"
-	},
+	"propertyName": "Friends",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BlastUp.ExplosionRadius"
-	},
+	"propertyName": "Calico.BlastUp.ExplosionRadius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

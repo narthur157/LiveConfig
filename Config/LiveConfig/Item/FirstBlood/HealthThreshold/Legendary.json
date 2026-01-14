@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.FirstBlood.HealthThreshold.Legendary"
-	},
+	"propertyName": "Item.FirstBlood.HealthThreshold.Legendary",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

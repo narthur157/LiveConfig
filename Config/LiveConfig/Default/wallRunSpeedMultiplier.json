@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.wallRunSpeedMultiplier"
-	},
+	"propertyName": "Default.wallRunSpeedMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

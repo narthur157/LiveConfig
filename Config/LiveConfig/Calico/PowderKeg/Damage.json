@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.PowderKeg.Damage"
-	},
+	"propertyName": "Calico.PowderKeg.Damage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Bling.Cost"
-	},
+	"propertyName": "Item.Bling.Cost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.AntiSlime.Power"
-	},
+	"propertyName": "Item.AntiSlime.Power",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "1v1.mapName"
-	},
+	"propertyName": "1v1.mapName",
 	"description": "",
 	"propertyType": "String",
 	"tags": [

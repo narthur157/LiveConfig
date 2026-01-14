@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Cleave.Cooldown"
-	},
+	"propertyName": "Item.Cleave.Cooldown",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

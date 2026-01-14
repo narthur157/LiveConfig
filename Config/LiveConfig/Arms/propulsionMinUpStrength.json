@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.propulsionMinUpStrength"
-	},
+	"propertyName": "Arms.propulsionMinUpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

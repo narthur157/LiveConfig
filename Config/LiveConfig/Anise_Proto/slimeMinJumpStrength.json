@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.slimeMinJumpStrength"
-	},
+	"propertyName": "Anise_Proto.slimeMinJumpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

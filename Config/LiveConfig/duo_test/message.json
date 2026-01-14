@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "duo_test.message"
-	},
+	"propertyName": "duo_test.message",
 	"description": "",
 	"propertyType": "String",
 	"tags": [

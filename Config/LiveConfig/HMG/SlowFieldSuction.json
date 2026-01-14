@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.SlowFieldSuction"
-	},
+	"propertyName": "HMG.SlowFieldSuction",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "BasicTraining.personalMassPickupDelaySeconds"
-	},
+	"propertyName": "BasicTraining.personalMassPickupDelaySeconds",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

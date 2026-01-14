@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.GrindRail.Speed"
-	},
+	"propertyName": "Interactable.GrindRail.Speed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

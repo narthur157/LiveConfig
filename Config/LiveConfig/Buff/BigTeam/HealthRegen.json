@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buff.BigTeam.HealthRegen"
-	},
+	"propertyName": "Buff.BigTeam.HealthRegen",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

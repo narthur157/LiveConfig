@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BouncyBomb.PowerCof"
-	},
+	"propertyName": "Calico.BouncyBomb.PowerCof",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

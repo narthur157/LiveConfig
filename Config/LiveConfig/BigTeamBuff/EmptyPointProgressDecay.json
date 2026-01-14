@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "BigTeamBuff.EmptyPointProgressDecay"
-	},
+	"propertyName": "BigTeamBuff.EmptyPointProgressDecay",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

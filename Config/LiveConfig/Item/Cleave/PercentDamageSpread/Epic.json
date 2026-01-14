@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Cleave.PercentDamageSpread.Epic"
-	},
+	"propertyName": "Item.Cleave.PercentDamageSpread.Epic",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

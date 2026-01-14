@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "NewObjectiveSounds"
-	},
+	"propertyName": "NewObjectiveSounds",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

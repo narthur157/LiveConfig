@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "BasicTraining.maxGameLengthRespawnDelaySeconds"
-	},
+	"propertyName": "BasicTraining.maxGameLengthRespawnDelaySeconds",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

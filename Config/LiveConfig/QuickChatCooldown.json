@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "QuickChatCooldown"
-	},
+	"propertyName": "QuickChatCooldown",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

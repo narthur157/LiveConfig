@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.SodaFrag.Cooldown"
-	},
+	"propertyName": "Anise.SodaFrag.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

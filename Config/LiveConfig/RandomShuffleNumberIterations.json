@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "RandomShuffleNumberIterations"
-	},
+	"propertyName": "RandomShuffleNumberIterations",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

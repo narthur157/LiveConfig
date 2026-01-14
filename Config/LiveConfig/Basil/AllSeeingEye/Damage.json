@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.AllSeeingEye.Damage"
-	},
+	"propertyName": "Basil.AllSeeingEye.Damage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

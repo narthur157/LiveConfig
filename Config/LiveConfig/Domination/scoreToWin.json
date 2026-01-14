@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Domination.scoreToWin"
-	},
+	"propertyName": "Domination.scoreToWin",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

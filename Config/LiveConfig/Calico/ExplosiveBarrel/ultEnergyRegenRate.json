@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.ExplosiveBarrel.ultEnergyRegenRate"
-	},
+	"propertyName": "Calico.ExplosiveBarrel.ultEnergyRegenRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

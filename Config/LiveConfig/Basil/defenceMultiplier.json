@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.defenceMultiplier"
-	},
+	"propertyName": "Basil.defenceMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

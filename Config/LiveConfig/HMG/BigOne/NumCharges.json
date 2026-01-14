@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.BigOne.NumCharges"
-	},
+	"propertyName": "HMG.BigOne.NumCharges",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

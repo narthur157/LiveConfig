@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "duo_test.queueName"
-	},
+	"propertyName": "duo_test.queueName",
 	"description": "",
 	"propertyType": "String",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.propulsionMinUpStrength"
-	},
+	"propertyName": "Buster.propulsionMinUpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

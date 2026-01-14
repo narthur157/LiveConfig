@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.heroSpeed"
-	},
+	"propertyName": "Calico.heroSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

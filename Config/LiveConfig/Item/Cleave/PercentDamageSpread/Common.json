@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Cleave.PercentDamageSpread.Common"
-	},
+	"propertyName": "Item.Cleave.PercentDamageSpread.Common",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

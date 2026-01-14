@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "BasicTraining.pickupRespawnDelaySeconds"
-	},
+	"propertyName": "BasicTraining.pickupRespawnDelaySeconds",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

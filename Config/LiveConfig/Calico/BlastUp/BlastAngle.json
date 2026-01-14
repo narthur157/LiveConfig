@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BlastUp.BlastAngle"
-	},
+	"propertyName": "Calico.BlastUp.BlastAngle",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

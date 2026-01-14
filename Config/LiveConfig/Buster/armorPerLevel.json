@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.armorPerLevel"
-	},
+	"propertyName": "Buster.armorPerLevel",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camp.Generic.RespawnTime.BigTeam"
-	},
+	"propertyName": "Camp.Generic.RespawnTime.BigTeam",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

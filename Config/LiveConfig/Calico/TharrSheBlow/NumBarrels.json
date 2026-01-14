@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.TharrSheBlow.NumBarrels"
-	},
+	"propertyName": "Calico.TharrSheBlow.NumBarrels",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

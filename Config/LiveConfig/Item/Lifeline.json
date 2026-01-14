@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Lifeline"
-	},
+	"propertyName": "Item.Lifeline",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

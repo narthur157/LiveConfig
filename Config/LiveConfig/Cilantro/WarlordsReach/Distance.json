@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.WarlordsReach.Distance"
-	},
+	"propertyName": "Cilantro.WarlordsReach.Distance",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

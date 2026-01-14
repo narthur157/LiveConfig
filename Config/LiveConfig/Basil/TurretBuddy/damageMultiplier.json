@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddy.damageMultiplier"
-	},
+	"propertyName": "Basil.TurretBuddy.damageMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

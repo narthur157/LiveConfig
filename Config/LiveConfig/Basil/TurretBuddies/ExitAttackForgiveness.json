@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddies.ExitAttackForgiveness"
-	},
+	"propertyName": "Basil.TurretBuddies.ExitAttackForgiveness",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

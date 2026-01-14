@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.BuffingShrine.AoE.TickRate"
-	},
+	"propertyName": "Interactable.BuffingShrine.AoE.TickRate",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

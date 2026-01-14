@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.Primary.DOT.Numticks"
-	},
+	"propertyName": "Basil.Primary.DOT.Numticks",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

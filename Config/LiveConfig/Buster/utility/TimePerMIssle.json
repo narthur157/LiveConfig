@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.utility.TimePerMIssle"
-	},
+	"propertyName": "Buster.utility.TimePerMIssle",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

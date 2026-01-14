@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.distanceFalloffBegin"
-	},
+	"propertyName": "Arms.distanceFalloffBegin",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

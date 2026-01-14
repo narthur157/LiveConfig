@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.AntiSlime.Cost"
-	},
+	"propertyName": "Item.AntiSlime.Cost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.SlimeStealingEyes.IsMassPickupImmediate"
-	},
+	"propertyName": "Basil.SlimeStealingEyes.IsMassPickupImmediate",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

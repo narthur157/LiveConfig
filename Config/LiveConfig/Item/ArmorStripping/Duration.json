@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.ArmorStripping.Duration"
-	},
+	"propertyName": "Item.ArmorStripping.Duration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

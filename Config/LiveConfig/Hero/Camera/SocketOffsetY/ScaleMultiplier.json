@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Hero.Camera.SocketOffsetY.ScaleMultiplier"
-	},
+	"propertyName": "Hero.Camera.SocketOffsetY.ScaleMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

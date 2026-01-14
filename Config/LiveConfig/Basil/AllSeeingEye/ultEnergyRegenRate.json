@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.AllSeeingEye.ultEnergyRegenRate"
-	},
+	"propertyName": "Basil.AllSeeingEye.ultEnergyRegenRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

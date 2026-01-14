@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Domination.respawnDelaySeconds"
-	},
+	"propertyName": "Domination.respawnDelaySeconds",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

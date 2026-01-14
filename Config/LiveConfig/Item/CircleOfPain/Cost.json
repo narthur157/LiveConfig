@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.CircleOfPain.Cost"
-	},
+	"propertyName": "Item.CircleOfPain.Cost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

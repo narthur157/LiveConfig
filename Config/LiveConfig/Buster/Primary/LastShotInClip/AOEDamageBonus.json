@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Primary.LastShotInClip.AOEDamageBonus"
-	},
+	"propertyName": "Buster.Primary.LastShotInClip.AOEDamageBonus",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

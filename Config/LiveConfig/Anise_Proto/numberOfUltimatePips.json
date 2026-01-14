@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.numberOfUltimatePips"
-	},
+	"propertyName": "Anise_Proto.numberOfUltimatePips",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

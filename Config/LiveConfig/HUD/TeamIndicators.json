@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HUD.TeamIndicators"
-	},
+	"propertyName": "HUD.TeamIndicators",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

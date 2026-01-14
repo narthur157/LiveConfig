@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.ChargedNova.Cooldown"
-	},
+	"propertyName": "Cilantro.ChargedNova.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

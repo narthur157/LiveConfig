@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.healthRegenRate"
-	},
+	"propertyName": "Buster.healthRegenRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

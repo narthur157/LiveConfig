@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.SingularityGrenade.InitialSpeed"
-	},
+	"propertyName": "Anise.SingularityGrenade.InitialSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

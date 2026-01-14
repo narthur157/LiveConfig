@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "duo_test.profileName"
-	},
+	"propertyName": "duo_test.profileName",
 	"description": "",
 	"propertyType": "String",
 	"tags": [

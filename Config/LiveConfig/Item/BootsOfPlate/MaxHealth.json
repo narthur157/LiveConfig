@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.BootsOfPlate.MaxHealth"
-	},
+	"propertyName": "Item.BootsOfPlate.MaxHealth",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

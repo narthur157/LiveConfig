@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HeroGroundFriction.p4"
-	},
+	"propertyName": "HeroGroundFriction.p4",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

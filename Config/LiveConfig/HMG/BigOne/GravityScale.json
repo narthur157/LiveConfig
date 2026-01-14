@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.BigOne.GravityScale"
-	},
+	"propertyName": "HMG.BigOne.GravityScale",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

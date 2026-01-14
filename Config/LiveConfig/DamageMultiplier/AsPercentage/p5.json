@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "DamageMultiplier.AsPercentage.p5"
-	},
+	"propertyName": "DamageMultiplier.AsPercentage.p5",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

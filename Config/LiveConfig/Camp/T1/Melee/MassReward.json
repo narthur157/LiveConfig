@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camp.T1.Melee.MassReward"
-	},
+	"propertyName": "Camp.T1.Melee.MassReward",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

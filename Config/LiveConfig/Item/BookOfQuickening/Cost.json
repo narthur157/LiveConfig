@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.BookOfQuickening.Cost"
-	},
+	"propertyName": "Item.BookOfQuickening.Cost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

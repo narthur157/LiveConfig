@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.BuffingShrine.AoE.HealPerTick"
-	},
+	"propertyName": "Interactable.BuffingShrine.AoE.HealPerTick",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

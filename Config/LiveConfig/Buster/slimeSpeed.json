@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.slimeSpeed"
-	},
+	"propertyName": "Buster.slimeSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

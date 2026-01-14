@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camp.T1.MeleeCluster.Damage"
-	},
+	"propertyName": "Camp.T1.MeleeCluster.Damage",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.damageMultiplier"
-	},
+	"propertyName": "Anise_Proto.damageMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

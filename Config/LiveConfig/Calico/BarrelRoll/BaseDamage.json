@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BarrelRoll.BaseDamage"
-	},
+	"propertyName": "Calico.BarrelRoll.BaseDamage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

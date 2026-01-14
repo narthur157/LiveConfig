@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.TrueSentience.Spawned.GravityScale"
-	},
+	"propertyName": "Anise.TrueSentience.Spawned.GravityScale",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

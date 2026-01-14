@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.SlimeDodge.MaxSpeedMultiplier"
-	},
+	"propertyName": "Anise.SlimeDodge.MaxSpeedMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

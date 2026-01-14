@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.SingularityGrenade.KnockbackMultiplier"
-	},
+	"propertyName": "Anise.SingularityGrenade.KnockbackMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

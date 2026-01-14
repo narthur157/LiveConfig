@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.PrimaryFire.Unscoped.ActorEyesMuzzleOffset.x"
-	},
+	"propertyName": "Basil.PrimaryFire.Unscoped.ActorEyesMuzzleOffset.x",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.p11"
-	},
+	"propertyName": "Default.p11",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

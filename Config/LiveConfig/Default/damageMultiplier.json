@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.damageMultiplier"
-	},
+	"propertyName": "Default.damageMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

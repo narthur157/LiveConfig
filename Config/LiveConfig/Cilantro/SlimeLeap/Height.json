@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.SlimeLeap.Height"
-	},
+	"propertyName": "Cilantro.SlimeLeap.Height",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

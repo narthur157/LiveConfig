@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.distanceFalloffBegin"
-	},
+	"propertyName": "Basil.distanceFalloffBegin",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

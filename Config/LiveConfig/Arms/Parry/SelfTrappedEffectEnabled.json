@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.Parry.SelfTrappedEffectEnabled"
-	},
+	"propertyName": "Arms.Parry.SelfTrappedEffectEnabled",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

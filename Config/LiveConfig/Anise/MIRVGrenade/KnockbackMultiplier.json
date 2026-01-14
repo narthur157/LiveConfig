@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.MIRVGrenade.KnockbackMultiplier"
-	},
+	"propertyName": "Anise.MIRVGrenade.KnockbackMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

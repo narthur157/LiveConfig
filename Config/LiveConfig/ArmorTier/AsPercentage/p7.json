@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ArmorTier.AsPercentage.p7"
-	},
+	"propertyName": "ArmorTier.AsPercentage.p7",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

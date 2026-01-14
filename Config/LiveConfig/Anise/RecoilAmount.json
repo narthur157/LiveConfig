@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.RecoilAmount"
-	},
+	"propertyName": "Anise.RecoilAmount",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

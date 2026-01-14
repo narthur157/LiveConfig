@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.AllSeeingEye.healthRegenRate"
-	},
+	"propertyName": "Basil.AllSeeingEye.healthRegenRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

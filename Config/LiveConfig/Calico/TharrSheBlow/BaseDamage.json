@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.TharrSheBlow.BaseDamage"
-	},
+	"propertyName": "Calico.TharrSheBlow.BaseDamage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

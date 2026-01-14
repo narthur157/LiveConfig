@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.ChargedNova.MaxChargeTime"
-	},
+	"propertyName": "Cilantro.ChargedNova.MaxChargeTime",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

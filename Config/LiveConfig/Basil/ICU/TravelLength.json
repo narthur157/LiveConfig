@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.ICU.TravelLength"
-	},
+	"propertyName": "Basil.ICU.TravelLength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

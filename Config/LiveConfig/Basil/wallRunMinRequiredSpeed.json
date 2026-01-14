@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.wallRunMinRequiredSpeed"
-	},
+	"propertyName": "Basil.wallRunMinRequiredSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

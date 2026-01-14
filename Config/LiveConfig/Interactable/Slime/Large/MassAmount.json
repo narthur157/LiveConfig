@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.Slime.Large.MassAmount"
-	},
+	"propertyName": "Interactable.Slime.Large.MassAmount",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

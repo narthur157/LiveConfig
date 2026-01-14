@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.critMultiplier"
-	},
+	"propertyName": "Basil.critMultiplier",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

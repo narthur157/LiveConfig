@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augments.StaticSlime.PowerCoefficient"
-	},
+	"propertyName": "Anise.Augments.StaticSlime.PowerCoefficient",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

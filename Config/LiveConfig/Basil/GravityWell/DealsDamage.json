@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.GravityWell.DealsDamage"
-	},
+	"propertyName": "Basil.GravityWell.DealsDamage",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

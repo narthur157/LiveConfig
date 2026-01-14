@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.ArmorStripping.ArmorReductionPerHit.Legendary"
-	},
+	"propertyName": "Item.ArmorStripping.ArmorReductionPerHit.Legendary",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.VortexShot.ShieldConeScaleZ"
-	},
+	"propertyName": "Buster.VortexShot.ShieldConeScaleZ",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

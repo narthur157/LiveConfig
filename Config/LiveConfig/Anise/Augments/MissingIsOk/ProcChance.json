@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augments.MissingIsOk.ProcChance"
-	},
+	"propertyName": "Anise.Augments.MissingIsOk.ProcChance",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

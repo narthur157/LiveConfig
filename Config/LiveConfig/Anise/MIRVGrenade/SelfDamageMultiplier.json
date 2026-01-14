@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.MIRVGrenade.SelfDamageMultiplier"
-	},
+	"propertyName": "Anise.MIRVGrenade.SelfDamageMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

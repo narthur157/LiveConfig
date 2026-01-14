@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Immolation"
-	},
+	"propertyName": "Item.Immolation",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

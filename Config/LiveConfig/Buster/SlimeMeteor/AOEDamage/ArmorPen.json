@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.SlimeMeteor.AOEDamage.ArmorPen"
-	},
+	"propertyName": "Buster.SlimeMeteor.AOEDamage.ArmorPen",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

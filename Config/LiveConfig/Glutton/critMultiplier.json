@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Glutton.critMultiplier"
-	},
+	"propertyName": "Glutton.critMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

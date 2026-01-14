@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.miscParameter2"
-	},
+	"propertyName": "Anise_Proto.miscParameter2",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

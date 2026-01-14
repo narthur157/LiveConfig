@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.miscParameter1"
-	},
+	"propertyName": "Basil.miscParameter1",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

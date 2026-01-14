@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.Slime.Large.DecayTimer"
-	},
+	"propertyName": "Interactable.Slime.Large.DecayTimer",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

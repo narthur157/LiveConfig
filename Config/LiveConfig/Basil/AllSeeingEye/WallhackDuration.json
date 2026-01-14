@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.AllSeeingEye.WallhackDuration"
-	},
+	"propertyName": "Basil.AllSeeingEye.WallhackDuration",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

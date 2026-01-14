@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.propulsionMaxUpStrength"
-	},
+	"propertyName": "Anise_Proto.propulsionMaxUpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

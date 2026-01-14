@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.SingularityGrenade.MinKnockbackFallOffMultiplier"
-	},
+	"propertyName": "Anise.SingularityGrenade.MinKnockbackFallOffMultiplier",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

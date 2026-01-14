@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.MIRVGrenade.InitialSpeed"
-	},
+	"propertyName": "Anise.MIRVGrenade.InitialSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

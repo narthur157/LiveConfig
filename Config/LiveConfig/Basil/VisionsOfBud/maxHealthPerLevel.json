@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.VisionsOfBud.maxHealthPerLevel"
-	},
+	"propertyName": "Basil.VisionsOfBud.maxHealthPerLevel",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

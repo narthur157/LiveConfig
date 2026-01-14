@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.mass"
-	},
+	"propertyName": "Calico.mass",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

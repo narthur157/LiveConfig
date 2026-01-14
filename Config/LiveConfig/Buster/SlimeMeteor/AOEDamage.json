@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.SlimeMeteor.AOEDamage"
-	},
+	"propertyName": "Buster.SlimeMeteor.AOEDamage",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

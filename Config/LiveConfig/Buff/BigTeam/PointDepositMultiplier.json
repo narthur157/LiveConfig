@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buff.BigTeam.PointDepositMultiplier"
-	},
+	"propertyName": "Buff.BigTeam.PointDepositMultiplier",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

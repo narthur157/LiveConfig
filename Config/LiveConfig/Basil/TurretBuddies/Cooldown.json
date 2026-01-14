@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddies.Cooldown"
-	},
+	"propertyName": "Basil.TurretBuddies.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

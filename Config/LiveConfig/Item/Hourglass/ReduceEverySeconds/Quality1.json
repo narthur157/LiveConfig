@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Hourglass.ReduceEverySeconds.Quality1"
-	},
+	"propertyName": "Item.Hourglass.ReduceEverySeconds.Quality1",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

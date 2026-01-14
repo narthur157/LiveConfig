@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Augments"
-	},
+	"propertyName": "Augments",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

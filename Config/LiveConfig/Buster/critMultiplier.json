@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.critMultiplier"
-	},
+	"propertyName": "Buster.critMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

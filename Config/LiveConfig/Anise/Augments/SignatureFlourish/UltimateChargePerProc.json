@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augments.SignatureFlourish.UltimateChargePerProc"
-	},
+	"propertyName": "Anise.Augments.SignatureFlourish.UltimateChargePerProc",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.DoubleCast.DoublingChancePerStack.Epic"
-	},
+	"propertyName": "Item.DoubleCast.DoublingChancePerStack.Epic",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

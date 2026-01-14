@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Glutton.accuracy"
-	},
+	"propertyName": "Glutton.accuracy",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

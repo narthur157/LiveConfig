@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.PowderKeg.ArmorPenetration"
-	},
+	"propertyName": "Calico.PowderKeg.ArmorPenetration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Molly.TickRate"
-	},
+	"propertyName": "Buster.Molly.TickRate",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

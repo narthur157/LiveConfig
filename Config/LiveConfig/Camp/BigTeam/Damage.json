@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camp.BigTeam.Damage"
-	},
+	"propertyName": "Camp.BigTeam.Damage",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

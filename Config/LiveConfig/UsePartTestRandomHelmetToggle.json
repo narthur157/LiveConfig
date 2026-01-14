@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "UsePartTestRandomHelmetToggle"
-	},
+	"propertyName": "UsePartTestRandomHelmetToggle",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

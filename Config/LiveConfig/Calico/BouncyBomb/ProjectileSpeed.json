@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BouncyBomb.ProjectileSpeed"
-	},
+	"propertyName": "Calico.BouncyBomb.ProjectileSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.BootsOfPlate.SlimeDefenceMod.Rare"
-	},
+	"propertyName": "Item.BootsOfPlate.SlimeDefenceMod.Rare",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

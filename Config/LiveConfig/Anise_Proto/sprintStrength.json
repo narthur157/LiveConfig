@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.sprintStrength"
-	},
+	"propertyName": "Anise_Proto.sprintStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

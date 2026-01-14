@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddies.Damage"
-	},
+	"propertyName": "Basil.TurretBuddies.Damage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

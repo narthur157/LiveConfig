@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.TrueSentience.Spawned.KnockbackMultiplier"
-	},
+	"propertyName": "Anise.TrueSentience.Spawned.KnockbackMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

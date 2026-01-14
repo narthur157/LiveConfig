@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.AllSeeingEye.HalfHeight"
-	},
+	"propertyName": "Basil.AllSeeingEye.HalfHeight",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

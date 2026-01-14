@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BlastBack.CritDamageMultiplier"
-	},
+	"propertyName": "Calico.BlastBack.CritDamageMultiplier",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.wallRunSpeedMultiplier"
-	},
+	"propertyName": "Calico.wallRunSpeedMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

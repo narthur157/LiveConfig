@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Primary.LastShotInClip.DirectDamageBonus"
-	},
+	"propertyName": "Buster.Primary.LastShotInClip.DirectDamageBonus",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.propulsionMaxForwardStrength"
-	},
+	"propertyName": "Calico.propulsionMaxForwardStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

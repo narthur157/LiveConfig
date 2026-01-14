@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.bEnabled"
-	},
+	"propertyName": "Calico.bEnabled",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

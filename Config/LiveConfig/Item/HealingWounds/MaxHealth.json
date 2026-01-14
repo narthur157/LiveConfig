@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.HealingWounds.MaxHealth"
-	},
+	"propertyName": "Item.HealingWounds.MaxHealth",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

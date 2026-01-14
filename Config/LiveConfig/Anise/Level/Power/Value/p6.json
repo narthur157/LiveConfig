@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Level.Power.Value.p6"
-	},
+	"propertyName": "Anise.Level.Power.Value.p6",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

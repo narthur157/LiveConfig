@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.SodaFrag.KnockbackMultiplier"
-	},
+	"propertyName": "Anise.SodaFrag.KnockbackMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

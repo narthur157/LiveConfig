@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.ExplosiveBarrel.ExplosionFireDamage"
-	},
+	"propertyName": "Interactable.ExplosiveBarrel.ExplosionFireDamage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

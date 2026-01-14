@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.TheSlam.ProjectileIncomingTravelDuration.p9"
-	},
+	"propertyName": "Arms.TheSlam.ProjectileIncomingTravelDuration.p9",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

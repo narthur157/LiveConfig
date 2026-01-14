@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HUD.AttributeList"
-	},
+	"propertyName": "HUD.AttributeList",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

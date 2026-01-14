@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.damageMultiplier"
-	},
+	"propertyName": "Arms.damageMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

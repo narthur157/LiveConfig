@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.LastStand.ArmorPenPct.Legendary"
-	},
+	"propertyName": "Item.LastStand.ArmorPenPct.Legendary",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

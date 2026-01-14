@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camp.Buff.BigTeam.damageMultiplier"
-	},
+	"propertyName": "Camp.Buff.BigTeam.damageMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

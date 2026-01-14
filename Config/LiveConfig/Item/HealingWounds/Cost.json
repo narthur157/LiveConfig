@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.HealingWounds.Cost"
-	},
+	"propertyName": "Item.HealingWounds.Cost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

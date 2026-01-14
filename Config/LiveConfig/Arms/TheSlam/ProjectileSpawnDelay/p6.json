@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.TheSlam.ProjectileSpawnDelay.p6"
-	},
+	"propertyName": "Arms.TheSlam.ProjectileSpawnDelay.p6",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

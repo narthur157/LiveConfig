@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.reloadTime"
-	},
+	"propertyName": "Anise_Proto.reloadTime",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

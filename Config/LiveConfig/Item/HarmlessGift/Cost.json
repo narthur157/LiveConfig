@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.HarmlessGift.Cost"
-	},
+	"propertyName": "Item.HarmlessGift.Cost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augment.DodgyExplosion.SodaFrag.Damage"
-	},
+	"propertyName": "Anise.Augment.DodgyExplosion.SodaFrag.Damage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

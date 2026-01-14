@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.BigOne.PowerScalingCof"
-	},
+	"propertyName": "HMG.BigOne.PowerScalingCof",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

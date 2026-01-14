@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.PowderKeg.PowerCof"
-	},
+	"propertyName": "Calico.PowderKeg.PowerCof",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

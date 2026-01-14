@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "PickupRipple"
-	},
+	"propertyName": "PickupRipple",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

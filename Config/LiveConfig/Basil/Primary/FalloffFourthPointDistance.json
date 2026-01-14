@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.Primary.FalloffFourthPointDistance"
-	},
+	"propertyName": "Basil.Primary.FalloffFourthPointDistance",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.BuffingShrine.Impact.CDR"
-	},
+	"propertyName": "Interactable.BuffingShrine.Impact.CDR",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

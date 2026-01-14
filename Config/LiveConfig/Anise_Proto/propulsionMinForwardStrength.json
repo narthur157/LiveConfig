@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.propulsionMinForwardStrength"
-	},
+	"propertyName": "Anise_Proto.propulsionMinForwardStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

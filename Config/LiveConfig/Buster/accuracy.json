@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.accuracy"
-	},
+	"propertyName": "Buster.accuracy",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

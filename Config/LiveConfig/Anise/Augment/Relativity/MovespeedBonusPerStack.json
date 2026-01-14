@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augment.Relativity.MovespeedBonusPerStack"
-	},
+	"propertyName": "Anise.Augment.Relativity.MovespeedBonusPerStack",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

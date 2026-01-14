@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.ExplosiveChugging.MoveSpeedPercentMultiplier"
-	},
+	"propertyName": "Anise.ExplosiveChugging.MoveSpeedPercentMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.RejuvenatingSpells"
-	},
+	"propertyName": "Item.RejuvenatingSpells",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

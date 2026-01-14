@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.AntiHeal.Duration"
-	},
+	"propertyName": "Item.AntiHeal.Duration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

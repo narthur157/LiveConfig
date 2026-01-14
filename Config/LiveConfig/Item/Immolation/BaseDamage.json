@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Immolation.BaseDamage"
-	},
+	"propertyName": "Item.Immolation.BaseDamage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

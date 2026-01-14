@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.Mark.MassTransfer.IsActive"
-	},
+	"propertyName": "Basil.Mark.MassTransfer.IsActive",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

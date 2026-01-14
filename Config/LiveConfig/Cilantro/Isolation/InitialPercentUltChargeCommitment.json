@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.Isolation.InitialPercentUltChargeCommitment"
-	},
+	"propertyName": "Cilantro.Isolation.InitialPercentUltChargeCommitment",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

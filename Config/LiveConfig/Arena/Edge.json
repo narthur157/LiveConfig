@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arena.Edge"
-	},
+	"propertyName": "Arena.Edge",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

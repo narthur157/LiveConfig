@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BarrelRoll.MuzzleOffsetPitch"
-	},
+	"propertyName": "Calico.BarrelRoll.MuzzleOffsetPitch",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

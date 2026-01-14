@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddies.LifeSpan"
-	},
+	"propertyName": "Basil.TurretBuddies.LifeSpan",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

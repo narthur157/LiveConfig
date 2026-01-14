@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.scoreToWin"
-	},
+	"propertyName": "Default.scoreToWin",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

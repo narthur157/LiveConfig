@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.fireRatePerSecond"
-	},
+	"propertyName": "Arms.fireRatePerSecond",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

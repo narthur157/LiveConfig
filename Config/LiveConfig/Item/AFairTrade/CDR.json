@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.AFairTrade.CDR"
-	},
+	"propertyName": "Item.AFairTrade.CDR",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

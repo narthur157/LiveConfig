@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.BookOfQuickening.CooldownReduction"
-	},
+	"propertyName": "Item.BookOfQuickening.CooldownReduction",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

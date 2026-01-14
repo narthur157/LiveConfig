@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "AllowClassSwaps"
-	},
+	"propertyName": "AllowClassSwaps",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

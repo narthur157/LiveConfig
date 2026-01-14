@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.VortexShot.ShieldConeScaleY"
-	},
+	"propertyName": "Buster.VortexShot.ShieldConeScaleY",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

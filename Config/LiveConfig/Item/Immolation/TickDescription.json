@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Immolation.TickDescription"
-	},
+	"propertyName": "Item.Immolation.TickDescription",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

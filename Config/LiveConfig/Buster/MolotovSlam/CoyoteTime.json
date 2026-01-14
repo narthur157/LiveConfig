@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.MolotovSlam.CoyoteTime"
-	},
+	"propertyName": "Buster.MolotovSlam.CoyoteTime",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

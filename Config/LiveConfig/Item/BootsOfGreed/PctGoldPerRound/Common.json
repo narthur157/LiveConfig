@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.BootsOfGreed.PctGoldPerRound.Common"
-	},
+	"propertyName": "Item.BootsOfGreed.PctGoldPerRound.Common",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

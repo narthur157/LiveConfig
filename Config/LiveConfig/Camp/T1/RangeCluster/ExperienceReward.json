@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camp.T1.RangeCluster.ExperienceReward"
-	},
+	"propertyName": "Camp.T1.RangeCluster.ExperienceReward",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

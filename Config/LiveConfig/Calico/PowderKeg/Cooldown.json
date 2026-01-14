@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.PowderKeg.Cooldown"
-	},
+	"propertyName": "Calico.PowderKeg.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

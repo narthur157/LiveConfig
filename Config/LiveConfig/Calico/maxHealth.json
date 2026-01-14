@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.maxHealth"
-	},
+	"propertyName": "Calico.maxHealth",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

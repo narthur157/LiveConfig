@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Primary.AOERadius"
-	},
+	"propertyName": "Buster.Primary.AOERadius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

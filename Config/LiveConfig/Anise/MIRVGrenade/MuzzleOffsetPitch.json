@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.MIRVGrenade.MuzzleOffsetPitch"
-	},
+	"propertyName": "Anise.MIRVGrenade.MuzzleOffsetPitch",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

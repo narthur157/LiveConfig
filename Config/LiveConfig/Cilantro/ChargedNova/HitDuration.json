@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.ChargedNova.HitDuration"
-	},
+	"propertyName": "Cilantro.ChargedNova.HitDuration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

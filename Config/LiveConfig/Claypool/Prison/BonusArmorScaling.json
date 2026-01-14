@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Claypool.Prison.BonusArmorScaling"
-	},
+	"propertyName": "Claypool.Prison.BonusArmorScaling",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

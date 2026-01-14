@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "PostDamageAtZeroWhenPastMaxFalloff"
-	},
+	"propertyName": "PostDamageAtZeroWhenPastMaxFalloff",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "NewInt"
-	},
+	"propertyName": "NewInt",
 	"description": "User-added property: NewInt",
 	"propertyType": "Int",
 	"tags": [],

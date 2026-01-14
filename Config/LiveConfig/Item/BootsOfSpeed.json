@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.BootsOfSpeed"
-	},
+	"propertyName": "Item.BootsOfSpeed",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

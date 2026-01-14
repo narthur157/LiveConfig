@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "AbortEmptyMatches33"
-	},
+	"propertyName": "AbortEmptyMatches33",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

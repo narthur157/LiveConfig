@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.TheRinger.CollisionSphereDistance.p12"
-	},
+	"propertyName": "Arms.TheRinger.CollisionSphereDistance.p12",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

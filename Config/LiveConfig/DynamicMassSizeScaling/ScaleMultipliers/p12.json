@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "DynamicMassSizeScaling.ScaleMultipliers.p12"
-	},
+	"propertyName": "DynamicMassSizeScaling.ScaleMultipliers.p12",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

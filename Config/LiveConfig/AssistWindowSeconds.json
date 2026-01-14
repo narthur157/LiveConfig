@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "AssistWindowSeconds"
-	},
+	"propertyName": "AssistWindowSeconds",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

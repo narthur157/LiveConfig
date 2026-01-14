@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Hourglass.MaxHealth"
-	},
+	"propertyName": "Item.Hourglass.MaxHealth",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

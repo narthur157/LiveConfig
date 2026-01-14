@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "InactivePlayerStateLifeSpan"
-	},
+	"propertyName": "InactivePlayerStateLifeSpan",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

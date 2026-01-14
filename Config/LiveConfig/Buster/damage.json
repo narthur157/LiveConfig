@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.damage"
-	},
+	"propertyName": "Buster.damage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

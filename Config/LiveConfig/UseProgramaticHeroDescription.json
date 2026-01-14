@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "UseProgramaticHeroDescription"
-	},
+	"propertyName": "UseProgramaticHeroDescription",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Glutton.damage"
-	},
+	"propertyName": "Glutton.damage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

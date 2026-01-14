@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Bloom.IncrementPerShot"
-	},
+	"propertyName": "Anise.Bloom.IncrementPerShot",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

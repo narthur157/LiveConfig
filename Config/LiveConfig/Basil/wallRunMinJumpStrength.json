@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.wallRunMinJumpStrength"
-	},
+	"propertyName": "Basil.wallRunMinJumpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

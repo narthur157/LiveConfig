@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.clipSize"
-	},
+	"propertyName": "Anise_Proto.clipSize",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

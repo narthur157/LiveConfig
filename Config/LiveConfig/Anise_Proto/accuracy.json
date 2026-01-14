@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.accuracy"
-	},
+	"propertyName": "Anise_Proto.accuracy",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

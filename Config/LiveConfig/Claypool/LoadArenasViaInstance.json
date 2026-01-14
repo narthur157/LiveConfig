@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Claypool.LoadArenasViaInstance"
-	},
+	"propertyName": "Claypool.LoadArenasViaInstance",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

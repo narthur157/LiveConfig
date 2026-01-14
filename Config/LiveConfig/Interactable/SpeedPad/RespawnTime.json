@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.SpeedPad.RespawnTime"
-	},
+	"propertyName": "Interactable.SpeedPad.RespawnTime",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Animation.RefreshSkeletonGUID"
-	},
+	"propertyName": "Animation.RefreshSkeletonGUID",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

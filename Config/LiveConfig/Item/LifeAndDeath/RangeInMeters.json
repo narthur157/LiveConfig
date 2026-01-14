@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.LifeAndDeath.RangeInMeters"
-	},
+	"propertyName": "Item.LifeAndDeath.RangeInMeters",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

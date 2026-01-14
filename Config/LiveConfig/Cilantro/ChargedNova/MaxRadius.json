@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.ChargedNova.MaxRadius"
-	},
+	"propertyName": "Cilantro.ChargedNova.MaxRadius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BouncyBomb.ArmorPenetration"
-	},
+	"propertyName": "Calico.BouncyBomb.ArmorPenetration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

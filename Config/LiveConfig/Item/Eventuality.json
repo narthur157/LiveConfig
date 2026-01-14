@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Eventuality"
-	},
+	"propertyName": "Item.Eventuality",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

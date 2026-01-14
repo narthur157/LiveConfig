@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.ExplosiveBarrel.moveSpeed"
-	},
+	"propertyName": "Calico.ExplosiveBarrel.moveSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

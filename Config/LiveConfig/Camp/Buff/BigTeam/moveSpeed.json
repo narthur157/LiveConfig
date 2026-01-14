@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camp.Buff.BigTeam.moveSpeed"
-	},
+	"propertyName": "Camp.Buff.BigTeam.moveSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

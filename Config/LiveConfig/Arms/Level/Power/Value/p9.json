@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.Level.Power.Value.p9"
-	},
+	"propertyName": "Arms.Level.Power.Value.p9",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

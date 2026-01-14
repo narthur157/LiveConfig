@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.AllSeeingEye.defenceMultiplier"
-	},
+	"propertyName": "Basil.AllSeeingEye.defenceMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

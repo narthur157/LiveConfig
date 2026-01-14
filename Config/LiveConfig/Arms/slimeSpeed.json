@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.slimeSpeed"
-	},
+	"propertyName": "Arms.slimeSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

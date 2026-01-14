@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddies.PowerCoeffecient"
-	},
+	"propertyName": "Basil.TurretBuddies.PowerCoeffecient",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

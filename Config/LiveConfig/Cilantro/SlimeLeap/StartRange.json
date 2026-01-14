@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.SlimeLeap.StartRange"
-	},
+	"propertyName": "Cilantro.SlimeLeap.StartRange",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

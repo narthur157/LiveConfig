@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.staminaRegenPeriod"
-	},
+	"propertyName": "Default.staminaRegenPeriod",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

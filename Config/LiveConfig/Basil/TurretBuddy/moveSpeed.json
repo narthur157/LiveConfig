@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddy.moveSpeed"
-	},
+	"propertyName": "Basil.TurretBuddy.moveSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

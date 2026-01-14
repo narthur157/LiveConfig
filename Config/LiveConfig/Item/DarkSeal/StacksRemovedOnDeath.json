@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.DarkSeal.StacksRemovedOnDeath"
-	},
+	"propertyName": "Item.DarkSeal.StacksRemovedOnDeath",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

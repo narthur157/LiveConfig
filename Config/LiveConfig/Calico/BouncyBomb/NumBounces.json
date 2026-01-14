@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BouncyBomb.NumBounces"
-	},
+	"propertyName": "Calico.BouncyBomb.NumBounces",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

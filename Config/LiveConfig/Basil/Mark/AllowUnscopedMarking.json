@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.Mark.AllowUnscopedMarking"
-	},
+	"propertyName": "Basil.Mark.AllowUnscopedMarking",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

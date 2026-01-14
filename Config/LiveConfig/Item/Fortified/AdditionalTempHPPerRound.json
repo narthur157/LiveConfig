@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Fortified.AdditionalTempHPPerRound"
-	},
+	"propertyName": "Item.Fortified.AdditionalTempHPPerRound",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

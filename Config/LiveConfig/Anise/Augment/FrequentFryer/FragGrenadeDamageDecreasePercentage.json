@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augment.FrequentFryer.FragGrenadeDamageDecreasePercentage"
-	},
+	"propertyName": "Anise.Augment.FrequentFryer.FragGrenadeDamageDecreasePercentage",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

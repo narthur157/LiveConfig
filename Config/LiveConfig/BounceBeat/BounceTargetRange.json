@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "BounceBeat.BounceTargetRange"
-	},
+	"propertyName": "BounceBeat.BounceTargetRange",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

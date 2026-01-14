@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augments.DodgeThis.Radius"
-	},
+	"propertyName": "Anise.Augments.DodgeThis.Radius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

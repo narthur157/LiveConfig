@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.ChargedNova.PowerCoeffecient"
-	},
+	"propertyName": "Cilantro.ChargedNova.PowerCoeffecient",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

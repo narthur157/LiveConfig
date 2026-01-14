@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BarrelRoll.Cooldown"
-	},
+	"propertyName": "Calico.BarrelRoll.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

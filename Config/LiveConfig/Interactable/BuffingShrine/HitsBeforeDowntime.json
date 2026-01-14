@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.BuffingShrine.HitsBeforeDowntime"
-	},
+	"propertyName": "Interactable.BuffingShrine.HitsBeforeDowntime",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

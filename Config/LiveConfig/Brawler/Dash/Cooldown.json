@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Brawler.Dash.Cooldown"
-	},
+	"propertyName": "Brawler.Dash.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

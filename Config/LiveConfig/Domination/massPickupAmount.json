@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Domination.massPickupAmount"
-	},
+	"propertyName": "Domination.massPickupAmount",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

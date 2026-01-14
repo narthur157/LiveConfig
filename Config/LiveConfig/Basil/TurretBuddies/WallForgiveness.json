@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddies.WallForgiveness"
-	},
+	"propertyName": "Basil.TurretBuddies.WallForgiveness",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

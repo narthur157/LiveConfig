@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddies.AttackDelay"
-	},
+	"propertyName": "Basil.TurretBuddies.AttackDelay",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Level.Armor.Value.p9"
-	},
+	"propertyName": "Buster.Level.Armor.Value.p9",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

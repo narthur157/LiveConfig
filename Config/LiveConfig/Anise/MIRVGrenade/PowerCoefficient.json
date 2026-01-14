@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.MIRVGrenade.PowerCoefficient"
-	},
+	"propertyName": "Anise.MIRVGrenade.PowerCoefficient",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.ICU.Radius"
-	},
+	"propertyName": "Basil.ICU.Radius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

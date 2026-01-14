@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.GlassCannon.DamageMod.Legendary"
-	},
+	"propertyName": "Item.GlassCannon.DamageMod.Legendary",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

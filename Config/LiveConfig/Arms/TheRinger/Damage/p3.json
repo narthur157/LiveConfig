@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.TheRinger.Damage.p3"
-	},
+	"propertyName": "Arms.TheRinger.Damage.p3",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

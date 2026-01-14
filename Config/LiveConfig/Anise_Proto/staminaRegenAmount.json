@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.staminaRegenAmount"
-	},
+	"propertyName": "Anise_Proto.staminaRegenAmount",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

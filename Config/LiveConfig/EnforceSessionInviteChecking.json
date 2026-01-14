@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "EnforceSessionInviteChecking"
-	},
+	"propertyName": "EnforceSessionInviteChecking",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

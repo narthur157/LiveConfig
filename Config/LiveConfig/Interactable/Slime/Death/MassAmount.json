@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.Slime.Death.MassAmount"
-	},
+	"propertyName": "Interactable.Slime.Death.MassAmount",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

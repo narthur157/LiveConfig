@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.Level.Health.Value.p2"
-	},
+	"propertyName": "Arms.Level.Health.Value.p2",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

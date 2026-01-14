@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddy.armorPerLevel"
-	},
+	"propertyName": "Basil.TurretBuddy.armorPerLevel",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

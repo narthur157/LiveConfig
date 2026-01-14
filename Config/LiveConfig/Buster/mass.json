@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.mass"
-	},
+	"propertyName": "Buster.mass",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

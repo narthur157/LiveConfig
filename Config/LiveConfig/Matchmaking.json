@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Matchmaking"
-	},
+	"propertyName": "Matchmaking",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

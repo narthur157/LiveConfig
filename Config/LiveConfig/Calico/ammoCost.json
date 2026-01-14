@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.ammoCost"
-	},
+	"propertyName": "Calico.ammoCost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

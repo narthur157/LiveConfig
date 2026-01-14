@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augments.LeechingRounds.ShieldConversionPercentage"
-	},
+	"propertyName": "Anise.Augments.LeechingRounds.ShieldConversionPercentage",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

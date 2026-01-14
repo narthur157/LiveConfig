@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.FirstBlood.HealthThreshold.Common"
-	},
+	"propertyName": "Item.FirstBlood.HealthThreshold.Common",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

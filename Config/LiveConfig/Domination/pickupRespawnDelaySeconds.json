@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Domination.pickupRespawnDelaySeconds"
-	},
+	"propertyName": "Domination.pickupRespawnDelaySeconds",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

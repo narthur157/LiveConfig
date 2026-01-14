@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.TharrSheBlow.CritMultiplier"
-	},
+	"propertyName": "Calico.TharrSheBlow.CritMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

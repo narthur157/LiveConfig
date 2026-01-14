@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.VortexShot.Cooldown"
-	},
+	"propertyName": "Buster.VortexShot.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

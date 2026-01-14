@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Domination.maxGameLengthRespawnDelaySeconds"
-	},
+	"propertyName": "Domination.maxGameLengthRespawnDelaySeconds",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Ability.HealOnMassIngest.TickInterval"
-	},
+	"propertyName": "Ability.HealOnMassIngest.TickInterval",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

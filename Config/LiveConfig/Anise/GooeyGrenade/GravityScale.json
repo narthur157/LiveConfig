@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.GooeyGrenade.GravityScale"
-	},
+	"propertyName": "Anise.GooeyGrenade.GravityScale",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

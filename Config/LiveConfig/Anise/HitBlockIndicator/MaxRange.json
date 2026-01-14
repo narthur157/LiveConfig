@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.HitBlockIndicator.MaxRange"
-	},
+	"propertyName": "Anise.HitBlockIndicator.MaxRange",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

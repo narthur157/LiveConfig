@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.slimeMinJumpStrength"
-	},
+	"propertyName": "Buster.slimeMinJumpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

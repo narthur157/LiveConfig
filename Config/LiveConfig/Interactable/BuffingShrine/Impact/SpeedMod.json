@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.BuffingShrine.Impact.SpeedMod"
-	},
+	"propertyName": "Interactable.BuffingShrine.Impact.SpeedMod",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

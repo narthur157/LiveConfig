@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Fortified.TempHPPerRound.Quality1"
-	},
+	"propertyName": "Item.Fortified.TempHPPerRound.Quality1",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

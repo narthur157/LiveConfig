@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.SodaFrag.InitialSpeed"
-	},
+	"propertyName": "Anise.SodaFrag.InitialSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.fireRatePerSecond"
-	},
+	"propertyName": "Basil.fireRatePerSecond",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

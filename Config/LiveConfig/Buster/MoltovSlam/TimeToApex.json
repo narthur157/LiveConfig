@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.MoltovSlam.TimeToApex"
-	},
+	"propertyName": "Buster.MoltovSlam.TimeToApex",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

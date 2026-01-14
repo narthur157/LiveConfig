@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.WarlordsReach.Delay"
-	},
+	"propertyName": "Cilantro.WarlordsReach.Delay",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

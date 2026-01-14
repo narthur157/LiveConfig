@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.MIRVGrenade.TimeToDetonate"
-	},
+	"propertyName": "Anise.MIRVGrenade.TimeToDetonate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

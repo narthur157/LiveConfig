@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.MIRVGrenade.MinFalloffRadius"
-	},
+	"propertyName": "Anise.MIRVGrenade.MinFalloffRadius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

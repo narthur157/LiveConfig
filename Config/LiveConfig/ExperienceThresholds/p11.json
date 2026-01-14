@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ExperienceThresholds.p11"
-	},
+	"propertyName": "ExperienceThresholds.p11",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

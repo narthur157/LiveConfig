@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.Groupies.GroupiesDamageDelay"
-	},
+	"propertyName": "Cilantro.Groupies.GroupiesDamageDelay",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

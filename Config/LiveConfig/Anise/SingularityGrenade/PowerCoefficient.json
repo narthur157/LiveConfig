@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.SingularityGrenade.PowerCoefficient"
-	},
+	"propertyName": "Anise.SingularityGrenade.PowerCoefficient",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

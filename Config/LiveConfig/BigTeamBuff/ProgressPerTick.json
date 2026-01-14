@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "BigTeamBuff.ProgressPerTick"
-	},
+	"propertyName": "BigTeamBuff.ProgressPerTick",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.ChargedShot.Unscoped.ActorEyesMuzzleOffset.z"
-	},
+	"propertyName": "Basil.ChargedShot.Unscoped.ActorEyesMuzzleOffset.z",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

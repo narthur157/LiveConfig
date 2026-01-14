@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Banquet.Armor"
-	},
+	"propertyName": "Item.Banquet.Armor",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

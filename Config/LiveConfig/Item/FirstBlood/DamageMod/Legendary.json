@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.FirstBlood.DamageMod.Legendary"
-	},
+	"propertyName": "Item.FirstBlood.DamageMod.Legendary",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

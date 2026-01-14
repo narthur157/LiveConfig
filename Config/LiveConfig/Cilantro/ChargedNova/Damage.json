@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.ChargedNova.Damage"
-	},
+	"propertyName": "Cilantro.ChargedNova.Damage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

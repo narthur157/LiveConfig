@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.MIRVGrenade.Cooldown"
-	},
+	"propertyName": "Anise.MIRVGrenade.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

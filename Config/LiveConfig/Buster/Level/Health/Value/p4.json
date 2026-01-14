@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Level.Health.Value.p4"
-	},
+	"propertyName": "Buster.Level.Health.Value.p4",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

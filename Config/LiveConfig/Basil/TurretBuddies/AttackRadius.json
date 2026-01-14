@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddies.AttackRadius"
-	},
+	"propertyName": "Basil.TurretBuddies.AttackRadius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

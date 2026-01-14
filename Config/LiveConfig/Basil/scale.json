@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.scale"
-	},
+	"propertyName": "Basil.scale",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

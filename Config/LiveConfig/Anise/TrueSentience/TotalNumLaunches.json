@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.TrueSentience.TotalNumLaunches"
-	},
+	"propertyName": "Anise.TrueSentience.TotalNumLaunches",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

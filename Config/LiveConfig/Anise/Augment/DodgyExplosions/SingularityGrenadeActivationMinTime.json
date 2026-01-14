@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augment.DodgyExplosions.SingularityGrenadeActivationMinTime"
-	},
+	"propertyName": "Anise.Augment.DodgyExplosions.SingularityGrenadeActivationMinTime",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

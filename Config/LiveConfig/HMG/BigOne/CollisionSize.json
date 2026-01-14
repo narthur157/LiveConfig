@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.BigOne.CollisionSize"
-	},
+	"propertyName": "HMG.BigOne.CollisionSize",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

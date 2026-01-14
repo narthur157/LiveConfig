@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.Primary.MaxSpread"
-	},
+	"propertyName": "HMG.Primary.MaxSpread",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "FeatureFlag"
-	},
+	"propertyName": "FeatureFlag",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

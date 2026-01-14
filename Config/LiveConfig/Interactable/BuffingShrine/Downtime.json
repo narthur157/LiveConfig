@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.BuffingShrine.Downtime"
-	},
+	"propertyName": "Interactable.BuffingShrine.Downtime",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

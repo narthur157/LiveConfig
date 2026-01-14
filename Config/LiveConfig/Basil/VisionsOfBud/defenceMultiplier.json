@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.VisionsOfBud.defenceMultiplier"
-	},
+	"propertyName": "Basil.VisionsOfBud.defenceMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

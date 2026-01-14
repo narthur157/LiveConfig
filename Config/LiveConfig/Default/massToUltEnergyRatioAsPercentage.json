@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.massToUltEnergyRatioAsPercentage"
-	},
+	"propertyName": "Default.massToUltEnergyRatioAsPercentage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

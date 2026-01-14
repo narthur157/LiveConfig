@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BlastBack.BaseDamage"
-	},
+	"propertyName": "Calico.BlastBack.BaseDamage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

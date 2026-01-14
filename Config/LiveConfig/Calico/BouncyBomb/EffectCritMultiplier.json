@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BouncyBomb.EffectCritMultiplier"
-	},
+	"propertyName": "Calico.BouncyBomb.EffectCritMultiplier",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

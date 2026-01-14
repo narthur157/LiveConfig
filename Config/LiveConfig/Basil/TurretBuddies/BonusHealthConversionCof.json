@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddies.BonusHealthConversionCof"
-	},
+	"propertyName": "Basil.TurretBuddies.BonusHealthConversionCof",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.SodaFrag.ProximityRadius"
-	},
+	"propertyName": "Anise.SodaFrag.ProximityRadius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

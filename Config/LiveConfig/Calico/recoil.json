@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.recoil"
-	},
+	"propertyName": "Calico.recoil",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

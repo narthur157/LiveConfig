@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Primary.AOEDamage"
-	},
+	"propertyName": "Buster.Primary.AOEDamage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

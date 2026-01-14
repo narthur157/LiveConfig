@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BouncyBomb.FinalBounceDamageMultipllier"
-	},
+	"propertyName": "Calico.BouncyBomb.FinalBounceDamageMultipllier",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

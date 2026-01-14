@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Utility.MissleSize"
-	},
+	"propertyName": "Buster.Utility.MissleSize",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

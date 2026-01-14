@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.valuePerUltimatePip"
-	},
+	"propertyName": "Default.valuePerUltimatePip",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

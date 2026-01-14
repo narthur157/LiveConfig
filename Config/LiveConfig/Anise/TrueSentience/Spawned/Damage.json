@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.TrueSentience.Spawned.Damage"
-	},
+	"propertyName": "Anise.TrueSentience.Spawned.Damage",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.RootSlam.RootedDuration"
-	},
+	"propertyName": "Cilantro.RootSlam.RootedDuration",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

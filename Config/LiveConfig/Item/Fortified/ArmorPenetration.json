@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Fortified.ArmorPenetration"
-	},
+	"propertyName": "Item.Fortified.ArmorPenetration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

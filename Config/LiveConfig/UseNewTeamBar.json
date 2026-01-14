@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "UseNewTeamBar"
-	},
+	"propertyName": "UseNewTeamBar",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Eventuality.FlatArmorPen"
-	},
+	"propertyName": "Item.Eventuality.FlatArmorPen",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BlastBack.ConeHalfAngle"
-	},
+	"propertyName": "Calico.BlastBack.ConeHalfAngle",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

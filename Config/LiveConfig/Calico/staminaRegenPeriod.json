@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.staminaRegenPeriod"
-	},
+	"propertyName": "Calico.staminaRegenPeriod",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

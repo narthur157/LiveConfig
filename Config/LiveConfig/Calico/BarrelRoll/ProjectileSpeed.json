@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BarrelRoll.ProjectileSpeed"
-	},
+	"propertyName": "Calico.BarrelRoll.ProjectileSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

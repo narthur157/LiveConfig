@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BlastUp.Height"
-	},
+	"propertyName": "Calico.BlastUp.Height",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

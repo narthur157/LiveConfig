@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Utility.ExplosionDamage"
-	},
+	"propertyName": "Buster.Utility.ExplosionDamage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

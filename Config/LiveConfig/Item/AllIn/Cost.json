@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.AllIn.Cost"
-	},
+	"propertyName": "Item.AllIn.Cost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

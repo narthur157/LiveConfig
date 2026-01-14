@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.MIRVGrenade.LaunchPitch"
-	},
+	"propertyName": "Anise.MIRVGrenade.LaunchPitch",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HeroAccelerationMultiplier.p10"
-	},
+	"propertyName": "HeroAccelerationMultiplier.p10",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

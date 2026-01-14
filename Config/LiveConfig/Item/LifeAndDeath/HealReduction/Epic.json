@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.LifeAndDeath.HealReduction.Epic"
-	},
+	"propertyName": "Item.LifeAndDeath.HealReduction.Epic",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddy.numberOfUltimatePips"
-	},
+	"propertyName": "Basil.TurretBuddy.numberOfUltimatePips",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

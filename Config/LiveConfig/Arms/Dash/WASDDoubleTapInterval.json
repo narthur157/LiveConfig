@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.Dash.WASDDoubleTapInterval"
-	},
+	"propertyName": "Arms.Dash.WASDDoubleTapInterval",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

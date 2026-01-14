@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.accuracy"
-	},
+	"propertyName": "Basil.accuracy",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

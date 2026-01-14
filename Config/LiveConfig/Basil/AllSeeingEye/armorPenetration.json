@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.AllSeeingEye.armorPenetration"
-	},
+	"propertyName": "Basil.AllSeeingEye.armorPenetration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

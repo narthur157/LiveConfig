@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Grenade.StuckGrenadeHeight"
-	},
+	"propertyName": "Grenade.StuckGrenadeHeight",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

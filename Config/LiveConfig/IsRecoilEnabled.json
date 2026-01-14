@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "IsRecoilEnabled"
-	},
+	"propertyName": "IsRecoilEnabled",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

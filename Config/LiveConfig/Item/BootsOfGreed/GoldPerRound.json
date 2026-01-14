@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.BootsOfGreed.GoldPerRound"
-	},
+	"propertyName": "Item.BootsOfGreed.GoldPerRound",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

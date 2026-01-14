@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "DynamicFlatHealthSizeScaling.DamageMultiplier.p6"
-	},
+	"propertyName": "DynamicFlatHealthSizeScaling.DamageMultiplier.p6",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

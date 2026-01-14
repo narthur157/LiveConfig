@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.BurstOfSpeed.AllyBuffRadius"
-	},
+	"propertyName": "Item.BurstOfSpeed.AllyBuffRadius",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

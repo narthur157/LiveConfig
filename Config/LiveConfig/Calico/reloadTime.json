@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.reloadTime"
-	},
+	"propertyName": "Calico.reloadTime",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

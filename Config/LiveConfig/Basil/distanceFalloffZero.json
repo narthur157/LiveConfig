@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.distanceFalloffZero"
-	},
+	"propertyName": "Basil.distanceFalloffZero",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

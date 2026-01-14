@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.GrindRail.LaunchPower"
-	},
+	"propertyName": "Interactable.GrindRail.LaunchPower",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

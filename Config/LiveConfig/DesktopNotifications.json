@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "DesktopNotifications"
-	},
+	"propertyName": "DesktopNotifications",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

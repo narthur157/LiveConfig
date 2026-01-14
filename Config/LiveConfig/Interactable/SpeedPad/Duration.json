@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.SpeedPad.Duration"
-	},
+	"propertyName": "Interactable.SpeedPad.Duration",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

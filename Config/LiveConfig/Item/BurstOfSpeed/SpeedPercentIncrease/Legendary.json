@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.BurstOfSpeed.SpeedPercentIncrease.Legendary"
-	},
+	"propertyName": "Item.BurstOfSpeed.SpeedPercentIncrease.Legendary",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

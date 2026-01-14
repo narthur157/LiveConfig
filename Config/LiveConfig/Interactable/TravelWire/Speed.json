@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.TravelWire.Speed"
-	},
+	"propertyName": "Interactable.TravelWire.Speed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

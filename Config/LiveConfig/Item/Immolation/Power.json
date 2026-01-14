@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Immolation.Power"
-	},
+	"propertyName": "Item.Immolation.Power",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

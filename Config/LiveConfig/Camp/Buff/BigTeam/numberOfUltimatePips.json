@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camp.Buff.BigTeam.numberOfUltimatePips"
-	},
+	"propertyName": "Camp.Buff.BigTeam.numberOfUltimatePips",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

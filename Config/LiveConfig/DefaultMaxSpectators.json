@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "DefaultMaxSpectators"
-	},
+	"propertyName": "DefaultMaxSpectators",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

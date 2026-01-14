@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.AFairTrade.MaxHealth"
-	},
+	"propertyName": "Item.AFairTrade.MaxHealth",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

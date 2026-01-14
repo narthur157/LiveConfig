@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.TrueSentience.Spawned.ExplosionRadius"
-	},
+	"propertyName": "Anise.TrueSentience.Spawned.ExplosionRadius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

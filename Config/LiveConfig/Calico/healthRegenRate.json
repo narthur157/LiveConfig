@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.healthRegenRate"
-	},
+	"propertyName": "Calico.healthRegenRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

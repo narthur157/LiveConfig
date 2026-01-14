@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.armor"
-	},
+	"propertyName": "Basil.armor",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

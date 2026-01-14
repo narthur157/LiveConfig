@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.TharrSheBlow.BarrelSpawnLookDownDistance"
-	},
+	"propertyName": "Calico.TharrSheBlow.BarrelSpawnLookDownDistance",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

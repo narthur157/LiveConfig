@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.maxStamina"
-	},
+	"propertyName": "Anise.maxStamina",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

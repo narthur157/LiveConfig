@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Bloom.Bloom.InterpSpeed"
-	},
+	"propertyName": "Anise.Bloom.Bloom.InterpSpeed",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

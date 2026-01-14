@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.ChainLightning.Enabled"
-	},
+	"propertyName": "Item.ChainLightning.Enabled",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.TharrSheBlow.MaxRange"
-	},
+	"propertyName": "Calico.TharrSheBlow.MaxRange",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

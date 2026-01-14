@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Executioner.HealthPercent.Quality3"
-	},
+	"propertyName": "Item.Executioner.HealthPercent.Quality3",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

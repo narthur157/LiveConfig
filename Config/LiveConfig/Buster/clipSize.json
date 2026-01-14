@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.clipSize"
-	},
+	"propertyName": "Buster.clipSize",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.LastStand.CooldownReduction"
-	},
+	"propertyName": "Item.LastStand.CooldownReduction",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.Parry.Duration.p7"
-	},
+	"propertyName": "Arms.Parry.Duration.p7",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

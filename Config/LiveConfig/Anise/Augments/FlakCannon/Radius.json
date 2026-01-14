@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augments.FlakCannon.Radius"
-	},
+	"propertyName": "Anise.Augments.FlakCannon.Radius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

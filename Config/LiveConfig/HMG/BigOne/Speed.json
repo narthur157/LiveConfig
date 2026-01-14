@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.BigOne.Speed"
-	},
+	"propertyName": "HMG.BigOne.Speed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

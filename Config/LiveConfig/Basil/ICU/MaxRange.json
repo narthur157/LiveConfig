@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.ICU.MaxRange"
-	},
+	"propertyName": "Basil.ICU.MaxRange",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

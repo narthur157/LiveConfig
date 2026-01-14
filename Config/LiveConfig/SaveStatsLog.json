@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SaveStatsLog"
-	},
+	"propertyName": "SaveStatsLog",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

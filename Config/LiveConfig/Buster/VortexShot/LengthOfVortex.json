@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.VortexShot.LengthOfVortex"
-	},
+	"propertyName": "Buster.VortexShot.LengthOfVortex",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

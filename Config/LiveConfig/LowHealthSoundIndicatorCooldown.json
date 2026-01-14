@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "LowHealthSoundIndicatorCooldown"
-	},
+	"propertyName": "LowHealthSoundIndicatorCooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

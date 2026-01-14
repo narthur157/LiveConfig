@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augment.Relativity.DistanceTravelledPerStack"
-	},
+	"propertyName": "Anise.Augment.Relativity.DistanceTravelledPerStack",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

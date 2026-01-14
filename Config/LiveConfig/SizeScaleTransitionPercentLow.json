@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SizeScaleTransitionPercentLow"
-	},
+	"propertyName": "SizeScaleTransitionPercentLow",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.SlowField.AOERadius"
-	},
+	"propertyName": "HMG.SlowField.AOERadius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.fireRatePerSecond"
-	},
+	"propertyName": "Calico.fireRatePerSecond",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

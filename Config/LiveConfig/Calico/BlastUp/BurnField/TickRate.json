@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BlastUp.BurnField.TickRate"
-	},
+	"propertyName": "Calico.BlastUp.BurnField.TickRate",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

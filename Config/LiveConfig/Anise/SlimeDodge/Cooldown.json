@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.SlimeDodge.Cooldown"
-	},
+	"propertyName": "Anise.SlimeDodge.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

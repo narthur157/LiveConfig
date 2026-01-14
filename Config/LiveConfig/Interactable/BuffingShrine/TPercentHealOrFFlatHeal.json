@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.BuffingShrine.TPercentHealOrFFlatHeal"
-	},
+	"propertyName": "Interactable.BuffingShrine.TPercentHealOrFFlatHeal",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

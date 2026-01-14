@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.sprintStrength"
-	},
+	"propertyName": "Default.sprintStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

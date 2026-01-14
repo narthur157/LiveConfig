@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.Level.Health.Value.p9"
-	},
+	"propertyName": "Cilantro.Level.Health.Value.p9",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

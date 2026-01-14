@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.BurstOfSpeed.FlatPen"
-	},
+	"propertyName": "Item.BurstOfSpeed.FlatPen",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.BigOne.DirectDamage"
-	},
+	"propertyName": "HMG.BigOne.DirectDamage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

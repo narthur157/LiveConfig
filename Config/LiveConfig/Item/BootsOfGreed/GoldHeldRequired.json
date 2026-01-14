@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.BootsOfGreed.GoldHeldRequired"
-	},
+	"propertyName": "Item.BootsOfGreed.GoldHeldRequired",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddy.ultEnergyRegenRate"
-	},
+	"propertyName": "Basil.TurretBuddy.ultEnergyRegenRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

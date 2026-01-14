@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.maxMass"
-	},
+	"propertyName": "Basil.maxMass",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

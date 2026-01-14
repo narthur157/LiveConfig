@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.ExplosiveBarrel.armorPerLevel"
-	},
+	"propertyName": "Calico.ExplosiveBarrel.armorPerLevel",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

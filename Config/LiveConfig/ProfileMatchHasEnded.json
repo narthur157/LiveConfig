@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ProfileMatchHasEnded"
-	},
+	"propertyName": "ProfileMatchHasEnded",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

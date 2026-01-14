@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Utility.MissleHealth"
-	},
+	"propertyName": "Buster.Utility.MissleHealth",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

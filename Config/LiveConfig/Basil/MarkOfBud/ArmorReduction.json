@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.MarkOfBud.ArmorReduction"
-	},
+	"propertyName": "Basil.MarkOfBud.ArmorReduction",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

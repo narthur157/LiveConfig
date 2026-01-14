@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.GooeyGrenade.ExplosionRadius"
-	},
+	"propertyName": "Anise.GooeyGrenade.ExplosionRadius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

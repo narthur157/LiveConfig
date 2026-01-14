@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Level.Health.Value.p4"
-	},
+	"propertyName": "Anise.Level.Health.Value.p4",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

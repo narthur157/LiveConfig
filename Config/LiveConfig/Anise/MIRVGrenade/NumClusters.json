@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.MIRVGrenade.NumClusters"
-	},
+	"propertyName": "Anise.MIRVGrenade.NumClusters",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

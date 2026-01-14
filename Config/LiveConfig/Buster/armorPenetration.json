@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.armorPenetration"
-	},
+	"propertyName": "Buster.armorPenetration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

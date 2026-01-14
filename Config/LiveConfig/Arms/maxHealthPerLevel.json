@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.maxHealthPerLevel"
-	},
+	"propertyName": "Arms.maxHealthPerLevel",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.ChomeAndGetIt.Duration"
-	},
+	"propertyName": "Cilantro.ChomeAndGetIt.Duration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

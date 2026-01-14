@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camps.HealOnDeath"
-	},
+	"propertyName": "Camps.HealOnDeath",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

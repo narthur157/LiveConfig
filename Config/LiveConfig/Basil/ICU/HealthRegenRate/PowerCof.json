@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.ICU.HealthRegenRate.PowerCof"
-	},
+	"propertyName": "Basil.ICU.HealthRegenRate.PowerCof",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

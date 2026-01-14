@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.ExultInBattle.Duration"
-	},
+	"propertyName": "Cilantro.ExultInBattle.Duration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

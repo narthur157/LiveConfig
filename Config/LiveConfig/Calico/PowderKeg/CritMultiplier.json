@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.PowderKeg.CritMultiplier"
-	},
+	"propertyName": "Calico.PowderKeg.CritMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

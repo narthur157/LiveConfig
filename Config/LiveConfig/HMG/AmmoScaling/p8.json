@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.AmmoScaling.p8"
-	},
+	"propertyName": "HMG.AmmoScaling.p8",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

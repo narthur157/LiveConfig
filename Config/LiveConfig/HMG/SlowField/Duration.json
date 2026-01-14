@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.SlowField.Duration"
-	},
+	"propertyName": "HMG.SlowField.Duration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

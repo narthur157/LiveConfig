@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augment.DodgyExplosion.PowerCoefficient"
-	},
+	"propertyName": "Anise.Augment.DodgyExplosion.PowerCoefficient",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

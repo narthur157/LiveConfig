@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.PrimaryFire.Unscoped.SelfKnockbackIsAdditive"
-	},
+	"propertyName": "Basil.PrimaryFire.Unscoped.SelfKnockbackIsAdditive",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

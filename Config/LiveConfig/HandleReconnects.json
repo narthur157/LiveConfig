@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HandleReconnects"
-	},
+	"propertyName": "HandleReconnects",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

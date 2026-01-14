@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.BootsOfBattle.Power"
-	},
+	"propertyName": "Item.BootsOfBattle.Power",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

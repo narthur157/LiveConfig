@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddy.scale"
-	},
+	"propertyName": "Basil.TurretBuddy.scale",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buff.BigTeam.Duration"
-	},
+	"propertyName": "Buff.BigTeam.Duration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

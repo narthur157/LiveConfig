@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.TharrSheBlow.Cooldown"
-	},
+	"propertyName": "Calico.TharrSheBlow.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

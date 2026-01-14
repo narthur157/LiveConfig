@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "BasicTraining.massEfficiency"
-	},
+	"propertyName": "BasicTraining.massEfficiency",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

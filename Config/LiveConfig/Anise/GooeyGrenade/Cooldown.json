@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.GooeyGrenade.Cooldown"
-	},
+	"propertyName": "Anise.GooeyGrenade.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

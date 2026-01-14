@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.Primary.FalloffEndValue"
-	},
+	"propertyName": "Basil.Primary.FalloffEndValue",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

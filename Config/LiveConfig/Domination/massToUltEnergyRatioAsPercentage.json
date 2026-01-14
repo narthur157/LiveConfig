@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Domination.massToUltEnergyRatioAsPercentage"
-	},
+	"propertyName": "Domination.massToUltEnergyRatioAsPercentage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

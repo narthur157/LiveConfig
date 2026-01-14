@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.fireRatePerSecond"
-	},
+	"propertyName": "Anise_Proto.fireRatePerSecond",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

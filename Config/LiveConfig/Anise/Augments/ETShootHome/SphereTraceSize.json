@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augments.ETShootHome.SphereTraceSize"
-	},
+	"propertyName": "Anise.Augments.ETShootHome.SphereTraceSize",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

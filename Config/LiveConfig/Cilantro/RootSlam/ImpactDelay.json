@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.RootSlam.ImpactDelay"
-	},
+	"propertyName": "Cilantro.RootSlam.ImpactDelay",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

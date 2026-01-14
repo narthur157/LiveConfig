@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.miscParameter1"
-	},
+	"propertyName": "Calico.miscParameter1",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

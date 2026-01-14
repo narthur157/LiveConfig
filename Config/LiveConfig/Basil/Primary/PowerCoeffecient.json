@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.Primary.PowerCoeffecient"
-	},
+	"propertyName": "Basil.Primary.PowerCoeffecient",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

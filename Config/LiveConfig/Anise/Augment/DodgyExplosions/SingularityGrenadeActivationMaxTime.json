@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augment.DodgyExplosions.SingularityGrenadeActivationMaxTime"
-	},
+	"propertyName": "Anise.Augment.DodgyExplosions.SingularityGrenadeActivationMaxTime",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

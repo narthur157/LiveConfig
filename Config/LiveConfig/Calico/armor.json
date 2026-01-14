@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.armor"
-	},
+	"propertyName": "Calico.armor",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

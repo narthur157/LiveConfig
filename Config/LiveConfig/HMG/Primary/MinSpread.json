@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.Primary.MinSpread"
-	},
+	"propertyName": "HMG.Primary.MinSpread",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

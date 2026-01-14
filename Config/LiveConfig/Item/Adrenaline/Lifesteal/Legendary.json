@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Adrenaline.Lifesteal.Legendary"
-	},
+	"propertyName": "Item.Adrenaline.Lifesteal.Legendary",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

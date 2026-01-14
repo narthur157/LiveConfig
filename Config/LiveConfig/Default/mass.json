@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.mass"
-	},
+	"propertyName": "Default.mass",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

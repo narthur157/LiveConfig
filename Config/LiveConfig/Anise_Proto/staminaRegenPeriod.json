@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.staminaRegenPeriod"
-	},
+	"propertyName": "Anise_Proto.staminaRegenPeriod",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

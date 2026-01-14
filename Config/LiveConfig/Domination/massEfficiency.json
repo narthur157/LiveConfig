@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Domination.massEfficiency"
-	},
+	"propertyName": "Domination.massEfficiency",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

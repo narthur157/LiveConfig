@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.Primary.DOT.ArmorPen"
-	},
+	"propertyName": "Basil.Primary.DOT.ArmorPen",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

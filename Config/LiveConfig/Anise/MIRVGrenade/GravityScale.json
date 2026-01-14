@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.MIRVGrenade.GravityScale"
-	},
+	"propertyName": "Anise.MIRVGrenade.GravityScale",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

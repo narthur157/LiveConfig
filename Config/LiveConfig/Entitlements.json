@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Entitlements"
-	},
+	"propertyName": "Entitlements",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

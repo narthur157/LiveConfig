@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.ExpansiveNova.DamageMul"
-	},
+	"propertyName": "Cilantro.ExpansiveNova.DamageMul",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

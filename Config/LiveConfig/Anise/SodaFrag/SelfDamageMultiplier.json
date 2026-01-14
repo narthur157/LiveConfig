@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.SodaFrag.SelfDamageMultiplier"
-	},
+	"propertyName": "Anise.SodaFrag.SelfDamageMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

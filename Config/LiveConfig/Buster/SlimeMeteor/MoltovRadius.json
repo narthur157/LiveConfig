@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.SlimeMeteor.MoltovRadius"
-	},
+	"propertyName": "Buster.SlimeMeteor.MoltovRadius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

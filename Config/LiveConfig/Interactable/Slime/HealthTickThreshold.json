@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.Slime.HealthTickThreshold"
-	},
+	"propertyName": "Interactable.Slime.HealthTickThreshold",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

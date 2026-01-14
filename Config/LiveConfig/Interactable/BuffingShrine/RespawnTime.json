@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.BuffingShrine.RespawnTime"
-	},
+	"propertyName": "Interactable.BuffingShrine.RespawnTime",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

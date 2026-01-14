@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ReportServerPerf"
-	},
+	"propertyName": "ReportServerPerf",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

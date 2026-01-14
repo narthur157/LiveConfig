@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.VendingMachine.NumberHealthSegments"
-	},
+	"propertyName": "Interactable.VendingMachine.NumberHealthSegments",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

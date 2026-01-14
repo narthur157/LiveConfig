@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.PowerChord.RingDelay"
-	},
+	"propertyName": "Cilantro.PowerChord.RingDelay",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

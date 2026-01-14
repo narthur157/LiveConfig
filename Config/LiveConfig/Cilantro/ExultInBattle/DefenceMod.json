@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.ExultInBattle.DefenceMod"
-	},
+	"propertyName": "Cilantro.ExultInBattle.DefenceMod",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

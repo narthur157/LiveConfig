@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "DepositProgressSoundEndDelay"
-	},
+	"propertyName": "DepositProgressSoundEndDelay",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

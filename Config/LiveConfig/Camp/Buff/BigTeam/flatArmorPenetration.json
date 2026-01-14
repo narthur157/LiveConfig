@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camp.Buff.BigTeam.flatArmorPenetration"
-	},
+	"propertyName": "Camp.Buff.BigTeam.flatArmorPenetration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

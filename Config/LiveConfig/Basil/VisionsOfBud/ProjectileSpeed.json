@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.VisionsOfBud.ProjectileSpeed"
-	},
+	"propertyName": "Basil.VisionsOfBud.ProjectileSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

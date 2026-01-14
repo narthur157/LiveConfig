@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.numProjectiles"
-	},
+	"propertyName": "Calico.numProjectiles",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.mapName"
-	},
+	"propertyName": "Default.mapName",
 	"description": "",
 	"propertyType": "String",
 	"tags": [

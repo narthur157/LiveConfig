@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.reloadTime"
-	},
+	"propertyName": "Basil.reloadTime",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

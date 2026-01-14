@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.TheSlam.Cooldown"
-	},
+	"propertyName": "Arms.TheSlam.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

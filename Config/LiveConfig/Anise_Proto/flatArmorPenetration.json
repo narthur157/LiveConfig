@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.flatArmorPenetration"
-	},
+	"propertyName": "Anise_Proto.flatArmorPenetration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

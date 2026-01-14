@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeDamageChunks"
-	},
+	"propertyName": "SlimeDamageChunks",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

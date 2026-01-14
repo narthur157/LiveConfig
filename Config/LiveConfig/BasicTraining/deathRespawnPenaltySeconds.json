@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "BasicTraining.deathRespawnPenaltySeconds"
-	},
+	"propertyName": "BasicTraining.deathRespawnPenaltySeconds",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

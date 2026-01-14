@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.TankBuster"
-	},
+	"propertyName": "Item.TankBuster",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

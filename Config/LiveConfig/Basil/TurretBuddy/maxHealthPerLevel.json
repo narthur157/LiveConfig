@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddy.maxHealthPerLevel"
-	},
+	"propertyName": "Basil.TurretBuddy.maxHealthPerLevel",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Level.Power.Value.p5"
-	},
+	"propertyName": "Buster.Level.Power.Value.p5",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

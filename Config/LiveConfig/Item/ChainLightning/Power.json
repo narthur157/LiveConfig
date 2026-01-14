@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.ChainLightning.Power"
-	},
+	"propertyName": "Item.ChainLightning.Power",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

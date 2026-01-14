@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Cleave.PercentDamageSpread.Rare"
-	},
+	"propertyName": "Item.Cleave.PercentDamageSpread.Rare",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

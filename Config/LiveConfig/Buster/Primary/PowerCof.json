@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Primary.PowerCof"
-	},
+	"propertyName": "Buster.Primary.PowerCof",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.ultEnergyRegenRate"
-	},
+	"propertyName": "Anise_Proto.ultEnergyRegenRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

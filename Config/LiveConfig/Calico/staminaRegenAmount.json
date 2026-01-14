@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.staminaRegenAmount"
-	},
+	"propertyName": "Calico.staminaRegenAmount",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

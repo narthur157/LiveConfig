@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.maxMass"
-	},
+	"propertyName": "Default.maxMass",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

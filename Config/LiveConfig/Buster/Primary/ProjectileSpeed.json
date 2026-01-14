@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Primary.ProjectileSpeed"
-	},
+	"propertyName": "Buster.Primary.ProjectileSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

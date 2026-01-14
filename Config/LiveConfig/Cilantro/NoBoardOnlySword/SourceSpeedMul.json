@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.NoBoardOnlySword.SourceSpeedMul"
-	},
+	"propertyName": "Cilantro.NoBoardOnlySword.SourceSpeedMul",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

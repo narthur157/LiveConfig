@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.clipSize"
-	},
+	"propertyName": "Basil.clipSize",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

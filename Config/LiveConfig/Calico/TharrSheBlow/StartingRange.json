@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.TharrSheBlow.StartingRange"
-	},
+	"propertyName": "Calico.TharrSheBlow.StartingRange",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

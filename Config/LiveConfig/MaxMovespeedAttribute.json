@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MaxMovespeedAttribute"
-	},
+	"propertyName": "MaxMovespeedAttribute",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

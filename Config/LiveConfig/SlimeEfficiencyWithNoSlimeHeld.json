@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeEfficiencyWithNoSlimeHeld"
-	},
+	"propertyName": "SlimeEfficiencyWithNoSlimeHeld",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

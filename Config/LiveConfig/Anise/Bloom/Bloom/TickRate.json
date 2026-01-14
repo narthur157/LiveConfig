@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Bloom.Bloom.TickRate"
-	},
+	"propertyName": "Anise.Bloom.Bloom.TickRate",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.Parry.SelfTrappedEffectDuration.p4"
-	},
+	"propertyName": "Arms.Parry.SelfTrappedEffectDuration.p4",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

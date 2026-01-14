@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "LowHealthOverlay"
-	},
+	"propertyName": "LowHealthOverlay",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

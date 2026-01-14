@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.miscParameter1"
-	},
+	"propertyName": "Arms.miscParameter1",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

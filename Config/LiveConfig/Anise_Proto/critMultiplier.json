@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.critMultiplier"
-	},
+	"propertyName": "Anise_Proto.critMultiplier",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

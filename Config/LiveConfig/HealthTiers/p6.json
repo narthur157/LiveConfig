@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HealthTiers.p6"
-	},
+	"propertyName": "HealthTiers.p6",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Utility.ChannelDuration"
-	},
+	"propertyName": "Buster.Utility.ChannelDuration",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

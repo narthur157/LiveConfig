@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.BootsOfPlate.SlimeDefenceMod.Legendary"
-	},
+	"propertyName": "Item.BootsOfPlate.SlimeDefenceMod.Legendary",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

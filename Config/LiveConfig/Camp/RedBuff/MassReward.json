@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camp.RedBuff.MassReward"
-	},
+	"propertyName": "Camp.RedBuff.MassReward",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

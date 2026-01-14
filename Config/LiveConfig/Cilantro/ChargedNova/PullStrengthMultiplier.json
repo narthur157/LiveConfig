@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.ChargedNova.PullStrengthMultiplier"
-	},
+	"propertyName": "Cilantro.ChargedNova.PullStrengthMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

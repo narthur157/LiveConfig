@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddies.InstantFallTimer"
-	},
+	"propertyName": "Basil.TurretBuddies.InstantFallTimer",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

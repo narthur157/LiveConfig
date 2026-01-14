@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "UseMultiplierBasedStatIncreases"
-	},
+	"propertyName": "UseMultiplierBasedStatIncreases",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.SodaFrag.TimeToDetonate"
-	},
+	"propertyName": "Anise.SodaFrag.TimeToDetonate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.armor"
-	},
+	"propertyName": "Arms.armor",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

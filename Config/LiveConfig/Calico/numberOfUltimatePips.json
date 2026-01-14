@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.numberOfUltimatePips"
-	},
+	"propertyName": "Calico.numberOfUltimatePips",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

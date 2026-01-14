@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calilco.BlastBack.RecoilStrength"
-	},
+	"propertyName": "Calilco.BlastBack.RecoilStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

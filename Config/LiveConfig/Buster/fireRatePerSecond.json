@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.fireRatePerSecond"
-	},
+	"propertyName": "Buster.fireRatePerSecond",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

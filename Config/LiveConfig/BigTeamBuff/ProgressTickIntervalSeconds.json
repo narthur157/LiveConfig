@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "BigTeamBuff.ProgressTickIntervalSeconds"
-	},
+	"propertyName": "BigTeamBuff.ProgressTickIntervalSeconds",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

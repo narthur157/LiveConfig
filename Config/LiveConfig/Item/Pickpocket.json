@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Pickpocket"
-	},
+	"propertyName": "Item.Pickpocket",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

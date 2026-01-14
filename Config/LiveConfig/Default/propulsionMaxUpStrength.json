@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.propulsionMaxUpStrength"
-	},
+	"propertyName": "Default.propulsionMaxUpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

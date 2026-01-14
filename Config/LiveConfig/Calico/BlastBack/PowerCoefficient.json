@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BlastBack.PowerCoefficient"
-	},
+	"propertyName": "Calico.BlastBack.PowerCoefficient",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

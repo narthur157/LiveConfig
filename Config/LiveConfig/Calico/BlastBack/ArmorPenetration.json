@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BlastBack.ArmorPenetration"
-	},
+	"propertyName": "Calico.BlastBack.ArmorPenetration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

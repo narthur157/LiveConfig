@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.PowderKeg.MaxSpeedMultiplier"
-	},
+	"propertyName": "Calico.PowderKeg.MaxSpeedMultiplier",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

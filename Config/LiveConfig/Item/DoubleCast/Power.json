@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.DoubleCast.Power"
-	},
+	"propertyName": "Item.DoubleCast.Power",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

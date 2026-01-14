@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.SodaFrag.MuzzleOffsetPitch"
-	},
+	"propertyName": "Anise.SodaFrag.MuzzleOffsetPitch",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

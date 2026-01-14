@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.SodaFrag.ExplosionRadius"
-	},
+	"propertyName": "Anise.SodaFrag.ExplosionRadius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

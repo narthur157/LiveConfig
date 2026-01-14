@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.SlowField.Cooldown"
-	},
+	"propertyName": "HMG.SlowField.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

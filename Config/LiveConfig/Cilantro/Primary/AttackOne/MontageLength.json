@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.Primary.AttackOne.MontageLength"
-	},
+	"propertyName": "Cilantro.Primary.AttackOne.MontageLength",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

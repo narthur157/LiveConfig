@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.CircleOfPain.MaxHealth"
-	},
+	"propertyName": "Item.CircleOfPain.MaxHealth",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

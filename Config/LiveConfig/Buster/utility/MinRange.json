@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Utility.MinRange"
-	},
+	"propertyName": "Buster.Utility.MinRange",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

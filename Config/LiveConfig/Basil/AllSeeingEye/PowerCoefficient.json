@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.AllSeeingEye.PowerCoefficient"
-	},
+	"propertyName": "Basil.AllSeeingEye.PowerCoefficient",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

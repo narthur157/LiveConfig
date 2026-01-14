@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.HealingWounds.BonusHealthCof"
-	},
+	"propertyName": "Item.HealingWounds.BonusHealthCof",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Molly.TickDmgDeletesSlime"
-	},
+	"propertyName": "Buster.Molly.TickDmgDeletesSlime",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

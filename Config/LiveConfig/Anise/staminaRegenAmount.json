@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.staminaRegenAmount"
-	},
+	"propertyName": "Anise.staminaRegenAmount",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

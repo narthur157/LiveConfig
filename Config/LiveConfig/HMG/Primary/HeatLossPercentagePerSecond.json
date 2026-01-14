@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.Primary.HeatLossPercentagePerSecond"
-	},
+	"propertyName": "HMG.Primary.HeatLossPercentagePerSecond",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

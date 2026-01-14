@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.defenceMultiplier"
-	},
+	"propertyName": "Buster.defenceMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

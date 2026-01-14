@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.CircleOfPain.TrackingTime"
-	},
+	"propertyName": "Item.CircleOfPain.TrackingTime",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

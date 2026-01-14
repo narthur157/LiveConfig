@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.SodaFrag.MinKnockbackFallOffMultiplier"
-	},
+	"propertyName": "Anise.SodaFrag.MinKnockbackFallOffMultiplier",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

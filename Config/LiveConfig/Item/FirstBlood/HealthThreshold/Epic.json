@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.FirstBlood.HealthThreshold.Epic"
-	},
+	"propertyName": "Item.FirstBlood.HealthThreshold.Epic",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

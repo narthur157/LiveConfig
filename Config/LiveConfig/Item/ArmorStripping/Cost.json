@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.ArmorStripping.Cost"
-	},
+	"propertyName": "Item.ArmorStripping.Cost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

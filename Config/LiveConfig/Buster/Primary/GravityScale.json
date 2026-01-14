@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Primary.GravityScale"
-	},
+	"propertyName": "Buster.Primary.GravityScale",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

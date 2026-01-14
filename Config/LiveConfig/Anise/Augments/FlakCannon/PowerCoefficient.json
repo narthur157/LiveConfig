@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augments.FlakCannon.PowerCoefficient"
-	},
+	"propertyName": "Anise.Augments.FlakCannon.PowerCoefficient",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

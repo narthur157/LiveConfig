@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camp.BlueBuff.Damage"
-	},
+	"propertyName": "Camp.BlueBuff.Damage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

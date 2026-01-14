@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.AllSeeingEye.maxMass"
-	},
+	"propertyName": "Basil.AllSeeingEye.maxMass",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

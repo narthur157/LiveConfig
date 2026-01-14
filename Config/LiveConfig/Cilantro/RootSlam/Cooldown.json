@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.RootSlam.Cooldown"
-	},
+	"propertyName": "Cilantro.RootSlam.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

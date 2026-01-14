@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Molly.EffectDuration"
-	},
+	"propertyName": "Buster.Molly.EffectDuration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

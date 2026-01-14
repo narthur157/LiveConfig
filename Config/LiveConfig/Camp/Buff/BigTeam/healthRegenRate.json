@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camp.Buff.BigTeam.healthRegenRate"
-	},
+	"propertyName": "Camp.Buff.BigTeam.healthRegenRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

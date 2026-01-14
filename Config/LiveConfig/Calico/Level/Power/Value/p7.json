@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.Level.Power.Value.p7"
-	},
+	"propertyName": "Calico.Level.Power.Value.p7",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

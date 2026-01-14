@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.VisionsOfBud.Radius"
-	},
+	"propertyName": "Basil.VisionsOfBud.Radius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

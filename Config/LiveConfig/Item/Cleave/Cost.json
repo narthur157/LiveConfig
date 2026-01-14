@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Cleave.Cost"
-	},
+	"propertyName": "Item.Cleave.Cost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Molly.DeletesSlimeInArea"
-	},
+	"propertyName": "Buster.Molly.DeletesSlimeInArea",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

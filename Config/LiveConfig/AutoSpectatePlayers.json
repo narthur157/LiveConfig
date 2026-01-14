@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "AutoSpectatePlayers"
-	},
+	"propertyName": "AutoSpectatePlayers",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

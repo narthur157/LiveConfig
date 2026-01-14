@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.BigOne.AOERadius"
-	},
+	"propertyName": "HMG.BigOne.AOERadius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

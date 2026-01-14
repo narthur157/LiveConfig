@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.DoubleCast.Cost"
-	},
+	"propertyName": "Item.DoubleCast.Cost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

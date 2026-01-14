@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.scale"
-	},
+	"propertyName": "Default.scale",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

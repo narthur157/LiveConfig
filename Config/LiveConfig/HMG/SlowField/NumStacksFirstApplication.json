@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HMG.SlowField.NumStacksFirstApplication"
-	},
+	"propertyName": "HMG.SlowField.NumStacksFirstApplication",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

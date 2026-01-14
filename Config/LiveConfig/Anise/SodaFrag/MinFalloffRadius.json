@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.SodaFrag.MinFalloffRadius"
-	},
+	"propertyName": "Anise.SodaFrag.MinFalloffRadius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

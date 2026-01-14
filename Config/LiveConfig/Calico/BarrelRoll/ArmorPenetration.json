@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BarrelRoll.ArmorPenetration"
-	},
+	"propertyName": "Calico.BarrelRoll.ArmorPenetration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

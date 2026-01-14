@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.propulsionMaxForwardStrength"
-	},
+	"propertyName": "Arms.propulsionMaxForwardStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

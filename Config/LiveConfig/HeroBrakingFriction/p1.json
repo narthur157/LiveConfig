@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HeroBrakingFriction.p1"
-	},
+	"propertyName": "HeroBrakingFriction.p1",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

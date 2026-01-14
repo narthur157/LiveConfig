@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.wallRunMinRequiredSpeed"
-	},
+	"propertyName": "Calico.wallRunMinRequiredSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

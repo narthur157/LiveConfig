@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augments.DodgeThis.Damage"
-	},
+	"propertyName": "Anise.Augments.DodgeThis.Damage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

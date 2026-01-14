@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BlastUp.ArmorPen"
-	},
+	"propertyName": "Calico.BlastUp.ArmorPen",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

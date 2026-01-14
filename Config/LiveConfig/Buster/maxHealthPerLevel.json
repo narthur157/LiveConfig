@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.maxHealthPerLevel"
-	},
+	"propertyName": "Buster.maxHealthPerLevel",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

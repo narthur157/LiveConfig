@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Eventuality.PowerPercentPerDamage"
-	},
+	"propertyName": "Item.Eventuality.PowerPercentPerDamage",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

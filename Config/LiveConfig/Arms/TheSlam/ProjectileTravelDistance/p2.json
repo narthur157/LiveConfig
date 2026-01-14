@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.TheSlam.ProjectileTravelDistance.p2"
-	},
+	"propertyName": "Arms.TheSlam.ProjectileTravelDistance.p2",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

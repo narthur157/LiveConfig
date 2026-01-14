@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.ultEnergyRegenRate"
-	},
+	"propertyName": "Calico.ultEnergyRegenRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

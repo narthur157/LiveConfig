@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.DefensiveFormation.RangeInMeters"
-	},
+	"propertyName": "Item.DefensiveFormation.RangeInMeters",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.ArmorStripping.ArmorReductionPerHit.Epic"
-	},
+	"propertyName": "Item.ArmorStripping.ArmorReductionPerHit.Epic",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

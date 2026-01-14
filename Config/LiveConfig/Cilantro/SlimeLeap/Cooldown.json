@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.SlimeLeap.Cooldown"
-	},
+	"propertyName": "Cilantro.SlimeLeap.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

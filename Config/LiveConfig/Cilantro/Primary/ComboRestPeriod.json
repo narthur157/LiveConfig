@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.Primary.ComboRestPeriod"
-	},
+	"propertyName": "Cilantro.Primary.ComboRestPeriod",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

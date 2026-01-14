@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augment.FrequentFryer.CooldownIncreasePercentage"
-	},
+	"propertyName": "Anise.Augment.FrequentFryer.CooldownIncreasePercentage",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

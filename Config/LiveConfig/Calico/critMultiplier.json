@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.critMultiplier"
-	},
+	"propertyName": "Calico.critMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

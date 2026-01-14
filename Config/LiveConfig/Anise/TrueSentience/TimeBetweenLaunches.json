@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.TrueSentience.TimeBetweenLaunches"
-	},
+	"propertyName": "Anise.TrueSentience.TimeBetweenLaunches",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

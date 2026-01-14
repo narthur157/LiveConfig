@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.TrueSentience.Spawned.MaxInitialSpeed"
-	},
+	"propertyName": "Anise.TrueSentience.Spawned.MaxInitialSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

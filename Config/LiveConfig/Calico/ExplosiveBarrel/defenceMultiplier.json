@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.ExplosiveBarrel.defenceMultiplier"
-	},
+	"propertyName": "Calico.ExplosiveBarrel.defenceMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

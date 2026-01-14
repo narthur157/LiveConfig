@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddy.flatArmorPenetration"
-	},
+	"propertyName": "Basil.TurretBuddy.flatArmorPenetration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.GrindRail.LaunchPowerZMultiplier"
-	},
+	"propertyName": "Interactable.GrindRail.LaunchPowerZMultiplier",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

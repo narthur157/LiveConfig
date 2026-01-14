@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.heroSpeed"
-	},
+	"propertyName": "Anise_Proto.heroSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

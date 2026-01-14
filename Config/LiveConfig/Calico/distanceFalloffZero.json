@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.distanceFalloffZero"
-	},
+	"propertyName": "Calico.distanceFalloffZero",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

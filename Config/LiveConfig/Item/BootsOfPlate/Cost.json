@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.BootsOfPlate.Cost"
-	},
+	"propertyName": "Item.BootsOfPlate.Cost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

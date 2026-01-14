@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augment.LifeThroughDeath.DamageToHealthConversion"
-	},
+	"propertyName": "Anise.Augment.LifeThroughDeath.DamageToHealthConversion",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

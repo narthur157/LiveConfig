@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.TheSlam.ProjectileScale.p1"
-	},
+	"propertyName": "Arms.TheSlam.ProjectileScale.p1",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

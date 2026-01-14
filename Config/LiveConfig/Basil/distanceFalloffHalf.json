@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.distanceFalloffHalf"
-	},
+	"propertyName": "Basil.distanceFalloffHalf",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

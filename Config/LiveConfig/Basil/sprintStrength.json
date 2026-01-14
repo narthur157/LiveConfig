@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.sprintStrength"
-	},
+	"propertyName": "Basil.sprintStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.slimeSpeed"
-	},
+	"propertyName": "Anise_Proto.slimeSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

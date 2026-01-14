@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Hourglass.Power"
-	},
+	"propertyName": "Item.Hourglass.Power",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

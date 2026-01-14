@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "BigTeamBuff.CaptureLimit"
-	},
+	"propertyName": "BigTeamBuff.CaptureLimit",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "duo_test.mapName"
-	},
+	"propertyName": "duo_test.mapName",
 	"description": "",
 	"propertyType": "String",
 	"tags": [

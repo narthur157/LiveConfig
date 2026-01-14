@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SentryLogMonitoring"
-	},
+	"propertyName": "SentryLogMonitoring",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

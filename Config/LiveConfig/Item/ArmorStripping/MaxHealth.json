@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.ArmorStripping.MaxHealth"
-	},
+	"propertyName": "Item.ArmorStripping.MaxHealth",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

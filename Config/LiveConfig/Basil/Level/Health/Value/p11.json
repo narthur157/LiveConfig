@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.Level.Health.Value.p11"
-	},
+	"propertyName": "Basil.Level.Health.Value.p11",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

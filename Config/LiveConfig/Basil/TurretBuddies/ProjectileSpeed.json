@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddies.ProjectileSpeed"
-	},
+	"propertyName": "Basil.TurretBuddies.ProjectileSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

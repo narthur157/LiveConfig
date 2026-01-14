@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.TurretBuddies.MuzzleOffsetPitch"
-	},
+	"propertyName": "Basil.TurretBuddies.MuzzleOffsetPitch",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

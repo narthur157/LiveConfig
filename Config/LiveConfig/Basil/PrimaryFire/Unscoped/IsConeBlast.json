@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.PrimaryFire.Unscoped.IsConeBlast"
-	},
+	"propertyName": "Basil.PrimaryFire.Unscoped.IsConeBlast",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.damageMultiplier"
-	},
+	"propertyName": "Calico.damageMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

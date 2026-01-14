@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.massPickupAmount"
-	},
+	"propertyName": "Default.massPickupAmount",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

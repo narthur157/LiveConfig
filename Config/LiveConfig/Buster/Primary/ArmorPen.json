@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.Primary.ArmorPen"
-	},
+	"propertyName": "Buster.Primary.ArmorPen",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

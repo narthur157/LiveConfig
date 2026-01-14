@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.armorPerLevel"
-	},
+	"propertyName": "Basil.armorPerLevel",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

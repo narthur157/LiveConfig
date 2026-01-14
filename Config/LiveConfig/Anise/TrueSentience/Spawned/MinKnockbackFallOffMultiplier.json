@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.TrueSentience.Spawned.MinKnockbackFallOffMultiplier"
-	},
+	"propertyName": "Anise.TrueSentience.Spawned.MinKnockbackFallOffMultiplier",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

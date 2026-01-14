@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Fortified.Cost"
-	},
+	"propertyName": "Item.Fortified.Cost",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

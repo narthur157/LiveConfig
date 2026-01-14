@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Brawler.AutoFire"
-	},
+	"propertyName": "Brawler.AutoFire",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

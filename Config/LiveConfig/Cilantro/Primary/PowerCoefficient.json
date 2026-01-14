@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.Primary.PowerCoefficient"
-	},
+	"propertyName": "Cilantro.Primary.PowerCoefficient",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

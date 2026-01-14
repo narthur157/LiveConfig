@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.slimeMinJumpStrength"
-	},
+	"propertyName": "Basil.slimeMinJumpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.VisionsOfBud.armorPerLevel"
-	},
+	"propertyName": "Basil.VisionsOfBud.armorPerLevel",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

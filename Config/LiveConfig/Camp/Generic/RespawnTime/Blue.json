@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camp.Generic.RespawnTime.Blue"
-	},
+	"propertyName": "Camp.Generic.RespawnTime.Blue",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

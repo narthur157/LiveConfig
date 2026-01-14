@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Default.moveSpeed"
-	},
+	"propertyName": "Default.moveSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

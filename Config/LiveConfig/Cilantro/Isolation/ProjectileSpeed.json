@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.Isolation.ProjectileSpeed"
-	},
+	"propertyName": "Cilantro.Isolation.ProjectileSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

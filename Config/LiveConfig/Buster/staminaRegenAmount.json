@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.staminaRegenAmount"
-	},
+	"propertyName": "Buster.staminaRegenAmount",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

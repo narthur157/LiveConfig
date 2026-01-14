@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.healthRegenRate"
-	},
+	"propertyName": "Anise_Proto.healthRegenRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

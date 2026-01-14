@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.LargeHealthPack.RespawnTime"
-	},
+	"propertyName": "Interactable.LargeHealthPack.RespawnTime",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

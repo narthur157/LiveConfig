@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Hero.Camera.Distance.Base"
-	},
+	"propertyName": "Hero.Camera.Distance.Base",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

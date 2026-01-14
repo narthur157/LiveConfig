@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.ICU.StartingRange"
-	},
+	"propertyName": "Basil.ICU.StartingRange",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

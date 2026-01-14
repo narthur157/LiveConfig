@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "LoadingScreen"
-	},
+	"propertyName": "LoadingScreen",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

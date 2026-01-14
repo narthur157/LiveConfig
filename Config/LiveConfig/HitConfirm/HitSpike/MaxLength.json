@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "HitConfirm.HitSpike.MaxLength"
-	},
+	"propertyName": "HitConfirm.HitSpike.MaxLength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

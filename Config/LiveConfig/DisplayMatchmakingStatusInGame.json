@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "DisplayMatchmakingStatusInGame"
-	},
+	"propertyName": "DisplayMatchmakingStatusInGame",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

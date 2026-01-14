@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.ChargedShot.Unscoped.SelfKnockback.IsAdditive"
-	},
+	"propertyName": "Basil.ChargedShot.Unscoped.SelfKnockback.IsAdditive",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

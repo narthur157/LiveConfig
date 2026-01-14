@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Bling.HealthGranted"
-	},
+	"propertyName": "Item.Bling.HealthGranted",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

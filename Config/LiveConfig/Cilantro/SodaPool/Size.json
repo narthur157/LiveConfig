@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Cilantro.SodaPool.Size"
-	},
+	"propertyName": "Cilantro.SodaPool.Size",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

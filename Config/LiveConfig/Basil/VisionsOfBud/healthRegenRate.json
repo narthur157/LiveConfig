@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.VisionsOfBud.healthRegenRate"
-	},
+	"propertyName": "Basil.VisionsOfBud.healthRegenRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BlimeyBomb.PowerCoefficient"
-	},
+	"propertyName": "Calico.BlimeyBomb.PowerCoefficient",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

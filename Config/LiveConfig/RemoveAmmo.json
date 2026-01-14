@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "RemoveAmmo"
-	},
+	"propertyName": "RemoveAmmo",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

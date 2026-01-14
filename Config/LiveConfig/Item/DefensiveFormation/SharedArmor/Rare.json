@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.DefensiveFormation.SharedArmor.Rare"
-	},
+	"propertyName": "Item.DefensiveFormation.SharedArmor.Rare",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

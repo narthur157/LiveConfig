@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.recoil"
-	},
+	"propertyName": "Arms.recoil",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

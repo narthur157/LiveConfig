@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "FreePlay"
-	},
+	"propertyName": "FreePlay",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

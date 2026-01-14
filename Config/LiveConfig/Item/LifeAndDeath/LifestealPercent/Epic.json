@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.LifeAndDeath.LifestealPercent.Epic"
-	},
+	"propertyName": "Item.LifeAndDeath.LifestealPercent.Epic",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

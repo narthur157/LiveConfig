@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise_Proto.maxMass"
-	},
+	"propertyName": "Anise_Proto.maxMass",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

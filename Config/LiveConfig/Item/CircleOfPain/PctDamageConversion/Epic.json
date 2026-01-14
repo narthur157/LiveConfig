@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.CircleOfPain.PctDamageConversion.Epic"
-	},
+	"propertyName": "Item.CircleOfPain.PctDamageConversion.Epic",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

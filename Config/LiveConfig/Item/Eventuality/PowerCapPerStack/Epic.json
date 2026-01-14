@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Eventuality.PowerCapPerStack.Epic"
-	},
+	"propertyName": "Item.Eventuality.PowerCapPerStack.Epic",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,5 +1,7 @@
 ﻿#include "LiveConfigJson.h"
 #include "LiveConfigSystem.h"
+#include "Profiles/LiveConfigProfileSystem.h"
+#include "Profiles/LiveConfigProfile.h"
 #include "LiveConfigGameSettings.h"
 #include "Misc/AutomationTest.h"
 #include "Misc/Paths.h"
@@ -48,6 +50,17 @@ bool FLiveConfigJsonOperationsTest::RunTest(const FString& Parameters)
 	FJsonObjectConverter::JsonObjectToUStruct(JsonObject.ToSharedRef(), &LoadedDef);
 	TestEqual(TEXT("Loaded property name should match"), LoadedDef.PropertyName.GetName(), PropertyName);
 	TestEqual(TEXT("Loaded value should match"), LoadedDef.Value, TestValue);
+
+	// Verify that propertyName is a string, not an object
+	FString PropNameValue;
+	if (JsonObject->TryGetStringField(TEXT("propertyName"), PropNameValue))
+	{
+		TestEqual(TEXT("propertyName should be serialized as a string"), PropNameValue, PropertyName.ToString());
+	}
+	else
+	{
+		AddError(TEXT("propertyName should be a string field in the JSON"));
+	}
 
 	// Test Updating
 	PropertyDefinition.Value = TEXT("UpdatedValue");
@@ -113,6 +126,62 @@ bool FLiveConfigJsonOperationsTest::RunTest(const FString& Parameters)
 
 	// Restore original settings
 	System->PropertyDefinitions = OriginalDefinitions;
+
+	return true;
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FLiveConfigProfileJsonTest, "LiveConfig.ProfileJson", EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter);
+
+bool FLiveConfigProfileJsonTest::RunTest(const FString& Parameters)
+{
+	ULiveConfigProfileSystem* ProfileSystem = ULiveConfigProfileSystem::Get();
+	if (!ProfileSystem)
+	{
+		return false;
+	}
+
+	FName TestProfileName = TEXT("UnitTestProfile");
+	FLiveConfigProfile Profile;
+	Profile.ProfileName = TestProfileName;
+	Profile.Overrides.Add(FLiveConfigProperty(FName(TEXT("Test.Property.1"))), TEXT("Value1"));
+	Profile.Overrides.Add(FLiveConfigProperty(FName(TEXT("Test.Property.2"))), TEXT("Value2"));
+	Profile.PrepareForReplication(); // Populates ReplicatedOverrides
+
+	// Test Saving
+	ProfileSystem->SaveProfile(Profile);
+	FString Path = ProfileSystem->GetProfilePath(TestProfileName);
+	TestTrue(TEXT("Profile file should exist"), FPaths::FileExists(Path));
+
+	FString SavedJson;
+	FFileHelper::LoadFileToString(SavedJson, *Path);
+	TSharedPtr<FJsonObject> JsonObject;
+	TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(SavedJson);
+	TestTrue(TEXT("Saved JSON should be valid"), FJsonSerializer::Deserialize(Reader, JsonObject) && JsonObject.IsValid());
+
+	// Verify that profileName is NOT present
+	TestFalse(TEXT("profileName should NOT be serialized in the new format"), JsonObject->HasField(TEXT("profileName")));
+
+	// Verify that overrides is NOT a nested field, but the root object itself contains the properties
+	// In the new format, the root JSON object IS the overrides map
+	FString Val1;
+	if (JsonObject->TryGetStringField(TEXT("Test.Property.1"), Val1))
+	{
+		TestEqual(TEXT("Override value 1 should match"), Val1, TEXT("Value1"));
+	}
+	else
+	{
+		AddError(TEXT("Override Test.Property.1 should be a string field at the root (flattened)"));
+	}
+
+	// Test Round-trip
+	FLiveConfigProfile LoadedProfile;
+	TestTrue(TEXT("LoadProfile should succeed"), ProfileSystem->LoadProfile(TestProfileName, LoadedProfile));
+	TestEqual(TEXT("Loaded profile name should match"), LoadedProfile.ProfileName, TestProfileName);
+	TestEqual(TEXT("Loaded overrides count should match"), LoadedProfile.Overrides.Num(), 2);
+	TestEqual(TEXT("Loaded override value 1 should match"), LoadedProfile.Overrides.FindRef(FLiveConfigProperty(FName(TEXT("Test.Property.1")))), TEXT("Value1"));
+
+	// Cleanup
+	ProfileSystem->DeleteProfile(TestProfileName);
 
 	return true;
 }

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Domination.valuePerUltimatePip"
-	},
+	"propertyName": "Domination.valuePerUltimatePip",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

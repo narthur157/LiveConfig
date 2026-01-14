@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.MIRVGrenade.ExplosionRadius"
-	},
+	"propertyName": "Anise.MIRVGrenade.ExplosionRadius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

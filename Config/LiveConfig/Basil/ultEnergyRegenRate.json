@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.ultEnergyRegenRate"
-	},
+	"propertyName": "Basil.ultEnergyRegenRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

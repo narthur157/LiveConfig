@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Interactable.VendingMachine.SlimedropDecayTime"
-	},
+	"propertyName": "Interactable.VendingMachine.SlimedropDecayTime",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

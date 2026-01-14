@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.Dash.DirectionDashEnabled"
-	},
+	"propertyName": "Arms.Dash.DirectionDashEnabled",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

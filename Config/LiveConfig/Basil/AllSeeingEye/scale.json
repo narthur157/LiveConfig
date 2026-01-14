@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.AllSeeingEye.scale"
-	},
+	"propertyName": "Basil.AllSeeingEye.scale",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

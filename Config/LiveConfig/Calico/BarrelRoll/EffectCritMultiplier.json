@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Calico.BarrelRoll.EffectCritMultiplier"
-	},
+	"propertyName": "Calico.BarrelRoll.EffectCritMultiplier",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

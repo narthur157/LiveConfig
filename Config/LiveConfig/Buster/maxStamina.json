@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.maxStamina"
-	},
+	"propertyName": "Buster.maxStamina",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "BasicTraining.maxGameLengthSeconds"
-	},
+	"propertyName": "BasicTraining.maxGameLengthSeconds",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

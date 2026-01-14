@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeSlopeSliding"
-	},
+	"propertyName": "SlimeSlopeSliding",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

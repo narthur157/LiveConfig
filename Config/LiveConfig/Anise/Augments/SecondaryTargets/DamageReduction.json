@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augments.SecondaryTargets.DamageReduction"
-	},
+	"propertyName": "Anise.Augments.SecondaryTargets.DamageReduction",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

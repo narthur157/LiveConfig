@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.AntiHeal.HealingReductionPercent.Quality3"
-	},
+	"propertyName": "Item.AntiHeal.HealingReductionPercent.Quality3",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

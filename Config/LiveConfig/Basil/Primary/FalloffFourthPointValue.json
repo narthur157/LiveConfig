@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.Primary.FalloffFourthPointValue"
-	},
+	"propertyName": "Basil.Primary.FalloffFourthPointValue",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

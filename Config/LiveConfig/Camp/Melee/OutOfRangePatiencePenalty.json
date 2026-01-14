@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Camp.Melee.OutOfRangePatiencePenalty"
-	},
+	"propertyName": "Camp.Melee.OutOfRangePatiencePenalty",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

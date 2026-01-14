@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Buster.SlimeMeteor.AOEDamage.PowerCof"
-	},
+	"propertyName": "Buster.SlimeMeteor.AOEDamage.PowerCof",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

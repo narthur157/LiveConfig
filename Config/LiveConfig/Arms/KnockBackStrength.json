@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.KnockBackStrength"
-	},
+	"propertyName": "Arms.KnockBackStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

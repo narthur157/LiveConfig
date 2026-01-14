@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Augments.DodgyExplosions.ExplosiveSpawnInterval"
-	},
+	"propertyName": "Anise.Augments.DodgyExplosions.ExplosiveSpawnInterval",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [

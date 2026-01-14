@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Basil.BlisteringBolt.NumTiers"
-	},
+	"propertyName": "Basil.BlisteringBolt.NumTiers",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

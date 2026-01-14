@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Ability.HealOnMassIngest.PauseAtFullHealth"
-	},
+	"propertyName": "Ability.HealOnMassIngest.PauseAtFullHealth",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

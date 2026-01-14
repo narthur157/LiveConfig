@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Arms.armorPerLevel"
-	},
+	"propertyName": "Arms.armorPerLevel",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [

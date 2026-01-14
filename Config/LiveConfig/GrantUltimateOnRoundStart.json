@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "GrantUltimateOnRoundStart"
-	},
+	"propertyName": "GrantUltimateOnRoundStart",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [

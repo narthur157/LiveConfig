@@ -1,8 +1,5 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Anise.Primary.FalloffEndDistance"
-	},
+	"propertyName": "Anise.Primary.FalloffEndDistance",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
