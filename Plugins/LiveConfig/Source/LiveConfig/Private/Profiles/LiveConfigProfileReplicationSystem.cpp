@@ -4,6 +4,7 @@
 #include "LiveConfigGameSettings.h"
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
+#include "Profiles/LiveConfigProfileSystem.h"
 
 void ULiveConfigProfileReplicationSystem::Initialize(FSubsystemCollectionBase& Collection)
 {
@@ -46,7 +47,13 @@ void ULiveConfigProfileReplicationSystem::OnWorldBeginPlay(UWorld& InWorld)
 {
     Super::OnWorldBeginPlay(InWorld);
 
-    if (InWorld.GetNetMode() == NM_Client || InWorld.GetNetMode() == NM_Standalone)
+    if (InWorld.GetNetMode() == NM_Client)
+    {
+        ULiveConfigProfileSystem::Get()->SetActiveProfileData_NoReplication({});
+        return;
+    }
+    
+    if (InWorld.GetNetMode() == NM_Standalone)
     {
         return;
     }
