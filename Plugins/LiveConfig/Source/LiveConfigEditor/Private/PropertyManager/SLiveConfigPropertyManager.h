@@ -48,11 +48,13 @@ private:
 	void OnTagFilterSelected(FName InTag);
 	int32 GetTagCount(FName InTag) const;
 	FSlateColor GetTagColor(FName InTag) const;
-	void Save();
 	void OnPropertyRowChanged(TSharedPtr<FLiveConfigPropertyDefinition> OldDef, TSharedPtr<FLiveConfigPropertyDefinition> NewDef, ELiveConfigPropertyChangeType ChangeType);
 	void SaveKnownTags();
 	void GetFlatVisibleProperties(TArray<TSharedRef<FLiveConfigPropertyTreeNode>>& OutFlatList) const;
 	void NavigateToProperty(TSharedPtr<FLiveConfigPropertyTreeNode> CurrentItem, int32 Direction);
+	void OnContextMenuOpening(FMenuBuilder& MenuBuilder);
+	void BulkAddTag(TArray<TSharedRef<FLiveConfigPropertyTreeNode>> Nodes, FName TagName);
+	TSharedPtr<SWidget> OnGetContextMenuContent();
 
 	TArray<TSharedPtr<FLiveConfigPropertyDefinition>> RawPropertyList;
 	TArray<TSharedRef<FLiveConfigPropertyTreeNode>> RootNodes;

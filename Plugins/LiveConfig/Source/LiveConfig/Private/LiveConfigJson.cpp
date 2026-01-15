@@ -10,6 +10,7 @@
 #include "Serialization/JsonSerializer.h"
 #include "JsonObjectConverter.h"
 #include "HAL/FileManager.h"
+#include "Containers/Ticker.h"
 
 #if WITH_EDITOR
 #include "SourceControlHelpers.h"
@@ -55,15 +56,6 @@ void ULiveConfigJsonSystem::LoadJsonFromFiles()
 {
 	FString Dir = GetLiveConfigDirectory();
 	LoadJsonFromDirectory(Dir);
-
-#if WITH_EDITOR
-	if (PendingCheckoutFiles.Num() > 0)
-	{
-		SourceControlHelpers::CheckOutOrAddFiles(PendingCheckoutFiles);
-		SourceControlHelpers::RevertUnchangedFiles(PendingCheckoutFiles);
-		PendingCheckoutFiles.Empty();
-	}
-#endif 
 }
 
 void ULiveConfigJsonSystem::LoadJsonFromDirectory(const FString& Dir)
@@ -179,49 +171,6 @@ void ULiveConfigJsonSystem::VerifyJsonIntegrity()
 	}
 }
 
-void ULiveConfigJsonSystem::SaveJsonToFiles()
-{
-	if (const ULiveConfigSystem* System = ULiveConfigSystem::Get())
-	{
-		// Collect all current property paths
-		TSet<FString> CurrentPropertyPaths;
-		for (const auto& Pair : System->PropertyDefinitions)
-		{
-			// Skip properties imported from curve tables
-			if (Pair.Value.Tags.Contains(LiveConfigTags::FromCurveTable))
-			{
-				continue;
-			}
-
-			CurrentPropertyPaths.Add(FPaths::ConvertRelativePathToFull(GetPropertyPath(Pair.Value.PropertyName.GetName())));
-			SavePropertyToFile(Pair.Value);
-		}
-
-		// Clean up files that are no longer in the map
-		TArray<FString> AllFiles;
-		IFileManager::Get().FindFilesRecursive(AllFiles, *GetLiveConfigDirectory(), TEXT("*.json"), true, false);
-
-		for (const FString& FilePath : AllFiles)
-		{
-			FString FullFilePath = FPaths::ConvertRelativePathToFull(FilePath);
-			if (!CurrentPropertyPaths.Contains(FullFilePath))
-			{
-				if (IFileManager::Get().Delete(*FullFilePath))
-				{
-					UE_LOG(LogLiveConfig, Log, TEXT("Deleted obsolete property file: %s"), *FullFilePath);
-#if WITH_EDITOR
-					PendingCheckoutFiles.Add(FullFilePath);
-#endif
-				}
-			}
-		}
-	}
-	if (CVarVerifyJsonOnSave.GetValueOnGameThread() != 0)
-	{
-		VerifyJsonIntegrity();
-	}
-}
-
 void ULiveConfigJsonSystem::SavePropertyToFile(const FLiveConfigPropertyDefinition& PropertyDefinition)
 {
 	if (!PropertyDefinition.PropertyName.IsValid() || PropertyDefinition.PropertyName.ToString().EndsWith(TEXT(".")))
@@ -235,38 +184,9 @@ void ULiveConfigJsonSystem::SavePropertyToFile(const FLiveConfigPropertyDefiniti
 		return;
 	}
 
-	FString ActualPath = GetPropertyPath(PropertyDefinition.PropertyName.GetName());
-
-	FLiveConfigPropertyDefinition DefCopy = PropertyDefinition;
-	if (DefCopy.PropertyType == ELiveConfigPropertyType::Float && !DefCopy.Value.IsEmpty())
-	{
-		float FloatVal = FCString::Atof(*DefCopy.Value);
-		DefCopy.Value = FString::SanitizeFloat(FloatVal);
-	}
-
-	TSharedPtr<FJsonObject> JsonObject = FJsonObjectConverter::UStructToJsonObject(DefCopy);
-	if (JsonObject.IsValid())
-	{
-		FString JsonString;
-		TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&JsonString);
-		FJsonSerializer::Serialize(JsonObject.ToSharedRef(), Writer);
-
-		if (FFileHelper::SaveStringToFile(JsonString, *ActualPath))
-		{
-			UE_LOG(LogLiveConfig, Log, TEXT("Saved property %s to %s"), *PropertyDefinition.PropertyName.ToString(), *ActualPath);
-		}
-		else
-		{
-			UE_LOG(LogLiveConfig, Error, TEXT("Failed to save property %s to %s"), *PropertyDefinition.PropertyName.ToString(), *ActualPath);
-		}
-
-		PendingCheckoutFiles.Add(ActualPath);
-	}
-
-	if (CVarVerifyJsonOnSave.GetValueOnGameThread() != 0)
-	{
-		VerifyJsonIntegrity();
-	}
+	QueuedSaves.Add(PropertyDefinition.PropertyName.GetName(), PropertyDefinition);
+	QueuedDeletions.Remove(PropertyDefinition.PropertyName.GetName());
+	QueueSave();
 }
 
 void ULiveConfigJsonSystem::DeletePropertyFile(FName PropertyName)
@@ -276,33 +196,93 @@ void ULiveConfigJsonSystem::DeletePropertyFile(FName PropertyName)
 		return;
 	}
 
-	FString ActualPath = GetPropertyPath(PropertyName);
-	if (FPaths::FileExists(ActualPath))
+	QueuedDeletions.Add(PropertyName);
+	QueuedSaves.Remove(PropertyName);
+	QueueSave();
+}
+
+void ULiveConfigJsonSystem::QueueSave()
+{
+	if (!TickHandle.IsValid())
 	{
-		if (IFileManager::Get().Delete(*ActualPath))
+		TickHandle = FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateUObject(this, &ULiveConfigJsonSystem::OnTick));
+	}
+}
+
+bool ULiveConfigJsonSystem::OnTick(float DeltaTime)
+{
+	QUICK_SCOPE_CYCLE_COUNTER(STAT_ULiveConfigJsonSystem_OnTick);
+
+	if (QueuedSaves.Num() == 0 && QueuedDeletions.Num() == 0)
+	{
+		TickHandle.Reset();
+		return false;
+	}
+
+	TArray<FString> FilesToCheckout;
+
+	for (const auto& Pair : QueuedSaves)
+	{
+		const FLiveConfigPropertyDefinition& PropertyDefinition = Pair.Value;
+		FString ActualPath = GetPropertyPath(PropertyDefinition.PropertyName.GetName());
+
+		FLiveConfigPropertyDefinition DefCopy = PropertyDefinition;
+		if (DefCopy.PropertyType == ELiveConfigPropertyType::Float && !DefCopy.Value.IsEmpty())
 		{
-			UE_LOG(LogLiveConfig, Log, TEXT("Deleted property file %s"), *ActualPath);
-			PendingCheckoutFiles.Add(ActualPath);
+			float FloatVal = FCString::Atof(*DefCopy.Value);
+			DefCopy.Value = FString::SanitizeFloat(FloatVal);
+		}
+
+		TSharedPtr<FJsonObject> JsonObject = FJsonObjectConverter::UStructToJsonObject(DefCopy);
+		if (JsonObject.IsValid())
+		{
+			FString JsonString;
+			TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&JsonString);
+			FJsonSerializer::Serialize(JsonObject.ToSharedRef(), Writer);
+
+			if (FFileHelper::SaveStringToFile(JsonString, *ActualPath))
+			{
+				UE_LOG(LogLiveConfig, Log, TEXT("Saved property %s to %s"), *PropertyDefinition.PropertyName.ToString(), *ActualPath);
+				FilesToCheckout.Add(ActualPath);
+			}
+			else
+			{
+				UE_LOG(LogLiveConfig, Error, TEXT("Failed to save property %s to %s"), *PropertyDefinition.PropertyName.ToString(), *ActualPath);
+			}
 		}
 	}
+
+	for (const FName& PropertyName : QueuedDeletions)
+	{
+		FString ActualPath = GetPropertyPath(PropertyName);
+		if (FPaths::FileExists(ActualPath))
+		{
+			if (IFileManager::Get().Delete(*ActualPath))
+			{
+				UE_LOG(LogLiveConfig, Log, TEXT("Deleted property file %s"), *ActualPath);
+				FilesToCheckout.Add(ActualPath);
+			}
+		}
+	}
+
+#if WITH_EDITOR
+	if (FilesToCheckout.Num() > 0)
+	{
+		SourceControlHelpers::CheckOutOrAddFiles(FilesToCheckout);
+		SourceControlHelpers::RevertUnchangedFiles(FilesToCheckout);
+	}
+#endif
+
+	QueuedSaves.Empty();
+	QueuedDeletions.Empty();
 
 	if (CVarVerifyJsonOnSave.GetValueOnGameThread() != 0)
 	{
 		VerifyJsonIntegrity();
 	}
-}
 
-void ULiveConfigJsonSystem::CheckoutProperties(const TArray<FName>& PropertyNames)
-{
-#if WITH_EDITOR
-	TArray<FString> Paths;
-	for (FName PropertyName : PropertyNames)
-	{
-		Paths.Add(GetPropertyPath(PropertyName));
-	}
-	
-	SourceControlHelpers::CheckOutFiles(Paths);
-#endif
+	TickHandle.Reset();
+	return false;
 }
 
 FString ULiveConfigJsonSystem::GetPropertyPath(FName PropertyName)

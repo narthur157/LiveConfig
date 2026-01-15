@@ -121,7 +121,13 @@ void SLiveConfigPropertyPicker::Construct(const FArguments& InArgs)
             [
                 SAssignNew(AddNewTextBox, SEditableTextBox)
                 .HintText(NSLOCTEXT("LiveConfig", "AddNewProperty", "Enter new property name..."))
-                .OnTextCommitted(this, &SLiveConfigPropertyPicker::OnCommitNewProperty)
+                .OnTextCommitted_Lambda([this](const FText& Text, ETextCommit::Type CommitType)
+                {
+                    if (CommitType == ETextCommit::OnEnter)
+                    {
+                        OnCommitNewProperty(Text, CommitType);
+                    }
+                })
                 .IsEnabled(!bReadOnly)
             ]
 

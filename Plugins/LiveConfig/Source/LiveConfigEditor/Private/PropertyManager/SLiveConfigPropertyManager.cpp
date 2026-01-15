@@ -184,6 +184,8 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 				.TreeItemsSource(&RootNodes)
 				.OnGenerateRow(this, &SLiveConfigPropertyManager::OnGenerateRow)
 				.OnGetChildren(this, &SLiveConfigPropertyManager::OnGetChildren)
+				.OnContextMenuOpening(this, &SLiveConfigPropertyManager::OnGetContextMenuContent)
+				.SelectionMode(ESelectionMode::Multi)
 				.HeaderRow(
 					SNew(SHeaderRow)
 					.Style(FAppStyle::Get(), "TableView.Header")
@@ -268,6 +270,7 @@ TSharedRef<ITableRow> SLiveConfigPropertyManager::OnGenerateRow(TSharedRef<FLive
 				return false;
 			}));
 		})
+		.OnAddNewTag(this, &SLiveConfigPropertyManager::OnAddNewTag)
 		.GetTagColor(TFunction<FSlateColor(FName)>([this](FName InTag) { return GetTagColor(InTag); }))
 		.KnownTags_Lambda([this]() { return KnownTags; });
 }
@@ -535,6 +538,24 @@ void SLiveConfigPropertyManager::OnAddNewTag()
 			[
 				SAssignNew(TagNameTextBox, SEditableTextBox)
 				.HintText(LOCTEXT("NewTagNameHint", "Enter tag name..."))
+				.OnTextCommitted_Lambda([this, TagNameTextBox](const FText& Text, ETextCommit::Type CommitType)
+				{
+					if (CommitType == ETextCommit::OnEnter)
+					{
+						FName NewTag = FName(*Text.ToString());
+						if (!NewTag.IsNone() && !KnownTags.Contains(NewTag))
+						{
+							KnownTags.Add(NewTag);
+							SaveKnownTags();
+							UpdateAllTags();
+						}
+						
+						if (NewTagWindow)
+						{
+							NewTagWindow->RequestDestroyWindow();
+						}
+					}
+				})
 			]
 			+ SVerticalBox::Slot()
 			.Padding(10, 0, 10, 10)
@@ -563,6 +584,7 @@ void SLiveConfigPropertyManager::OnAddNewTag()
 			]
 		];
 
+	NewTagWindow->SetWidgetToFocusOnActivate(TagNameTextBox);
 	FSlateApplication::Get().AddWindow(NewTagWindow.ToSharedRef());
 }
 
@@ -620,6 +642,132 @@ void SLiveConfigPropertyManager::NavigateToProperty(TSharedPtr<FLiveConfigProper
 				break;
 			}
 		}
+	}
+}
+
+TSharedPtr<SWidget> SLiveConfigPropertyManager::OnGetContextMenuContent()
+{
+	FMenuBuilder MenuBuilder(true, nullptr);
+
+	TArray<TSharedRef<FLiveConfigPropertyTreeNode>> SelectedItems = PropertyTreeView->GetSelectedItems();
+	TArray<TSharedRef<FLiveConfigPropertyTreeNode>> FlatVisibleItems;
+	GetFlatVisibleProperties(FlatVisibleItems);
+
+	auto BuildTagSubMenu = [this](FMenuBuilder& SubMenuBuilder, TArray<TSharedRef<FLiveConfigPropertyTreeNode>> TargetNodes)
+	{
+		// Filter out non-property nodes from target
+		TArray<TSharedRef<FLiveConfigPropertyTreeNode>> PropertyNodes;
+		for (auto& Node : TargetNodes)
+		{
+			if (Node->IsProperty())
+			{
+				PropertyNodes.Add(Node);
+			}
+		}
+
+		if (PropertyNodes.Num() == 0)
+		{
+			SubMenuBuilder.AddMenuEntry(
+				LOCTEXT("NoPropertiesSelected", "No properties in selection."),
+				FText::GetEmpty(),
+				FSlateIcon(),
+				FUIAction(FExecuteAction(), FCanExecuteAction::CreateLambda([](){ return false; }))
+			);
+			return;
+		}
+
+		for (const FName& Tag : KnownTags)
+		{
+			SubMenuBuilder.AddMenuEntry(
+				FText::FromName(Tag),
+				FText::Format(LOCTEXT("AddTagToPropertiesTooltip", "Add tag '{0}' to all target properties"), FText::FromName(Tag)),
+				FSlateIcon(),
+				FUIAction(FExecuteAction::CreateSP(this, &SLiveConfigPropertyManager::BulkAddTag, PropertyNodes, Tag))
+			);
+		}
+
+		if (KnownTags.Num() == 0)
+		{
+			SubMenuBuilder.AddMenuEntry(
+				LOCTEXT("NoTagsAvailable", "No tags available. Create tags in the Tag Manager first."),
+				FText::GetEmpty(),
+				FSlateIcon(),
+				FUIAction(FExecuteAction(), FCanExecuteAction::CreateLambda([](){ return false; }))
+			);
+		}
+	};
+
+	if (SelectedItems.Num() > 0)
+	{
+		TArray<TSharedRef<FLiveConfigPropertyTreeNode>> SelectedPropertyNodes;
+		for (auto& Node : SelectedItems)
+		{
+			if (Node->IsProperty())
+			{
+				SelectedPropertyNodes.Add(Node);
+			}
+		}
+
+		if (SelectedPropertyNodes.Num() > 0)
+		{
+			MenuBuilder.AddSubMenu(
+				FText::Format(LOCTEXT("TagSelectedProperties", "Tag Selected ({0})"), FText::AsNumber(SelectedPropertyNodes.Num())),
+				LOCTEXT("TagSelectedPropertiesTooltip", "Add a tag to all currently selected properties"),
+				FNewMenuDelegate::CreateLambda([BuildTagSubMenu, SelectedPropertyNodes](FMenuBuilder& SubMenuBuilder)
+				{
+					BuildTagSubMenu(SubMenuBuilder, SelectedPropertyNodes);
+				})
+			);
+		}
+	}
+
+	if (FlatVisibleItems.Num() > 0)
+	{
+		TArray<TSharedRef<FLiveConfigPropertyTreeNode>> VisiblePropertyNodes;
+		for (auto& Node : FlatVisibleItems)
+		{
+			if (Node->IsProperty())
+			{
+				VisiblePropertyNodes.Add(Node);
+			}
+		}
+
+		if (VisiblePropertyNodes.Num() > 0)
+		{
+			MenuBuilder.AddSubMenu(
+				FText::Format(LOCTEXT("TagAllVisibleProperties", "Tag All Visible ({0})"), FText::AsNumber(VisiblePropertyNodes.Num())),
+				LOCTEXT("TagAllVisiblePropertiesTooltip", "Add a tag to all properties in the current filtered list"),
+				FNewMenuDelegate::CreateLambda([BuildTagSubMenu, VisiblePropertyNodes](FMenuBuilder& SubMenuBuilder)
+				{
+					BuildTagSubMenu(SubMenuBuilder, VisiblePropertyNodes);
+				})
+			);
+		}
+	}
+
+	return MenuBuilder.MakeWidget();
+}
+
+void SLiveConfigPropertyManager::BulkAddTag(TArray<TSharedRef<FLiveConfigPropertyTreeNode>> Nodes, FName TagName)
+{
+	bool bChanged = false;
+	for (auto& Node : Nodes)
+	{
+		if (Node->IsProperty())
+		{
+			if (!Node->PropertyDefinition->Tags.Contains(TagName))
+			{
+				TSharedPtr<FLiveConfigPropertyDefinition> OldDef = MakeShared<FLiveConfigPropertyDefinition>(*Node->PropertyDefinition);
+				Node->PropertyDefinition->Tags.Add(TagName);
+				OnPropertyRowChanged(OldDef, Node->PropertyDefinition, ELiveConfigPropertyChangeType::Tags);
+				bChanged = true;
+			}
+		}
+	}
+
+	if (bChanged)
+	{
+		PropertyTreeView->RequestTreeRefresh();
 	}
 }
 
@@ -780,31 +928,6 @@ void SLiveConfigPropertyManager::OnAddPropertyAtFolder(FString FolderPath)
 	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
 
 	ScrollToProperty(NewProp->PropertyName);
-	UpdateAllTags();
-}
-
-void SLiveConfigPropertyManager::Save()
-{
-	ULiveConfigSystem* System = ULiveConfigSystem::Get();
-	System->PropertyDefinitions.Empty();
-	for (const auto& PropDef : RawPropertyList)
-	{
-		System->PropertyDefinitions.Add(PropDef->PropertyName, *PropDef);
-	}
-	System->SaveConfig();
-	System->TryUpdateDefaultConfigFile();
-
-	if (ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get())
-	{
-		JsonSystem->SaveJsonToFiles();
-	}
-
-	// Notify system to refresh its base values
-	if (ULiveConfigSystem* LiveConfigSystem = ULiveConfigSystem::Get())
-	{
-		LiveConfigSystem->RefreshFromSettings();
-	}
-
 	UpdateAllTags();
 }
 

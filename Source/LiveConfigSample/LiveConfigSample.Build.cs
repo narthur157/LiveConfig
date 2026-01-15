@@ -12,9 +12,11 @@ public class LiveConfigSample : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
+		IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
+
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
-		
+
 		// Uncomment if you are using online features
 		// PrivateDependencyModuleNames.Add("OnlineSubsystem");
 

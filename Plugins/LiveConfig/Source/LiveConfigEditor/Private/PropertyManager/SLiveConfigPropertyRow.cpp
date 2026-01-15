@@ -16,6 +16,7 @@
 #include "Widgets/SWindow.h"
 #include "Framework/Application/SlateApplication.h"
 #include "Widgets/Text/SMultiLineEditableText.h"
+#include "Misc/ComparisonUtility.h"
 
 #define LOCTEXT_NAMESPACE "SLiveConfigPropertyManager"
 
@@ -44,6 +45,7 @@ void SLiveConfigPropertyRow::Construct(const FArguments& InArgs, const TSharedRe
 	OnNavigateDown = InArgs._OnNavigateDown;
 	OnNavigateUp = InArgs._OnNavigateUp;
 	OnNavigateValue = InArgs._OnNavigateValue;
+	OnAddNewTag = InArgs._OnAddNewTag;
 	GetTagColor = InArgs._GetTagColor;
 	KnownTagsAttribute.Assign(*this, InArgs._KnownTags);
 	
@@ -575,15 +577,72 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateTagsColumnWidget()
 		[
 			SNew(SScrollBox)
 			.ScrollBarVisibility(EVisibility::Collapsed)
+			.Orientation(Orient_Horizontal)
 			+ SScrollBox::Slot()
 			[
 				SAssignNew(TagWrapBox, SWrapBox)
 				.UseAllottedSize(true)
 			]
+			+ SScrollBox::Slot()
+			.Padding(4.0f, 0.0f)
+			[
+				SNew(SComboButton)
+				.ButtonStyle(FAppStyle::Get(), "SimpleButton")
+				.HasDownArrow(false)
+				.ContentPadding(FMargin(4.0f, 2.0f))
+				.ButtonContent()
+				[
+					SNew(SImage)
+					.Image(FAppStyle::GetBrush("Icons.Plus"))
+					.DesiredSizeOverride(FVector2D(12.0f, 12.0f))
+				]
+				.OnGetMenuContent_Lambda([this]()
+				{
+					FMenuBuilder MenuBuilder(true, nullptr);
+					
+					TArray<FName> Tags = KnownTagsAttribute.Get();
+					Tags.Sort([](const FName& A, const FName& B) { return A.Compare(B) < 0; });
+
+					for (const FName& Tag : Tags)
+					{
+						if (!Item->PropertyDefinition->Tags.Contains(Tag))
+						{
+							MenuBuilder.AddMenuEntry(
+								FText::FromName(Tag),
+								FText::GetEmpty(),
+								FSlateIcon(),
+								FUIAction(FExecuteAction::CreateLambda([this, Tag]()
+								{
+									Item->PropertyDefinition->Tags.Add(Tag);
+									OnTagChanged();
+								}))
+							);
+						}
+					}
+
+					if (OnAddNewTag.IsBound())
+					{
+						MenuBuilder.AddMenuSeparator();
+						MenuBuilder.AddMenuEntry(
+							LOCTEXT("AddNewTagMenu", "Add New Tag..."),
+							FText::GetEmpty(),
+							FSlateIcon(FAppStyle::GetAppStyleSetName(), "Icons.Plus"),
+							FUIAction(FExecuteAction::CreateSP(this, &SLiveConfigPropertyRow::OnAddNewTagClicked))
+						);
+					}
+
+					return MenuBuilder.MakeWidget();
+				})
+			]
 		];
 	
 	RefreshTags();
 	return TagsWidget;
+}
+
+void SLiveConfigPropertyRow::OnAddNewTagClicked()
+{
+	OnAddNewTag.ExecuteIfBound();
 }
 
 void SLiveConfigPropertyRow::RefreshTags()

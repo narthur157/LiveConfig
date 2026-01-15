@@ -3,11 +3,11 @@
 using UnrealBuildTool;
 using System.Collections.Generic;
 
-public class LiveConfigSampleEditorTarget : TargetRules
+public class LiveConfigSampleServerTarget : TargetRules
 {
-	public LiveConfigSampleEditorTarget( TargetInfo Target) : base(Target)
+	public LiveConfigSampleServerTarget(TargetInfo Target) : base(Target)
 	{
-		Type = TargetType.Editor;
+		Type = TargetType.Server;
 		DefaultBuildSettings = BuildSettingsVersion.V6;
 		IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
 		CppCompileWarningSettings.UndefinedIdentifierWarningLevel = WarningLevel.Error;

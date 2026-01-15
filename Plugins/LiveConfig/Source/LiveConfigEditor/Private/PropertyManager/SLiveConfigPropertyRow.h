@@ -40,6 +40,7 @@ public:
 		SLATE_EVENT(FOnNavigatePropertyName, OnNavigateDown);
 		SLATE_EVENT(FOnNavigatePropertyName, OnNavigateUp);
 		SLATE_EVENT(FOnNavigateValue, OnNavigateValue);
+		SLATE_EVENT(FSimpleDelegate, OnAddNewTag);
 		SLATE_ARGUMENT(TFunction<FSlateColor(FName)>, GetTagColor);
 		SLATE_ATTRIBUTE(TArray<FName>, KnownTags);
 	SLATE_END_ARGS();
@@ -65,6 +66,7 @@ private:
 
 	void RefreshTags();
 	void OnTagChanged();
+	void OnAddNewTagClicked();
 	bool VerifyValueText(const FText& NewText, FText& OutError);
 	void ValueTextCommitted(const FText& NewText, ETextCommit::Type CommitType);
 
@@ -87,4 +89,5 @@ private:
 	bool bNeedsValueFocus = false;
 	bool bIsCommitting = false;
 	bool bJustFinishedEnterCommit = false;
+	FSimpleDelegate OnAddNewTag;
 };

@@ -21,16 +21,11 @@ public:
 	
 	void LoadJsonFromFiles();
 
-	UFUNCTION(BlueprintCallable)
-	void SaveJsonToFiles();
-
 	UFUNCTION(Exec)
 	void VerifyJsonIntegrity();
 
 	void SavePropertyToFile(const FLiveConfigPropertyDefinition& PropertyDefinition);
 	void DeletePropertyFile(FName PropertyName);
-
-	void CheckoutProperties(const TArray<FName>& PropertyNames);
 
 	static FString GetPropertyPath(FName PropertyName);
 	static FString GetLiveConfigDirectory();
@@ -38,5 +33,10 @@ private:
 	void LoadJsonFromDirectory(const FString& Dir);
 	void LoadJsonFromFile(const FString& Path, const FString& FileName);
 	
-	TArray<FString> PendingCheckoutFiles;
+	void QueueSave();
+	bool OnTick(float DeltaTime);
+
+	TMap<FName, FLiveConfigPropertyDefinition> QueuedSaves;
+	TSet<FName> QueuedDeletions;
+	FTSTicker::FDelegateHandle TickHandle;
 };
