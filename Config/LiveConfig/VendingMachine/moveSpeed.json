@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "VendingMachine.moveSpeed"
-	},
+	"propertyName": "VendingMachine.moveSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"VendingMachine"
 	],
 	"value": "0"
 }

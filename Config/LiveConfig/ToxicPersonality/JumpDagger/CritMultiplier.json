@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.JumpDagger.CritMultiplier"
-	},
+	"propertyName": "ToxicPersonality.JumpDagger.CritMultiplier",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
 	"value": "1.5"
 }

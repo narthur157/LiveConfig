@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.clipSize"
-	},
+	"propertyName": "Scanner.clipSize",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Scanner"
 	],
 	"value": "28"
 }

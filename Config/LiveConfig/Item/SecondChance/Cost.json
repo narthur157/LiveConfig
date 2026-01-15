@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.SecondChance.Cost"
-	},
+	"propertyName": "Item.SecondChance.Cost",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "3"
 }

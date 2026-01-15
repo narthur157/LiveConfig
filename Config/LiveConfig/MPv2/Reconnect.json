@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MPv2.Reconnect"
-	},
+	"propertyName": "MPv2.Reconnect",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

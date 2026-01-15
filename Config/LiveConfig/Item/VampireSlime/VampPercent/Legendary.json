@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.VampireSlime.VampPercent.Legendary"
-	},
+	"propertyName": "Item.VampireSlime.VampPercent.Legendary",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1.5"
 }

@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "VendingMachine.healthRegenRate"
-	},
+	"propertyName": "VendingMachine.healthRegenRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"VendingMachine"
 	],
 	"value": "0"
 }

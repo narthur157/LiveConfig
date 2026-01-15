@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.Propulsion.PowerUp.MinimumPercentage"
-	},
+	"propertyName": "SlimeForm.Propulsion.PowerUp.MinimumPercentage",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.10000000149011612"
+	"tags": [],
+	"value": "0.1"
 }

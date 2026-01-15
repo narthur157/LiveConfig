@@ -3,7 +3,8 @@
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Calico"
 	],
 	"value": "1150"
 }

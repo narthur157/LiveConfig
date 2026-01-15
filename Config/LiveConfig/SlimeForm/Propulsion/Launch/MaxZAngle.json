@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.Propulsion.Launch.MaxZAngle"
-	},
+	"propertyName": "SlimeForm.Propulsion.Launch.MaxZAngle",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.44999998807907104"
+	"tags": [],
+	"value": "0.45"
 }

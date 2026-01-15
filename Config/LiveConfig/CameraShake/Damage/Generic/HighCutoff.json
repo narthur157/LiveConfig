@@ -2,9 +2,6 @@
 	"propertyName": "CameraShake.Damage.Generic.HighCutoff",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "100"
 }

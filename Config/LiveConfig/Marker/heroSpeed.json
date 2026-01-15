@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.heroSpeed"
-	},
+	"propertyName": "Marker.heroSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Marker"
 	],
 	"value": "600"
 }

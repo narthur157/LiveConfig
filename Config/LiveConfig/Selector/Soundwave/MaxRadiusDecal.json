@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.Soundwave.MaxRadiusDecal"
-	},
+	"propertyName": "Selector.Soundwave.MaxRadiusDecal",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Thornmail.Armor"
-	},
+	"propertyName": "Item.Thornmail.Armor",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "4"
 }

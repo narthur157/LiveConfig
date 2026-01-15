@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeDestruction.RoyalSlime.ProtectionVariant.ArmorPlates"
-	},
+	"propertyName": "SlimeDestruction.RoyalSlime.ProtectionVariant.ArmorPlates",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

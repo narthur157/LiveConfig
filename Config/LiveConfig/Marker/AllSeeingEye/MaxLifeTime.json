@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.AllSeeingEye.MaxLifeTime"
-	},
+	"propertyName": "Marker.AllSeeingEye.MaxLifeTime",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"Marker"
 	],
 	"value": "10"
 }

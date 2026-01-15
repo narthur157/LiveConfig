@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.ToxicAura.BaseDamage"
-	},
+	"propertyName": "ToxicPersonality.ToxicAura.BaseDamage",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
 	"value": "17.5"
 }

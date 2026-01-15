@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.Level.Armor.Value.p7"
-	},
+	"propertyName": "Marker.Level.Armor.Value.p7",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Tiers"
+		"Tiers",
+		"Marker"
 	],
 	"value": "7"
 }

@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.MidasTouch.Power"
-	},
+	"propertyName": "Item.MidasTouch.Power",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1"
 }

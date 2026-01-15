@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.RejuvenatingSpells.BaseHeal.Rare"
-	},
+	"propertyName": "Item.RejuvenatingSpells.BaseHeal.Rare",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "20"
 }

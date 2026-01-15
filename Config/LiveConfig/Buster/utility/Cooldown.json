@@ -2,9 +2,6 @@
 	"propertyName": "Buster.Utility.Cooldown",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "14"
 }

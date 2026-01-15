@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "KnightWeapon_IsolationRework.defenceMultiplier"
-	},
+	"propertyName": "KnightWeapon_IsolationRework.defenceMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"Claypool"
 	],
 	"value": "1"
 }

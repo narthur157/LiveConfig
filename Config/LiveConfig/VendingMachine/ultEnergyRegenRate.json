@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "VendingMachine.ultEnergyRegenRate"
-	},
+	"propertyName": "VendingMachine.ultEnergyRegenRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"VendingMachine"
 	],
 	"value": "0"
 }

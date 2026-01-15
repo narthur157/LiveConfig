@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MTRB.UI.Use3DIntroLineUp"
-	},
+	"propertyName": "MTRB.UI.Use3DIntroLineUp",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

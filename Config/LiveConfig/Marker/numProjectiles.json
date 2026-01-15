@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.numProjectiles"
-	},
+	"propertyName": "Marker.numProjectiles",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Marker"
 	],
 	"value": "1"
 }

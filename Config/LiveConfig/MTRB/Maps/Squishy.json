@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MTRB.Maps.Squishy"
-	},
+	"propertyName": "MTRB.Maps.Squishy",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

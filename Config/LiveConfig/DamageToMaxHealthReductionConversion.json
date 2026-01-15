@@ -2,9 +2,6 @@
 	"propertyName": "DamageToMaxHealthReductionConversion",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "0.2"
 }

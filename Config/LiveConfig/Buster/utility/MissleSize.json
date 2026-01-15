@@ -2,9 +2,6 @@
 	"propertyName": "Buster.Utility.MissleSize",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "10"
 }

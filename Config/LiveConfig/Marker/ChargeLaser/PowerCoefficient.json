@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.ChargeLaser.PowerCoefficient"
-	},
+	"propertyName": "Marker.ChargeLaser.PowerCoefficient",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Marker"
 	],
 	"value": "0.625"
 }

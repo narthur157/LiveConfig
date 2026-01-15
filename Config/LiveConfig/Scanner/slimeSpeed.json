@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.slimeSpeed"
-	},
+	"propertyName": "Scanner.slimeSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Scanner"
 	],
 	"value": "990"
 }

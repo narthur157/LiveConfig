@@ -2,9 +2,6 @@
 	"propertyName": "Item.Immolation.BaseDamage",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "4"
 }

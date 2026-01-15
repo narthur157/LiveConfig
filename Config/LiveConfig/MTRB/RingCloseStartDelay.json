@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MTRB.RingCloseStartDelay"
-	},
+	"propertyName": "MTRB.RingCloseStartDelay",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "45"
 }

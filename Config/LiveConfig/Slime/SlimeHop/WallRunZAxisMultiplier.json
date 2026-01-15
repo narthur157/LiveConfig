@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Slime.SlimeHop.WallRunZAxisMultiplier"
-	},
+	"propertyName": "Slime.SlimeHop.WallRunZAxisMultiplier",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1"
 }

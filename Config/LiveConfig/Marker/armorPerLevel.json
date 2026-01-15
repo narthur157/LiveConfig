@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.armorPerLevel"
-	},
+	"propertyName": "Marker.armorPerLevel",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"Marker"
 	],
 	"value": "21"
 }

@@ -2,9 +2,6 @@
 	"propertyName": "Camp.T1.RangeCluster.ExperienceReward",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "30"
 }

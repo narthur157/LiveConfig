@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.ComboMeter.IsActive"
-	},
+	"propertyName": "Selector.ComboMeter.IsActive",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

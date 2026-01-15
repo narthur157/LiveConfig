@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.RejuvenatingSpells.Power"
-	},
+	"propertyName": "Item.RejuvenatingSpells.Power",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "5"
 }

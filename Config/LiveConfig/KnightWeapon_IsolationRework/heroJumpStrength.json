@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "KnightWeapon_IsolationRework.heroJumpStrength"
-	},
+	"propertyName": "KnightWeapon_IsolationRework.heroJumpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Claypool"
 	],
 	"value": "1150"
 }

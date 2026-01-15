@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.recoil"
-	},
+	"propertyName": "ToxicPersonality.recoil",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Fugu"
 	],
 	"value": "0"
 }

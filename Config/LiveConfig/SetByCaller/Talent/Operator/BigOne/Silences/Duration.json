@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SetByCaller.Talent.Operator.BigOne.Silences.Duration"
-	},
+	"propertyName": "SetByCaller.Talent.Operator.BigOne.Silences.Duration",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1.5"
 }

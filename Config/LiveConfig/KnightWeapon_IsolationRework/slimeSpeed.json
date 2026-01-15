@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "KnightWeapon_IsolationRework.slimeSpeed"
-	},
+	"propertyName": "KnightWeapon_IsolationRework.slimeSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Claypool"
 	],
 	"value": "1040"
 }

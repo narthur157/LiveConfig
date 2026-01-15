@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.Primary.UseWeaponConfigForFalloff"
-	},
+	"propertyName": "Marker.Primary.UseWeaponConfigForFalloff",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [
-		"Feature",
-		"bool"
+		"Marker"
 	],
 	"value": "false"
 }

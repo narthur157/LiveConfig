@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Thornmail.ArmorCof"
-	},
+	"propertyName": "Item.Thornmail.ArmorCof",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.000750000006519258"
+	"tags": [],
+	"value": "0.00075"
 }

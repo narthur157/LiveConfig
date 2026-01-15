@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Toxic.Level.Power.Value.p4"
-	},
+	"propertyName": "Toxic.Level.Power.Value.p4",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Tiers"
+		"Tiers",
+		"Fugu"
 	],
 	"value": "10"
 }

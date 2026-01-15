@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.Propulsion.StaminaRegenPauseDuration"
-	},
+	"propertyName": "SlimeForm.Propulsion.StaminaRegenPauseDuration",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1.75"
 }

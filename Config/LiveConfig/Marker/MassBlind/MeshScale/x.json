@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.MassBlind.MeshScale.x"
-	},
+	"propertyName": "Marker.MassBlind.MeshScale.x",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Vector"
+		"Vector",
+		"Marker"
 	],
 	"value": "1"
 }

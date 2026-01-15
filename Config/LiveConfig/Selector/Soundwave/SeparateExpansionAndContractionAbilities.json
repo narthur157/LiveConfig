@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.Soundwave.SeparateExpansionAndContractionAbilities"
-	},
+	"propertyName": "Selector.Soundwave.SeparateExpansionAndContractionAbilities",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

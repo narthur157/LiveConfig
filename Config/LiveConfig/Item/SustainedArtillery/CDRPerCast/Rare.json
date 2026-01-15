@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.SustainedArtillery.CDRPerCast.Rare"
-	},
+	"propertyName": "Item.SustainedArtillery.CDRPerCast.Rare",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.012500000186264515"
+	"tags": [],
+	"value": "0.0125"
 }

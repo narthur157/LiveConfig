@@ -2,9 +2,6 @@
 	"propertyName": "Item.Eventuality.PowerCapPerStack.Legendary",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "125"
 }

@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Store.ItemUpgradeAppearanceMultiplier"
-	},
+	"propertyName": "Store.ItemUpgradeAppearanceMultiplier",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "3"
 }

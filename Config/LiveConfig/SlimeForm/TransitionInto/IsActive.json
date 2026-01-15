@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.TransitionInto.IsActive"
-	},
+	"propertyName": "SlimeForm.TransitionInto.IsActive",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "false"
 }

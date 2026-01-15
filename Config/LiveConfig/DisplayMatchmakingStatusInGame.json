@@ -3,8 +3,6 @@
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [
-		"Feature",
-		"bool",
 		"Matchmaking"
 	],
 	"value": "true"

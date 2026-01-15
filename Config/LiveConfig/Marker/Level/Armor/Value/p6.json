@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.Level.Armor.Value.p6"
-	},
+	"propertyName": "Marker.Level.Armor.Value.p6",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Tiers"
+		"Tiers",
+		"Marker"
 	],
 	"value": "6.5"
 }

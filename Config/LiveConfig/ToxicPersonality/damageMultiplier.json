@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.damageMultiplier"
-	},
+	"propertyName": "ToxicPersonality.damageMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"Fugu"
 	],
 	"value": "1"
 }

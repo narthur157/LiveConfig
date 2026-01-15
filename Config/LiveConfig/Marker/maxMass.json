@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.maxMass"
-	},
+	"propertyName": "Marker.maxMass",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"Marker"
 	],
 	"value": "99999"
 }

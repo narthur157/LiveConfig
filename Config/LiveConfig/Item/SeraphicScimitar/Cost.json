@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.SeraphicScimitar.Cost"
-	},
+	"propertyName": "Item.SeraphicScimitar.Cost",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "3"
 }

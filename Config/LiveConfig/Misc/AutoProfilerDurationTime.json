@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Misc.AutoProfilerDurationTime"
-	},
+	"propertyName": "Misc.AutoProfilerDurationTime",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "5"
 }

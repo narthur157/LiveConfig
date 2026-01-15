@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "VendingMachine.Mass.maxHealthPerLevel"
-	},
+	"propertyName": "VendingMachine.Mass.maxHealthPerLevel",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"VendingMachine"
 	],
 	"value": "0"
 }

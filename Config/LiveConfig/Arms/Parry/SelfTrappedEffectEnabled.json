@@ -3,8 +3,7 @@
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [
-		"Feature",
-		"bool"
+		"Arms"
 	],
 	"value": "true"
 }

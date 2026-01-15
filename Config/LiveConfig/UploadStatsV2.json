@@ -2,9 +2,6 @@
 	"propertyName": "UploadStatsV2",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

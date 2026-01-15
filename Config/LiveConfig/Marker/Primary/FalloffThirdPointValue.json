@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.Primary.FalloffThirdPointValue"
-	},
+	"propertyName": "Marker.Primary.FalloffThirdPointValue",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Marker"
 	],
 	"value": "0.5"
 }

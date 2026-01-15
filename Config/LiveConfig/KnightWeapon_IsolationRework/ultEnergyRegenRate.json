@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "KnightWeapon_IsolationRework.ultEnergyRegenRate"
-	},
+	"propertyName": "KnightWeapon_IsolationRework.ultEnergyRegenRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"Claypool"
 	],
 	"value": "3"
 }

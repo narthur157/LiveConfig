@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.SlimeSacrifice.RadiusInMeters"
-	},
+	"propertyName": "Item.SlimeSacrifice.RadiusInMeters",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "7.5"
 }

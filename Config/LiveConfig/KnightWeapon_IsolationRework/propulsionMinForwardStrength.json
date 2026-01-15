@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "KnightWeapon_IsolationRework.propulsionMinForwardStrength"
-	},
+	"propertyName": "KnightWeapon_IsolationRework.propulsionMinForwardStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Claypool"
 	],
 	"value": "2500"
 }

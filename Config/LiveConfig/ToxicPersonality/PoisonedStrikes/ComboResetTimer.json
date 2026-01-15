@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.PoisonedStrikes.ComboResetTimer"
-	},
+	"propertyName": "ToxicPersonality.PoisonedStrikes.ComboResetTimer",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
 	"value": "1"
 }

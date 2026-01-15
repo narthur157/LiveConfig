@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.WallRun.MinJumpAngle"
-	},
+	"propertyName": "SlimeForm.WallRun.MinJumpAngle",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "30"
 }

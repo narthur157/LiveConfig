@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Toxic.SeaUrchinShell.Duration"
-	},
+	"propertyName": "Toxic.SeaUrchinShell.Duration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
 	"value": "4"
 }

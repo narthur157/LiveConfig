@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.Sprint.StaminaCostPeriod"
-	},
+	"propertyName": "SlimeForm.Sprint.StaminaCostPeriod",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.10000000149011612"
+	"tags": [],
+	"value": "0.1"
 }

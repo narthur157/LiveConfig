@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MeleeCamp.AttackRange"
-	},
+	"propertyName": "MeleeCamp.AttackRange",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "100"
 }

@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.ChargeLaser.MaxCharge"
-	},
+	"propertyName": "Marker.ChargeLaser.MaxCharge",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Marker"
 	],
 	"value": "0.75"
 }

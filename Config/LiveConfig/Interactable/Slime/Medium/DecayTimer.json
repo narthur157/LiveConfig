@@ -2,9 +2,6 @@
 	"propertyName": "Interactable.Slime.Medium.DecayTimer",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "8"
 }

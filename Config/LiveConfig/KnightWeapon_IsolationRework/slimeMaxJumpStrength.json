@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "KnightWeapon_IsolationRework.slimeMaxJumpStrength"
-	},
+	"propertyName": "KnightWeapon_IsolationRework.slimeMaxJumpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Claypool"
 	],
 	"value": "1450"
 }

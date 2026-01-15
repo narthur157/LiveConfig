@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.Level.Health.Value.p9"
-	},
+	"propertyName": "Scanner.Level.Health.Value.p9",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Tiers"
+		"Tiers",
+		"Scanner"
 	],
 	"value": "44"
 }

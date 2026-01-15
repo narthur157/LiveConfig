@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.Propulsion.MinimumStaminaCost"
-	},
+	"propertyName": "SlimeForm.Propulsion.MinimumStaminaCost",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "30"
 }

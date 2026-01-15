@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "VendingMachine.Mass.mass"
-	},
+	"propertyName": "VendingMachine.Mass.mass",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"VendingMachine"
 	],
 	"value": "0"
 }

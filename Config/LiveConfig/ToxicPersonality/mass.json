@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.mass"
-	},
+	"propertyName": "ToxicPersonality.mass",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"Fugu"
 	],
 	"value": "0"
 }

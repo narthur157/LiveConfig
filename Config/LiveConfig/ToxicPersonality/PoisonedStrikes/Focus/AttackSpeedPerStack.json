@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.PoisonedStrikes.Focus.AttackSpeedPerStack"
-	},
+	"propertyName": "ToxicPersonality.PoisonedStrikes.Focus.AttackSpeedPerStack",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
 	"value": "0.125"
 }

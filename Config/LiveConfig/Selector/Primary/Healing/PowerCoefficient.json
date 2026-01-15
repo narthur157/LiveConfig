@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.Primary.Healing.PowerCoefficient"
-	},
+	"propertyName": "Selector.Primary.Healing.PowerCoefficient",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "0"
 }

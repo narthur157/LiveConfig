@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Stuns.DisableCamera"
-	},
+	"propertyName": "Stuns.DisableCamera",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "false"
 }

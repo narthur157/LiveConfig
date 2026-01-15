@@ -2,9 +2,6 @@
 	"propertyName": "Item.LastStand.ArmorPenPct.Legendary",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "0.75"
 }

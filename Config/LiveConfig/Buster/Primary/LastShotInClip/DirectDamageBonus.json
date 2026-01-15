@@ -2,9 +2,6 @@
 	"propertyName": "Buster.Primary.LastShotInClip.DirectDamageBonus",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "10"
 }

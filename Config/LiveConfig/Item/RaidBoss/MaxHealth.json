@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.RaidBoss.MaxHealth"
-	},
+	"propertyName": "Item.RaidBoss.MaxHealth",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "75"
 }

@@ -2,9 +2,6 @@
 	"propertyName": "Interactable.ExplosiveBarrel.Radius",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "750"
 }

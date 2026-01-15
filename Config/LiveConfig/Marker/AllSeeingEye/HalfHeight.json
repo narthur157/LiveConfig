@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.AllSeeingEye.HalfHeight"
-	},
+	"propertyName": "Marker.AllSeeingEye.HalfHeight",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"Marker"
 	],
 	"value": "1000"
 }

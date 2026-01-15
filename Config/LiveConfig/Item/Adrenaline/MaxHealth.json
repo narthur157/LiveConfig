@@ -2,9 +2,6 @@
 	"propertyName": "Item.Adrenaline.MaxHealth",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "25"
 }

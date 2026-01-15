@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.defenceMultiplier"
-	},
+	"propertyName": "Marker.defenceMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"Marker"
 	],
 	"value": "1333"
 }

@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Monster.Archer.ProjectileFireDelay"
-	},
+	"propertyName": "Monster.Archer.ProjectileFireDelay",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.4000000059604645"
+	"tags": [],
+	"value": "0.4"
 }

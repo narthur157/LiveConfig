@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.Level.Health.Value.p8"
-	},
+	"propertyName": "Marker.Level.Health.Value.p8",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Tiers"
+		"Tiers",
+		"Marker"
 	],
 	"value": "40"
 }

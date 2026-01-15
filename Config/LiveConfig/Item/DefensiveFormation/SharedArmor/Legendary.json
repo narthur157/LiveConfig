@@ -2,9 +2,6 @@
 	"propertyName": "Item.DefensiveFormation.SharedArmor.Legendary",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "60"
 }

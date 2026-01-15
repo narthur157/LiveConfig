@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.Expunge.AttackRadius"
-	},
+	"propertyName": "ToxicPersonality.Expunge.AttackRadius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
 	"value": "300"
 }

@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeDestruction.SlimeBank.SlimeGainedOnCompletion"
-	},
+	"propertyName": "SlimeDestruction.SlimeBank.SlimeGainedOnCompletion",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "250"
 }

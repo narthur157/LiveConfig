@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.SlowAndSteady.PowerPerKill"
-	},
+	"propertyName": "Item.SlowAndSteady.PowerPerKill",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "4"
 }

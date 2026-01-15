@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Toxic.Level.Armor.Value.p4"
-	},
+	"propertyName": "Toxic.Level.Armor.Value.p4",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Tiers"
+		"Tiers",
+		"Fugu"
 	],
 	"value": "5.75"
 }

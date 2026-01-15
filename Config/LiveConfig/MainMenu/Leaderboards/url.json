@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MainMenu.Leaderboards.url"
-	},
+	"propertyName": "MainMenu.Leaderboards.url",
 	"description": "",
 	"propertyType": "String",
-	"tags": [
-		"String",
-		"string"
-	],
+	"tags": [],
 	"value": "https://leaderboard.genpop.io/"
 }

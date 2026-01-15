@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Slime.WallRun.ContinueOnInputRelease"
-	},
+	"propertyName": "Slime.WallRun.ContinueOnInputRelease",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

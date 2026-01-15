@@ -3,7 +3,8 @@
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Tiers"
+		"Tiers",
+		"Arms"
 	],
-	"value": "0.4000000059604645"
+	"value": "0.4"
 }

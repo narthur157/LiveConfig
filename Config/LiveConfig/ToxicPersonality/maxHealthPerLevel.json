@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.maxHealthPerLevel"
-	},
+	"propertyName": "ToxicPersonality.maxHealthPerLevel",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"Fugu"
 	],
 	"value": "30"
 }

@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.Level.Power.Value.p4"
-	},
+	"propertyName": "Marker.Level.Power.Value.p4",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Tiers"
+		"Tiers",
+		"Marker"
 	],
 	"value": "13"
 }

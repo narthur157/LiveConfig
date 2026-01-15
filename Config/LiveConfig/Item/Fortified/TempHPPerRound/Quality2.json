@@ -2,9 +2,6 @@
 	"propertyName": "Item.Fortified.TempHPPerRound.Quality2",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "50"
 }

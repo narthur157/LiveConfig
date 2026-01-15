@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.Augment.SoundStorm.Radius"
-	},
+	"propertyName": "Selector.Augment.SoundStorm.Radius",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1200"
 }

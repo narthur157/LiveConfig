@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Toxic.VenomSplash.AttackOne.MontageLength"
-	},
+	"propertyName": "Toxic.VenomSplash.AttackOne.MontageLength",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
 	"value": "0.75"
 }

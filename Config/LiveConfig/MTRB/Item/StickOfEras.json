@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MTRB.Item.StickOfEras"
-	},
+	"propertyName": "MTRB.Item.StickOfEras",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

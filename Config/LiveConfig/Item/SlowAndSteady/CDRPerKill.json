@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.SlowAndSteady.CDRPerKill"
-	},
+	"propertyName": "Item.SlowAndSteady.CDRPerKill",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.029999999329447746"
+	"tags": [],
+	"value": "0.03"
 }

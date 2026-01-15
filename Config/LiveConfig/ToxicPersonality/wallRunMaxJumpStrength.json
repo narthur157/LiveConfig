@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.wallRunMaxJumpStrength"
-	},
+	"propertyName": "ToxicPersonality.wallRunMaxJumpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Fugu"
 	],
 	"value": "2000"
 }

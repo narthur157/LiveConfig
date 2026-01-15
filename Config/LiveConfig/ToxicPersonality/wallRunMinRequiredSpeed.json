@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.wallRunMinRequiredSpeed"
-	},
+	"propertyName": "ToxicPersonality.wallRunMinRequiredSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Fugu"
 	],
 	"value": "999999"
 }

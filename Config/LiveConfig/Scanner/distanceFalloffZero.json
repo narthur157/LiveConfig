@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.distanceFalloffZero"
-	},
+	"propertyName": "Scanner.distanceFalloffZero",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Scanner"
 	],
 	"value": "20000"
 }

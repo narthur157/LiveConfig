@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.Augment.Emergency.HealthThreshold"
-	},
+	"propertyName": "Scanner.Augment.Emergency.HealthThreshold",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Scanner"
 	],
-	"value": "0.30000001192092896"
+	"value": "0.3"
 }

@@ -2,9 +2,6 @@
 	"propertyName": "HMG.Primary.MaxFireRate",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "18"
 }

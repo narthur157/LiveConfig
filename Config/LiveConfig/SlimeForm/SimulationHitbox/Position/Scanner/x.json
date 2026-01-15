@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.SimulationHitbox.Position.Scanner.x"
-	},
+	"propertyName": "SlimeForm.SimulationHitbox.Position.Scanner.x",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Vector"
+		"Vector",
+		"Scanner"
 	],
 	"value": "0"
 }

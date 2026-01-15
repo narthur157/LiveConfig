@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "VendingMachine.TieredHealth.NumMassChunksPerStage"
-	},
+	"propertyName": "VendingMachine.TieredHealth.NumMassChunksPerStage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"VendingMachine"
 	],
 	"value": "7"
 }

@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.MedusasGaze.IslookingRadianAngle"
-	},
+	"propertyName": "ToxicPersonality.MedusasGaze.IslookingRadianAngle",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
 	"value": "-0.25"
 }

@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.Radio.ActivateSoundwaveOnPlayerInput"
-	},
+	"propertyName": "Selector.Radio.ActivateSoundwaveOnPlayerInput",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

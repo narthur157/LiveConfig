@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.TankBuster.MxHpReducionPct.Rare"
-	},
+	"propertyName": "Item.TankBuster.MxHpReducionPct.Rare",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "0.125"
 }

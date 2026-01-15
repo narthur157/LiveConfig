@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.maxHealth"
-	},
+	"propertyName": "Marker.maxHealth",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"Marker"
 	],
 	"value": "260"
 }

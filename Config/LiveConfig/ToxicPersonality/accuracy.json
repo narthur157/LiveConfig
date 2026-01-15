@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.accuracy"
-	},
+	"propertyName": "ToxicPersonality.accuracy",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Fugu"
 	],
 	"value": "1"
 }

@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.armorPerLevel"
-	},
+	"propertyName": "ToxicPersonality.armorPerLevel",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"Fugu"
 	],
-	"value": "2.200000047683716"
+	"value": "2.2"
 }

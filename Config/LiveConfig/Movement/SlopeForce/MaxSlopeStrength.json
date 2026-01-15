@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Movement.SlopeForce.MaxSlopeStrength"
-	},
+	"propertyName": "Movement.SlopeForce.MaxSlopeStrength",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "800"
 }

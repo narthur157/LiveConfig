@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Lobby.BulkDisplayNames"
-	},
+	"propertyName": "Lobby.BulkDisplayNames",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

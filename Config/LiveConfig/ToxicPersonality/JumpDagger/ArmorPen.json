@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.JumpDagger.ArmorPen"
-	},
+	"propertyName": "ToxicPersonality.JumpDagger.ArmorPen",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
 	"value": "0"
 }

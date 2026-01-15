@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MTRB.Maps.Chasm"
-	},
+	"propertyName": "MTRB.Maps.Chasm",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

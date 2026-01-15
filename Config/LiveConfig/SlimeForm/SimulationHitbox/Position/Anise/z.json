@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.SimulationHitbox.Position.Anise.z"
-	},
+	"propertyName": "SlimeForm.SimulationHitbox.Position.Anise.z",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Vector"
+		"Vector",
+		"Vandal"
 	],
 	"value": "-20"
 }

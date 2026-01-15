@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.numProjectiles"
-	},
+	"propertyName": "ToxicPersonality.numProjectiles",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Fugu"
 	],
 	"value": "0"
 }

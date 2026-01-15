@@ -2,9 +2,6 @@
 	"propertyName": "Item.Adrenaline.Cost",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "3"
 }

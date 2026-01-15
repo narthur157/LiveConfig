@@ -3,7 +3,8 @@
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Basil"
 	],
 	"value": "0"
 }

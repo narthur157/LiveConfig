@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Movement.Momentum.ForceBased.Duration"
-	},
+	"propertyName": "Movement.Momentum.ForceBased.Duration",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "4"
 }

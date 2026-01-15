@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.Augment.GoodVibrations.AutoAttackRadius"
-	},
+	"propertyName": "Selector.Augment.GoodVibrations.AutoAttackRadius",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1200"
 }

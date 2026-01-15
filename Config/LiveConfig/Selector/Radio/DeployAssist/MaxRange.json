@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.Radio.DeployAssist.MaxRange"
-	},
+	"propertyName": "Selector.Radio.DeployAssist.MaxRange",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1100"
 }

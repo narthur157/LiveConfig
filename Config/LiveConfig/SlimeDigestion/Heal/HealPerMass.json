@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeDigestion.Heal.HealPerMass"
-	},
+	"propertyName": "SlimeDigestion.Heal.HealPerMass",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "0"
 }

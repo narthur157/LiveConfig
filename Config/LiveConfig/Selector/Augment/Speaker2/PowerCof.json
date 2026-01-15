@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.Augment.Speaker2.PowerCof"
-	},
+	"propertyName": "Selector.Augment.Speaker2.PowerCof",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "0.25"
 }

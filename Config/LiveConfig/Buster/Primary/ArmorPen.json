@@ -2,9 +2,6 @@
 	"propertyName": "Buster.Primary.ArmorPen",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "0"
 }

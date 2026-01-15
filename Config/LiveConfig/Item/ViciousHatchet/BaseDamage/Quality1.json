@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.ViciousHatchet.BaseDamage.Quality1"
-	},
+	"propertyName": "Item.ViciousHatchet.BaseDamage.Quality1",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "25"
 }

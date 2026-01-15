@@ -2,9 +2,6 @@
 	"propertyName": "Camp.T1.MeleeCluster.Damage",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "2.5"
 }

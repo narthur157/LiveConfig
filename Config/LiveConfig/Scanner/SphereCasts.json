@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.SphereCasts"
-	},
+	"propertyName": "Scanner.SphereCasts",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [
-		"Feature",
-		"bool"
+		"Scanner"
 	],
 	"value": "true"
 }

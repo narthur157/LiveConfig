@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Lobby.GetPlayersMMRs"
-	},
+	"propertyName": "Lobby.GetPlayersMMRs",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

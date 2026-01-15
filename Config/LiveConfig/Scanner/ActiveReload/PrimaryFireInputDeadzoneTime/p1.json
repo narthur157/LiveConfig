@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.ActiveReload.PrimaryFireInputDeadzoneTime.p1"
-	},
+	"propertyName": "Scanner.ActiveReload.PrimaryFireInputDeadzoneTime.p1",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Tiers"
+		"Tiers",
+		"Scanner"
 	],
 	"value": "0.25"
 }

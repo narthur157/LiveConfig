@@ -3,7 +3,8 @@
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Vector"
+		"Vector",
+		"Basil"
 	],
 	"value": "0"
 }

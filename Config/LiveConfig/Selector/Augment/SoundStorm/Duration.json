@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.Augment.SoundStorm.Duration"
-	},
+	"propertyName": "Selector.Augment.SoundStorm.Duration",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1.5"
 }

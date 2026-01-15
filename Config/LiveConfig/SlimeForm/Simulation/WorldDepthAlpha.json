@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.Simulation.WorldDepthAlpha"
-	},
+	"propertyName": "SlimeForm.Simulation.WorldDepthAlpha",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "false"
 }

@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.Arcstar.DebuffDuration"
-	},
+	"propertyName": "Scanner.Arcstar.DebuffDuration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"Scanner"
 	],
 	"value": "3"
 }

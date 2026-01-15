@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "KnightWeapon_IsolationRework.maxMass"
-	},
+	"propertyName": "KnightWeapon_IsolationRework.maxMass",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"Claypool"
 	],
 	"value": "99999"
 }

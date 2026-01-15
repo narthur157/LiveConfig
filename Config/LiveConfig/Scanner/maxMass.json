@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.maxMass"
-	},
+	"propertyName": "Scanner.maxMass",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"Scanner"
 	],
 	"value": "99999"
 }

@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Toxic.VenomBlowfish.CooldownReductionPerVenomStack"
-	},
+	"propertyName": "Toxic.VenomBlowfish.CooldownReductionPerVenomStack",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
 	"value": "0.625"
 }

@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.SlimeJump.Height"
-	},
+	"propertyName": "Marker.SlimeJump.Height",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"Marker"
 	],
 	"value": "1200"
 }

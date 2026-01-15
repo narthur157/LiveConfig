@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.SpellBlade.BaseDamage.Legendary"
-	},
+	"propertyName": "Item.SpellBlade.BaseDamage.Legendary",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "25"
 }

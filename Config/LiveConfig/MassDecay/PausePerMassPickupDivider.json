@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MassDecay.PausePerMassPickupDivider"
-	},
+	"propertyName": "MassDecay.PausePerMassPickupDivider",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "20"
 }

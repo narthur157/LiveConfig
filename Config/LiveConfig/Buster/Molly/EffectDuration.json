@@ -2,9 +2,6 @@
 	"propertyName": "Buster.Molly.EffectDuration",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "3"
 }

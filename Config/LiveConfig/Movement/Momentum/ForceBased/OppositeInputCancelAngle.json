@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Movement.Momentum.ForceBased.OppositeInputCancelAngle"
-	},
+	"propertyName": "Movement.Momentum.ForceBased.OppositeInputCancelAngle",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "50"
 }

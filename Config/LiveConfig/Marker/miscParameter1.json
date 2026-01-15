@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.miscParameter1"
-	},
+	"propertyName": "Marker.miscParameter1",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Marker"
 	],
 	"value": "1"
 }

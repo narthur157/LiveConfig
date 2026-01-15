@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.numberOfUltimatePips"
-	},
+	"propertyName": "Marker.numberOfUltimatePips",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"Marker"
 	],
 	"value": "4"
 }

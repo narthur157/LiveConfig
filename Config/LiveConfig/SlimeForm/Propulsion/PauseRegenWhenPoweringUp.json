@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.Propulsion.PauseRegenWhenPoweringUp"
-	},
+	"propertyName": "SlimeForm.Propulsion.PauseRegenWhenPoweringUp",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

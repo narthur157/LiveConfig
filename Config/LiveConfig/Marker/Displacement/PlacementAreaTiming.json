@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.Displacement.PlacementAreaTiming"
-	},
+	"propertyName": "Marker.Displacement.PlacementAreaTiming",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Marker"
 	],
 	"value": "0.75"
 }

@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.SimulationHitbox.Scale.Marker.z"
-	},
+	"propertyName": "SlimeForm.SimulationHitbox.Scale.Marker.z",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Vector"
+		"Vector",
+		"Marker"
 	],
 	"value": "1"
 }

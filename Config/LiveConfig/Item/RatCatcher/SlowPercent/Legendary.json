@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.RatCatcher.SlowPercent.Legendary"
-	},
+	"propertyName": "Item.RatCatcher.SlowPercent.Legendary",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.4000000059604645"
+	"tags": [],
+	"value": "0.4"
 }

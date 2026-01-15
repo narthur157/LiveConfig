@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.SimulationHitbox.Position.KnightWeapon_IsolationRework.z"
-	},
+	"propertyName": "SlimeForm.SimulationHitbox.Position.KnightWeapon_IsolationRework.z",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Vector"
+		"Vector",
+		"Claypool"
 	],
 	"value": "-30"
 }

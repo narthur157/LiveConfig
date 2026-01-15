@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.defenceMultiplier"
-	},
+	"propertyName": "Scanner.defenceMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"Scanner"
 	],
 	"value": "1"
 }

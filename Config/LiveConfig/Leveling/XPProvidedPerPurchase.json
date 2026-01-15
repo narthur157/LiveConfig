@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Leveling.XPProvidedPerPurchase"
-	},
+	"propertyName": "Leveling.XPProvidedPerPurchase",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1"
 }

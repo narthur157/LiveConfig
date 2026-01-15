@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "KnightWeapon_IsolationRework.damage"
-	},
+	"propertyName": "KnightWeapon_IsolationRework.damage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Claypool"
 	],
 	"value": "0"
 }

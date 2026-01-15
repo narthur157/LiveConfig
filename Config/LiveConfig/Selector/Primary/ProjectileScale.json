@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.Primary.ProjectileScale"
-	},
+	"propertyName": "Selector.Primary.ProjectileScale",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "1.2000000476837158"
+	"tags": [],
+	"value": "1.2"
 }

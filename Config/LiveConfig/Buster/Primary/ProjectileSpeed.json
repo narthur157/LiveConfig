@@ -2,9 +2,6 @@
 	"propertyName": "Buster.Primary.ProjectileSpeed",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "10000"
 }

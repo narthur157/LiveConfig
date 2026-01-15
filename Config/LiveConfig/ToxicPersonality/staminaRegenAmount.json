@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.staminaRegenAmount"
-	},
+	"propertyName": "ToxicPersonality.staminaRegenAmount",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Fugu"
 	],
 	"value": "2"
 }

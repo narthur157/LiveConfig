@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.Reservoir.ReservoirIngestRate"
-	},
+	"propertyName": "Selector.Reservoir.ReservoirIngestRate",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1"
 }

@@ -2,9 +2,6 @@
 	"propertyName": "HitConfirm.HitSpike.MinLength",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "12"
 }

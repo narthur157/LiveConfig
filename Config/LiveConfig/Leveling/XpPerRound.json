@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Leveling.XpPerRound"
-	},
+	"propertyName": "Leveling.XpPerRound",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "3"
 }

@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeBankProtection.DamagePerTick"
-	},
+	"propertyName": "SlimeBankProtection.DamagePerTick",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "150"
 }

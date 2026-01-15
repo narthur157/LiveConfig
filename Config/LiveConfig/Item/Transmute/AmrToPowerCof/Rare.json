@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Transmute.AmrToPowerCof.Rare"
-	},
+	"propertyName": "Item.Transmute.AmrToPowerCof.Rare",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1.25"
 }

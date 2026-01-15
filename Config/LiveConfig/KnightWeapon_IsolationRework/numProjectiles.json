@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "KnightWeapon_IsolationRework.numProjectiles"
-	},
+	"propertyName": "KnightWeapon_IsolationRework.numProjectiles",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Claypool"
 	],
 	"value": "0"
 }

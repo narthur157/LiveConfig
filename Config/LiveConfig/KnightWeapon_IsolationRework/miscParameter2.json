@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "KnightWeapon_IsolationRework.miscParameter2"
-	},
+	"propertyName": "KnightWeapon_IsolationRework.miscParameter2",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Claypool"
 	],
 	"value": "1.25"
 }

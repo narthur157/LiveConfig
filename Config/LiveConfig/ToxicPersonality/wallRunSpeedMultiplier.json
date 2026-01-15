@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.wallRunSpeedMultiplier"
-	},
+	"propertyName": "ToxicPersonality.wallRunSpeedMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Fugu"
 	],
 	"value": "1"
 }

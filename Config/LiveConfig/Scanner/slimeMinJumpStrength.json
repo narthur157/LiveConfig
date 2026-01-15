@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.slimeMinJumpStrength"
-	},
+	"propertyName": "Scanner.slimeMinJumpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Scanner"
 	],
 	"value": "1450"
 }

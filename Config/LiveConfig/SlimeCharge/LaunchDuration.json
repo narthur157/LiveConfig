@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeCharge.LaunchDuration"
-	},
+	"propertyName": "SlimeCharge.LaunchDuration",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.15000000596046448"
+	"tags": [],
+	"value": "0.15"
 }

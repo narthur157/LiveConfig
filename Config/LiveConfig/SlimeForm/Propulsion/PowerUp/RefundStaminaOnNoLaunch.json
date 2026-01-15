@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.Propulsion.PowerUp.RefundStaminaOnNoLaunch"
-	},
+	"propertyName": "SlimeForm.Propulsion.PowerUp.RefundStaminaOnNoLaunch",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

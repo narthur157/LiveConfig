@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeCollection.UsePerPlayerSlimeQuotas"
-	},
+	"propertyName": "SlimeCollection.UsePerPlayerSlimeQuotas",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "false"
 }

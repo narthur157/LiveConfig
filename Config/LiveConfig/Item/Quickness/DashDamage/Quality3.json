@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Quickness.DashDamage.Quality3"
-	},
+	"propertyName": "Item.Quickness.DashDamage.Quality3",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "150"
 }

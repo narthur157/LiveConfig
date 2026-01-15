@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.RejuvenatingSpells.BaseHeal.Legendary"
-	},
+	"propertyName": "Item.RejuvenatingSpells.BaseHeal.Legendary",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "25"
 }

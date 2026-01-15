@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Operator.ReverseSpread"
-	},
+	"propertyName": "Operator.ReverseSpread",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

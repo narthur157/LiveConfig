@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.propulsionMinUpStrength"
-	},
+	"propertyName": "Scanner.propulsionMinUpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Scanner"
 	],
 	"value": "1500"
 }

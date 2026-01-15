@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.Camera.SocketOffsetZ.Base"
-	},
+	"propertyName": "SlimeForm.Camera.SocketOffsetZ.Base",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "100"
 }

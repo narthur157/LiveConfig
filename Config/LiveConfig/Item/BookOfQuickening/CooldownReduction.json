@@ -2,9 +2,6 @@
 	"propertyName": "Item.BookOfQuickening.CooldownReduction",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.03999999910593033"
+	"tags": [],
+	"value": "0.04"
 }

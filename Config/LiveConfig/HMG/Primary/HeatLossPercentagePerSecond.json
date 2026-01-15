@@ -2,9 +2,6 @@
 	"propertyName": "HMG.Primary.HeatLossPercentagePerSecond",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.07000000029802322"
+	"tags": [],
+	"value": "0.07"
 }

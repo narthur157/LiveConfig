@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.MedusasGaze.SleepLength"
-	},
+	"propertyName": "ToxicPersonality.MedusasGaze.SleepLength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
 	"value": "6"
 }

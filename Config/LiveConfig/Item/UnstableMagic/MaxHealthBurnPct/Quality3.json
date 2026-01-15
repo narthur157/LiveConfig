@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.UnstableMagic.MaxHealthBurnPct.Quality3"
-	},
+	"propertyName": "Item.UnstableMagic.MaxHealthBurnPct.Quality3",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.07999999821186066"
+	"tags": [],
+	"value": "0.08"
 }

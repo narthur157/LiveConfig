@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.RainbowCollector.MaxHPPercentPerUnique.Rare"
-	},
+	"propertyName": "Item.RainbowCollector.MaxHPPercentPerUnique.Rare",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.029999999329447746"
+	"tags": [],
+	"value": "0.03"
 }

@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.SimulationHitbox.Scale.Scanner.y"
-	},
+	"propertyName": "SlimeForm.SimulationHitbox.Scale.Scanner.y",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Vector"
+		"Vector",
+		"Scanner"
 	],
 	"value": "1"
 }

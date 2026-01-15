@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.wallRunMinRequiredSpeed"
-	},
+	"propertyName": "Marker.wallRunMinRequiredSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Marker"
 	],
 	"value": "999999"
 }

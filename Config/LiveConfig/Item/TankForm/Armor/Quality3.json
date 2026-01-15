@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.TankForm.Armor.Quality3"
-	},
+	"propertyName": "Item.TankForm.Armor.Quality3",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "40"
 }

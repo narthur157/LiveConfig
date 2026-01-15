@@ -2,9 +2,6 @@
 	"propertyName": "Ability.HealOnMassIngest.HealthPerSlime",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "0"
 }

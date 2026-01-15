@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.AllSeeingEye.DamagePerTick"
-	},
+	"propertyName": "Marker.AllSeeingEye.DamagePerTick",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"Marker"
 	],
 	"value": "5"
 }

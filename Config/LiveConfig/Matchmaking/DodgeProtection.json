@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Matchmaking.DodgeProtection"
-	},
+	"propertyName": "Matchmaking.DodgeProtection",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

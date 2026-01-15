@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.BounceBeat.Healing.PowerCoefficient"
-	},
+	"propertyName": "Selector.BounceBeat.Healing.PowerCoefficient",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.550000011920929"
+	"tags": [],
+	"value": "0.55"
 }

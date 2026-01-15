@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Turret.OnlyCombatActiveOnceFilled"
-	},
+	"propertyName": "Turret.OnlyCombatActiveOnceFilled",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "KnightWeapon_IsolationRework.flatArmorPenetration"
-	},
+	"propertyName": "KnightWeapon_IsolationRework.flatArmorPenetration",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"Claypool"
 	],
 	"value": "0"
 }

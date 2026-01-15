@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.PoisonedStrikes.AtackPlayLength"
-	},
+	"propertyName": "ToxicPersonality.PoisonedStrikes.AtackPlayLength",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
 	"value": "0.5"
 }

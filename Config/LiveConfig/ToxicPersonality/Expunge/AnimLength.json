@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.Expunge.AnimLength"
-	},
+	"propertyName": "ToxicPersonality.Expunge.AnimLength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
 	"value": "1"
 }

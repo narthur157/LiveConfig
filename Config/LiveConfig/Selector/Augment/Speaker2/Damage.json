@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.Augment.Speaker2.Damage"
-	},
+	"propertyName": "Selector.Augment.Speaker2.Damage",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "50"
 }

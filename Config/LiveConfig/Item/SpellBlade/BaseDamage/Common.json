@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.SpellBlade.BaseDamage.Common"
-	},
+	"propertyName": "Item.SpellBlade.BaseDamage.Common",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "15"
 }

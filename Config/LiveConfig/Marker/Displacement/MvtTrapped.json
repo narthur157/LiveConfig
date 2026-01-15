@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.Displacement.MvtTrapped"
-	},
+	"propertyName": "Marker.Displacement.MvtTrapped",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Marker"
 	],
 	"value": "0.5"
 }

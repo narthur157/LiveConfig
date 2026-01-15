@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.damageMultiplier"
-	},
+	"propertyName": "Scanner.damageMultiplier",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"Scanner"
 	],
 	"value": "1"
 }

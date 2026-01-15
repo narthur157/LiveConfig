@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SetByCaller.Talent.Operator.SlowField.PullsEnemies.AOERadius"
-	},
+	"propertyName": "SetByCaller.Talent.Operator.SlowField.PullsEnemies.AOERadius",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1500"
 }

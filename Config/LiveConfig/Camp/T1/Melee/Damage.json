@@ -2,9 +2,6 @@
 	"propertyName": "Camp.T1.Melee.Damage",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "12.5"
 }

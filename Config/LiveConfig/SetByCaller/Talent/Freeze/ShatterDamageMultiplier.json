@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SetByCaller.Talent.Freeze.ShatterDamageMultiplier"
-	},
+	"propertyName": "SetByCaller.Talent.Freeze.ShatterDamageMultiplier",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1.5"
 }

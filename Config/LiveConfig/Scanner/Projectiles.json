@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.Projectiles"
-	},
+	"propertyName": "Scanner.Projectiles",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [
-		"Feature",
-		"bool"
+		"Scanner"
 	],
 	"value": "false"
 }

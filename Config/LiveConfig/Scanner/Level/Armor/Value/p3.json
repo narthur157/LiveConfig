@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.Level.Armor.Value.p3"
-	},
+	"propertyName": "Scanner.Level.Armor.Value.p3",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Tiers"
+		"Tiers",
+		"Scanner"
 	],
 	"value": "4"
 }

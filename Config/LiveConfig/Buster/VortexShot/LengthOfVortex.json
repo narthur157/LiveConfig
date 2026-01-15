@@ -2,9 +2,6 @@
 	"propertyName": "Buster.VortexShot.LengthOfVortex",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1.5"
 }

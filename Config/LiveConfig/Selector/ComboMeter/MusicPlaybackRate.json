@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.ComboMeter.MusicPlaybackRate"
-	},
+	"propertyName": "Selector.ComboMeter.MusicPlaybackRate",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1"
 }

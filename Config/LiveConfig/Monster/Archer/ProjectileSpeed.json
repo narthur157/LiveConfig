@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Monster.Archer.ProjectileSpeed"
-	},
+	"propertyName": "Monster.Archer.ProjectileSpeed",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1000"
 }

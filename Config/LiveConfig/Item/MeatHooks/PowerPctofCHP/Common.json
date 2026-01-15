@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.MeatHooks.PowerPctofCHP.Common"
-	},
+	"propertyName": "Item.MeatHooks.PowerPctofCHP.Common",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.07500000298023224"
+	"tags": [],
+	"value": "0.075"
 }

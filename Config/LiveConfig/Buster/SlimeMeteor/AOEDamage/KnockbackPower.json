@@ -2,9 +2,6 @@
 	"propertyName": "Buster.SlimeMeteor.AOEDamage.KnockbackPower",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "2000"
 }

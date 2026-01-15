@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.OneWithDeath.PowerPct.Rare"
-	},
+	"propertyName": "Item.OneWithDeath.PowerPct.Rare",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.014999999664723873"
+	"tags": [],
+	"value": "0.015"
 }

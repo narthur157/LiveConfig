@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Toxic.VenomRoad.Damage"
-	},
+	"propertyName": "Toxic.VenomRoad.Damage",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
 	"value": "60"
 }

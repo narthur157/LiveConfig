@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MMR.FlatOffset"
-	},
+	"propertyName": "MMR.FlatOffset",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "25"
 }

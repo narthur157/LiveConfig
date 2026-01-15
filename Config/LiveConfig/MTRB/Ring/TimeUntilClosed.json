@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MTRB.Ring.TimeUntilClosed"
-	},
+	"propertyName": "MTRB.Ring.TimeUntilClosed",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "90"
 }

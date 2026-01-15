@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Movement.SlopeForce.MinSlopeStrength"
-	},
+	"propertyName": "Movement.SlopeForce.MinSlopeStrength",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "0"
 }

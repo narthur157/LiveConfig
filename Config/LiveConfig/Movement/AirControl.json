@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Movement.AirControl"
-	},
+	"propertyName": "Movement.AirControl",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.35499998927116394"
+	"tags": [],
+	"value": "0.355"
 }

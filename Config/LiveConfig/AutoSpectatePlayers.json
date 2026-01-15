@@ -2,9 +2,6 @@
 	"propertyName": "AutoSpectatePlayers",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "false"
 }

@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.PoisonedStrikes.PoisonApplicationRate"
-	},
+	"propertyName": "ToxicPersonality.PoisonedStrikes.PoisonApplicationRate",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
 	"value": "2"
 }

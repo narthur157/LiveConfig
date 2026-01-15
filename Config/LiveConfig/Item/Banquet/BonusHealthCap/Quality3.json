@@ -2,9 +2,6 @@
 	"propertyName": "Item.Banquet.BonusHealthCap.Quality3",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "150"
 }

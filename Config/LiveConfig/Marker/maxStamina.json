@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.maxStamina"
-	},
+	"propertyName": "Marker.maxStamina",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Marker"
 	],
 	"value": "63"
 }

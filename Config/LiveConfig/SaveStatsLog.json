@@ -2,9 +2,6 @@
 	"propertyName": "SaveStatsLog",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "false"
 }

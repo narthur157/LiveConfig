@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.Expunge.PowerCoeffecient"
-	},
+	"propertyName": "ToxicPersonality.Expunge.PowerCoeffecient",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
 	"value": "0.25"
 }

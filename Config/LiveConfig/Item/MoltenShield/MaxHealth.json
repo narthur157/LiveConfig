@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.MoltenShield.MaxHealth"
-	},
+	"propertyName": "Item.MoltenShield.MaxHealth",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "40"
 }

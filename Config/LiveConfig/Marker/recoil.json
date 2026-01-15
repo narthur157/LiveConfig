@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.recoil"
-	},
+	"propertyName": "Marker.recoil",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Marker"
 	],
 	"value": "0"
 }

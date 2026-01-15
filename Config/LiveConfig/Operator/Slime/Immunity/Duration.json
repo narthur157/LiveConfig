@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Operator.Slime.Immunity.Duration"
-	},
+	"propertyName": "Operator.Slime.Immunity.Duration",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "2.5"
 }

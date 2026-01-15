@@ -2,9 +2,6 @@
 	"propertyName": "Buster.HitBlockIndicator.MaxRange",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "450"
 }

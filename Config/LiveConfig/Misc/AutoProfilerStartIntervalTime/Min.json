@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Misc.AutoProfilerStartIntervalTime.Min"
-	},
+	"propertyName": "Misc.AutoProfilerStartIntervalTime.Min",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "180"
 }

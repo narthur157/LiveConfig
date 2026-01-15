@@ -2,9 +2,6 @@
 	"propertyName": "HMG.BigOne.PowerScalingCof",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "0.25"
 }

@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Slime.WallRun.BlockOnJumpForDuration"
-	},
+	"propertyName": "Slime.WallRun.BlockOnJumpForDuration",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.10000000149011612"
+	"tags": [],
+	"value": "0.1"
 }

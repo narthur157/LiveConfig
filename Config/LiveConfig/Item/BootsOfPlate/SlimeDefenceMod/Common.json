@@ -2,9 +2,6 @@
 	"propertyName": "Item.BootsOfPlate.SlimeDefenceMod.Common",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.05000000074505806"
+	"tags": [],
+	"value": "0.05"
 }

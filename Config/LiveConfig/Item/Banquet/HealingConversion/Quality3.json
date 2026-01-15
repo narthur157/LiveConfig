@@ -2,9 +2,6 @@
 	"propertyName": "Item.Banquet.HealingConversion.Quality3",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "0.125"
 }

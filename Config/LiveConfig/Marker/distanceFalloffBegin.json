@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.distanceFalloffBegin"
-	},
+	"propertyName": "Marker.distanceFalloffBegin",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Marker"
 	],
 	"value": "20000"
 }

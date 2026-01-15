@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Toxic.VenomSplash.AttackOne.SweepAngle"
-	},
+	"propertyName": "Toxic.VenomSplash.AttackOne.SweepAngle",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
 	"value": "35"
 }

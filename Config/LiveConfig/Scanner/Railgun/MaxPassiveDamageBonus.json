@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.Railgun.MaxPassiveDamageBonus"
-	},
+	"propertyName": "Scanner.Railgun.MaxPassiveDamageBonus",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Scanner"
 	],
-	"value": "0.20000000298023224"
+	"value": "0.2"
 }

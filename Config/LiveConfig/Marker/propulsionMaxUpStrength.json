@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.propulsionMaxUpStrength"
-	},
+	"propertyName": "Marker.propulsionMaxUpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Marker"
 	],
 	"value": "1500"
 }

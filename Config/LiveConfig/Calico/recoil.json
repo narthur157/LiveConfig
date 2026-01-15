@@ -3,7 +3,8 @@
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Calico"
 	],
 	"value": "0.5"
 }

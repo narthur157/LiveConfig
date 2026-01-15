@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.SecondChance.PowerCof"
-	},
+	"propertyName": "Item.SecondChance.PowerCof",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.02500000037252903"
+	"tags": [],
+	"value": "0.025"
 }

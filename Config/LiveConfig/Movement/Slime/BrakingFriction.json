@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Movement.Slime.BrakingFriction"
-	},
+	"propertyName": "Movement.Slime.BrakingFriction",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "1.7999999523162842"
+	"tags": [],
+	"value": "1.8"
 }

@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.critMultiplier"
-	},
+	"propertyName": "ToxicPersonality.critMultiplier",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Fugu"
 	],
 	"value": "1.5"
 }

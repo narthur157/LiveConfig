@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.SimulationHitbox.Scale.KnightWeapon_IsolationRework.y"
-	},
+	"propertyName": "SlimeForm.SimulationHitbox.Scale.KnightWeapon_IsolationRework.y",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Vector"
+		"Vector",
+		"Claypool"
 	],
-	"value": "0.949999988079071"
+	"value": "0.95"
 }

@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Slime.WallRun.MinimumChargeYawAngle"
-	},
+	"propertyName": "Slime.WallRun.MinimumChargeYawAngle",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "30"
 }

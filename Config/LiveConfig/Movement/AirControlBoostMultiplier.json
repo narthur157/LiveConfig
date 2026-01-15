@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Movement.AirControlBoostMultiplier"
-	},
+	"propertyName": "Movement.AirControlBoostMultiplier",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "2"
 }

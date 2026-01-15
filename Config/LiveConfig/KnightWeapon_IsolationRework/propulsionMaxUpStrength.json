@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "KnightWeapon_IsolationRework.propulsionMaxUpStrength"
-	},
+	"propertyName": "KnightWeapon_IsolationRework.propulsionMaxUpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Claypool"
 	],
 	"value": "1500"
 }

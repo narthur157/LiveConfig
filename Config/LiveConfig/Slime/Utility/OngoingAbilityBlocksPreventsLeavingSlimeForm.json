@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Slime.Utility.OngoingAbilityBlocksPreventsLeavingSlimeForm"
-	},
+	"propertyName": "Slime.Utility.OngoingAbilityBlocksPreventsLeavingSlimeForm",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

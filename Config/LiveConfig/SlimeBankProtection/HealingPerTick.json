@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeBankProtection.HealingPerTick"
-	},
+	"propertyName": "SlimeBankProtection.HealingPerTick",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "50"
 }

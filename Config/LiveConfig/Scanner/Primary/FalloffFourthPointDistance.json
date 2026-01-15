@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.Primary.FalloffFourthPointDistance"
-	},
+	"propertyName": "Scanner.Primary.FalloffFourthPointDistance",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"Scanner"
 	],
 	"value": "6750"
 }

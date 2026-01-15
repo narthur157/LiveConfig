@@ -2,9 +2,6 @@
 	"propertyName": "Buff.RedBuff.Duration",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "45"
 }

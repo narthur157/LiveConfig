@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.reloadTime"
-	},
+	"propertyName": "Marker.reloadTime",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Marker"
 	],
 	"value": "1.5"
 }

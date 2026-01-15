@@ -2,9 +2,6 @@
 	"propertyName": "Item.BurstOfSpeed.Duration",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "10"
 }

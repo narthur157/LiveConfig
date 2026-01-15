@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Movement.SlopeForce.MinSpeedCancelThreshold"
-	},
+	"propertyName": "Movement.SlopeForce.MinSpeedCancelThreshold",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "300"
 }

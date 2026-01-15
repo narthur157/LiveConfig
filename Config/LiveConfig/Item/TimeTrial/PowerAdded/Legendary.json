@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.TimeTrial.PowerAdded.Legendary"
-	},
+	"propertyName": "Item.TimeTrial.PowerAdded.Legendary",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "6"
 }

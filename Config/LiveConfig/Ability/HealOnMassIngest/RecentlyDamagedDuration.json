@@ -2,9 +2,6 @@
 	"propertyName": "Ability.HealOnMassIngest.RecentlyDamagedDuration",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "9999123"
 }

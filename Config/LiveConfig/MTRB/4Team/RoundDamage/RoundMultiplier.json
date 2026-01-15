@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MTRB.4Team.RoundDamage.RoundMultiplier"
-	},
+	"propertyName": "MTRB.4Team.RoundDamage.RoundMultiplier",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "2"
 }

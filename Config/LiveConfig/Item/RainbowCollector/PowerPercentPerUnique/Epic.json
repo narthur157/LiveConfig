@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.RainbowCollector.PowerPercentPerUnique.Epic"
-	},
+	"propertyName": "Item.RainbowCollector.PowerPercentPerUnique.Epic",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.03500000014901161"
+	"tags": [],
+	"value": "0.035"
 }

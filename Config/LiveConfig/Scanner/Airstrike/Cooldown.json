@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.Airstrike.Cooldown"
-	},
+	"propertyName": "Scanner.Airstrike.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"Scanner"
 	],
 	"value": "15"
 }

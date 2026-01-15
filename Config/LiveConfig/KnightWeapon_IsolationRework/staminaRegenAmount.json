@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "KnightWeapon_IsolationRework.staminaRegenAmount"
-	},
+	"propertyName": "KnightWeapon_IsolationRework.staminaRegenAmount",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Claypool"
 	],
 	"value": "2"
 }

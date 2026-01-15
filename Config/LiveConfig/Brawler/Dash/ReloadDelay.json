@@ -2,9 +2,6 @@
 	"propertyName": "Brawler.Dash.ReloadDelay",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.30000001192092896"
+	"tags": [],
+	"value": "0.3"
 }

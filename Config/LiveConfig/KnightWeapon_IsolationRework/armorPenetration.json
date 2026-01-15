@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "KnightWeapon_IsolationRework.armorPenetration"
-	},
+	"propertyName": "KnightWeapon_IsolationRework.armorPenetration",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Claypool"
 	],
-	"value": "0.20000000298023224"
+	"value": "0.2"
 }

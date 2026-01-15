@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.Amplify.Healing.PowerCoefficient"
-	},
+	"propertyName": "Selector.Amplify.Healing.PowerCoefficient",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "0.5"
 }

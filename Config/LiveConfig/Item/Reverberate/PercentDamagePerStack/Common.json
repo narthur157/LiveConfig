@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Reverberate.PercentDamagePerStack.Common"
-	},
+	"propertyName": "Item.Reverberate.PercentDamagePerStack.Common",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.20000000298023224"
+	"tags": [],
+	"value": "0.2"
 }

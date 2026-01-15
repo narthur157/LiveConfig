@@ -2,9 +2,6 @@
 	"propertyName": "HMG.Primary.MinFireRate",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "3"
 }

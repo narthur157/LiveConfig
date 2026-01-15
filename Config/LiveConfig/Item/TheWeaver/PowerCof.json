@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.TheWeaver.PowerCof"
-	},
+	"propertyName": "Item.TheWeaver.PowerCof",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.4000000059604645"
+	"tags": [],
+	"value": "0.4"
 }

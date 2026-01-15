@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.Propulsion.PowerUp.ConsumeStaminaEqualToPercentage"
-	},
+	"propertyName": "SlimeForm.Propulsion.PowerUp.ConsumeStaminaEqualToPercentage",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

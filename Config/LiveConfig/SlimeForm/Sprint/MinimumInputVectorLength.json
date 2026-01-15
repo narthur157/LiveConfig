@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.Sprint.MinimumInputVectorLength"
-	},
+	"propertyName": "SlimeForm.Sprint.MinimumInputVectorLength",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.949999988079071"
+	"tags": [],
+	"value": "0.95"
 }

@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.slimeMaxJumpStrength"
-	},
+	"propertyName": "Marker.slimeMaxJumpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Marker"
 	],
 	"value": "1450"
 }

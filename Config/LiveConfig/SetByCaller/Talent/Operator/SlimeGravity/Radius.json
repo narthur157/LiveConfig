@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SetByCaller.Talent.Operator.SlimeGravity.Radius"
-	},
+	"propertyName": "SetByCaller.Talent.Operator.SlimeGravity.Radius",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "800"
 }

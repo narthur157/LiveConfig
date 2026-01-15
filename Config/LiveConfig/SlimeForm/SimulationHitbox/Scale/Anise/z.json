@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.SimulationHitbox.Scale.Anise.z"
-	},
+	"propertyName": "SlimeForm.SimulationHitbox.Scale.Anise.z",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Vector"
+		"Vector",
+		"Vandal"
 	],
-	"value": "0.8999999761581421"
+	"value": "0.9"
 }

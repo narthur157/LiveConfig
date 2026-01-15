@@ -2,9 +2,6 @@
 	"propertyName": "Item.Immolation",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

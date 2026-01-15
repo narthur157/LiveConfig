@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "RaceTimer.TrainingMap.AdvancedMovement"
-	},
+	"propertyName": "RaceTimer.TrainingMap.AdvancedMovement",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "119.58100128173828"
+	"tags": [],
+	"value": "119.581001"
 }

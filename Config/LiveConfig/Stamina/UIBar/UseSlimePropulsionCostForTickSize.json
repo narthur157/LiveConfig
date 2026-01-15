@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Stamina.UIBar.UseSlimePropulsionCostForTickSize"
-	},
+	"propertyName": "Stamina.UIBar.UseSlimePropulsionCostForTickSize",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

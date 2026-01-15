@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeDestruction.RoyalSlime.ProtectionVariant.DurtionForDistressPerLostInhibitor"
-	},
+	"propertyName": "SlimeDestruction.RoyalSlime.ProtectionVariant.DurtionForDistressPerLostInhibitor",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "30"
 }

@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.UnstableMagic.MaxHealthBurnPercentage"
-	},
+	"propertyName": "Item.UnstableMagic.MaxHealthBurnPercentage",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.05999999865889549"
+	"tags": [],
+	"value": "0.06"
 }

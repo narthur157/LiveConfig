@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeCollection.Showdown.FirstToMaxExcluded"
-	},
+	"propertyName": "SlimeCollection.Showdown.FirstToMaxExcluded",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

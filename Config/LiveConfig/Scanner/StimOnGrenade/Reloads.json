@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.StimOnGrenade.Reloads"
-	},
+	"propertyName": "Scanner.StimOnGrenade.Reloads",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [
-		"Feature",
-		"bool"
+		"Scanner"
 	],
 	"value": "true"
 }

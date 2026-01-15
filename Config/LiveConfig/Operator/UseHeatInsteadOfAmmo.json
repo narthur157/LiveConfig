@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Operator.UseHeatInsteadOfAmmo"
-	},
+	"propertyName": "Operator.UseHeatInsteadOfAmmo",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "false"
 }

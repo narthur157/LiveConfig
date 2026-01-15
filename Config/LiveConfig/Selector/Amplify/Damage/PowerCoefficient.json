@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.Amplify.Damage.PowerCoefficient"
-	},
+	"propertyName": "Selector.Amplify.Damage.PowerCoefficient",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "0.5"
 }

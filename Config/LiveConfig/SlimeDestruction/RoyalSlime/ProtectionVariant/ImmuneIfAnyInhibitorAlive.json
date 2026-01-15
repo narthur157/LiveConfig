@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeDestruction.RoyalSlime.ProtectionVariant.ImmuneIfAnyInhibitorAlive"
-	},
+	"propertyName": "SlimeDestruction.RoyalSlime.ProtectionVariant.ImmuneIfAnyInhibitorAlive",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "false"
 }

@@ -2,9 +2,6 @@
 	"propertyName": "Interactable.BuffingShrine.EnableText",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

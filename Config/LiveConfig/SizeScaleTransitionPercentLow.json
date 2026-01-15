@@ -2,9 +2,6 @@
 	"propertyName": "SizeScaleTransitionPercentLow",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.33000001311302185"
+	"tags": [],
+	"value": "0.33"
 }

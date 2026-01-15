@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.reloadTime"
-	},
+	"propertyName": "Scanner.reloadTime",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Scanner"
 	],
 	"value": "1"
 }

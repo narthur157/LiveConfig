@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.WallRun.WallDetectionWaitTime"
-	},
+	"propertyName": "SlimeForm.WallRun.WallDetectionWaitTime",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.07999999821186066"
+	"tags": [],
+	"value": "0.08"
 }

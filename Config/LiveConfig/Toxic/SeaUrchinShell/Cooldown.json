@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Toxic.SeaUrchinShell.Cooldown"
-	},
+	"propertyName": "Toxic.SeaUrchinShell.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
 	"value": "18"
 }

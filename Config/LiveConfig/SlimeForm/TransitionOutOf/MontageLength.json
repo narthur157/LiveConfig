@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.TransitionOutOf.MontageLength"
-	},
+	"propertyName": "SlimeForm.TransitionOutOf.MontageLength",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.05000000074505806"
+	"tags": [],
+	"value": "0.05"
 }

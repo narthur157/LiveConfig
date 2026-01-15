@@ -1,12 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Playerstats.ExcludedTypes"
-	},
+	"propertyName": "Playerstats.ExcludedTypes",
 	"description": "",
 	"propertyType": "String",
-	"tags": [
-		"String"
-	],
+	"tags": [],
 	"value": "Mass.Transfer,Mass.Create,Mass.Destroy,VendingMachine.Opened,VendingMachine.Closed,ResetTalents,Effect"
 }

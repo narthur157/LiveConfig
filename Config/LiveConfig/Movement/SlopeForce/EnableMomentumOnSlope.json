@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Movement.SlopeForce.EnableMomentumOnSlope"
-	},
+	"propertyName": "Movement.SlopeForce.EnableMomentumOnSlope",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "false"
 }

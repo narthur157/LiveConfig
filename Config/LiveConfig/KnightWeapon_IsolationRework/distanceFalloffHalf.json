@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "KnightWeapon_IsolationRework.distanceFalloffHalf"
-	},
+	"propertyName": "KnightWeapon_IsolationRework.distanceFalloffHalf",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Claypool"
 	],
 	"value": "10000"
 }

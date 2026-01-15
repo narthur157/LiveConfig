@@ -3,7 +3,8 @@
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"Vandal"
 	],
-	"value": "2.4000000953674316"
+	"value": "2.4"
 }

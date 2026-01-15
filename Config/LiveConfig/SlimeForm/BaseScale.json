@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.BaseScale"
-	},
+	"propertyName": "SlimeForm.BaseScale",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "1.649999976158142"
+	"tags": [],
+	"value": "1.65"
 }

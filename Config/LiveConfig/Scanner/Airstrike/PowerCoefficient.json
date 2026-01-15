@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.Airstrike.PowerCoefficient"
-	},
+	"propertyName": "Scanner.Airstrike.PowerCoefficient",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Scanner"
 	],
-	"value": "1.399999976158142"
+	"value": "1.4"
 }

@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SetByCaller.Talent.Operator.Freeze.MaxStacks"
-	},
+	"propertyName": "SetByCaller.Talent.Operator.Freeze.MaxStacks",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "30"
 }

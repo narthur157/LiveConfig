@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.bEnabled"
-	},
+	"propertyName": "ToxicPersonality.bEnabled",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Fugu"
 	],
 	"value": "true"
 }

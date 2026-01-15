@@ -2,9 +2,6 @@
 	"propertyName": "Ability.HealOnMassIngest.MaxPendingHealing",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1"
 }

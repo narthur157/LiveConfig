@@ -2,9 +2,6 @@
 	"propertyName": "HMG.SlowField.PullStrength",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "2.5"
 }

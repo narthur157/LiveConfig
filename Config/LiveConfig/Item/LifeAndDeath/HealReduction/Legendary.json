@@ -2,9 +2,6 @@
 	"propertyName": "Item.LifeAndDeath.HealReduction.Legendary",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "0.5"
 }

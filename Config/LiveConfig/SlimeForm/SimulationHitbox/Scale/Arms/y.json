@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.SimulationHitbox.Scale.Arms.y"
-	},
+	"propertyName": "SlimeForm.SimulationHitbox.Scale.Arms.y",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Vector"
+		"Vector",
+		"Arms"
 	],
 	"value": "1"
 }

@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.CameraOffset.z"
-	},
+	"propertyName": "Scanner.CameraOffset.z",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Vector"
+		"Vector",
+		"Scanner"
 	],
 	"value": "10"
 }

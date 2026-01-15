@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SetByCaller.Talent.Operator.Primary.RateOfFireIncrease.Amount"
-	},
+	"propertyName": "SetByCaller.Talent.Operator.Primary.RateOfFireIncrease.Amount",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "6"
 }

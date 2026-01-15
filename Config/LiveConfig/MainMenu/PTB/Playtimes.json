@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MainMenu.PTB.Playtimes"
-	},
+	"propertyName": "MainMenu.PTB.Playtimes",
 	"description": "",
 	"propertyType": "String",
-	"tags": [
-		"String",
-		"string"
-	],
+	"tags": [],
 	"value": ""
 }

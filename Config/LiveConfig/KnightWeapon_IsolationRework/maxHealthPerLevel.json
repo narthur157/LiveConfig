@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "KnightWeapon_IsolationRework.maxHealthPerLevel"
-	},
+	"propertyName": "KnightWeapon_IsolationRework.maxHealthPerLevel",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"Claypool"
 	],
 	"value": "30"
 }

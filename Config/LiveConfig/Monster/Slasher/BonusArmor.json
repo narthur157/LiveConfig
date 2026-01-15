@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Monster.Slasher.BonusArmor"
-	},
+	"propertyName": "Monster.Slasher.BonusArmor",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "70"
 }

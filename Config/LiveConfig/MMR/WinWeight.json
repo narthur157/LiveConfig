@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MMR.WinWeight"
-	},
+	"propertyName": "MMR.WinWeight",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "100"
 }

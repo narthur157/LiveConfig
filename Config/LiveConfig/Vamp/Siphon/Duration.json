@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Vamp.Siphon.Duration"
-	},
+	"propertyName": "Vamp.Siphon.Duration",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "5"
 }

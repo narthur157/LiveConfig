@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Objective.OneShotDelayLength"
-	},
+	"propertyName": "Objective.OneShotDelayLength",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "2.5"
 }

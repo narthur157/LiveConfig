@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "UI.EscapeMenuv2"
-	},
+	"propertyName": "UI.EscapeMenuv2",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

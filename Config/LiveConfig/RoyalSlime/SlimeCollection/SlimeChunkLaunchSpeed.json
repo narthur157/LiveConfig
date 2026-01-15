@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "RoyalSlime.SlimeCollection.SlimeChunkLaunchSpeed"
-	},
+	"propertyName": "RoyalSlime.SlimeCollection.SlimeChunkLaunchSpeed",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "2000"
 }

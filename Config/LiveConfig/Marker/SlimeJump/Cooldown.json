@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.SlimeJump.Cooldown"
-	},
+	"propertyName": "Marker.SlimeJump.Cooldown",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"Marker"
 	],
 	"value": "12"
 }

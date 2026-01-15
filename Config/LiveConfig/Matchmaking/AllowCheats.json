@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Matchmaking.AllowCheats"
-	},
+	"propertyName": "Matchmaking.AllowCheats",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

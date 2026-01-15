@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.Primary.FalloffFourthPointValue"
-	},
+	"propertyName": "Scanner.Primary.FalloffFourthPointValue",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Scanner"
 	],
 	"value": "0.25"
 }

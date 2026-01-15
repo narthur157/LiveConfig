@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.armor"
-	},
+	"propertyName": "Scanner.armor",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"Scanner"
 	],
 	"value": "15"
 }

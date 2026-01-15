@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MoveSpeedModifier.Max"
-	},
+	"propertyName": "MoveSpeedModifier.Max",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "2"
 }

@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.ChargeLaser.Damage"
-	},
+	"propertyName": "Marker.ChargeLaser.Damage",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Marker"
 	],
 	"value": "62.5"
 }

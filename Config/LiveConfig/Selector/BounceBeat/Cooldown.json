@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.BounceBeat.Cooldown"
-	},
+	"propertyName": "Selector.BounceBeat.Cooldown",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "8"
 }

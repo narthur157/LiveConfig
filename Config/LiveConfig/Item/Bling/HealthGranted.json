@@ -2,9 +2,6 @@
 	"propertyName": "Item.Bling.HealthGranted",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "100"
 }

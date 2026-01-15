@@ -2,9 +2,6 @@
 	"propertyName": "HMG.TierScaled.Ammo",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

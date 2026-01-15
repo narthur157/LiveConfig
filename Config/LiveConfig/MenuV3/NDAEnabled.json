@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MenuV3.NDAEnabled"
-	},
+	"propertyName": "MenuV3.NDAEnabled",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "false"
 }

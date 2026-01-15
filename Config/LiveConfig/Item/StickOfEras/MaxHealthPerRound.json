@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.StickOfEras.MaxHealthPerRound"
-	},
+	"propertyName": "Item.StickOfEras.MaxHealthPerRound",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "10"
 }

@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SetByCaller.Talent.Operator.DestroyerOfSlime.Primary.Radius"
-	},
+	"propertyName": "SetByCaller.Talent.Operator.DestroyerOfSlime.Primary.Radius",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "25"
 }

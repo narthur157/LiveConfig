@@ -2,9 +2,6 @@
 	"propertyName": "Buster.Utility.Critmultiplier",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1"
 }

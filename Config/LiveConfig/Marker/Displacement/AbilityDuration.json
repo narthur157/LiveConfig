@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.Displacement.AbilityDuration"
-	},
+	"propertyName": "Marker.Displacement.AbilityDuration",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Marker"
 	],
 	"value": "1.5"
 }

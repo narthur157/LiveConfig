@@ -2,9 +2,6 @@
 	"propertyName": "Interactable.GrindRail.LaunchPower",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "3000"
 }

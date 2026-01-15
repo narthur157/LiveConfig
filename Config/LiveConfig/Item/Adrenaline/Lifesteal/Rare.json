@@ -2,9 +2,6 @@
 	"propertyName": "Item.Adrenaline.Lifesteal.Rare",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "0.5"
 }

@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Quickness.Dash.Strength"
-	},
+	"propertyName": "Item.Quickness.Dash.Strength",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "500"
 }

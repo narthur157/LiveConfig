@@ -2,9 +2,6 @@
 	"propertyName": "Item.AFairTrade.DamageMod.Common",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "0.5"
 }

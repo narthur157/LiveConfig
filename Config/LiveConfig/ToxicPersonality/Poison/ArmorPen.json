@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.Poison.ArmorPen"
-	},
+	"propertyName": "ToxicPersonality.Poison.ArmorPen",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
-	"value": "0.10000000149011612"
+	"value": "0.1"
 }

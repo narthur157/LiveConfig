@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.Primary.FalloffThirdPointDistance"
-	},
+	"propertyName": "Scanner.Primary.FalloffThirdPointDistance",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"Scanner"
 	],
 	"value": "6750"
 }

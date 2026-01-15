@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Matchmaking.DodgeMMRPenalty"
-	},
+	"propertyName": "Matchmaking.DodgeMMRPenalty",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "-5"
 }

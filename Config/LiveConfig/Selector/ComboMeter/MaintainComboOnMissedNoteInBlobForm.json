@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.ComboMeter.MaintainComboOnMissedNoteInBlobForm"
-	},
+	"propertyName": "Selector.ComboMeter.MaintainComboOnMissedNoteInBlobForm",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

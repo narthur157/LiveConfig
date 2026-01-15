@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.Primary.FalloffBeginDistance"
-	},
+	"propertyName": "Marker.Primary.FalloffBeginDistance",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"Marker"
 	],
 	"value": "5250"
 }

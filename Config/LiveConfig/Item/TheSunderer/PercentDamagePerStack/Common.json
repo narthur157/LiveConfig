@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.TheSunderer.PercentDamagePerStack.Common"
-	},
+	"propertyName": "Item.TheSunderer.PercentDamagePerStack.Common",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.10000000149011612"
+	"tags": [],
+	"value": "0.1"
 }

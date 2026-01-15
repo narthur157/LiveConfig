@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.TheWeaver.BaseDamage.Epic"
-	},
+	"propertyName": "Item.TheWeaver.BaseDamage.Epic",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "40"
 }

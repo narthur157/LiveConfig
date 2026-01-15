@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.SpellBlade.PowerCof"
-	},
+	"propertyName": "Item.SpellBlade.PowerCof",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.30000001192092896"
+	"tags": [],
+	"value": "0.3"
 }

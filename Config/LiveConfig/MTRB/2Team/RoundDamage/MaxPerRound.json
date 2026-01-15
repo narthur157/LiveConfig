@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MTRB.2Team.RoundDamage.MaxPerRound"
-	},
+	"propertyName": "MTRB.2Team.RoundDamage.MaxPerRound",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "25"
 }

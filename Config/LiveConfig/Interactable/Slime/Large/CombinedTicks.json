@@ -2,9 +2,6 @@
 	"propertyName": "Interactable.Slime.Large.CombinedTicks",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "10"
 }

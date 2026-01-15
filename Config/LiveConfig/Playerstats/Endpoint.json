@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Playerstats.Endpoint"
-	},
+	"propertyName": "Playerstats.Endpoint",
 	"description": "",
 	"propertyType": "String",
-	"tags": [
-		"String",
-		"string"
-	],
+	"tags": [],
 	"value": "s3-playerstats.genpop.io:3000/upload"
 }

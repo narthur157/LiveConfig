@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Movement.SlopeForce.MaxForwardOffsetAngle"
-	},
+	"propertyName": "Movement.SlopeForce.MaxForwardOffsetAngle",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "85"
 }

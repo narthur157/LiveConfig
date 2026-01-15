@@ -2,9 +2,6 @@
 	"propertyName": "Interactable.ExplosiveBarrel.ExplosionDamage",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "150"
 }

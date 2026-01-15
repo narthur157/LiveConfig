@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.Augment.SoundStorm.PowerCoefficient"
-	},
+	"propertyName": "Selector.Augment.SoundStorm.PowerCoefficient",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.699999988079071"
+	"tags": [],
+	"value": "0.7"
 }

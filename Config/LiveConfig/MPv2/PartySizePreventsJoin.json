@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MPv2.PartySizePreventsJoin"
-	},
+	"propertyName": "MPv2.PartySizePreventsJoin",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

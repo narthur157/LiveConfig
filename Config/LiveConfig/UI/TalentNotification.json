@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "UI.TalentNotification"
-	},
+	"propertyName": "UI.TalentNotification",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

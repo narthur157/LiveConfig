@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.bEnabled"
-	},
+	"propertyName": "Scanner.bEnabled",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Scanner"
 	],
 	"value": "true"
 }

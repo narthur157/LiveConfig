@@ -2,9 +2,6 @@
 	"propertyName": "HMG.SlowField.Cooldown",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "15"
 }

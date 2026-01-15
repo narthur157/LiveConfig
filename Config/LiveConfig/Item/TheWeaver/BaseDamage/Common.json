@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.TheWeaver.BaseDamage.Common"
-	},
+	"propertyName": "Item.TheWeaver.BaseDamage.Common",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "20"
 }

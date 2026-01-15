@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.ComboMeter.ResetCompletelyOnFailedBeat"
-	},
+	"propertyName": "Selector.ComboMeter.ResetCompletelyOnFailedBeat",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "false"
 }

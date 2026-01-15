@@ -2,9 +2,6 @@
 	"propertyName": "Buster.VortexShot.ShieldConeRelativePostionY",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "0"
 }

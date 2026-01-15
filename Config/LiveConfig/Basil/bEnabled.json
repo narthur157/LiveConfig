@@ -3,7 +3,8 @@
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Basil"
 	],
 	"value": "true"
 }

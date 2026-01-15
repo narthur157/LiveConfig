@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Item.Pickpocket.GoldPerHit.Epic"
-	},
+	"propertyName": "Item.Pickpocket.GoldPerHit.Epic",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "3"
 }

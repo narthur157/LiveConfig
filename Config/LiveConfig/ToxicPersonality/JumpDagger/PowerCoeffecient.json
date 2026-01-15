@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.JumpDagger.PowerCoeffecient"
-	},
+	"propertyName": "ToxicPersonality.JumpDagger.PowerCoeffecient",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
 	"value": "0.5"
 }

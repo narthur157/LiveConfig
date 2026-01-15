@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.Mark.LineOfSightPeriod"
-	},
+	"propertyName": "Marker.Mark.LineOfSightPeriod",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Marker"
 	],
 	"value": "0.25"
 }

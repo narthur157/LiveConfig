@@ -2,9 +2,6 @@
 	"propertyName": "Item.Hourglass.ReduceEverySeconds.Quality3",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "4"
 }

@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.Speaker.SlowPercentage"
-	},
+	"propertyName": "Selector.Speaker.SlowPercentage",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.699999988079071"
+	"tags": [],
+	"value": "0.7"
 }

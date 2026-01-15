@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MainMenu.ODS.Playtimes"
-	},
+	"propertyName": "MainMenu.ODS.Playtimes",
 	"description": "",
 	"propertyType": "String",
-	"tags": [
-		"String",
-		"string"
-	],
+	"tags": [],
 	"value": ""
 }

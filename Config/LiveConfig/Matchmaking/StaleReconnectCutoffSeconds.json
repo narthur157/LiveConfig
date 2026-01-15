@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Matchmaking.StaleReconnectCutoffSeconds"
-	},
+	"propertyName": "Matchmaking.StaleReconnectCutoffSeconds",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "120"
 }

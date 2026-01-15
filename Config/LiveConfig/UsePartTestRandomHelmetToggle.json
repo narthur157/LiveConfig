@@ -2,9 +2,6 @@
 	"propertyName": "UsePartTestRandomHelmetToggle",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "false"
 }

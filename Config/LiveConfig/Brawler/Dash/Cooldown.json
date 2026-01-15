@@ -2,9 +2,6 @@
 	"propertyName": "Brawler.Dash.Cooldown",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "3"
 }

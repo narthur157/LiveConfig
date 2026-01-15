@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Movement.Hero.BrakingDecelerationWalking"
-	},
+	"propertyName": "Movement.Hero.BrakingDecelerationWalking",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1700"
 }

@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.Railgun.PowerCoefficient.LowHealth"
-	},
+	"propertyName": "Scanner.Railgun.PowerCoefficient.LowHealth",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Scanner"
 	],
-	"value": "0.8500000238418579"
+	"value": "0.85"
 }

@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Stats.SegmentSize"
-	},
+	"propertyName": "Stats.SegmentSize",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "500"
 }

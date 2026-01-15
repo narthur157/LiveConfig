@@ -2,9 +2,6 @@
 	"propertyName": "Brawler.AutoFire",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "false"
 }

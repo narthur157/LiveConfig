@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "VendingMachine.Reward.LaunchStrength"
-	},
+	"propertyName": "VendingMachine.Reward.LaunchStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"VendingMachine"
 	],
 	"value": "400"
 }

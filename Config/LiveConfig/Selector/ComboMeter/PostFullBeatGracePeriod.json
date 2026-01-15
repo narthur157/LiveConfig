@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.ComboMeter.PostFullBeatGracePeriod"
-	},
+	"propertyName": "Selector.ComboMeter.PostFullBeatGracePeriod",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "0.125"
 }

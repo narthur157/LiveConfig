@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "PVE.TestModeDuration"
-	},
+	"propertyName": "PVE.TestModeDuration",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "300"
 }

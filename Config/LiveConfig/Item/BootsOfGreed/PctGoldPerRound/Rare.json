@@ -2,9 +2,6 @@
 	"propertyName": "Item.BootsOfGreed.PctGoldPerRound.Rare",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.07500000298023224"
+	"tags": [],
+	"value": "0.075"
 }

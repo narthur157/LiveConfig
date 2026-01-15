@@ -2,9 +2,6 @@
 	"propertyName": "Interactible.ExplosiveBarrel.FireDuration",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "4"
 }

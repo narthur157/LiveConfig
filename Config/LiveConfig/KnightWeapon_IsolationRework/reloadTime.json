@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "KnightWeapon_IsolationRework.reloadTime"
-	},
+	"propertyName": "KnightWeapon_IsolationRework.reloadTime",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Claypool"
 	],
-	"value": "0.8999999761581421"
+	"value": "0.9"
 }

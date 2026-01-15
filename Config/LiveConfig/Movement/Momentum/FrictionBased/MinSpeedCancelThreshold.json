@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Movement.Momentum.FrictionBased.MinSpeedCancelThreshold"
-	},
+	"propertyName": "Movement.Momentum.FrictionBased.MinSpeedCancelThreshold",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "300"
 }

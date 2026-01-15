@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "ToxicPersonality.Expunge.PercentHealthBasedExecute"
-	},
+	"propertyName": "ToxicPersonality.Expunge.PercentHealthBasedExecute",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [
-		"Feature",
-		"bool"
+		"Fugu"
 	],
 	"value": "false"
 }

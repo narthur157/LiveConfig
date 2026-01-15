@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.SimulationHitbox.Scale.Basil.z"
-	},
+	"propertyName": "SlimeForm.SimulationHitbox.Scale.Basil.z",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Vector"
+		"Vector",
+		"Basil"
 	],
 	"value": "1"
 }

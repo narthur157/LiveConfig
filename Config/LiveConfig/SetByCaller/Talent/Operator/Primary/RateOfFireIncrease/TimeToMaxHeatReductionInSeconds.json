@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SetByCaller.Talent.Operator.Primary.RateOfFireIncrease.TimeToMaxHeatReductionInSeconds"
-	},
+	"propertyName": "SetByCaller.Talent.Operator.Primary.RateOfFireIncrease.TimeToMaxHeatReductionInSeconds",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "-2"
 }

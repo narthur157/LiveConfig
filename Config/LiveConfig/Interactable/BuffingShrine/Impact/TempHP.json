@@ -2,9 +2,6 @@
 	"propertyName": "Interactable.BuffingShrine.Impact.TempHP",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "100"
 }

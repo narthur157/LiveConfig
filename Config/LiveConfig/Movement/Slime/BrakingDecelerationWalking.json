@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Movement.Slime.BrakingDecelerationWalking"
-	},
+	"propertyName": "Movement.Slime.BrakingDecelerationWalking",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1700"
 }

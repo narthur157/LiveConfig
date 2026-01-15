@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.MassBlind.BlindRadius"
-	},
+	"propertyName": "Marker.MassBlind.BlindRadius",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Value",
-		"number"
+		"Marker"
 	],
 	"value": "600"
 }

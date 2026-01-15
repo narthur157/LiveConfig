@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "KnightWeapon_IsolationRework.fireRatePerSecond"
-	},
+	"propertyName": "KnightWeapon_IsolationRework.fireRatePerSecond",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Weapon"
+		"Weapon",
+		"Claypool"
 	],
 	"value": "-1"
 }

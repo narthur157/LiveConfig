@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Movement.SlopeForce.MaxForwardOffsetStrengthMultiplier"
-	},
+	"propertyName": "Movement.SlopeForce.MaxForwardOffsetStrengthMultiplier",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "0"
 }

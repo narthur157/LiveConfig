@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.Expel.MultiplierPerComboStack"
-	},
+	"propertyName": "Selector.Expel.MultiplierPerComboStack",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "0.25"
 }

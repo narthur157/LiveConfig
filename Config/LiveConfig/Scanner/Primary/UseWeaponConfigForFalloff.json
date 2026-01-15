@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.Primary.UseWeaponConfigForFalloff"
-	},
+	"propertyName": "Scanner.Primary.UseWeaponConfigForFalloff",
 	"description": "",
 	"propertyType": "Bool",
 	"tags": [
-		"Feature",
-		"bool"
+		"Scanner"
 	],
 	"value": "false"
 }

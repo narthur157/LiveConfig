@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "KnightWeapon_IsolationRework.armorPerLevel"
-	},
+	"propertyName": "KnightWeapon_IsolationRework.armorPerLevel",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"Claypool"
 	],
-	"value": "2.799999952316284"
+	"value": "2.8"
 }

@@ -2,9 +2,6 @@
 	"propertyName": "Buster.SlimeMeteor.AOEDamage.CritMultiplier",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "1"
 }

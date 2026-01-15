@@ -2,9 +2,6 @@
 	"propertyName": "Item.Adrenaline.Power",
 	"description": "",
 	"propertyType": "Int",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "7"
 }

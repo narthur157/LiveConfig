@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Movement.Hero.AccelerationMultiplier"
-	},
+	"propertyName": "Movement.Hero.AccelerationMultiplier",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
-	"value": "0.6000000238418579"
+	"tags": [],
+	"value": "0.6"
 }

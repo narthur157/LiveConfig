@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Toxic.VenomBlowfish.PowerCoeffecient"
-	},
+	"propertyName": "Toxic.VenomBlowfish.PowerCoeffecient",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
-	"value": "0.6000000238418579"
+	"value": "0.6"
 }

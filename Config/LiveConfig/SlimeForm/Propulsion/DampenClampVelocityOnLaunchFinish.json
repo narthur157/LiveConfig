@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "SlimeForm.Propulsion.DampenClampVelocityOnLaunchFinish"
-	},
+	"propertyName": "SlimeForm.Propulsion.DampenClampVelocityOnLaunchFinish",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [
-		"Value",
-		"number"
-	],
+	"tags": [],
 	"value": "-0.5"
 }

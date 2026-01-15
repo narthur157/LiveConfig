@@ -1,13 +1,7 @@
 {
-	"propertyName":
-	{
-		"propertyName": "MenuV3.UseRyLobbyUI"
-	},
+	"propertyName": "MenuV3.UseRyLobbyUI",
 	"description": "",
 	"propertyType": "Bool",
-	"tags": [
-		"Feature",
-		"bool"
-	],
+	"tags": [],
 	"value": "true"
 }

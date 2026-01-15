@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Toxic.Venom.PowerCoeffecient"
-	},
+	"propertyName": "Toxic.Venom.PowerCoeffecient",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Fugu"
 	],
-	"value": "0.05999999865889549"
+	"value": "0.06"
 }

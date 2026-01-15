@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Scanner.armorPerLevel"
-	},
+	"propertyName": "Scanner.armorPerLevel",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Attributes"
+		"Attributes",
+		"Scanner"
 	],
-	"value": "2.0999999046325684"
+	"value": "2.1"
 }

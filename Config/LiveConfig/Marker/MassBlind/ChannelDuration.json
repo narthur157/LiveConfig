@@ -1,13 +1,9 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Marker.MassBlind.ChannelDuration"
-	},
+	"propertyName": "Marker.MassBlind.ChannelDuration",
 	"description": "",
 	"propertyType": "Float",
 	"tags": [
-		"Value",
-		"number"
+		"Marker"
 	],
 	"value": "0.75"
 }
