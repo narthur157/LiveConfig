@@ -77,11 +77,18 @@ void SLiveConfigPropertyRow::Construct(const FArguments& InArgs, const TSharedRe
 		bNeedsFocus = true;
 		Item->bNeedsFocus = false;
 	}
+
+	bJustFinishedEnterCommit = false;
 }
 
 void SLiveConfigPropertyRow::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
 {
 	SPropertyRowParent::Tick(AllottedGeometry, InCurrentTime, InDeltaTime);
+
+	if (bJustFinishedEnterCommit)
+	{
+		bJustFinishedEnterCommit = false;
+	}
 
 	if (bNeedsFocus)
 	{
@@ -328,6 +335,13 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateNameColumnWidget()
 					{
 						OnNavigateValue.ExecuteIfBound(Item);
 					}
+					return;
+				}
+
+				// If it's a focus loss and the name is empty or ends with a dot, 
+				// don't try to commit it as it would just trigger a refresh and potentially re-focus.
+				if (CommitType == ETextCommit::OnUserMovedFocus && (NewFullName.IsEmpty() || NewFullName.EndsWith(TEXT("."))))
+				{
 					return;
 				}
 				
