@@ -219,13 +219,36 @@ bool ULiveConfigJsonSystem::OnTick(float DeltaTime)
 		return false;
 	}
 
-	TArray<FString> FilesToCheckout;
+#if WITH_EDITOR
+	// in editor - checkout files
+	// all of this code could actually be editor only since we don't save to json at runtime
+	{
+		TArray<FString> FilesToCheckout;
+		for (const auto& Pair : QueuedSaves)
+		{
+			const FLiveConfigPropertyDefinition& PropertyDefinition = Pair.Value;
+			FString ActualPath = GetPropertyPath(PropertyDefinition.PropertyName.GetName());
+			FilesToCheckout.Add(ActualPath);
+		}
+		
+		for (const FName& PropertyName : QueuedDeletions)
+		{
+			FString ActualPath = GetPropertyPath(PropertyName);
+			FilesToCheckout.Add(ActualPath);
+		}
+
+		if (FilesToCheckout.Num() > 0)
+		{
+			SourceControlHelpers::CheckOutOrAddFiles(FilesToCheckout);
+			SourceControlHelpers::RevertUnchangedFiles(FilesToCheckout);
+		}
+	}
+#endif
 
 	for (const auto& Pair : QueuedSaves)
 	{
 		const FLiveConfigPropertyDefinition& PropertyDefinition = Pair.Value;
 		FString ActualPath = GetPropertyPath(PropertyDefinition.PropertyName.GetName());
-
 		FLiveConfigPropertyDefinition DefCopy = PropertyDefinition;
 		if (DefCopy.PropertyType == ELiveConfigPropertyType::Float && !DefCopy.Value.IsEmpty())
 		{
@@ -243,7 +266,6 @@ bool ULiveConfigJsonSystem::OnTick(float DeltaTime)
 			if (FFileHelper::SaveStringToFile(JsonString, *ActualPath))
 			{
 				UE_LOG(LogLiveConfig, Log, TEXT("Saved property %s to %s"), *PropertyDefinition.PropertyName.ToString(), *ActualPath);
-				FilesToCheckout.Add(ActualPath);
 			}
 			else
 			{
@@ -260,18 +282,9 @@ bool ULiveConfigJsonSystem::OnTick(float DeltaTime)
 			if (IFileManager::Get().Delete(*ActualPath))
 			{
 				UE_LOG(LogLiveConfig, Log, TEXT("Deleted property file %s"), *ActualPath);
-				FilesToCheckout.Add(ActualPath);
 			}
 		}
 	}
-
-#if WITH_EDITOR
-	if (FilesToCheckout.Num() > 0)
-	{
-		SourceControlHelpers::CheckOutOrAddFiles(FilesToCheckout);
-		SourceControlHelpers::RevertUnchangedFiles(FilesToCheckout);
-	}
-#endif
 
 	QueuedSaves.Empty();
 	QueuedDeletions.Empty();
