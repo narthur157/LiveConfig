@@ -370,6 +370,41 @@ void SLiveConfigPropertyManager::OnFilterTextChanged(const FText& InFilterText)
 			return *FoundFolder;
 		}
 
+		// Check if we already have a property that is a struct with this name
+		for (const auto& PropDef : RawPropertyList)
+		{
+			if (PropDef->PropertyName.ToString() == FolderPath && PropDef->PropertyType == ELiveConfigPropertyType::Struct)
+			{
+				// This struct property will be created later in the loop and will replace the folder if it's already here.
+				// But we need a node NOW to attach children to.
+				TSharedRef<FLiveConfigPropertyTreeNode> NewNode = MakeShared<FLiveConfigPropertyTreeNode>();
+				NewNode->FullPath = FolderPath;
+				NewNode->PropertyDefinition = PropDef;
+				
+				int32 LastDot;
+				if (FolderPath.FindLastChar('.', LastDot))
+				{
+					NewNode->DisplayName = FolderPath.RightChop(LastDot + 1);
+					FString ParentPath = FolderPath.Left(LastDot);
+					TSharedPtr<FLiveConfigPropertyTreeNode> ParentFolder = GetOrCreateFolder(ParentPath);
+					if (ParentFolder.IsValid())
+					{
+						ParentFolder->Children.Add(NewNode);
+						NewNode->Parent = ParentFolder;
+					}
+				}
+				else
+				{
+					NewNode->DisplayName = FolderPath;
+					RootNodes.Add(NewNode);
+				}
+
+				TSharedPtr<FLiveConfigPropertyTreeNode> NewNodePtr = NewNode;
+				FolderMap.Add(FolderPath, NewNodePtr);
+				return NewNodePtr;
+			}
+		}
+
 		TSharedRef<FLiveConfigPropertyTreeNode> NewFolder = MakeShared<FLiveConfigPropertyTreeNode>();
 		NewFolder->FullPath = FolderPath;
 		
@@ -407,6 +442,14 @@ void SLiveConfigPropertyManager::OnFilterTextChanged(const FText& InFilterText)
 		if (bPassesTextFilter && bPassesTagFilter)
 		{
 			FString FullName = PropDef->PropertyName.ToString();
+			
+			// If it's a struct property and it already exists in FolderMap (created by GetOrCreateFolder)
+			// we skip it here as it was already added.
+			if (PropDef->PropertyType == ELiveConfigPropertyType::Struct && FolderMap.Contains(FullName))
+			{
+				continue;
+			}
+
 			int32 LastDot;
 			if (FullName.FindLastChar('.', LastDot))
 			{
@@ -432,7 +475,45 @@ void SLiveConfigPropertyManager::OnFilterTextChanged(const FText& InFilterText)
 				NewNode->DisplayName = FullName;
 				NewNode->FullPath = FullName;
 				NewNode->PropertyDefinition = PropDef;
-				RootNodes.Add(NewNode);
+				
+				if (PropDef->PropertyType == ELiveConfigPropertyType::Struct)
+				{
+					// If it's a struct and we already have a folder with the same name,
+					// we should probably merge them or ensure the struct node becomes the parent.
+					if (TSharedPtr<FLiveConfigPropertyTreeNode>* ExistingFolder = FolderMap.Find(FullName))
+					{
+						// Merge existing folder into this struct node
+						NewNode->Children = (*ExistingFolder)->Children;
+						for (auto& Child : NewNode->Children)
+						{
+							Child->Parent = NewNode;
+						}
+						
+						// Replace folder in RootNodes or its parent's children
+						if (TSharedPtr<FLiveConfigPropertyTreeNode> FolderParent = (*ExistingFolder)->Parent.Pin())
+						{
+							FolderParent->Children.Remove((*ExistingFolder).ToSharedRef());
+							FolderParent->Children.Add(NewNode);
+							NewNode->Parent = FolderParent;
+						}
+						else
+						{
+							RootNodes.Remove((*ExistingFolder).ToSharedRef());
+							RootNodes.Add(NewNode);
+						}
+						
+						FolderMap[FullName] = NewNode;
+					}
+					else
+					{
+						RootNodes.Add(NewNode);
+						FolderMap.Add(FullName, NewNode);
+					}
+				}
+				else
+				{
+					RootNodes.Add(NewNode);
+				}
 			}
 		}
 	}
@@ -441,9 +522,17 @@ void SLiveConfigPropertyManager::OnFilterTextChanged(const FText& InFilterText)
 	{
 		Nodes.Sort([](const TSharedRef<FLiveConfigPropertyTreeNode>& A, const TSharedRef<FLiveConfigPropertyTreeNode>& B)
 		{
-			if (A->IsProperty() != B->IsProperty())
+			bool bAIsFolder = !A->PropertyDefinition.IsValid();
+			bool bAIsStruct = A->IsStruct();
+			bool bBIsFolder = !B->PropertyDefinition.IsValid();
+			bool bBIsStruct = B->IsStruct();
+
+			bool bAIsParent = bAIsFolder || bAIsStruct;
+			bool bBIsParent = bBIsFolder || bBIsStruct;
+
+			if (bAIsParent != bBIsParent)
 			{
-				return !A->IsProperty(); // Folders (not property) first
+				return bAIsParent; // Parents (Folders/Structs) first
 			}
 			
 			if (A->DisplayName.IsEmpty() || B->DisplayName.IsEmpty())

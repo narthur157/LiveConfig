@@ -1,6 +1,7 @@
 ﻿#include "SLiveConfigPropertyRow.h"
 #include "SLiveConfigTagRow.h"
 #include "SLiveConfigTagPicker.h"
+#include "LiveConfigJson.h"
 
 SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyRow);
 
@@ -62,7 +63,7 @@ void SLiveConfigPropertyRow::Construct(const FArguments& InArgs, const TSharedRe
 
 	if (!Item->IsProperty())
 	{
-		// Folder nodes get a distinct darker background
+		// Folder and Struct nodes get a distinct darker background
 		SetBorderImage(FAppStyle::GetBrush("WhiteBrush"));
 		SetBorderBackgroundColor(FLinearColor(0.02f, 0.02f, 0.02f, 1.0f));
 	}
@@ -133,19 +134,19 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateWidgetForColumn(const FName&
 	}
 	else if (ColumnName == ColumnNames::Description)
 	{
-		return Item->IsProperty() ? GenerateDescriptionColumnWidget() : SNullWidget::NullWidget;
+		return (Item->IsProperty() || Item->IsStruct()) ? GenerateDescriptionColumnWidget() : SNullWidget::NullWidget;
 	}
 	else if (ColumnName == ColumnNames::Type)
 	{
-		return Item->IsProperty() ? GenerateTypeColumnWidget() : SNullWidget::NullWidget;
+		return (Item->IsProperty() || Item->IsStruct()) ? GenerateTypeColumnWidget() : SNullWidget::NullWidget;
 	}
 	else if (ColumnName == ColumnNames::Value)
 	{
-		return Item->IsProperty() ? GenerateValueColumnWidget() : SNullWidget::NullWidget;
+		return (Item->IsProperty() || Item->IsStruct()) ? GenerateValueColumnWidget() : SNullWidget::NullWidget;
 	}
 	else if (ColumnName == ColumnNames::Tags)
 	{
-		return Item->IsProperty() ? GenerateTagsColumnWidget() : SNullWidget::NullWidget;
+		return (Item->IsProperty() || Item->IsStruct()) ? GenerateTagsColumnWidget() : SNullWidget::NullWidget;
 	}
 
 	return SNullWidget::NullWidget;
@@ -153,7 +154,7 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateWidgetForColumn(const FName&
 
 TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateActionsColumnWidget()
 {
-	if (!Item->IsProperty())
+	if (!Item->PropertyDefinition.IsValid())
 	{
 		return SNew(SBox)
 			.HeightOverride(RowHeight)
@@ -306,10 +307,14 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateNameColumnWidget()
 			.VAlign(VAlign_Center)
 			[
 				SNew(SExpanderArrow, SharedThis(this))
+				.Visibility_Lambda([this]()
+				{
+					return Item->Children.Num() > 0 ? EVisibility::Visible : EVisibility::Hidden;
+				})
 			]
 		];
 
-	if (Item->IsProperty())
+	if (Item->IsProperty() || Item->IsStruct())
 	{
 		NameContent->AddSlot()
 		.FillWidth(1.0f)
@@ -523,6 +528,11 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateDescriptionColumnWidget()
 
 TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateTypeColumnWidget()
 {
+	if (!Item->PropertyDefinition.IsValid())
+	{
+		return SNullWidget::NullWidget;
+	}
+
 	static TArray<TSharedPtr<ELiveConfigPropertyType>> TypeOptions;
 	if (TypeOptions.Num() == 0)
 	{
@@ -582,6 +592,11 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateTypeColumnWidget()
 
 TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateValueColumnWidget()
 {
+	if (!Item->PropertyDefinition.IsValid())
+	{
+		return SNullWidget::NullWidget;
+	}
+
 	return SNew(SBox)
 		.HeightOverride(RowHeight)
 		.Padding(FMargin(4.0f, 0.0f))
@@ -641,6 +656,11 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateValueColumnWidget()
 
 TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateTagsColumnWidget()
 {
+	if (!Item->PropertyDefinition.IsValid())
+	{
+		return SNullWidget::NullWidget;
+	}
+
 	TSharedRef<SWidget> TagsWidget = SNew(SBox)
 		.HeightOverride(RowHeight)
 		.Padding(FMargin(4.0f, 4.0f))
@@ -680,30 +700,42 @@ void SLiveConfigPropertyRow::OnStructPicked(const UScriptStruct* ChosenStruct)
 {
 	FSlateApplication::Get().DismissAllMenus();
 
+	TSharedPtr<FLiveConfigPropertyDefinition> OldDef = MakeShared<FLiveConfigPropertyDefinition>(*Item->PropertyDefinition);
+	Item->PropertyDefinition->Value = ChosenStruct ? ChosenStruct->GetName() : "";
+	OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value);
+
 	if (ChosenStruct)
 	{
-		TSharedPtr<FLiveConfigPropertyDefinition> OldDef = MakeShared<FLiveConfigPropertyDefinition>(*Item->PropertyDefinition);
-		Item->PropertyDefinition->Value = ChosenStruct->GetName();
-		OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value);
-
 		GenerateSubPropertiesForStruct(ChosenStruct);
 	}
 }
 
 void SLiveConfigPropertyRow::GenerateSubPropertiesForStruct(const UScriptStruct* Struct)
 {
-	if (!Struct || !Item->IsProperty())
+	UE_LOG(LogLiveConfig, Log, TEXT("GenerateSubPropertiesForStruct called for struct: %s"), Struct ? *Struct->GetName() : TEXT("None"));
+
+	if (!Struct || (!Item->IsProperty() && !Item->IsStruct()))
 	{
+		UE_LOG(LogLiveConfig, Warning, TEXT("GenerateSubPropertiesForStruct: Invalid struct or item type (IsProperty: %d, IsStruct: %d)"), Item->IsProperty(), Item->IsStruct());
 		return;
 	}
 
 	ULiveConfigSystem* System = ULiveConfigSystem::Get();
 	if (!System)
 	{
+		UE_LOG(LogLiveConfig, Error, TEXT("GenerateSubPropertiesForStruct: System is null"));
 		return;
 	}
 
 	FString Prefix = Item->PropertyDefinition->PropertyName.ToString();
+	UE_LOG(LogLiveConfig, Log, TEXT("GenerateSubPropertiesForStruct: Using prefix: %s"), *Prefix);
+	
+	if (Prefix.IsEmpty() || Prefix.EndsWith(TEXT(".")))
+	{
+		UE_LOG(LogLiveConfig, Warning, TEXT("GenerateSubPropertiesForStruct: Prefix is empty or ends with dot, skipping generation"));
+		return;
+	}
+
 	bool bChanged = false;
 
 	for (TFieldIterator<FProperty> It(Struct); It; ++It)
@@ -714,6 +746,7 @@ void SLiveConfigPropertyRow::GenerateSubPropertiesForStruct(const UScriptStruct*
 
 		if (System->PropertyDefinitions.Contains(ConfigProp))
 		{
+			UE_LOG(LogLiveConfig, Log, TEXT("GenerateSubPropertiesForStruct: Property %s already exists, skipping"), *FullPropName);
 			continue;
 		}
 
@@ -742,7 +775,7 @@ void SLiveConfigPropertyRow::GenerateSubPropertiesForStruct(const UScriptStruct*
 		}
 		else
 		{
-			// Skip unsupported types
+			UE_LOG(LogLiveConfig, Log, TEXT("GenerateSubPropertiesForStruct: Skipping unsupported property type for %s"), *Prop->GetName());
 			continue;
 		}
 
@@ -752,12 +785,20 @@ void SLiveConfigPropertyRow::GenerateSubPropertiesForStruct(const UScriptStruct*
 		NewDef.Value = DefaultValue;
 		NewDef.Tags = Item->PropertyDefinition->Tags; // Inherit tags from parent struct property
 
+		UE_LOG(LogLiveConfig, Log, TEXT("GenerateSubPropertiesForStruct: Adding property %s"), *FullPropName);
 		System->PropertyDefinitions.Add(ConfigProp, NewDef);
+		
+		if (ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get())
+		{
+			JsonSystem->SavePropertyToFile(NewDef);
+		}
+		
 		bChanged = true;
 	}
 
 	if (bChanged)
 	{
+		UE_LOG(LogLiveConfig, Log, TEXT("GenerateSubPropertiesForStruct: Refreshing system and UI"));
 		System->RefreshFromSettings();
 		OnRequestRefresh.ExecuteIfBound();
 	}
@@ -861,7 +902,24 @@ void SLiveConfigPropertyRow::ValueTextCommitted(const FText& NewText, ETextCommi
 		bJustFinishedEnterCommit = true;
 	}
 
-	if (Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Int)
+	if (Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Struct)
+	{
+		UScriptStruct* Struct = FindObject<UScriptStruct>(nullptr, *NewVal, EFindObjectFlags::ExactClass);
+		if (!Struct)
+		{
+			UE_LOG(LogLiveConfig, Warning, TEXT("SLiveConfigPropertyRow: Struct not found for value '%s'"), *NewVal);
+			return;
+		}
+		
+		OnStructPicked(Struct);
+		
+		if (Struct)
+		{
+			// Force a manager refresh because sub-properties might have been added
+			OnRequestRefresh.ExecuteIfBound();
+		}
+	}
+	else if (Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Int)
 	{
 		if (NewVal.IsEmpty() || NewVal == TEXT("-"))
 		{

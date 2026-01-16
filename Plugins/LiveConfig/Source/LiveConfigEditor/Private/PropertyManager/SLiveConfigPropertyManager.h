@@ -15,7 +15,8 @@ struct FLiveConfigPropertyTreeNode : public TSharedFromThis<FLiveConfigPropertyT
 	bool bIsExpanded = true;
 	bool bNeedsFocus = false;
 
-	bool IsProperty() const { return PropertyDefinition.IsValid(); }
+	bool IsProperty() const { return PropertyDefinition.IsValid() && PropertyDefinition->PropertyType != ELiveConfigPropertyType::Struct; }
+	bool IsStruct() const { return PropertyDefinition.IsValid() && PropertyDefinition->PropertyType == ELiveConfigPropertyType::Struct; }
 };
 
 class SLiveConfigPropertyManager : public SCompoundWidget
