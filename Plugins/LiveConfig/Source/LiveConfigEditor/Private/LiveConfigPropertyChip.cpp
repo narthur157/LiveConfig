@@ -22,7 +22,11 @@ void SLiveConfigPropertyChip::PrivateRegisterAttributes(FSlateAttributeInitializ
 		}));
 }
 
-SLiveConfigPropertyChip::SLiveConfigPropertyChip() : ToolTipTextAttribute(*this), TextAttribute(*this), IsSelectedAttribute(*this), ShowClearButtonAttribute(*this)
+SLiveConfigPropertyChip::SLiveConfigPropertyChip()
+	: ToolTipTextAttribute(*this)
+	, TextAttribute(*this)
+	, IsSelectedAttribute(*this)
+	, ShowClearButtonAttribute(*this)
 {
 }
 

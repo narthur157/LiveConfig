@@ -257,6 +257,69 @@ bool ULiveConfigSystem::GetBoolValue(FLiveConfigProperty Key)
     return Cache.GetValue<bool>(Key);
 }
 
+void ULiveConfigSystem::GetLiveConfigStruct_Internal(UScriptStruct* Struct, void* OutStructPtr, FLiveConfigProperty Prefix)
+{
+	if (!Struct || !OutStructPtr)
+	{
+		return;
+	}
+
+	for (TFieldIterator<FProperty> It(Struct); It; ++It)
+	{
+		FProperty* Prop = *It;
+		FString FullPropName = Prefix.ToString() + TEXT(".") + Prop->GetName();
+		FLiveConfigProperty ConfigProp(FullPropName);
+
+		if (FDoubleProperty* DoubleProp = CastField<FDoubleProperty>(Prop))
+		{
+			double Value = (double)GetFloatValue(ConfigProp);
+			DoubleProp->SetPropertyValue_InContainer(OutStructPtr, Value);
+		}
+		else if (FFloatProperty* FloatProp = CastField<FFloatProperty>(Prop))
+		{
+			float Value = GetFloatValue(ConfigProp);
+			FloatProp->SetPropertyValue_InContainer(OutStructPtr, Value);
+		}
+		else if (FIntProperty* IntProp = CastField<FIntProperty>(Prop))
+		{
+			int32 Value = GetIntValue(ConfigProp);
+			IntProp->SetPropertyValue_InContainer(OutStructPtr, Value);
+		}
+		else if (FBoolProperty* BoolProp = CastField<FBoolProperty>(Prop))
+		{
+			bool Value = GetBoolValue(ConfigProp);
+			BoolProp->SetPropertyValue_InContainer(OutStructPtr, Value);
+		}
+		else if (FStrProperty* StrProp = CastField<FStrProperty>(Prop))
+		{
+			FString Value = GetStringValue(ConfigProp);
+			StrProp->SetPropertyValue_InContainer(OutStructPtr, Value);
+		}
+		else if (FNameProperty* NameProp = CastField<FNameProperty>(Prop))
+		{
+			FName Value = FName(*GetStringValue(ConfigProp));
+			NameProp->SetPropertyValue_InContainer(OutStructPtr, Value);
+		}
+		else if (FTextProperty* TextProp = CastField<FTextProperty>(Prop))
+		{
+			FText Value = FText::FromString(GetStringValue(ConfigProp));
+			TextProp->SetPropertyValue_InContainer(OutStructPtr, Value);
+		}
+		else if (FEnumProperty* EnumProp = CastField<FEnumProperty>(Prop))
+		{
+			FString Value = GetStringValue(ConfigProp);
+			if (UEnum* Enum = EnumProp->GetEnum())
+			{
+				int64 EnumValue = Enum->GetValueByNameString(Value);
+				if (EnumValue != INDEX_NONE)
+				{
+					EnumProp->GetUnderlyingProperty()->SetIntPropertyValue(EnumProp->ContainerPtrToValuePtr<void>(OutStructPtr), EnumValue);
+				}
+			}
+		}
+	}
+}
+
 void ULiveConfigSystem::PopulateAutoCompleteEntries(TArray<FAutoCompleteCommand>& Entries)
 {
     // Use iterator to avoid copying the full property list 

@@ -16,7 +16,7 @@ class SLiveConfigPropertyCombo : public SCompoundWidget
 	
 public:
 	SLiveConfigPropertyCombo();
-    DECLARE_DELEGATE_OneParam(FOnPropertyChanged, FLiveConfigProperty);
+    DECLARE_DELEGATE_OneParam(FOnPropertyChanged, FLiveConfigProperty)
 	
 	SLATE_BEGIN_ARGS(SLiveConfigPropertyCombo) { }
 		// Flag to set if the list is read only
@@ -26,7 +26,7 @@ public:
 		SLATE_ATTRIBUTE(TOptional<ELiveConfigPropertyType>, FilterType)
 		
 		SLATE_EVENT(FOnPropertyChanged, OnPropertyChanged)
-		
+	
 	SLATE_END_ARGS()
 
 	/** Constructs this widget with InArgs */

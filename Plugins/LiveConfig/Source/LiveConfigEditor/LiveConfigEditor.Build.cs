@@ -31,7 +31,8 @@ public class LiveConfigEditor : ModuleRules
                 "EditorStyle",
                 "InputCore",
                 "ToolMenus",
-                "ApplicationCore"
+                "ApplicationCore",
+                "StructViewer"
             }
         );
     }

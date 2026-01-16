@@ -5,6 +5,12 @@
 #define LOCTEXT_NAMESPACE "LiveConfigTagPicker"
 
 SLATE_IMPLEMENT_WIDGET(SLiveConfigTagPicker);
+
+SLiveConfigTagPicker::SLiveConfigTagPicker()
+	: KnownTagsAttribute(*this)
+{
+}
+
 void SLiveConfigTagPicker::PrivateRegisterAttributes(FSlateAttributeInitializer& AttributeInitializer)
 {
 	SLATE_ADD_MEMBER_ATTRIBUTE_DEFINITION_WITH_NAME(AttributeInitializer, "KnownTags", KnownTagsAttribute, EInvalidateWidgetReason::Layout);

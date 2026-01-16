@@ -23,7 +23,8 @@ enum class ELiveConfigPropertyType : uint8
 	String,
 	Int,
 	Float,
-	Bool
+	Bool,
+	Struct
 };
 
 USTRUCT(BlueprintType)

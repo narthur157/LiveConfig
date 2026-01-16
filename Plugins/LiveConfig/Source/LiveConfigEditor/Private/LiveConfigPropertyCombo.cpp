@@ -15,7 +15,7 @@
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
-SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyCombo)
+SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyCombo);
 
 void SLiveConfigPropertyCombo::PrivateRegisterAttributes(FSlateAttributeInitializer& AttributeInitializer)
 {
@@ -23,7 +23,9 @@ void SLiveConfigPropertyCombo::PrivateRegisterAttributes(FSlateAttributeInitiali
     SLATE_ADD_MEMBER_ATTRIBUTE_DEFINITION_WITH_NAME(AttributeInitializer, "FilterType", FilterTypeAttribute, EInvalidateWidgetReason::Layout);
 }
 
-SLiveConfigPropertyCombo::SLiveConfigPropertyCombo() : RowNameAttribute(*this), FilterTypeAttribute(*this)
+SLiveConfigPropertyCombo::SLiveConfigPropertyCombo()
+    : RowNameAttribute(*this)
+    , FilterTypeAttribute(*this)
 {
 }
 

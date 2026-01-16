@@ -24,7 +24,7 @@ class SLiveConfigPropertyManager : public SCompoundWidget
 public:
 	SLATE_BEGIN_ARGS(SLiveConfigPropertyManager)
 	{}
-	SLATE_END_ARGS();
+	SLATE_END_ARGS()
 
 	void Construct(const FArguments& InArgs);
 	virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;

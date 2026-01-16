@@ -1,5 +1,6 @@
 #pragma once
 
+#include "UObject/UnrealType.h"
 #include "Subsystems/EngineSubsystem.h"
 #include "Interfaces/IHttpRequest.h"
 #include "CoreMinimal.h"
@@ -52,6 +53,25 @@ public:
     /** Gets a configuration value as a boolean. */
     UFUNCTION(BlueprintCallable, Category = "Live Config")
     bool GetBoolValue(FLiveConfigProperty Key);
+
+    /**
+     * Look up values for a struct's properties using a prefix.
+     * Each UProperty in the struct will be looked up as Prefix.PropertyName.
+     */
+    template<typename T>
+    T GetLiveConfigStruct(FLiveConfigProperty Prefix)
+    {
+        T OutStruct;
+        UScriptStruct* Struct = TBaseStructure<T>::Get();
+        if (!Struct)
+        {
+            Struct = T::StaticStruct();
+        }
+        GetLiveConfigStruct_Internal(Struct, &OutStruct, Prefix);
+        return OutStruct;
+    }
+
+    void GetLiveConfigStruct_Internal(class UScriptStruct* Struct, void* OutStructPtr, FLiveConfigProperty Prefix);
 
     /** Returns true if the data has been successfully downloaded and parsed. */
     UFUNCTION(BlueprintCallable, Category = "Live Config")

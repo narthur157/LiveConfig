@@ -9,7 +9,7 @@ class SLiveConfigTagRow : public SCompoundWidget
 	SLATE_DECLARE_WIDGET(SLiveConfigTagRow, SCompoundWidget);
 public:
 	SLATE_BEGIN_ARGS(SLiveConfigTagRow) {}
-	SLATE_END_ARGS();
+	SLATE_END_ARGS()
 
 	void Construct(const FArguments& InArgs, TSharedPtr<FLiveConfigPropertyDefinition> InItem, int32 InIndex, FSimpleDelegate InOnChanged, TFunction<FSlateColor(FName)> InGetTagColor);
 

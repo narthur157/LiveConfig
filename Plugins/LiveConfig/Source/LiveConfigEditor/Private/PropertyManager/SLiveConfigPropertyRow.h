@@ -9,7 +9,6 @@ typedef SMultiColumnTableRow<TSharedRef<FLiveConfigPropertyTreeNode>> SPropertyR
 
 class SLiveConfigPropertyRow : public SPropertyRowParent
 {
-	SLATE_DECLARE_WIDGET(SLiveConfigPropertyRow, SPropertyRowParent);
 public:
 	struct ColumnNames
 	{
@@ -21,7 +20,7 @@ public:
 		static const FName Actions;
 	};
 
-	SLiveConfigPropertyRow() : KnownTagsAttribute(*this) {}
+	SLiveConfigPropertyRow();
 	
 	DECLARE_DELEGATE_ThreeParams(FOnPropertyPropertyChanged, TSharedPtr<FLiveConfigPropertyDefinition>, TSharedPtr<FLiveConfigPropertyDefinition>, ELiveConfigPropertyChangeType);
 	DECLARE_DELEGATE_OneParam(FOnDeleteProperty, TSharedPtr<FLiveConfigPropertyDefinition>);
@@ -33,19 +32,19 @@ public:
 	DECLARE_DELEGATE_OneParam(FOnNavigateValue, TSharedPtr<FLiveConfigPropertyTreeNode>);
 
 	SLATE_BEGIN_ARGS(SLiveConfigPropertyRow) {}
-		SLATE_EVENT(FOnDeleteProperty, OnDeleteProperty);
-		SLATE_EVENT(FOnAddPropertyAtFolder, OnAddPropertyAtFolder);
-		SLATE_EVENT(FOnBulkTagFolder, OnBulkTagFolder);
-		SLATE_EVENT(FIsNameDuplicate, IsNameDuplicate);
-		SLATE_EVENT(FOnPropertyPropertyChanged, OnChanged);
-		SLATE_EVENT(FOnRequestRefresh, OnRequestRefresh);
-		SLATE_EVENT(FOnNavigatePropertyName, OnNavigateDown);
-		SLATE_EVENT(FOnNavigatePropertyName, OnNavigateUp);
-		SLATE_EVENT(FOnNavigateValue, OnNavigateValue);
-		SLATE_EVENT(FSimpleDelegate, OnAddNewTag);
-		SLATE_ARGUMENT(TFunction<FSlateColor(FName)>, GetTagColor);
-		SLATE_ATTRIBUTE(TArray<FName>, KnownTags);
-	SLATE_END_ARGS();
+		SLATE_EVENT(FOnDeleteProperty, OnDeleteProperty)
+		SLATE_EVENT(FOnAddPropertyAtFolder, OnAddPropertyAtFolder)
+		SLATE_EVENT(FOnBulkTagFolder, OnBulkTagFolder)
+		SLATE_EVENT(FIsNameDuplicate, IsNameDuplicate)
+		SLATE_EVENT(FOnPropertyPropertyChanged, OnChanged)
+		SLATE_EVENT(FOnRequestRefresh, OnRequestRefresh)
+		SLATE_EVENT(FOnNavigatePropertyName, OnNavigateDown)
+		SLATE_EVENT(FOnNavigatePropertyName, OnNavigateUp)
+		SLATE_EVENT(FOnNavigateValue, OnNavigateValue)
+		SLATE_EVENT(FSimpleDelegate, OnAddNewTag)
+		SLATE_ARGUMENT(TFunction<FSlateColor(FName)>, GetTagColor)
+		SLATE_ATTRIBUTE(TArray<FName>, KnownTags)
+	SLATE_END_ARGS()
 
 	void Construct(const FArguments& InArgs, const TSharedRef<STableViewBase>& InOwnerTable, TSharedPtr<FLiveConfigPropertyTreeNode>
 	               InItem, int32 InIndex);
@@ -65,6 +64,10 @@ private:
 	TSharedRef<SWidget> GenerateValueColumnWidget();
 	TSharedRef<SWidget> GenerateTagsColumnWidget();
 	TSharedRef<SWidget> GenerateActionsColumnWidget();
+
+	TSharedRef<SWidget> OnGetStructPickerMenu();
+	void OnStructPicked(const UScriptStruct* ChosenStruct);
+	void GenerateSubPropertiesForStruct(const UScriptStruct* Struct);
 
 	void RefreshTags();
 	void OnTagChanged();
@@ -87,7 +90,7 @@ private:
 	TSharedPtr<class SEditableTextBox> NameTextBox;
 	TSharedPtr<class SEditableTextBox> ValueTextBox;
 	TSharedPtr<class SCheckBox> ValueCheckBox;
-	TSlateAttribute<TArray<FName>> KnownTagsAttribute;
+	TSlateAttribute<TArray<FName>, EInvalidateWidgetReason::Layout> KnownTagsAttribute;
 	bool bNeedsFocus = false;
 	bool bNeedsValueFocus = false;
 	bool bIsCommitting = false;

@@ -10,7 +10,7 @@ class SLiveConfigTagPicker : public SCompoundWidget
 {
 	SLATE_DECLARE_WIDGET(SLiveConfigTagPicker, SCompoundWidget);
 public:
-	SLiveConfigTagPicker() : KnownTagsAttribute(*this) {}
+	SLiveConfigTagPicker();
 
 	SLATE_BEGIN_ARGS(SLiveConfigTagPicker)
 		: _TagVisibilityFilter()

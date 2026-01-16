@@ -4,9 +4,9 @@
 
 SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyRow);
 
-void SLiveConfigPropertyRow::PrivateRegisterAttributes(FSlateAttributeInitializer& AttributeInitializer)
+SLiveConfigPropertyRow::SLiveConfigPropertyRow()
+	: KnownTagsAttribute(*this)
 {
-	SLATE_ADD_MEMBER_ATTRIBUTE_DEFINITION_WITH_NAME(AttributeInitializer, "KnownTags", KnownTagsAttribute, EInvalidateWidgetReason::Layout);
 }
 
 #include "Widgets/Views/STableViewBase.h"
@@ -26,6 +26,7 @@ void SLiveConfigPropertyRow::PrivateRegisterAttributes(FSlateAttributeInitialize
 #include "Framework/Application/SlateApplication.h"
 #include "Widgets/Text/SMultiLineEditableText.h"
 #include "Misc/ComparisonUtility.h"
+#include "StructViewerModule.h"
 
 #define LOCTEXT_NAMESPACE "SLiveConfigPropertyManager"
 
@@ -36,6 +37,7 @@ const FName SLiveConfigPropertyRow::ColumnNames::Value("Value");
 const FName SLiveConfigPropertyRow::ColumnNames::Tags("Tags");
 const FName SLiveConfigPropertyRow::ColumnNames::Actions("Actions");
 
+// ReSharper disable once CppPassValueParameterByConstReference
 void SLiveConfigPropertyRow::Construct(const FArguments& InArgs, const TSharedRef<STableViewBase>& InOwnerTable, TSharedPtr<FLiveConfigPropertyTreeNode>
                                        InItem, int32 InIndex)
 {
@@ -528,6 +530,7 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateTypeColumnWidget()
 		TypeOptions.Add(MakeShared<ELiveConfigPropertyType>(ELiveConfigPropertyType::Int));
 		TypeOptions.Add(MakeShared<ELiveConfigPropertyType>(ELiveConfigPropertyType::Float));
 		TypeOptions.Add(MakeShared<ELiveConfigPropertyType>(ELiveConfigPropertyType::Bool));
+		TypeOptions.Add(MakeShared<ELiveConfigPropertyType>(ELiveConfigPropertyType::Struct));
 	}
 
 	return SNew(SBox)
@@ -552,6 +555,7 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateTypeColumnWidget()
 					switch (Item->PropertyDefinition->PropertyType)
 					{
 					case ELiveConfigPropertyType::String:
+					case ELiveConfigPropertyType::Struct:
 						Item->PropertyDefinition->Value = "";
 						break;
 					case ELiveConfigPropertyType::Int:
@@ -586,7 +590,12 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateValueColumnWidget()
 			SNew(SWidgetSwitcher)
 			.WidgetIndex_Lambda([this]()
 			{
-				return Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Bool ? 1 : 0;
+				switch (Item->PropertyDefinition->PropertyType)
+				{
+					case ELiveConfigPropertyType::Bool: return 1;
+					case ELiveConfigPropertyType::Struct: return 2;
+					default: return 0;
+				}
 			})
 			+ SWidgetSwitcher::Slot()
 			[
@@ -608,6 +617,24 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateValueColumnWidget()
 					Item->PropertyDefinition->Value = NewState == ECheckBoxState::Checked ? TEXT("true") : TEXT("false");
 					OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value);
 				})
+			]
+			+ SWidgetSwitcher::Slot()
+			[
+				SNew(SComboButton)
+				.OnGetMenuContent(this, &SLiveConfigPropertyRow::OnGetStructPickerMenu)
+				.ContentPadding(FMargin(4.0f, 2.0f))
+				.ButtonContent()
+				[
+					SNew(STextBlock)
+					.Text_Lambda([this]()
+					{
+						if (Item->PropertyDefinition->Value.IsEmpty())
+						{
+							return LOCTEXT("None", "None");
+						}
+						return FText::FromString(Item->PropertyDefinition->Value);
+					})
+				]
 			]
 		];
 }
@@ -631,6 +658,109 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateTagsColumnWidget()
 	
 	RefreshTags();
 	return TagsWidget;
+}
+
+TSharedRef<SWidget> SLiveConfigPropertyRow::OnGetStructPickerMenu()
+{
+	FStructViewerModule& StructViewerModule = FModuleManager::LoadModuleChecked<FStructViewerModule>("StructViewer");
+
+	FStructViewerInitializationOptions Options;
+	Options.Mode = EStructViewerMode::StructPicker;
+	
+	
+	return SNew(SBox)
+		.WidthOverride(300.0f)
+		.HeightOverride(400.0f)
+		[
+			StructViewerModule.CreateStructViewer(Options, FOnStructPicked::CreateSP(this, &SLiveConfigPropertyRow::OnStructPicked))
+		];
+}
+
+void SLiveConfigPropertyRow::OnStructPicked(const UScriptStruct* ChosenStruct)
+{
+	FSlateApplication::Get().DismissAllMenus();
+
+	if (ChosenStruct)
+	{
+		TSharedPtr<FLiveConfigPropertyDefinition> OldDef = MakeShared<FLiveConfigPropertyDefinition>(*Item->PropertyDefinition);
+		Item->PropertyDefinition->Value = ChosenStruct->GetName();
+		OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value);
+
+		GenerateSubPropertiesForStruct(ChosenStruct);
+	}
+}
+
+void SLiveConfigPropertyRow::GenerateSubPropertiesForStruct(const UScriptStruct* Struct)
+{
+	if (!Struct || !Item->IsProperty())
+	{
+		return;
+	}
+
+	ULiveConfigSystem* System = ULiveConfigSystem::Get();
+	if (!System)
+	{
+		return;
+	}
+
+	FString Prefix = Item->PropertyDefinition->PropertyName.ToString();
+	bool bChanged = false;
+
+	for (TFieldIterator<FProperty> It(Struct); It; ++It)
+	{
+		FProperty* Prop = *It;
+		FString FullPropName = Prefix + TEXT(".") + Prop->GetName();
+		FLiveConfigProperty ConfigProp(FullPropName);
+
+		if (System->PropertyDefinitions.Contains(ConfigProp))
+		{
+			continue;
+		}
+
+		ELiveConfigPropertyType PropType = ELiveConfigPropertyType::String;
+		FString DefaultValue = "";
+
+		if (CastField<FDoubleProperty>(Prop) || CastField<FFloatProperty>(Prop))
+		{
+			PropType = ELiveConfigPropertyType::Float;
+			DefaultValue = "0";
+		}
+		else if (CastField<FIntProperty>(Prop))
+		{
+			PropType = ELiveConfigPropertyType::Int;
+			DefaultValue = "0";
+		}
+		else if (CastField<FBoolProperty>(Prop))
+		{
+			PropType = ELiveConfigPropertyType::Bool;
+			DefaultValue = "false";
+		}
+		else if (CastField<FStrProperty>(Prop) || CastField<FNameProperty>(Prop) || CastField<FTextProperty>(Prop) || CastField<FEnumProperty>(Prop))
+		{
+			PropType = ELiveConfigPropertyType::String;
+			DefaultValue = "";
+		}
+		else
+		{
+			// Skip unsupported types
+			continue;
+		}
+
+		FLiveConfigPropertyDefinition NewDef;
+		NewDef.PropertyName = ConfigProp;
+		NewDef.PropertyType = PropType;
+		NewDef.Value = DefaultValue;
+		NewDef.Tags = Item->PropertyDefinition->Tags; // Inherit tags from parent struct property
+
+		System->PropertyDefinitions.Add(ConfigProp, NewDef);
+		bChanged = true;
+	}
+
+	if (bChanged)
+	{
+		System->RefreshFromSettings();
+		OnRequestRefresh.ExecuteIfBound();
+	}
 }
 
 void SLiveConfigPropertyRow::OnAddNewTagClicked()

@@ -19,11 +19,11 @@ public:
         , _bReadOnly(false)
         , _bMultiSelect(false)
     {}
-    SLATE_ARGUMENT(FName, Filter);
-    SLATE_ARGUMENT(TOptional<ELiveConfigPropertyType>, FilterType);
-    SLATE_ARGUMENT(bool, bReadOnly);
-    SLATE_ARGUMENT(bool, bMultiSelect);
-    SLATE_EVENT(FOnPropertyChanged, OnPropertyChanged);
+        SLATE_ARGUMENT(FName, Filter)
+        SLATE_ARGUMENT(TOptional<ELiveConfigPropertyType>, FilterType)
+        SLATE_ARGUMENT(bool, bReadOnly)
+        SLATE_ARGUMENT(bool, bMultiSelect)
+        SLATE_EVENT(FOnPropertyChanged, OnPropertyChanged)
     SLATE_END_ARGS()
 
     void Construct(const FArguments& InArgs);
