@@ -1,6 +1,7 @@
 ﻿#include "SLiveConfigPropertyManager.h"
 #include "SLiveConfigPropertyRow.h"
 #include "SLiveConfigTagRow.h"
+#include "SLiveConfigTagPicker.h"
 #include "Widgets/Text/STextBlock.h"
 #include "Widgets/Layout/SBox.h"
 #include "Widgets/Views/SListView.h"
@@ -207,7 +208,7 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 					.HeaderContentPadding(FMargin(4.0f, 0.0f))
 					+ SHeaderRow::Column(SLiveConfigPropertyRow::ColumnNames::Actions)
 					.DefaultLabel(LOCTEXT("ActionsColumn", ""))
-					.FixedWidth(120.0f)
+					.FixedWidth(180.0f)
 				)
 			]
 		]
@@ -238,6 +239,49 @@ TSharedRef<ITableRow> SLiveConfigPropertyManager::OnGenerateRow(TSharedRef<FLive
 	return SNew(SLiveConfigPropertyRow, OwnerTable, InItem, 0)
 		.OnDeleteProperty(this, &SLiveConfigPropertyManager::RemoveProperty)
 		.OnAddPropertyAtFolder(this, &SLiveConfigPropertyManager::OnAddPropertyAtFolder)
+		.OnBulkTagFolder_Lambda([this](FString FolderPath, FName TagName)
+		{
+			TArray<TSharedRef<FLiveConfigPropertyTreeNode>> FolderProperties;
+			
+			// Find the folder node
+			auto FindFolder = [&FolderPath](auto& Self, const TArray<TSharedRef<FLiveConfigPropertyTreeNode>>& Nodes) -> TSharedPtr<FLiveConfigPropertyTreeNode>
+			{
+				for (const auto& Node : Nodes)
+				{
+					if (Node->FullPath == FolderPath) return Node;
+					TSharedPtr<FLiveConfigPropertyTreeNode> Found = Self(Self, Node->Children);
+					if (Found.IsValid()) return Found;
+				}
+				return nullptr;
+			};
+
+			TSharedPtr<FLiveConfigPropertyTreeNode> FolderNode = FindFolder(FindFolder, RootNodes);
+			if (FolderNode.IsValid())
+			{
+				// Collect all descendant properties
+				auto CollectProperties = [&FolderProperties](auto& Self, TSharedRef<FLiveConfigPropertyTreeNode> Node) -> void
+				{
+					if (Node->IsProperty())
+					{
+						FolderProperties.Add(Node);
+					}
+					for (const auto& Child : Node->Children)
+					{
+						Self(Self, Child);
+					}
+				};
+				
+				for (const auto& Child : FolderNode->Children)
+				{
+					CollectProperties(CollectProperties, Child);
+				}
+
+				if (FolderProperties.Num() > 0)
+				{
+					BulkAddTag(FolderProperties, TagName);
+				}
+			}
+		})
 		.IsNameDuplicate(this, &SLiveConfigPropertyManager::IsNameDuplicate)
 		.OnChanged(this, &SLiveConfigPropertyManager::OnPropertyRowChanged)
 		.OnRequestRefresh_Lambda([this]() { if (PropertyTreeView.IsValid()) PropertyTreeView->RequestTreeRefresh(); })
@@ -401,6 +445,12 @@ void SLiveConfigPropertyManager::OnFilterTextChanged(const FText& InFilterText)
 			{
 				return !A->IsProperty(); // Folders (not property) first
 			}
+			
+			if (A->DisplayName.IsEmpty() || B->DisplayName.IsEmpty())
+			{
+				return false;
+			}
+			
 			return UE::ComparisonUtility::CompareNaturalOrder(A->DisplayName, B->DisplayName) < 0;
 		});
 	};
@@ -676,25 +726,16 @@ TSharedPtr<SWidget> SLiveConfigPropertyManager::OnGetContextMenuContent()
 			return;
 		}
 
-		for (const FName& Tag : KnownTags)
-		{
-			SubMenuBuilder.AddMenuEntry(
-				FText::FromName(Tag),
-				FText::Format(LOCTEXT("AddTagToPropertiesTooltip", "Add tag '{0}' to all target properties"), FText::FromName(Tag)),
-				FSlateIcon(),
-				FUIAction(FExecuteAction::CreateSP(this, &SLiveConfigPropertyManager::BulkAddTag, PropertyNodes, Tag))
-			);
-		}
-
-		if (KnownTags.Num() == 0)
-		{
-			SubMenuBuilder.AddMenuEntry(
-				LOCTEXT("NoTagsAvailable", "No tags available. Create tags in the Tag Manager first."),
-				FText::GetEmpty(),
-				FSlateIcon(),
-				FUIAction(FExecuteAction(), FCanExecuteAction::CreateLambda([](){ return false; }))
-			);
-		}
+		SubMenuBuilder.AddWidget(
+			SNew(SLiveConfigTagPicker)
+			.KnownTags(KnownTags)
+			.OnTagSelected_Lambda([this, PropertyNodes](FName SelectedTag)
+			{
+				BulkAddTag(PropertyNodes, SelectedTag);
+			}),
+			FText::GetEmpty(),
+			true // No padding
+		);
 	};
 
 	if (SelectedItems.Num() > 0)

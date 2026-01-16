@@ -26,6 +26,7 @@ public:
 	DECLARE_DELEGATE_ThreeParams(FOnPropertyPropertyChanged, TSharedPtr<FLiveConfigPropertyDefinition>, TSharedPtr<FLiveConfigPropertyDefinition>, ELiveConfigPropertyChangeType);
 	DECLARE_DELEGATE_OneParam(FOnDeleteProperty, TSharedPtr<FLiveConfigPropertyDefinition>);
 	DECLARE_DELEGATE_OneParam(FOnAddPropertyAtFolder, FString);
+	DECLARE_DELEGATE_TwoParams(FOnBulkTagFolder, FString, FName);
 	DECLARE_DELEGATE_RetVal_OneParam(bool, FIsNameDuplicate, FName);
 	DECLARE_DELEGATE(FOnRequestRefresh);
 	DECLARE_DELEGATE_OneParam(FOnNavigatePropertyName, TSharedPtr<FLiveConfigPropertyTreeNode>);
@@ -34,6 +35,7 @@ public:
 	SLATE_BEGIN_ARGS(SLiveConfigPropertyRow) {}
 		SLATE_EVENT(FOnDeleteProperty, OnDeleteProperty);
 		SLATE_EVENT(FOnAddPropertyAtFolder, OnAddPropertyAtFolder);
+		SLATE_EVENT(FOnBulkTagFolder, OnBulkTagFolder);
 		SLATE_EVENT(FIsNameDuplicate, IsNameDuplicate);
 		SLATE_EVENT(FOnPropertyPropertyChanged, OnChanged);
 		SLATE_EVENT(FOnRequestRefresh, OnRequestRefresh);
@@ -73,6 +75,7 @@ private:
 	TSharedPtr<FLiveConfigPropertyTreeNode> Item;
 	FOnDeleteProperty OnDeleteProperty;
 	FOnAddPropertyAtFolder OnAddPropertyAtFolder;
+	FOnBulkTagFolder OnBulkTagFolder;
 	FIsNameDuplicate OnIsNameDuplicate;
 	FOnPropertyPropertyChanged OnChanged;
 	FOnRequestRefresh OnRequestRefresh;
@@ -84,7 +87,7 @@ private:
 	TSharedPtr<class SEditableTextBox> NameTextBox;
 	TSharedPtr<class SEditableTextBox> ValueTextBox;
 	TSharedPtr<class SCheckBox> ValueCheckBox;
-	TSlateAttribute<TArray<FName>, EInvalidateWidgetReason::Layout> KnownTagsAttribute;
+	TSlateAttribute<TArray<FName>> KnownTagsAttribute;
 	bool bNeedsFocus = false;
 	bool bNeedsValueFocus = false;
 	bool bIsCommitting = false;

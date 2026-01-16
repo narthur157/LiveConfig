@@ -1,5 +1,14 @@
 ﻿#include "SLiveConfigPropertyRow.h"
 #include "SLiveConfigTagRow.h"
+#include "SLiveConfigTagPicker.h"
+
+SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyRow);
+
+void SLiveConfigPropertyRow::PrivateRegisterAttributes(FSlateAttributeInitializer& AttributeInitializer)
+{
+	SLATE_ADD_MEMBER_ATTRIBUTE_DEFINITION_WITH_NAME(AttributeInitializer, "KnownTags", KnownTagsAttribute, EInvalidateWidgetReason::Layout);
+}
+
 #include "Widgets/Views/STableViewBase.h"
 #include "Widgets/Text/STextBlock.h"
 #include "Widgets/Layout/SBox.h"
@@ -20,8 +29,6 @@
 
 #define LOCTEXT_NAMESPACE "SLiveConfigPropertyManager"
 
-SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyRow);
-
 const FName SLiveConfigPropertyRow::ColumnNames::Name("Name");
 const FName SLiveConfigPropertyRow::ColumnNames::Description("Description");
 const FName SLiveConfigPropertyRow::ColumnNames::Type("Type");
@@ -29,16 +36,13 @@ const FName SLiveConfigPropertyRow::ColumnNames::Value("Value");
 const FName SLiveConfigPropertyRow::ColumnNames::Tags("Tags");
 const FName SLiveConfigPropertyRow::ColumnNames::Actions("Actions");
 
-void SLiveConfigPropertyRow::PrivateRegisterAttributes(FSlateAttributeInitializer& AttributeInitializer)
-{
-}
-
 void SLiveConfigPropertyRow::Construct(const FArguments& InArgs, const TSharedRef<STableViewBase>& InOwnerTable, TSharedPtr<FLiveConfigPropertyTreeNode>
                                        InItem, int32 InIndex)
 {
 	Item = InItem;
 	OnDeleteProperty = InArgs._OnDeleteProperty;
 	OnAddPropertyAtFolder = InArgs._OnAddPropertyAtFolder;
+	OnBulkTagFolder = InArgs._OnBulkTagFolder;
 	OnIsNameDuplicate = InArgs._IsNameDuplicate;
 	OnChanged = InArgs._OnChanged;
 	OnRequestRefresh = InArgs._OnRequestRefresh;
@@ -152,21 +156,68 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateActionsColumnWidget()
 		return SNew(SBox)
 			.HeightOverride(RowHeight)
 			.Padding(2.0f)
-			.HAlign(HAlign_Center)
+			.HAlign(HAlign_Right)
 			.VAlign(VAlign_Center)
 			[
-				SNew(SButton)
-				.ButtonStyle(FAppStyle::Get(), "SimpleButton")
-				.OnClicked_Lambda([this]()
-				{
-					OnAddPropertyAtFolder.ExecuteIfBound(Item->FullPath);
-					return FReply::Handled();
-				})
-				.ToolTipText(LOCTEXT("AddPropertyToFolder", "Add property to this folder"))
+				SNew(SHorizontalBox)
+				+ SHorizontalBox::Slot()
+				.AutoWidth()
+				.Padding(2.0f)
 				[
-					SNew(SImage)
-					.Image(FAppStyle::GetBrush("Icons.Plus"))
-					.DesiredSizeOverride(FVector2D(12, 12))
+					SNew(SButton)
+					.IsFocusable(false)
+					.ButtonStyle(FAppStyle::Get(), "NoBorder")
+					.ContentPadding(FMargin(4, 2))
+					.OnClicked_Lambda([this]()
+					{
+						OnAddPropertyAtFolder.ExecuteIfBound(Item->FullPath);
+						return FReply::Handled();
+					})
+					.ToolTipText(LOCTEXT("AddPropertyToFolder", "Add property to this folder"))
+					[
+						SNew(SBorder)
+						.Padding(FMargin(8, 2))
+						.BorderImage(FAppStyle::GetBrush("WhiteBrush"))
+						.BorderBackgroundColor(FLinearColor(0.2f, 0.2f, 0.2f, 0.5f))
+						[
+							SNew(STextBlock)
+							.Text(LOCTEXT("AddPropertyLabel", "+ Property"))
+							.Font(FAppStyle::GetFontStyle("NormalFont"))
+							.ColorAndOpacity(FLinearColor(0.8f, 0.8f, 0.8f, 1.0f))
+						]
+					]
+				]
+				+ SHorizontalBox::Slot()
+				.AutoWidth()
+				.Padding(2.0f)
+				[
+					SNew(SComboButton)
+					.IsFocusable(false)
+					.HasDownArrow(false)
+					.ButtonStyle(FAppStyle::Get(), "NoBorder")
+					.ContentPadding(FMargin(4, 2))
+ 				.OnGetMenuContent_Lambda([this]()
+ 				{
+ 					return SNew(SLiveConfigTagPicker)
+ 						.KnownTags(KnownTagsAttribute.Get())
+ 						.OnTagSelected_Lambda([this](FName InTag)
+ 						{
+ 							OnBulkTagFolder.ExecuteIfBound(Item->FullPath, InTag);
+ 						});
+ 				})
+					.ButtonContent()
+					[
+						SNew(SBorder)
+						.Padding(FMargin(8, 2))
+						.BorderImage(FAppStyle::GetBrush("WhiteBrush"))
+						.BorderBackgroundColor(FLinearColor(0.2f, 0.2f, 0.2f, 0.5f))
+						[
+							SNew(STextBlock)
+							.Text(LOCTEXT("AddTagLabel", "+ Tag"))
+							.Font(FAppStyle::GetFontStyle("NormalFont"))
+							.ColorAndOpacity(FLinearColor(0.8f, 0.8f, 0.8f, 1.0f))
+						]
+					]
 				]
 			];
 	}
@@ -174,58 +225,18 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateActionsColumnWidget()
 	return SNew(SBox)
 		.HeightOverride(RowHeight)
 		.Padding(2.0f)
-		.HAlign(HAlign_Center)
+		.HAlign(HAlign_Right)
 		.VAlign(VAlign_Center)
 		[
 			SNew(SHorizontalBox)
 			+ SHorizontalBox::Slot()
-			.Padding(2.0f)
 			.AutoWidth()
+			.Padding(2.0f)
 			[
 				SNew(SComboButton)
-				.IsFocusable(false)
-				.ComboButtonStyle(FAppStyle::Get(), "SimpleComboButton")
-				.HasDownArrow(false)
 				.ButtonStyle(FAppStyle::Get(), "NoBorder")
-				.ContentPadding(FMargin(4, 2))
-				.OnGetMenuContent_Lambda([this]()
-				{
-					FMenuBuilder MenuBuilder(true, nullptr);
-					TArray<FName> AvailableTags = KnownTagsAttribute.Get();
-		
-					bool bAnyTagsAdded = false;
-					for (const FName& Tag : AvailableTags)
-					{
-						if (!Item->PropertyDefinition->Tags.Contains(Tag))
-						{
-							MenuBuilder.AddMenuEntry(
-								FText::FromName(Tag),
-								FText::GetEmpty(),
-								FSlateIcon(),
-								FUIAction(FExecuteAction::CreateLambda([this, Tag]()
-								{
-									Item->PropertyDefinition->Tags.Add(Tag);
-									OnTagChanged();
-								}))
-							);
-							bAnyTagsAdded = true;
-						}
-					}
-
-					if (!bAnyTagsAdded)
-					{
-						MenuBuilder.AddMenuEntry(
-							LOCTEXT("NoTagsAvailable", "No more tags available"),
-							FText::GetEmpty(),
-							FSlateIcon(),
-							FUIAction(),
-							NAME_None,
-							EUserInterfaceActionType::None
-						);
-					}
-		
-					return MenuBuilder.MakeWidget();
-				})
+				.HasDownArrow(false)
+				.ContentPadding(FMargin(4.0f, 2.0f))
 				.ButtonContent()
 				[
 					SNew(SBorder)
@@ -239,9 +250,28 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateActionsColumnWidget()
 						.ColorAndOpacity(FLinearColor(0.8f, 0.8f, 0.8f, 1.0f))
 					]
 				]
+				.OnGetMenuContent_Lambda([this]()
+				{
+					return SNew(SLiveConfigTagPicker)
+						.KnownTags(KnownTagsAttribute.Get())
+						.TagVisibilityFilter([this](FName InTag)
+						{
+							return !Item->PropertyDefinition->Tags.Contains(InTag);
+						})
+						.OnTagSelected_Lambda([this](FName InTag)
+						{
+							Item->PropertyDefinition->Tags.Add(InTag);
+							OnTagChanged();
+						})
+						.OnAddNewTag_Lambda([this]()
+						{
+							OnAddNewTag.ExecuteIfBound();
+						});
+				})
 			]
 			+ SHorizontalBox::Slot()
-				.AutoWidth()
+			.AutoWidth()
+			.Padding(2.0f)
 			[
 				SNew(SButton)
 				.IsFocusable(false)
@@ -596,57 +626,6 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateTagsColumnWidget()
 			[
 				SAssignNew(TagWrapBox, SWrapBox)
 				.UseAllottedSize(true)
-			]
-			+ SScrollBox::Slot()
-			.Padding(4.0f, 0.0f)
-			[
-				SNew(SComboButton)
-				.ButtonStyle(FAppStyle::Get(), "SimpleButton")
-				.HasDownArrow(false)
-				.ContentPadding(FMargin(4.0f, 2.0f))
-				.ButtonContent()
-				[
-					SNew(SImage)
-					.Image(FAppStyle::GetBrush("Icons.Plus"))
-					.DesiredSizeOverride(FVector2D(12.0f, 12.0f))
-				]
-				.OnGetMenuContent_Lambda([this]()
-				{
-					FMenuBuilder MenuBuilder(true, nullptr);
-					
-					TArray<FName> Tags = KnownTagsAttribute.Get();
-					Tags.Sort([](const FName& A, const FName& B) { return A.Compare(B) < 0; });
-
-					for (const FName& Tag : Tags)
-					{
-						if (!Item->PropertyDefinition->Tags.Contains(Tag))
-						{
-							MenuBuilder.AddMenuEntry(
-								FText::FromName(Tag),
-								FText::GetEmpty(),
-								FSlateIcon(),
-								FUIAction(FExecuteAction::CreateLambda([this, Tag]()
-								{
-									Item->PropertyDefinition->Tags.Add(Tag);
-									OnTagChanged();
-								}))
-							);
-						}
-					}
-
-					if (OnAddNewTag.IsBound())
-					{
-						MenuBuilder.AddMenuSeparator();
-						MenuBuilder.AddMenuEntry(
-							LOCTEXT("AddNewTagMenu", "Add New Tag..."),
-							FText::GetEmpty(),
-							FSlateIcon(FAppStyle::GetAppStyleSetName(), "Icons.Plus"),
-							FUIAction(FExecuteAction::CreateSP(this, &SLiveConfigPropertyRow::OnAddNewTagClicked))
-						);
-					}
-
-					return MenuBuilder.MakeWidget();
-				})
 			]
 		];
 	
