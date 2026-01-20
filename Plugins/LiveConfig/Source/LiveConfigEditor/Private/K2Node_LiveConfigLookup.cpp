@@ -29,15 +29,8 @@ void UK2Node_LiveConfigLookup::AllocateDefaultPins()
 	// Add value pin
 	if (!FindPin(ValuePinName))
 	{
-		if (DefaultPinType.PinCategory != NAME_None)
-		{
-			CreatePin(EGPD_Output, DefaultPinType.PinCategory, DefaultPinType.PinSubCategory, ValuePinName);
-		}
-		else
-		{
-			// Default to double-precision float for UE5
-			CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Real, UEdGraphSchema_K2::PC_Double, ValuePinName);
-		}
+		// Default to wildcard
+		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Wildcard, ValuePinName);
 	}
 
 	UpdateOutputPinType();
@@ -56,12 +49,12 @@ FText UK2Node_LiveConfigLookup::GetNodeTitle(ENodeTitleType::Type TitleType) con
 		return FText::Format(LOCTEXT("NodeTitle_WithProperty", "Get Live Config: {0}"), FText::FromName(SelectedProperty.GetName()));
 	}
 
-	return LOCTEXT("NodeTitle", "Get Live Config Value");
+	return LOCTEXT("NodeTitle", "Get Live Config");
 }
 
 FText UK2Node_LiveConfigLookup::GetTooltipText() const
 {
-	return LOCTEXT("NodeTooltip", "Get the value of a Live Config property. The output pin type will automatically update based on the selected property.");
+	return LOCTEXT("NodeTooltip", "Get the value of a Live Config property. The output pin type will automatically update based on the selected property or what it's connected to.");
 }
 
 FLinearColor UK2Node_LiveConfigLookup::GetNodeTitleColor() const
@@ -118,6 +111,10 @@ void UK2Node_LiveConfigLookup::PinDefaultValueChanged(UEdGraphPin* Pin)
 					{
 						NewDef.PropertyType = ELiveConfigPropertyType::String;
 					}
+					else if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Struct)
+					{
+						NewDef.PropertyType = ELiveConfigPropertyType::Struct;
+					}
 				}
 
 				MutableSystem->PropertyDefinitions.Add(SelectedProperty, NewDef);
@@ -140,46 +137,14 @@ void UK2Node_LiveConfigLookup::GetMenuActions(FBlueprintActionDatabaseRegistrar&
 	UClass* ActionKey = GetClass();
 	if (ActionRegistrar.IsOpenForRegistration(ActionKey))
 	{
-		// Helper for setting pin type on spawned node
-		auto CustomizeLambda = [](UEdGraphNode* NewNode, bool bIsTemplateNode, FEdGraphPinType PinType)
-		{
-			UK2Node_LiveConfigLookup* LookupNode = CastChecked<UK2Node_LiveConfigLookup>(NewNode);
-			LookupNode->DefaultPinType = PinType;
-			LookupNode->ReconstructNode();
-		};
+		UBlueprintNodeSpawner* NodeSpawner = UBlueprintNodeSpawner::Create(ActionKey);
+		check(NodeSpawner != nullptr);
 
-		// Define supported types to register with the action database
-		struct FSupportedType
-		{
-			FName Category;
-			FName SubCategory;
-			FText DisplayName;
-		};
+		NodeSpawner->DefaultMenuSignature.Category = GetMenuCategory();
+		NodeSpawner->DefaultMenuSignature.MenuName = LOCTEXT("MenuName", "Get Live Config");
+		NodeSpawner->DefaultMenuSignature.Tooltip = GetTooltipText();
 
-		TArray<FSupportedType> SupportedTypes = {
-			{ UEdGraphSchema_K2::PC_Boolean, NAME_None, LOCTEXT("TypeBool", "Boolean") },
-			{ UEdGraphSchema_K2::PC_Int, NAME_None, LOCTEXT("TypeInt", "Integer") },
-			{ UEdGraphSchema_K2::PC_Real, UEdGraphSchema_K2::PC_Double, LOCTEXT("TypeFloat", "Float") },
-			{ UEdGraphSchema_K2::PC_String, NAME_None, LOCTEXT("TypeString", "String") }
-		};
-
-		for (const FSupportedType& TypeInfo : SupportedTypes)
-		{
-			UBlueprintNodeSpawner* NodeSpawner = UBlueprintNodeSpawner::Create(ActionKey);
-			check(NodeSpawner != nullptr);
-
-			FEdGraphPinType PinType;
-			PinType.PinCategory = TypeInfo.Category;
-			PinType.PinSubCategory = TypeInfo.SubCategory;
-
-			NodeSpawner->CustomizeNodeDelegate = UBlueprintNodeSpawner::FCustomizeNodeDelegate::CreateStatic(CustomizeLambda, PinType);
-
-			NodeSpawner->DefaultMenuSignature.Category = GetMenuCategory();
-			NodeSpawner->DefaultMenuSignature.MenuName = FText::Format(LOCTEXT("MenuName_WithType", "Get Live Config Value ({0})"), TypeInfo.DisplayName);
-			NodeSpawner->DefaultMenuSignature.Tooltip = GetTooltipText();
-
-			ActionRegistrar.AddBlueprintAction(ActionKey, NodeSpawner);
-		}
+		ActionRegistrar.AddBlueprintAction(ActionKey, NodeSpawner);
 	}
 }
 
@@ -201,7 +166,6 @@ void UK2Node_LiveConfigLookup::ExpandNode(FKismetCompilerContext& CompilerContex
 	FLiveConfigProperty::StaticStruct()->ImportText(*PropertyPin->DefaultValue, &SelectedProperty, nullptr, 0, nullptr, FLiveConfigProperty::StaticStruct()->GetName());
 
 	bool bInputIsConnected = PropertyPin->LinkedTo.Num() > 0;
-	bool bOutputIsConnected = ValuePin->LinkedTo.Num() > 0;
 
 	if (!SelectedProperty.IsValid() && !bInputIsConnected)
 	{
@@ -210,13 +174,9 @@ void UK2Node_LiveConfigLookup::ExpandNode(FKismetCompilerContext& CompilerContex
 		return;
 	}
 
-	// this may not be valid at compile/cook time
-	FLiveConfigPropertyDefinition Def = ULiveConfigLib::GetLiveConfigPropertyDefinition(SelectedProperty);
-	
+	// Determine the property type based on the value pin's current type.
 	ELiveConfigPropertyType PropType = ELiveConfigPropertyType::Float;
 	
-	// Determine the property type based on the value pin's current type.
-	// We trust the pin type because it's what the user sees and what was set during UpdateOutputPinType.
 	if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Boolean)
 	{
 		PropType = ELiveConfigPropertyType::Bool;
@@ -229,12 +189,19 @@ void UK2Node_LiveConfigLookup::ExpandNode(FKismetCompilerContext& CompilerContex
 	{
 		PropType = ELiveConfigPropertyType::String;
 	}
-	else
+	else if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Struct)
 	{
-		PropType = ELiveConfigPropertyType::Float;
+		PropType = ELiveConfigPropertyType::Struct;
+	}
+	else if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Wildcard)
+	{
+		CompilerContext.MessageLog.Error(*LOCTEXT("WildcardError", "The output pin of 'Get Live Config' must be connected to a pin with a concrete type, or a property must be selected.").ToString());
+		BreakAllNodeLinks();
+		return;
 	}
 	
-	// If we have a valid definition, we can do a sanity check, but only in editor or if it's available.
+	// If we have a valid definition, we can do a sanity check.
+	FLiveConfigPropertyDefinition Def = ULiveConfigLib::GetLiveConfigPropertyDefinition(SelectedProperty);
 	if (Def.IsValid() && PropType != Def.PropertyType)
 	{
 		FFormatNamedArguments Args;
@@ -260,6 +227,9 @@ void UK2Node_LiveConfigLookup::ExpandNode(FKismetCompilerContext& CompilerContex
 	case ELiveConfigPropertyType::String:
 		FunctionName = GET_FUNCTION_NAME_CHECKED(ULiveConfigLib, GetStringValue);
 		break;
+	case ELiveConfigPropertyType::Struct:
+		FunctionName = GET_FUNCTION_NAME_CHECKED(ULiveConfigLib, GetStructValue);
+		break;
 	default:
 		FunctionName = GET_FUNCTION_NAME_CHECKED(ULiveConfigLib, GetValue);
 		break;
@@ -270,11 +240,21 @@ void UK2Node_LiveConfigLookup::ExpandNode(FKismetCompilerContext& CompilerContex
 	CallFunctionNode->AllocateDefaultPins();
 
 	UEdGraphPin* CallPropertyPin = CallFunctionNode->FindPinChecked(TEXT("Property"));
-	UEdGraphPin* CallReturnPin = CallFunctionNode->GetReturnValuePin();
+	
+	if (PropType == ELiveConfigPropertyType::Struct)
+	{
+		UEdGraphPin* CallOutStructPin = CallFunctionNode->FindPinChecked(TEXT("OutStruct"));
+		CallOutStructPin->PinType = ValuePin->PinType;
+		CompilerContext.MovePinLinksToIntermediate(*ValuePin, *CallOutStructPin);
+	}
+	else
+	{
+		UEdGraphPin* CallReturnPin = CallFunctionNode->GetReturnValuePin();
+		CompilerContext.MovePinLinksToIntermediate(*ValuePin, *CallReturnPin);
+	}
 
 	// Move connections
 	CompilerContext.MovePinLinksToIntermediate(*PropertyPin, *CallPropertyPin);
-	CompilerContext.MovePinLinksToIntermediate(*ValuePin, *CallReturnPin);
 
 	// If property pin has no connections, copy the default value
 	if (CallPropertyPin->LinkedTo.Num() == 0)
@@ -305,61 +285,60 @@ void UK2Node_LiveConfigLookup::UpdateOutputPinType()
 		return;
 	}
 
-	FLiveConfigProperty SelectedProperty;
-	FLiveConfigProperty::StaticStruct()->ImportText(*PropertyPin->DefaultValue, &SelectedProperty, nullptr, 0, nullptr, FLiveConfigProperty::StaticStruct()->GetName());
+	FEdGraphPinType NewType = ValuePin->PinType;
 
-	if (!SelectedProperty.IsValid())
+	// Try to get type from connected pin
+	if (ValuePin->LinkedTo.Num() > 0)
 	{
-		// If the property pin is connected, we don't want to reset the output pin type
-		// as it might have been set by the user or from a previous connection.
-		if (PropertyPin->LinkedTo.Num() > 0)
-		{
-			return;
-		}
+		NewType = ValuePin->LinkedTo[0]->PinType;
+		
+		// If the connected pin is also a wildcard, we don't want to adopt it if we already have a concrete type
+		// but if we are wildcard, we stay wildcard.
+	}
+	else
+	{
+		// Try to get type from selected property
+		FLiveConfigProperty SelectedProperty;
+		FLiveConfigProperty::StaticStruct()->ImportText(*PropertyPin->DefaultValue, &SelectedProperty, nullptr, 0, nullptr, FLiveConfigProperty::StaticStruct()->GetName());
 
-		// Fallback to default type if set
-		if (DefaultPinType.PinCategory != NAME_None && ValuePin->PinType != DefaultPinType)
+		if (SelectedProperty.IsValid())
 		{
-			ValuePin->PinType = DefaultPinType;
-			
-			if (UEdGraph* Graph = GetGraph())
+			FLiveConfigPropertyDefinition Def = ULiveConfigLib::GetLiveConfigPropertyDefinition(SelectedProperty);
+			if (Def.IsValid())
 			{
-				Graph->NotifyGraphChanged();
+				// Clear subcategory info by default when switching from property
+				NewType.PinCategory = UEdGraphSchema_K2::PC_Wildcard;
+				NewType.PinSubCategory = NAME_None;
+				NewType.PinSubCategoryObject = nullptr;
+
+				switch (Def.PropertyType)
+				{
+				case ELiveConfigPropertyType::Bool:
+					NewType.PinCategory = UEdGraphSchema_K2::PC_Boolean;
+					break;
+				case ELiveConfigPropertyType::Int:
+					NewType.PinCategory = UEdGraphSchema_K2::PC_Int;
+					break;
+				case ELiveConfigPropertyType::Float:
+					NewType.PinCategory = UEdGraphSchema_K2::PC_Real;
+					NewType.PinSubCategory = UEdGraphSchema_K2::PC_Double;
+					break;
+				case ELiveConfigPropertyType::String:
+					NewType.PinCategory = UEdGraphSchema_K2::PC_String;
+					break;
+				case ELiveConfigPropertyType::Struct:
+					NewType.PinCategory = UEdGraphSchema_K2::PC_Struct;
+					// Note: PinSubCategoryObject might be null if we don't know the struct yet
+					// It will be updated if connected or if we can determine it from metadata elsewhere
+					break;
+				}
 			}
 		}
-		return;
-	}
-
-	ELiveConfigPropertyType PropType = ELiveConfigPropertyType::Float;
-	
-	FLiveConfigPropertyDefinition Def = ULiveConfigLib::GetLiveConfigPropertyDefinition(SelectedProperty);
-	if (Def.IsValid())
-	{
-		PropType = Def.PropertyType;
-	}
-
-	FEdGraphPinType NewType;
-	NewType.PinCategory = UEdGraphSchema_K2::PC_Real; // Default to Real
-	NewType.PinSubCategory = UEdGraphSchema_K2::PC_Double;
-
-	switch (PropType)
-	{
-	case ELiveConfigPropertyType::Bool:
-		NewType.PinCategory = UEdGraphSchema_K2::PC_Boolean;
-		NewType.PinSubCategory = NAME_None;
-		break;
-	case ELiveConfigPropertyType::Int:
-		NewType.PinCategory = UEdGraphSchema_K2::PC_Int;
-		NewType.PinSubCategory = NAME_None;
-		break;
-	case ELiveConfigPropertyType::Float:
-		NewType.PinCategory = UEdGraphSchema_K2::PC_Real;
-		NewType.PinSubCategory = UEdGraphSchema_K2::PC_Double;
-		break;
-	case ELiveConfigPropertyType::String:
-		NewType.PinCategory = UEdGraphSchema_K2::PC_String;
-		NewType.PinSubCategory = NAME_None;
-		break;
+		else if (ValuePin->LinkedTo.Num() == 0)
+		{
+			// No connection and no property - if it's currently a wildcard and we just disconnected, 
+			// it should stay wildcard. If it has a type, it stays that type (as per previous requirement).
+		}
 	}
 
 	if (ValuePin->PinType != NewType)
@@ -378,19 +357,37 @@ void UK2Node_LiveConfigLookup::NotifyPinConnectionListChanged(UEdGraphPin* Pin)
 {
 	Super::NotifyPinConnectionListChanged(Pin);
 
-	if (Pin == GetValuePin() && Pin->LinkedTo.Num() > 0)
+	if (Pin == GetValuePin())
 	{
-		// Match the type of the first connection
-		UEdGraphPin* OtherPin = Pin->LinkedTo[0];
-		if (OtherPin)
+		UpdateOutputPinType();
+
+		if (Pin->LinkedTo.Num() > 0)
 		{
-			Pin->PinType = OtherPin->PinType;
+			// Reconstruct node to ensure all internal state is updated
+			ReconstructNode();
 		}
 	}
 	else if (Pin == GetPropertyPin())
 	{
 		UpdateOutputPinType();
 	}
+}
+
+bool UK2Node_LiveConfigLookup::IsConnectionDisallowed(const UEdGraphPin* MyPin, const UEdGraphPin* OtherPin, FString& OutConnectionMessage) const
+{
+	if (MyPin == GetValuePin() && MyPin->PinType.PinCategory == UEdGraphSchema_K2::PC_Wildcard)
+	{
+		return false; // Wildcard can connect to anything
+	}
+
+	return Super::IsConnectionDisallowed(MyPin, OtherPin, OutConnectionMessage);
+}
+
+void UK2Node_LiveConfigLookup::PostReconstructNode()
+{
+	Super::PostReconstructNode();
+
+	UpdateOutputPinType();
 }
 
 #undef LOCTEXT_NAMESPACE

@@ -220,7 +220,6 @@ bool ULiveConfigJsonSystem::OnTick(float DeltaTime)
 	}
 
 #if WITH_EDITOR
-	// in editor - checkout files
 	// all of this code could actually be editor only since we don't save to json at runtime
 	{
 		TArray<FString> FilesToCheckout;

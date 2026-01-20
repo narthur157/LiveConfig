@@ -196,7 +196,7 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 					.HeaderContentPadding(FMargin(4.0f, 0.0f))
 					+ SHeaderRow::Column(SLiveConfigPropertyRow::ColumnNames::Type)
 					.DefaultLabel(LOCTEXT("TypeColumn", "Type"))
-					.FillWidth(0.1f)
+					.FillWidth(0.15f)
 					.HeaderContentPadding(FMargin(4.0f, 0.0f))
 					+ SHeaderRow::Column(SLiveConfigPropertyRow::ColumnNames::Value)
 					.DefaultLabel(LOCTEXT("ValueColumn", "Value"))
@@ -204,7 +204,7 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 					.HeaderContentPadding(FMargin(4.0f, 0.0f))
 					+ SHeaderRow::Column(SLiveConfigPropertyRow::ColumnNames::Tags)
 					.DefaultLabel(LOCTEXT("TagsColumn", "Tags"))
-					.FillWidth(0.35f)
+					.FillWidth(0.3f)
 					.HeaderContentPadding(FMargin(4.0f, 0.0f))
 					+ SHeaderRow::Column(SLiveConfigPropertyRow::ColumnNames::Actions)
 					.DefaultLabel(LOCTEXT("ActionsColumn", ""))
@@ -313,6 +313,10 @@ TSharedRef<ITableRow> SLiveConfigPropertyManager::OnGenerateRow(TSharedRef<FLive
 				}
 				return false;
 			}));
+		})
+		.OnRequestScroll_Lambda([this](FLiveConfigProperty Property)
+		{
+			PendingScrollProperty = Property;
 		})
 		.OnAddNewTag(this, &SLiveConfigPropertyManager::OnAddNewTag)
 		.GetTagColor(TFunction<FSlateColor(FName)>([this](FName InTag) { return GetTagColor(InTag); }))

@@ -13,20 +13,18 @@ class LIVECONFIGEDITOR_API UK2Node_LiveConfigLookup : public UK2Node
 public:
 	UK2Node_LiveConfigLookup();
 
-	// UEdGraphNode interface
 	virtual void AllocateDefaultPins() override;
 	virtual FText GetNodeTitle(ENodeTitleType::Type TitleType) const override;
 	virtual FText GetTooltipText() const override;
 	virtual FLinearColor GetNodeTitleColor() const override;
 	virtual FText GetMenuCategory() const override;
 	virtual void PinDefaultValueChanged(UEdGraphPin* Pin) override;
-	// End UEdGraphNode interface
-
-	// UK2Node interface
 	virtual void GetMenuActions(FBlueprintActionDatabaseRegistrar& ActionRegistrar) const override;
 	virtual void ExpandNode(class FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph) override;
 	virtual bool IsNodePure() const override { return true; }
 	virtual void NotifyPinConnectionListChanged(UEdGraphPin* Pin) override;
+	virtual bool IsConnectionDisallowed(const UEdGraphPin* MyPin, const UEdGraphPin* OtherPin, FString& OutConnectionMessage) const override;
+	virtual void PostReconstructNode() override;
 	// End UK2Node interface
 
 	/** Get the property pin */

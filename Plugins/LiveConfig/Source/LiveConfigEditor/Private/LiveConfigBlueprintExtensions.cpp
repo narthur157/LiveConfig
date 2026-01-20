@@ -59,15 +59,6 @@ void FLiveConfigBlueprintExtensions::RegisterMenus()
 			
 			UE_LOG(LogLiveConfig, Log, TEXT("Adding entries to section: EdGraphSchemaPinActions in menu: %s"), *MenuName.ToString());
 
-			// Add a static entry for testing
-			Section.AddMenuEntry(
-				"LiveConfigTestStatic",
-				LOCTEXT("LiveConfigTestStatic", "Live Config Test (Static)"),
-				LOCTEXT("LiveConfigTestStaticTooltip", "Static test entry"),
-				FSlateIcon(),
-				FUIAction(FExecuteAction::CreateLambda([](){ UE_LOG(LogLiveConfig, Log, TEXT("Static test menu clicked")); }))
-			);
-
 			Section.AddDynamicEntry("LiveConfigPromote", FNewToolMenuSectionDelegate::CreateLambda([MenuName](FToolMenuSection& InSection)
 			{
 				UE_LOG(LogLiveConfig, Log, TEXT("Dynamic entry callback for section: %s in menu: %s"), *InSection.Name.ToString(), *MenuName.ToString());

@@ -30,6 +30,7 @@ public:
 	DECLARE_DELEGATE(FOnRequestRefresh);
 	DECLARE_DELEGATE_OneParam(FOnNavigatePropertyName, TSharedPtr<FLiveConfigPropertyTreeNode>);
 	DECLARE_DELEGATE_OneParam(FOnNavigateValue, TSharedPtr<FLiveConfigPropertyTreeNode>);
+	DECLARE_DELEGATE_OneParam(FOnScrollToProperty, FLiveConfigProperty);
 
 	SLATE_BEGIN_ARGS(SLiveConfigPropertyRow) {}
 		SLATE_EVENT(FOnDeleteProperty, OnDeleteProperty)
@@ -41,6 +42,7 @@ public:
 		SLATE_EVENT(FOnNavigatePropertyName, OnNavigateDown)
 		SLATE_EVENT(FOnNavigatePropertyName, OnNavigateUp)
 		SLATE_EVENT(FOnNavigateValue, OnNavigateValue)
+		SLATE_EVENT(FOnScrollToProperty, OnRequestScroll)
 		SLATE_EVENT(FSimpleDelegate, OnAddNewTag)
 		SLATE_ARGUMENT(TFunction<FSlateColor(FName)>, GetTagColor)
 		SLATE_ATTRIBUTE(TArray<FName>, KnownTags)
@@ -68,6 +70,7 @@ private:
 	TSharedRef<SWidget> OnGetStructPickerMenu();
 	void OnStructPicked(const UScriptStruct* ChosenStruct);
 	void GenerateSubPropertiesForStruct(const UScriptStruct* Struct);
+	void DeleteSubProperties();
 
 	void RefreshTags();
 	void OnTagChanged();
@@ -85,6 +88,7 @@ private:
 	FOnNavigatePropertyName OnNavigateDown;
 	FOnNavigatePropertyName OnNavigateUp;
 	FOnNavigateValue OnNavigateValue;
+	FOnScrollToProperty OnRequestScroll;
 	TFunction<FSlateColor(FName)> GetTagColor;
 	TSharedPtr<class SWrapBox> TagWrapBox;
 	TSharedPtr<class SEditableTextBox> NameTextBox;

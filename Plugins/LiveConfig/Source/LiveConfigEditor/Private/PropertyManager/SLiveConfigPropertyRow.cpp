@@ -3,6 +3,103 @@
 #include "SLiveConfigTagPicker.h"
 #include "LiveConfigJson.h"
 
+#include "StructViewerFilter.h"
+
+class FLiveConfigStructFilter : public IStructViewerFilter
+{
+public:
+	FLiveConfigStructFilter()
+	{
+		FModuleManager& ModuleManager = FModuleManager::Get();
+
+		TArray<FModuleDiskInfo> AllModules;
+		ModuleManager.FindModules(TEXT("*"), AllModules);
+
+		FString ProjectDir = FPaths::ConvertRelativePathToFull(FPaths::ProjectDir());
+		
+		// TODO: Allow customizing more of these
+		AllowedScripts.Add("/Script/CoreUObject.Vector");
+		AllowedScripts.Add("/Script/CoreUObject.Vector2D");
+		AllowedScripts.Add("/Script/CoreUObject.Transform");
+		AllowedScripts.Add("/Script/CoreUObject.Color");
+
+		for (const auto& ModuleInfo : AllModules)
+		{
+			FName ModuleName = ModuleInfo.Name;
+			if (ModuleInfo.FilePath.IsEmpty())
+			{
+				continue;
+			}
+			if (!ModuleManager.ModuleExists(*ModuleName.ToString()))
+			{
+				continue;
+			}
+			
+			// none of these structs really need to be live configurable
+			if (ModuleName.ToString() == "LiveConfig")
+			{
+				continue;
+			}
+			
+			const FString& ModuleFilenameRelative = ModuleInfo.FilePath;
+			FString ModuleFilename = FPaths::ConvertRelativePathToFull(ModuleFilenameRelative);
+
+			// Check if the module lives inside our project directory or is one of the core types
+			if (ModuleFilename.Contains(ProjectDir))
+			{
+				AllowedScripts.Add(TEXT("/Script/") + ModuleName.ToString());
+			}
+		}
+	}
+
+	virtual bool IsStructAllowed(const FStructViewerInitializationOptions& InInitOptions, const UScriptStruct* InStruct, TSharedRef<class FStructViewerFilterFuncs> InNode) override
+	{
+		if (!InStruct)
+		{
+			return false;
+		}
+		
+		// Don't show any hidden structs
+		static const FName NAME_HiddenMetaTag = "Hidden";
+		if (InStruct->HasMetaData(NAME_HiddenMetaTag))
+		{
+			return false;
+		}
+
+		FString PackageName = InStruct->GetStructPathName().ToString();
+		return IsPackageAllowed(PackageName);
+	}
+
+	virtual bool IsUnloadedStructAllowed(const FStructViewerInitializationOptions& InInitOptions, const FSoftObjectPath& InStructPath, TSharedRef<class FStructViewerFilterFuncs> InNode) override
+	{
+		FString PackageName = InStructPath.GetLongPackageName();
+		return IsPackageAllowed(PackageName);
+	}
+
+private:
+	bool IsPackageAllowed(const FString& PackageName) const
+	{
+		// allow bp structs from content
+		if (PackageName.StartsWith(TEXT("/Game/")))
+		{
+			return true;
+		}
+
+		// Allow project modules and plugins
+		for (const FString& AllowedScript : AllowedScripts)
+		{
+			if (PackageName.StartsWith(AllowedScript))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	TArray<FString> AllowedScripts;
+};
+
 SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyRow);
 
 SLiveConfigPropertyRow::SLiveConfigPropertyRow()
@@ -52,6 +149,7 @@ void SLiveConfigPropertyRow::Construct(const FArguments& InArgs, const TSharedRe
 	OnNavigateDown = InArgs._OnNavigateDown;
 	OnNavigateUp = InArgs._OnNavigateUp;
 	OnNavigateValue = InArgs._OnNavigateValue;
+	OnRequestScroll = InArgs._OnRequestScroll;
 	OnAddNewTag = InArgs._OnAddNewTag;
 	GetTagColor = InArgs._GetTagColor;
 	KnownTagsAttribute.Assign(*this, InArgs._KnownTags);
@@ -279,8 +377,25 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateActionsColumnWidget()
 				SNew(SButton)
 				.IsFocusable(false)
 				.ButtonStyle(FAppStyle::Get(), "SimpleButton")
+				.Visibility_Lambda([this]()
+				{
+					// Hide delete button for struct sub-properties
+					if (Item.IsValid())
+					{
+						TSharedPtr<FLiveConfigPropertyTreeNode> Parent = Item->Parent.Pin();
+						if (Parent.IsValid() && Parent->IsStruct())
+						{
+							return EVisibility::Collapsed;
+						}
+					}
+					return EVisibility::Visible;
+				})
 				.OnClicked_Lambda([this]()
 				{
+					if (Item->IsStruct())
+					{
+						DeleteSubProperties();
+					}
 					OnDeleteProperty.ExecuteIfBound(Item->PropertyDefinition);
 					return FReply::Handled();
 				})
@@ -561,6 +676,9 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateTypeColumnWidget()
 				if (NewType.IsValid())
 				{
 					TSharedPtr<FLiveConfigPropertyDefinition> OldDef = MakeShared<FLiveConfigPropertyDefinition>(*Item->PropertyDefinition);
+					
+					bool bOldWasStruct = Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Struct;
+
 					Item->PropertyDefinition->PropertyType = *NewType;
 					switch (Item->PropertyDefinition->PropertyType)
 					{
@@ -576,6 +694,17 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateTypeColumnWidget()
 						Item->PropertyDefinition->Value = "false";
 						break;
 					}
+
+					if (bOldWasStruct && Item->PropertyDefinition->PropertyType != ELiveConfigPropertyType::Struct)
+					{
+						DeleteSubProperties();
+						OnRequestScroll.ExecuteIfBound(Item->PropertyDefinition->PropertyName);
+					}
+					else if (!bOldWasStruct && Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Struct)
+					{
+						OnRequestScroll.ExecuteIfBound(Item->PropertyDefinition->PropertyName);
+					}
+
 					OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Type);
 				}
 			})
@@ -686,6 +815,7 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::OnGetStructPickerMenu()
 
 	FStructViewerInitializationOptions Options;
 	Options.Mode = EStructViewerMode::StructPicker;
+	Options.StructFilter = MakeShared<FLiveConfigStructFilter>();
 	
 	
 	return SNew(SBox)
@@ -702,6 +832,12 @@ void SLiveConfigPropertyRow::OnStructPicked(const UScriptStruct* ChosenStruct)
 
 	TSharedPtr<FLiveConfigPropertyDefinition> OldDef = MakeShared<FLiveConfigPropertyDefinition>(*Item->PropertyDefinition);
 	Item->PropertyDefinition->Value = ChosenStruct ? ChosenStruct->GetName() : "";
+
+	if (OldDef->PropertyType == ELiveConfigPropertyType::Struct && OldDef->Value != Item->PropertyDefinition->Value)
+	{
+		DeleteSubProperties();
+	}
+
 	OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value);
 
 	if (ChosenStruct)
@@ -741,7 +877,7 @@ void SLiveConfigPropertyRow::GenerateSubPropertiesForStruct(const UScriptStruct*
 	for (TFieldIterator<FProperty> It(Struct); It; ++It)
 	{
 		FProperty* Prop = *It;
-		FString FullPropName = Prefix + TEXT(".") + Prop->GetName();
+		FString FullPropName = Prefix + TEXT(".") + Prop->GetAuthoredName();
 		FLiveConfigProperty ConfigProp(FullPropName);
 
 		if (System->PropertyDefinitions.Contains(ConfigProp))
@@ -799,6 +935,43 @@ void SLiveConfigPropertyRow::GenerateSubPropertiesForStruct(const UScriptStruct*
 	if (bChanged)
 	{
 		UE_LOG(LogLiveConfig, Log, TEXT("GenerateSubPropertiesForStruct: Refreshing system and UI"));
+		System->RefreshFromSettings();
+		OnRequestRefresh.ExecuteIfBound();
+	}
+}
+
+void SLiveConfigPropertyRow::DeleteSubProperties()
+{
+	ULiveConfigSystem* System = ULiveConfigSystem::Get();
+	ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get();
+	if (!System)
+	{
+		return;
+	}
+
+	FString Prefix = Item->PropertyDefinition->PropertyName.ToString() + TEXT(".");
+	TArray<FLiveConfigProperty> PropertiesToDelete;
+
+	for (auto& Pair : System->PropertyDefinitions)
+	{
+		if (Pair.Key.ToString().StartsWith(Prefix))
+		{
+			PropertiesToDelete.Add(Pair.Key);
+		}
+	}
+
+	if (PropertiesToDelete.Num() > 0)
+	{
+		UE_LOG(LogLiveConfig, Log, TEXT("DeleteSubProperties: Deleting %d sub-properties for prefix %s"), PropertiesToDelete.Num(), *Prefix);
+		for (const FLiveConfigProperty& Prop : PropertiesToDelete)
+		{
+			System->PropertyDefinitions.Remove(Prop);
+			if (JsonSystem)
+			{
+				JsonSystem->DeletePropertyFile(Prop.GetName());
+			}
+		}
+
 		System->RefreshFromSettings();
 		OnRequestRefresh.ExecuteIfBound();
 	}
@@ -907,16 +1080,33 @@ void SLiveConfigPropertyRow::ValueTextCommitted(const FText& NewText, ETextCommi
 		UScriptStruct* Struct = FindObject<UScriptStruct>(nullptr, *NewVal, EFindObjectFlags::ExactClass);
 		if (!Struct)
 		{
-			UE_LOG(LogLiveConfig, Warning, TEXT("SLiveConfigPropertyRow: Struct not found for value '%s'"), *NewVal);
-			return;
+			// Try a broader search if exact lookup fails (similar to what was done in previous task)
+			for (TObjectIterator<UScriptStruct> It; It; ++It)
+			{
+				if (It->GetName() == NewVal)
+				{
+					Struct = *It;
+					break;
+				}
+			}
 		}
-		
-		OnStructPicked(Struct);
-		
+
 		if (Struct)
 		{
-			// Force a manager refresh because sub-properties might have been added
-			OnRequestRefresh.ExecuteIfBound();
+			OnStructPicked(Struct);
+		}
+		else
+		{
+			// If we manually set it to something invalid or empty, we should still handle the old sub-properties
+			TSharedPtr<FLiveConfigPropertyDefinition> OldDefCopy = MakeShared<FLiveConfigPropertyDefinition>(*Item->PropertyDefinition);
+			Item->PropertyDefinition->Value = NewVal;
+			
+			if (OldDefCopy->Value != NewVal)
+			{
+				DeleteSubProperties();
+			}
+			
+			OnChanged.ExecuteIfBound(OldDefCopy, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value);
 		}
 	}
 	else if (Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Int)

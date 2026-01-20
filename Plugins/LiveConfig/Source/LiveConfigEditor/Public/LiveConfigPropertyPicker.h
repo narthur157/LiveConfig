@@ -27,6 +27,11 @@ public:
     SLATE_END_ARGS()
 
     void Construct(const FArguments& InArgs);
+    
+    // SWidget
+    virtual FReply OnFocusReceived(const FGeometry& MyGeometry, const FFocusEvent& InFocusEvent) override;
+    virtual bool SupportsKeyboardFocus() const override;
+    // ~SWidget
 
     /** Get the currently selected property */
     FLiveConfigProperty GetSelectedProperty() const { return SelectedProperty; }
@@ -35,7 +40,7 @@ public:
     void SetSelectedProperty(FLiveConfigProperty InProperty);
 
 private:
-    /** Refresh the list of available propertys */
+    /** Refresh the list of available properties */
     void RefreshPropertyList();
 
     /** Filter the list based on search text */

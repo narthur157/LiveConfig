@@ -89,7 +89,7 @@ void SLiveConfigPropertyPicker::Construct(const FArguments& InArgs)
             .HintText(NSLOCTEXT("LiveConfig", "SearchProperties", "Search properties..."))
         ]
 
-        // List of propertys
+        // List of properties
         + SVerticalBox::Slot()
         .FillHeight(1.0f)
         .Padding(2.0f)
@@ -151,12 +151,22 @@ void SLiveConfigPropertyPicker::Construct(const FArguments& InArgs)
     ];
 }
 
+FReply SLiveConfigPropertyPicker::OnFocusReceived(const FGeometry& MyGeometry, const FFocusEvent& InFocusEvent)
+{
+    return FReply::Handled().SetUserFocus(SearchBox.ToSharedRef(), InFocusEvent.GetCause());
+}
+
+bool SLiveConfigPropertyPicker::SupportsKeyboardFocus() const
+{
+    return true;
+}
+
 void SLiveConfigPropertyPicker::RefreshPropertyList()
 {
     AvailablePropertyNames.Empty();
     FilteredProperties.Empty();
 
-    // Get all propertys from the system - now consolidated
+    // Get all properties from the system - now consolidated
     auto AllDefinitions = ULiveConfigSystem::Get()->GetAllProperties();
     
     TArray<FLiveConfigProperty> AllProperties;
@@ -346,8 +356,6 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
 
                                     if (bChanged)
                                     {
-                                        System->SaveConfig();
-                                        System->TryUpdateDefaultConfigFile();
                                         System->RefreshFromSettings();
                                     }
                                 }

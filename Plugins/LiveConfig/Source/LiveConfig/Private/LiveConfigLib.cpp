@@ -62,6 +62,41 @@ FString ULiveConfigLib::GetStringValue(FLiveConfigProperty Property)
 	return FString();
 }
 
+void ULiveConfigLib::GetStructValue(FLiveConfigProperty Property, int32& OutStruct)
+{
+	// This should not be called
+	checkNoEntry();
+}
+
+void ULiveConfigLib::Generic_GetStructValue(FLiveConfigProperty Property, UScriptStruct* Struct, void* OutStructPtr)
+{
+	if (Struct && OutStructPtr)
+	{
+		if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
+		{
+			System->GetLiveConfigStruct_Internal(Struct, OutStructPtr, Property);
+		}
+	}
+}
+
+DEFINE_FUNCTION(ULiveConfigLib::execGetStructValue)
+{
+	P_GET_STRUCT(FLiveConfigProperty, Property);
+
+	Stack.StepCompiledIn<FStructProperty>(NULL);
+	void* OutStructPtr = Stack.MostRecentPropertyAddress;
+	FStructProperty* StructProp = CastField<FStructProperty>(Stack.MostRecentProperty);
+
+	P_FINISH;
+
+	if (StructProp && OutStructPtr)
+	{
+		P_NATIVE_BEGIN;
+		Generic_GetStructValue(Property, StructProp->Struct, OutStructPtr);
+		P_NATIVE_END;
+	}
+}
+
 FName ULiveConfigLib::GetPropertyName(const FLiveConfigProperty& Property)
 {
 	return Property.GetName();

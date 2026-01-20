@@ -53,6 +53,10 @@ TSharedRef<SWidget> SLiveConfigPropertyPin::GetDefaultValueWidget()
                 {
                     FilterType = ELiveConfigPropertyType::String;
                 }
+                else if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Struct)
+                {
+                    FilterType = ELiveConfigPropertyType::Struct;
+                }
             }
         }
     }

@@ -267,7 +267,10 @@ void ULiveConfigSystem::GetLiveConfigStruct_Internal(UScriptStruct* Struct, void
 	for (TFieldIterator<FProperty> It(Struct); It; ++It)
 	{
 		FProperty* Prop = *It;
-		FString FullPropName = Prefix.ToString() + TEXT(".") + Prop->GetName();
+		
+		// we save properties using GetAuthoredName, so we also look them up that way
+		FString PropName = Prop->GetAuthoredName();
+		FString FullPropName = Prefix.ToString() + TEXT(".") + PropName;
 		FLiveConfigProperty ConfigProp(FullPropName);
 
 		if (FDoubleProperty* DoubleProp = CastField<FDoubleProperty>(Prop))

@@ -15,6 +15,9 @@ struct LIVECONFIG_API FLiveConfigProperty
 	FLiveConfigProperty() : PropertyName(NAME_None) {}
 	FLiveConfigProperty(FName InPropertyName) : PropertyName(InPropertyName) {}
 	FLiveConfigProperty(const FString& InPropertyStr) : PropertyName(*InPropertyStr) {}
+	FLiveConfigProperty(const TCHAR* InPropertyStr) : PropertyName(InPropertyStr) {}
+	// ReSharper disable once CppNonExplicitConvertingConstructor
+	FLiveConfigProperty(const char* InPropertyStr) : PropertyName(InPropertyStr) {}
     
 	/** Get the underlying FName */
 	FName GetName() const { return PropertyName; }
