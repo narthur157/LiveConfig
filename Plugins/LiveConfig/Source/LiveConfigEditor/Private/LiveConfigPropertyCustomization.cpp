@@ -122,7 +122,8 @@ FName FLiveConfigPropertyCustomization::GetCurrentProperty() const
     TArray<void*> RawData;
     PropertyHandle->AccessRawData(RawData);
 
-    if (RawData.Num() > 0)
+    // 
+    if (RawData.Num() > 0 && RawData[0] != nullptr)
     {
         // FLiveConfigProperty is a struct, so we need to access the RowName member
         // We'll need to get the struct property and then the RowName property

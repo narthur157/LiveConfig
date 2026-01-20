@@ -69,63 +69,6 @@ FText UK2Node_LiveConfigLookup::GetMenuCategory() const
 
 void UK2Node_LiveConfigLookup::PinDefaultValueChanged(UEdGraphPin* Pin)
 {
-	FLiveConfigProperty SelectedProperty;
-	if (UEdGraphPin* PropertyPin = GetPropertyPin())
-	{
-		FLiveConfigProperty::StaticStruct()->ImportText(*PropertyPin->DefaultValue, &SelectedProperty, nullptr, 0, nullptr, FLiveConfigProperty::StaticStruct()->GetName());
-	}
-
-	if (SelectedProperty.IsValid())
-	{
-		FLiveConfigPropertyDefinition Def = ULiveConfigLib::GetLiveConfigPropertyDefinition(SelectedProperty);
-		if (Def.IsValid())
-		{
-		}
-		if (const ULiveConfigSystem* System = ULiveConfigSystem::Get())
-		{
-			if (!System->PropertyDefinitions.Contains(SelectedProperty))
-			{
-				ULiveConfigSystem* MutableSystem = ULiveConfigSystem::Get();
-				FLiveConfigPropertyDefinition NewDef;
-				NewDef.PropertyName = SelectedProperty;
-				
-				// Try to guess the type from the output pin if it's connected or changed
-				UEdGraphPin* ValuePin = GetValuePin();
-				if (ValuePin)
-				{
-					if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Boolean)
-					{
-						NewDef.PropertyType = ELiveConfigPropertyType::Bool;
-					}
-					else if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Int)
-					{
-						NewDef.PropertyType = ELiveConfigPropertyType::Int;
-					}
-					else if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Float || 
-						ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Real || 
-						ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Double)
-					{
-						NewDef.PropertyType = ELiveConfigPropertyType::Float;
-					}
-					else if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_String)
-					{
-						NewDef.PropertyType = ELiveConfigPropertyType::String;
-					}
-					else if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Struct)
-					{
-						NewDef.PropertyType = ELiveConfigPropertyType::Struct;
-					}
-				}
-
-				MutableSystem->PropertyDefinitions.Add(SelectedProperty, NewDef);
-				MutableSystem->SaveConfig();
-				MutableSystem->TryUpdateDefaultConfigFile();
-
-				MutableSystem->RefreshFromSettings();
-			}
-		}
-	}
-
 	if (Pin && Pin->PinName == PropertyPinName)
 	{
 		UpdateOutputPinType();
@@ -291,9 +234,6 @@ void UK2Node_LiveConfigLookup::UpdateOutputPinType()
 	if (ValuePin->LinkedTo.Num() > 0)
 	{
 		NewType = ValuePin->LinkedTo[0]->PinType;
-		
-		// If the connected pin is also a wildcard, we don't want to adopt it if we already have a concrete type
-		// but if we are wildcard, we stay wildcard.
 	}
 	else
 	{
@@ -328,8 +268,13 @@ void UK2Node_LiveConfigLookup::UpdateOutputPinType()
 					break;
 				case ELiveConfigPropertyType::Struct:
 					NewType.PinCategory = UEdGraphSchema_K2::PC_Struct;
-					// Note: PinSubCategoryObject might be null if we don't know the struct yet
-					// It will be updated if connected or if we can determine it from metadata elsewhere
+					
+					// If you hit an ensure here, it's because there is a type collision and a struct probably needs to be renamed
+					NewType.PinSubCategoryObject = FindFirstObject<UScriptStruct>(*Def.Value, EFindFirstObjectOptions::EnsureIfAmbiguous);
+					if (!NewType.PinSubCategoryObject.IsValid() && !Def.Value.IsEmpty())
+					{
+						UE_LOG(LogLiveConfig, Error, TEXT("Failed to find struct for property %s with struct type %s, this could be due to an unloaded blueprint struct"), *Def.PropertyName.ToString(), *Def.Value);
+					}
 					break;
 				}
 			}

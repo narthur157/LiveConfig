@@ -83,7 +83,7 @@ DEFINE_FUNCTION(ULiveConfigLib::execGetStructValue)
 {
 	P_GET_STRUCT(FLiveConfigProperty, Property);
 
-	Stack.StepCompiledIn<FStructProperty>(NULL);
+	Stack.StepCompiledIn<FStructProperty>(nullptr);
 	void* OutStructPtr = Stack.MostRecentPropertyAddress;
 	FStructProperty* StructProp = CastField<FStructProperty>(Stack.MostRecentProperty);
 

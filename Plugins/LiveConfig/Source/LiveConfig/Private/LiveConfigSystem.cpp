@@ -329,9 +329,16 @@ void ULiveConfigSystem::PopulateAutoCompleteEntries(TArray<FAutoCompleteCommand>
     for (auto Iter = PropertyDefinitions.CreateConstIterator(); Iter; ++Iter)
     {
         const FLiveConfigProperty& Prop = Iter->Key;
+        auto Def = ULiveConfigLib::GetLiveConfigPropertyDefinition(Prop);
+    	
+    	// skip structs since we can set their subproperties individually
+    	if (!Def.IsValid() || Def.PropertyType == ELiveConfigPropertyType::Struct)
+    	{
+    		continue;
+    	}
+    	
         FAutoCompleteCommand Command;
         Command.Command = FString::Printf(TEXT("LiveConfig.SetOverride %s"), *Prop.ToString());
-        auto Def = ULiveConfigLib::GetLiveConfigPropertyDefinition(Prop);
         Command.Desc = FString::Printf(TEXT("Set live config override for %s (current %s)"), *Prop.ToString(), *Def.Value);
         Entries.Add(Command);
     }
