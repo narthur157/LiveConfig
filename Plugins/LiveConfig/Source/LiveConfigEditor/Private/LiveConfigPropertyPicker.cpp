@@ -29,6 +29,7 @@ void SLiveConfigPropertyPicker::Construct(const FArguments& InArgs)
 {
     Filter = InArgs._Filter;
     FilterType = InArgs._FilterType;
+    StructFilter = InArgs._StructFilter;
     bReadOnly = InArgs._bReadOnly;
     bMultiSelect = InArgs._bMultiSelect;
     OnPropertyChanged = InArgs._OnPropertyChanged;
@@ -193,6 +194,14 @@ void SLiveConfigPropertyPicker::RefreshPropertyList()
                 if (Def.PropertyType != FilterType.GetValue())
                 {
                     continue;
+                }
+
+                if (Def.PropertyType == ELiveConfigPropertyType::Struct && StructFilter.IsValid())
+                {
+                    if (Def.Value != StructFilter->GetName())
+                    {
+                        continue;
+                    }
                 }
             }
             AvailablePropertyNames.Add(MakeShareable(new FLiveConfigProperty(Property.GetName())));

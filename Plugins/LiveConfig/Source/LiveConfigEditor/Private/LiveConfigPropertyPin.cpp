@@ -30,6 +30,7 @@ TSharedRef<SWidget> SLiveConfigPropertyPin::GetDefaultValueWidget()
     }
 
     TOptional<ELiveConfigPropertyType> FilterType;
+    UScriptStruct* StructFilter = nullptr;
     if (UEdGraphNode* Node = GraphPinObj->GetOwningNode())
     {
         if (UK2Node_LiveConfigLookup* LookupNode = Cast<UK2Node_LiveConfigLookup>(Node))
@@ -56,6 +57,7 @@ TSharedRef<SWidget> SLiveConfigPropertyPin::GetDefaultValueWidget()
                 else if (ValuePin->PinType.PinCategory == UEdGraphSchema_K2::PC_Struct)
                 {
                     FilterType = ELiveConfigPropertyType::Struct;
+                    StructFilter = Cast<UScriptStruct>(ValuePin->PinType.PinSubCategoryObject.Get());
                 }
             }
         }
@@ -65,6 +67,7 @@ TSharedRef<SWidget> SLiveConfigPropertyPin::GetDefaultValueWidget()
         .Visibility(this, &SGraphPin::GetDefaultValueVisibility)
         .ReadOnly(false)
         .FilterType(FilterType)
+        .StructFilter(StructFilter)
         .OnPropertyChanged(this, &SLiveConfigPropertyPin::OnPropertyChanged)
         .Property(this, &SLiveConfigPropertyPin::GetCurrentProperty);
 

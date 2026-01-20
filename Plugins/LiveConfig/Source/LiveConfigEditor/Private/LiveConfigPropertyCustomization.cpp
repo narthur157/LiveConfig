@@ -35,6 +35,7 @@ void FLiveConfigPropertyCustomization::CustomizeHeader(TSharedRef<IPropertyHandl
                 FLiveConfigProperty CurrentProperty = GetCurrentProperty();
                 
                 TOptional<ELiveConfigPropertyType> FilterType;
+                UScriptStruct* StructFilter = nullptr;
                 if (PropertyHandle.IsValid())
                 {
                     const FString& FilterTypeString = PropertyHandle->GetMetaData(TEXT("FilterType"));
@@ -56,12 +57,23 @@ void FLiveConfigPropertyCustomization::CustomizeHeader(TSharedRef<IPropertyHandl
                         {
                             FilterType = ELiveConfigPropertyType::String;
                         }
+                        else if (FilterTypeString == TEXT("Struct"))
+                        {
+                            FilterType = ELiveConfigPropertyType::Struct;
+                        }
+                    }
+
+                    const FString& StructFilterString = PropertyHandle->GetMetaData(TEXT("StructFilter"));
+                    if (!StructFilterString.IsEmpty())
+                    {
+                        StructFilter = FindObject<UScriptStruct>(nullptr, *StructFilterString);
                     }
                 }
 
                 TSharedRef<SLiveConfigPropertyPicker> Widget = SNew(SLiveConfigPropertyPicker)
                     .bReadOnly(false)
                     .FilterType(FilterType)
+                    .StructFilter(StructFilter)
                     .OnPropertyChanged_Lambda([this](FLiveConfigProperty NewProperty)
                     {
                         OnPropertyChanged(NewProperty);

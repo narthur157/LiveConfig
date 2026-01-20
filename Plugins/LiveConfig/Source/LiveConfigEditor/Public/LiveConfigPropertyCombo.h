@@ -24,6 +24,7 @@ public:
 		
 		SLATE_ATTRIBUTE(FLiveConfigProperty, Property)
 		SLATE_ATTRIBUTE(TOptional<ELiveConfigPropertyType>, FilterType)
+		SLATE_ATTRIBUTE(UScriptStruct*, StructFilter)
 		
 		SLATE_EVENT(FOnPropertyChanged, OnPropertyChanged)
 	
@@ -46,6 +47,7 @@ protected:
 	FOnPropertyChanged OnPropertyChanged;
 	TSlateAttribute<FLiveConfigProperty> RowNameAttribute;
 	TSlateAttribute<TOptional<ELiveConfigPropertyType>> FilterTypeAttribute;
+	TSlateAttribute<UScriptStruct*> StructFilterAttribute;
 	TSharedPtr<SComboButton> ComboButton;
 	TSharedPtr<SLiveConfigPropertyChip> Chip;
 

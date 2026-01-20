@@ -21,11 +21,13 @@ void SLiveConfigPropertyCombo::PrivateRegisterAttributes(FSlateAttributeInitiali
 {
     SLATE_ADD_MEMBER_ATTRIBUTE_DEFINITION_WITH_NAME(AttributeInitializer, "Property", RowNameAttribute, EInvalidateWidgetReason::Layout);
     SLATE_ADD_MEMBER_ATTRIBUTE_DEFINITION_WITH_NAME(AttributeInitializer, "FilterType", FilterTypeAttribute, EInvalidateWidgetReason::Layout);
+    SLATE_ADD_MEMBER_ATTRIBUTE_DEFINITION_WITH_NAME(AttributeInitializer, "StructFilter", StructFilterAttribute, EInvalidateWidgetReason::Layout);
 }
 
 SLiveConfigPropertyCombo::SLiveConfigPropertyCombo()
     : RowNameAttribute(*this)
     , FilterTypeAttribute(*this)
+    , StructFilterAttribute(*this)
 {
 }
 
@@ -33,6 +35,7 @@ void SLiveConfigPropertyCombo::Construct(const FArguments& InArgs)
 {
     RowNameAttribute.Assign(*this, InArgs._Property);
     FilterTypeAttribute.Assign(*this, InArgs._FilterType);
+    StructFilterAttribute.Assign(*this, InArgs._StructFilter);
 	OnPropertyChanged = InArgs._OnPropertyChanged;
 
     ChildSlot
@@ -47,6 +50,7 @@ void SLiveConfigPropertyCombo::Construct(const FArguments& InArgs)
             return SNew(SLiveConfigPropertyPicker)
                 .bReadOnly(false)
                 .FilterType(FilterTypeAttribute.Get())
+                .StructFilter(StructFilterAttribute.Get())
                 .OnPropertyChanged(this, &SLiveConfigPropertyCombo::OnPropertySelected);
         })
         .ButtonContent()

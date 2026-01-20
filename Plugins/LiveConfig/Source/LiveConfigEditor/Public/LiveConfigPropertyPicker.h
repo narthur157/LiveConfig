@@ -16,11 +16,13 @@ public:
     SLATE_BEGIN_ARGS(SLiveConfigPropertyPicker)
         : _Filter()
         , _FilterType()
+        , _StructFilter(nullptr)
         , _bReadOnly(false)
         , _bMultiSelect(false)
     {}
         SLATE_ARGUMENT(FName, Filter)
         SLATE_ARGUMENT(TOptional<ELiveConfigPropertyType>, FilterType)
+        SLATE_ARGUMENT(UScriptStruct*, StructFilter)
         SLATE_ARGUMENT(bool, bReadOnly)
         SLATE_ARGUMENT(bool, bMultiSelect)
         SLATE_EVENT(FOnPropertyChanged, OnPropertyChanged)
@@ -67,6 +69,7 @@ private:
     FLiveConfigProperty SelectedProperty;
     FName Filter;
     TOptional<ELiveConfigPropertyType> FilterType;
+    TWeakObjectPtr<UScriptStruct> StructFilter;
     bool bReadOnly = false;
     bool bMultiSelect = false;
 
