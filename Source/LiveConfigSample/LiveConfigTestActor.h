@@ -24,6 +24,21 @@ struct FLiveConfigSampleStruct
 	FString BlueprintSampleString;
 };
 
+USTRUCT(BlueprintType)
+struct FLiveConfigSampleNestedStruct
+{
+	GENERATED_BODY()
+	
+	UPROPERTY()
+	FLiveConfigSampleStruct SampleStructA;
+	
+	UPROPERTY()
+	FLiveConfigSampleStruct SampleStructB;
+	
+	UPROPERTY()
+	FVector Vector;
+};
+
 UCLASS()
 class LIVECONFIGSAMPLE_API ALiveConfigTestActor : public AActor
 {

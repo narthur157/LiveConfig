@@ -154,14 +154,18 @@ void FLiveConfigEditorModule::RegisterMenus()
 	UToolMenu* PlayMenu = UToolMenus::Get()->ExtendMenu("LevelEditor.LevelEditorToolBar.PlayToolBar");
 	if (PlayMenu)
 	{
+		
 		FToolMenuSection& Section = PlayMenu->AddSection("LiveConfig", LOCTEXT("LiveConfigSection", "Live Config"));
-		Section.AddEntry(FToolMenuEntry::InitToolBarButton(
+		FToolMenuEntry Entry = FToolMenuEntry::InitToolBarButton(
 			"OpenLiveConfigManager",
 			FUIAction(FExecuteAction::CreateRaw(this, &FLiveConfigEditorModule::OpenPropertyManager, FLiveConfigProperty())),
 			LOCTEXT("OpenLiveConfigManager", "Live Config"),
 			LOCTEXT("OpenLiveConfigManagerTooltip", "Open the Live Config Property Manager"),
 			FSlateIcon(FAppStyle::GetAppStyleSetName(), "Icons.Settings")
-		));
+		);
+		Entry.SetCommandList(nullptr);
+		Entry.StyleNameOverride = "CalloutToolbar";
+		Section.AddEntry(Entry);
 	}
 }
 

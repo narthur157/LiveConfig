@@ -11,11 +11,12 @@ void SLiveConfigTagRow::PrivateRegisterAttributes(FSlateAttributeInitializer& At
 {
 }
 
-void SLiveConfigTagRow::Construct(const FArguments& InArgs, TSharedPtr<FLiveConfigPropertyDefinition> InItem, int32 InIndex, FSimpleDelegate InOnChanged, TFunction<FSlateColor(FName)> InGetTagColor)
+void SLiveConfigTagRow::Construct(const FArguments& InArgs, TSharedPtr<FLiveConfigPropertyDefinition> InItem, int32 InIndex, FSimpleDelegate InOnChanged, TFunction<FSlateColor(FName)> InGetTagColor, bool bInReadOnly)
 {
 	Item = InItem;
 	Index = InIndex;
 	OnChanged = InOnChanged;
+	bReadOnly = bInReadOnly;
 
 	ChildSlot
 	[
@@ -67,6 +68,7 @@ void SLiveConfigTagRow::Construct(const FArguments& InArgs, TSharedPtr<FLiveConf
 			.VAlign(VAlign_Center)
 			[
 				SNew(SButton)
+				.Visibility_Lambda([this]() { return bReadOnly ? EVisibility::Collapsed : EVisibility::Visible; })
 				.IsFocusable(false)
 				.ButtonStyle(FAppStyle::Get(), "SimpleButton")
 				.ContentPadding(0)

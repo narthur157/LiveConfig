@@ -53,6 +53,8 @@ public:
 
 	void RequestValueFocus() { bNeedsValueFocus = true; }
 
+	bool IsReadOnly() const;
+
 	virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
 
 	virtual TSharedRef<SWidget> GenerateWidgetForColumn(const FName& ColumnName) override;

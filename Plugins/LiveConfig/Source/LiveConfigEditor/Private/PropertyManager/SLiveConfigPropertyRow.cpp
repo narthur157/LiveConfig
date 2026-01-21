@@ -220,6 +220,19 @@ void SLiveConfigPropertyRow::Tick(const FGeometry& AllottedGeometry, const doubl
 	}
 }
 
+bool SLiveConfigPropertyRow::IsReadOnly() const
+{
+	if (Item.IsValid())
+	{
+		TSharedPtr<FLiveConfigPropertyTreeNode> ParentNode = Item->Parent.Pin();
+		if (ParentNode.IsValid() && ParentNode->IsStruct())
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateWidgetForColumn(const FName& ColumnName)
 {
 	if (ColumnName == ColumnNames::Actions)
@@ -252,6 +265,11 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateWidgetForColumn(const FName&
 
 TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateActionsColumnWidget()
 {
+	if (IsReadOnly())
+	{
+		return SNullWidget::NullWidget;
+	}
+
 	if (!Item->PropertyDefinition.IsValid())
 	{
 		return SNew(SBox)
@@ -436,6 +454,7 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateNameColumnWidget()
 		.VAlign(VAlign_Center)
 		[
 			SAssignNew(NameTextBox, SEditableTextBox)
+			.IsReadOnly(this, &SLiveConfigPropertyRow::IsReadOnly)
 			.Font(FAppStyle::GetFontStyle("BoldFont"))
 			.ForegroundColor(FLinearColor::Black)
 			.Text_Lambda([this]()
@@ -666,6 +685,7 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateTypeColumnWidget()
 			SNew(SComboBox<TSharedPtr<ELiveConfigPropertyType>>)
 			.IsFocusable(false)
 			.OptionsSource(&TypeOptions)
+			.IsEnabled_Lambda([this]() { return !IsReadOnly(); })
 			.OnGenerateWidget_Lambda([](TSharedPtr<ELiveConfigPropertyType> InType)
 			{
 				FString TypeStr = StaticEnum<ELiveConfigPropertyType>()->GetNameStringByValue((int64)*InType);
@@ -765,6 +785,7 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateValueColumnWidget()
 			+ SWidgetSwitcher::Slot()
 			[
 				SNew(SComboButton)
+				.IsEnabled_Lambda([this]() { return !IsReadOnly(); })
 				.OnGetMenuContent(this, &SLiveConfigPropertyRow::OnGetStructPickerMenu)
 				.ContentPadding(FMargin(4.0f, 2.0f))
 				.ButtonContent()
@@ -992,7 +1013,7 @@ void SLiveConfigPropertyRow::RefreshTags()
 			TagWrapBox->AddSlot()
 			.Padding(2.0f)
 			[
-				SNew(SLiveConfigTagRow, Item->PropertyDefinition, i, FSimpleDelegate::CreateSP(this, &SLiveConfigPropertyRow::OnTagChanged), GetTagColor)
+				SNew(SLiveConfigTagRow, Item->PropertyDefinition, i, FSimpleDelegate::CreateSP(this, &SLiveConfigPropertyRow::OnTagChanged), GetTagColor, IsReadOnly())
 			];
 		}
 	}
