@@ -55,6 +55,8 @@ private:
 	void NavigateToProperty(TSharedPtr<FLiveConfigPropertyTreeNode> CurrentItem, int32 Direction);
 	void OnContextMenuOpening(FMenuBuilder& MenuBuilder);
 	void BulkAddTag(TArray<TSharedRef<FLiveConfigPropertyTreeNode>> Nodes, FName TagName);
+	void BulkRemoveTag(TArray<TSharedRef<FLiveConfigPropertyTreeNode>> Nodes, FName TagName);
+	void BulkDeleteProperties(TArray<TSharedRef<FLiveConfigPropertyTreeNode>> Nodes);
 	TSharedPtr<SWidget> OnGetContextMenuContent();
 
 	TArray<TSharedPtr<FLiveConfigPropertyDefinition>> RawPropertyList;

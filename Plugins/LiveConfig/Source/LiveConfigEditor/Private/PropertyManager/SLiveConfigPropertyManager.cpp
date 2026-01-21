@@ -796,7 +796,7 @@ TSharedPtr<SWidget> SLiveConfigPropertyManager::OnGetContextMenuContent()
 	TArray<TSharedRef<FLiveConfigPropertyTreeNode>> FlatVisibleItems;
 	GetFlatVisibleProperties(FlatVisibleItems);
 
-	auto BuildTagSubMenu = [this](FMenuBuilder& SubMenuBuilder, TArray<TSharedRef<FLiveConfigPropertyTreeNode>> TargetNodes)
+	auto BuildAddTagSubMenu = [this](FMenuBuilder& SubMenuBuilder, TArray<TSharedRef<FLiveConfigPropertyTreeNode>> TargetNodes)
 	{
 		// Filter out non-property nodes from target
 		TArray<TSharedRef<FLiveConfigPropertyTreeNode>> PropertyNodes;
@@ -831,6 +831,59 @@ TSharedPtr<SWidget> SLiveConfigPropertyManager::OnGetContextMenuContent()
 		);
 	};
 
+	auto BuildRemoveTagSubMenu = [this](FMenuBuilder& SubMenuBuilder, TArray<TSharedRef<FLiveConfigPropertyTreeNode>> TargetNodes)
+	{
+		// Filter out non-property nodes from target
+		TArray<TSharedRef<FLiveConfigPropertyTreeNode>> PropertyNodes;
+		for (auto& Node : TargetNodes)
+		{
+			if (Node->IsProperty())
+			{
+				PropertyNodes.Add(Node);
+			}
+		}
+
+		if (PropertyNodes.Num() == 0)
+		{
+			return;
+		}
+
+		TArray<FName> CommonTags;
+		for (const auto& Node : PropertyNodes)
+		{
+			for (const FName& Tag : Node->PropertyDefinition->Tags)
+			{
+				CommonTags.AddUnique(Tag);
+			}
+		}
+
+		if (CommonTags.Num() == 0)
+		{
+			SubMenuBuilder.AddMenuEntry(
+				LOCTEXT("NoTagsToRemove", "No tags to remove."),
+				FText::GetEmpty(),
+				FSlateIcon(),
+				FUIAction(FExecuteAction(), FCanExecuteAction::CreateLambda([](){ return false; }))
+			);
+			return;
+		}
+
+		CommonTags.Sort([](const FName& A, const FName& B) { return A.Compare(B) < 0; });
+
+		for (const FName& Tag : CommonTags)
+		{
+			SubMenuBuilder.AddMenuEntry(
+				FText::FromName(Tag),
+				FText::Format(LOCTEXT("RemoveTagTooltip", "Remove tag '{0}' from properties"), FText::FromName(Tag)),
+				FSlateIcon(),
+				FUIAction(FExecuteAction::CreateLambda([this, PropertyNodes, Tag]()
+				{
+					BulkRemoveTag(PropertyNodes, Tag);
+				}))
+			);
+		}
+	};
+
 	if (SelectedItems.Num() > 0)
 	{
 		TArray<TSharedRef<FLiveConfigPropertyTreeNode>> SelectedPropertyNodes;
@@ -844,14 +897,37 @@ TSharedPtr<SWidget> SLiveConfigPropertyManager::OnGetContextMenuContent()
 
 		if (SelectedPropertyNodes.Num() > 0)
 		{
+			MenuBuilder.BeginSection("SelectedProperties", LOCTEXT("SelectedPropertiesSection", "Selected Properties"));
+			
 			MenuBuilder.AddSubMenu(
-				FText::Format(LOCTEXT("TagSelectedProperties", "Tag Selected ({0})"), FText::AsNumber(SelectedPropertyNodes.Num())),
+				FText::Format(LOCTEXT("TagSelectedProperties", "Add Tag to Selected ({0})"), FText::AsNumber(SelectedPropertyNodes.Num())),
 				LOCTEXT("TagSelectedPropertiesTooltip", "Add a tag to all currently selected properties"),
-				FNewMenuDelegate::CreateLambda([BuildTagSubMenu, SelectedPropertyNodes](FMenuBuilder& SubMenuBuilder)
+				FNewMenuDelegate::CreateLambda([BuildAddTagSubMenu, SelectedPropertyNodes](FMenuBuilder& SubMenuBuilder)
 				{
-					BuildTagSubMenu(SubMenuBuilder, SelectedPropertyNodes);
+					BuildAddTagSubMenu(SubMenuBuilder, SelectedPropertyNodes);
 				})
 			);
+
+			MenuBuilder.AddSubMenu(
+				FText::Format(LOCTEXT("RemoveTagSelectedProperties", "Remove Tag from Selected ({0})"), FText::AsNumber(SelectedPropertyNodes.Num())),
+				LOCTEXT("RemoveTagSelectedPropertiesTooltip", "Remove a tag from all currently selected properties"),
+				FNewMenuDelegate::CreateLambda([BuildRemoveTagSubMenu, SelectedPropertyNodes](FMenuBuilder& SubMenuBuilder)
+				{
+					BuildRemoveTagSubMenu(SubMenuBuilder, SelectedPropertyNodes);
+				})
+			);
+
+			MenuBuilder.AddMenuEntry(
+				FText::Format(LOCTEXT("DeleteSelectedProperties", "Delete Selected Properties ({0})"), FText::AsNumber(SelectedPropertyNodes.Num())),
+				LOCTEXT("DeleteSelectedPropertiesTooltip", "Delete all currently selected properties"),
+				FSlateIcon(FAppStyle::GetAppStyleSetName(), "Icons.Delete"),
+				FUIAction(FExecuteAction::CreateLambda([this, SelectedPropertyNodes]()
+				{
+					BulkDeleteProperties(SelectedPropertyNodes);
+				}))
+			);
+
+			MenuBuilder.EndSection();
 		}
 	}
 
@@ -868,14 +944,37 @@ TSharedPtr<SWidget> SLiveConfigPropertyManager::OnGetContextMenuContent()
 
 		if (VisiblePropertyNodes.Num() > 0)
 		{
+			MenuBuilder.BeginSection("VisibleProperties", LOCTEXT("VisiblePropertiesSection", "Visible Properties"));
+
 			MenuBuilder.AddSubMenu(
-				FText::Format(LOCTEXT("TagAllVisibleProperties", "Tag All Visible ({0})"), FText::AsNumber(VisiblePropertyNodes.Num())),
+				FText::Format(LOCTEXT("TagAllVisibleProperties", "Add Tag to All Visible ({0})"), FText::AsNumber(VisiblePropertyNodes.Num())),
 				LOCTEXT("TagAllVisiblePropertiesTooltip", "Add a tag to all properties in the current filtered list"),
-				FNewMenuDelegate::CreateLambda([BuildTagSubMenu, VisiblePropertyNodes](FMenuBuilder& SubMenuBuilder)
+				FNewMenuDelegate::CreateLambda([BuildAddTagSubMenu, VisiblePropertyNodes](FMenuBuilder& SubMenuBuilder)
 				{
-					BuildTagSubMenu(SubMenuBuilder, VisiblePropertyNodes);
+					BuildAddTagSubMenu(SubMenuBuilder, VisiblePropertyNodes);
 				})
 			);
+
+			MenuBuilder.AddSubMenu(
+				FText::Format(LOCTEXT("RemoveTagAllVisibleProperties", "Remove Tag from All Visible ({0})"), FText::AsNumber(VisiblePropertyNodes.Num())),
+				LOCTEXT("RemoveTagAllVisiblePropertiesTooltip", "Remove a tag from all properties in the current filtered list"),
+				FNewMenuDelegate::CreateLambda([BuildRemoveTagSubMenu, VisiblePropertyNodes](FMenuBuilder& SubMenuBuilder)
+				{
+					BuildRemoveTagSubMenu(SubMenuBuilder, VisiblePropertyNodes);
+				})
+			);
+
+			MenuBuilder.AddMenuEntry(
+				FText::Format(LOCTEXT("DeleteAllVisibleProperties", "Delete All Visible Properties ({0})"), FText::AsNumber(VisiblePropertyNodes.Num())),
+				LOCTEXT("DeleteAllVisiblePropertiesTooltip", "Delete all properties in the current filtered list"),
+				FSlateIcon(FAppStyle::GetAppStyleSetName(), "Icons.Delete"),
+				FUIAction(FExecuteAction::CreateLambda([this, VisiblePropertyNodes]()
+				{
+					BulkDeleteProperties(VisiblePropertyNodes);
+				}))
+			);
+
+			MenuBuilder.EndSection();
 		}
 	}
 
@@ -903,6 +1002,70 @@ void SLiveConfigPropertyManager::BulkAddTag(TArray<TSharedRef<FLiveConfigPropert
 	{
 		PropertyTreeView->RequestTreeRefresh();
 	}
+}
+
+void SLiveConfigPropertyManager::BulkRemoveTag(TArray<TSharedRef<FLiveConfigPropertyTreeNode>> Nodes, FName TagName)
+{
+	bool bChanged = false;
+	for (auto& Node : Nodes)
+	{
+		if (Node->IsProperty())
+		{
+			if (Node->PropertyDefinition->Tags.Contains(TagName))
+			{
+				TSharedPtr<FLiveConfigPropertyDefinition> OldDef = MakeShared<FLiveConfigPropertyDefinition>(*Node->PropertyDefinition);
+				Node->PropertyDefinition->Tags.Remove(TagName);
+				OnPropertyRowChanged(OldDef, Node->PropertyDefinition, ELiveConfigPropertyChangeType::Tags);
+				bChanged = true;
+			}
+		}
+	}
+
+	if (bChanged)
+	{
+		PropertyTreeView->RequestTreeRefresh();
+	}
+}
+
+void SLiveConfigPropertyManager::BulkDeleteProperties(TArray<TSharedRef<FLiveConfigPropertyTreeNode>> Nodes)
+{
+	if (Nodes.Num() == 0)
+	{
+		return;
+	}
+
+	FText ConfirmMessage = FText::Format(
+		LOCTEXT("BulkDeleteConfirm", "Are you sure you want to delete {0} selected property(s)?"),
+		FText::AsNumber(Nodes.Num())
+	);
+
+	if (FMessageDialog::Open(EAppMsgType::YesNo, ConfirmMessage, LOCTEXT("BulkDeleteTitle", "Delete Properties")) != EAppReturnType::Yes)
+	{
+		return;
+	}
+
+	ULiveConfigSystem* System = ULiveConfigSystem::Get();
+	ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get();
+
+	for (auto& Node : Nodes)
+	{
+		if (Node->IsProperty() && Node->PropertyDefinition.IsValid())
+		{
+			System->PropertyDefinitions.Remove(Node->PropertyDefinition->PropertyName);
+
+			if (JsonSystem)
+			{
+				JsonSystem->DeletePropertyFile(Node->PropertyDefinition->PropertyName.GetName());
+			}
+
+			RawPropertyList.Remove(Node->PropertyDefinition);
+		}
+	}
+
+	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
+
+	System->RefreshFromSettings();
+	UpdateAllTags();
 }
 
 void SLiveConfigPropertyManager::SaveKnownTags()
