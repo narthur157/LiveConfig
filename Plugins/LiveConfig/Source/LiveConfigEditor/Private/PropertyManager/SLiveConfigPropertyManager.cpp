@@ -25,6 +25,11 @@
 
 SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyManager);
 
+SLiveConfigPropertyManager::SLiveConfigPropertyManager()
+	: SelectedTag(NAME_None)
+{
+}
+
 void SLiveConfigPropertyManager::PrivateRegisterAttributes(FSlateAttributeInitializer& AttributeInitializer)
 {
 }
@@ -185,6 +190,7 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 				.TreeItemsSource(&RootNodes)
 				.OnGenerateRow(this, &SLiveConfigPropertyManager::OnGenerateRow)
 				.OnGetChildren(this, &SLiveConfigPropertyManager::OnGetChildren)
+				.OnSelectionChanged(this, &SLiveConfigPropertyManager::OnSelectionChanged)
 				.OnContextMenuOpening(this, &SLiveConfigPropertyManager::OnGetContextMenuContent)
 				.SelectionMode(ESelectionMode::Multi)
 				.HeaderRow(
@@ -1066,6 +1072,36 @@ void SLiveConfigPropertyManager::BulkDeleteProperties(TArray<TSharedRef<FLiveCon
 
 	System->RefreshFromSettings();
 	UpdateAllTags();
+}
+
+void SLiveConfigPropertyManager::OnSelectionChanged(TSharedPtr<FLiveConfigPropertyTreeNode> SelectedItem, ESelectInfo::Type SelectInfo)
+{
+	if (SelectInfo == ESelectInfo::Direct || !SelectedItem.IsValid())
+	{
+		return;
+	}
+
+	// If a folder (struct with no definition, or explicit struct type) is selected, select all its children
+	if (SelectedItem->IsStruct() || (!SelectedItem->PropertyDefinition.IsValid() && SelectedItem->Children.Num() > 0))
+	{
+		TArray<TSharedRef<FLiveConfigPropertyTreeNode>> ToSelect;
+		
+		TFunction<void(TSharedRef<FLiveConfigPropertyTreeNode>)> CollectChildren = [&](TSharedRef<FLiveConfigPropertyTreeNode> Node)
+		{
+			for (auto& Child : Node->Children)
+			{
+				ToSelect.Add(Child);
+				CollectChildren(Child);
+			}
+		};
+
+		CollectChildren(SelectedItem.ToSharedRef());
+
+		if (ToSelect.Num() > 0)
+		{
+			PropertyTreeView->SetItemSelection(ToSelect, true, ESelectInfo::Direct);
+		}
+	}
 }
 
 void SLiveConfigPropertyManager::SaveKnownTags()

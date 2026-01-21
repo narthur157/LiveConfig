@@ -27,6 +27,8 @@ public:
 	{}
 	SLATE_END_ARGS()
 
+	SLiveConfigPropertyManager();
+
 	void Construct(const FArguments& InArgs);
 	virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
 	void RemoveProperty(TSharedPtr<FLiveConfigPropertyDefinition> InItem);
@@ -58,6 +60,7 @@ private:
 	void BulkRemoveTag(TArray<TSharedRef<FLiveConfigPropertyTreeNode>> Nodes, FName TagName);
 	void BulkDeleteProperties(TArray<TSharedRef<FLiveConfigPropertyTreeNode>> Nodes);
 	TSharedPtr<SWidget> OnGetContextMenuContent();
+	void OnSelectionChanged(TSharedPtr<FLiveConfigPropertyTreeNode> SelectedItem, ESelectInfo::Type SelectInfo);
 
 	TArray<TSharedPtr<FLiveConfigPropertyDefinition>> RawPropertyList;
 	TArray<TSharedRef<FLiveConfigPropertyTreeNode>> RootNodes;
