@@ -816,14 +816,9 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateTagsColumnWidget()
 		.Padding(FMargin(4.0f, 4.0f))
 		.VAlign(VAlign_Top)
 		[
-			SNew(SScrollBox)
+			SAssignNew(TagScrollBox, SScrollBox)
 			.ScrollBarVisibility(EVisibility::Collapsed)
 			.Orientation(Orient_Horizontal)
-			+ SScrollBox::Slot()
-			[
-				SAssignNew(TagWrapBox, SWrapBox)
-				.UseAllottedSize(true)
-			]
 		];
 	
 	RefreshTags();
@@ -1005,12 +1000,12 @@ void SLiveConfigPropertyRow::OnAddNewTagClicked()
 
 void SLiveConfigPropertyRow::RefreshTags()
 {
-	if (TagWrapBox.IsValid())
+	if (TagScrollBox.IsValid())
 	{
-		TagWrapBox->ClearChildren();
+		TagScrollBox->ClearChildren();
 		for (int32 i = 0; i < Item->PropertyDefinition->Tags.Num(); ++i)
 		{
-			TagWrapBox->AddSlot()
+			TagScrollBox->AddSlot()
 			.Padding(2.0f)
 			[
 				SNew(SLiveConfigTagRow, Item->PropertyDefinition, i, FSimpleDelegate::CreateSP(this, &SLiveConfigPropertyRow::OnTagChanged), GetTagColor, IsReadOnly())

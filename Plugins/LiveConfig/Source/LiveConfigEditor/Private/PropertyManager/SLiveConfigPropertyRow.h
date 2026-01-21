@@ -92,7 +92,7 @@ private:
 	FOnNavigateValue OnNavigateValue;
 	FOnScrollToProperty OnRequestScroll;
 	TFunction<FSlateColor(FName)> GetTagColor;
-	TSharedPtr<class SWrapBox> TagWrapBox;
+	TSharedPtr<class SScrollBox> TagScrollBox;
 	TSharedPtr<class SEditableTextBox> NameTextBox;
 	TSharedPtr<class SEditableTextBox> ValueTextBox;
 	TSharedPtr<class SCheckBox> ValueCheckBox;

@@ -196,7 +196,7 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 					.HeaderContentPadding(FMargin(4.0f, 0.0f))
 					+ SHeaderRow::Column(SLiveConfigPropertyRow::ColumnNames::Type)
 					.DefaultLabel(LOCTEXT("TypeColumn", "Type"))
-					.FillWidth(0.15f)
+					.FixedWidth(90.f)
 					.HeaderContentPadding(FMargin(4.0f, 0.0f))
 					+ SHeaderRow::Column(SLiveConfigPropertyRow::ColumnNames::Value)
 					.DefaultLabel(LOCTEXT("ValueColumn", "Value"))
@@ -1085,6 +1085,46 @@ void SLiveConfigPropertyManager::OnPropertyRowChanged(TSharedPtr<FLiveConfigProp
 			if (JsonSystem)
 			{
 				JsonSystem->DeletePropertyFile(OldDef->PropertyName.GetName());
+			}
+
+			// If this was a struct, we need to rename all subproperties as well
+			if (OldDef->PropertyType == ELiveConfigPropertyType::Struct)
+			{
+				FString OldPrefix = OldDef->PropertyName.ToString() + TEXT(".");
+				FString NewPrefix = NewDef->PropertyName.ToString() + TEXT(".");
+
+				TArray<TSharedPtr<FLiveConfigPropertyDefinition>> SubPropsToUpdate;
+				for (const auto& PropDef : RawPropertyList)
+				{
+					if (PropDef->PropertyName.ToString().StartsWith(OldPrefix))
+					{
+						SubPropsToUpdate.Add(PropDef);
+					}
+				}
+
+				for (const auto& SubProp : SubPropsToUpdate)
+				{
+					FLiveConfigProperty OldSubPropName = SubProp->PropertyName;
+					FString NewSubPropNameStr = SubProp->PropertyName.ToString().Replace(*OldPrefix, *NewPrefix, ESearchCase::CaseSensitive);
+					FLiveConfigProperty NewSubPropName(NewSubPropNameStr);
+
+					// Remove old name from system and delete old file
+					LiveConfigSystem->PropertyDefinitions.Remove(OldSubPropName);
+					if (JsonSystem)
+					{
+						JsonSystem->DeletePropertyFile(OldSubPropName.GetName());
+					}
+
+					// Update the property definition
+					SubProp->PropertyName = NewSubPropName;
+
+					// Add new name to system and save new file
+					LiveConfigSystem->PropertyDefinitions.Add(NewSubPropName, *SubProp);
+					if (JsonSystem)
+					{
+						JsonSystem->SavePropertyToFile(*SubProp);
+					}
+				}
 			}
 		}
 	}
