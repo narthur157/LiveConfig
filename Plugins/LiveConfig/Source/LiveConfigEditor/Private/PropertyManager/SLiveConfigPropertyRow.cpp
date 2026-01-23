@@ -872,12 +872,7 @@ void SLiveConfigPropertyRow::GenerateSubPropertiesForStruct(const UScriptStruct*
 		return;
 	}
 
-	ULiveConfigSystem* System = ULiveConfigSystem::Get();
-	if (!System)
-	{
-		UE_LOG(LogLiveConfig, Error, TEXT("GenerateSubPropertiesForStruct: System is null"));
-		return;
-	}
+	ULiveConfigSystem& System = ULiveConfigSystem::Get();
 
 	FString Prefix = Item->PropertyDefinition->PropertyName.ToString();
 	UE_LOG(LogLiveConfig, Log, TEXT("GenerateSubPropertiesForStruct: Using prefix: %s"), *Prefix);
@@ -896,7 +891,7 @@ void SLiveConfigPropertyRow::GenerateSubPropertiesForStruct(const UScriptStruct*
 		FString FullPropName = Prefix + TEXT(".") + Prop->GetAuthoredName();
 		FLiveConfigProperty ConfigProp(FullPropName);
 
-		if (System->PropertyDefinitions.Contains(ConfigProp))
+		if (System.PropertyDefinitions.Contains(ConfigProp))
 		{
 			UE_LOG(LogLiveConfig, Log, TEXT("GenerateSubPropertiesForStruct: Property %s already exists, skipping"), *FullPropName);
 			continue;
@@ -938,7 +933,7 @@ void SLiveConfigPropertyRow::GenerateSubPropertiesForStruct(const UScriptStruct*
 		NewDef.Tags = Item->PropertyDefinition->Tags; // Inherit tags from parent struct property
 
 		UE_LOG(LogLiveConfig, Log, TEXT("GenerateSubPropertiesForStruct: Adding property %s"), *FullPropName);
-		System->PropertyDefinitions.Add(ConfigProp, NewDef);
+		System.PropertyDefinitions.Add(ConfigProp, NewDef);
 		
 		if (ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get())
 		{
@@ -951,24 +946,20 @@ void SLiveConfigPropertyRow::GenerateSubPropertiesForStruct(const UScriptStruct*
 	if (bChanged)
 	{
 		UE_LOG(LogLiveConfig, Log, TEXT("GenerateSubPropertiesForStruct: Refreshing system and UI"));
-		System->RebuildConfigCache();
+		System.RebuildConfigCache();
 		OnRequestRefresh.ExecuteIfBound();
 	}
 }
 
 void SLiveConfigPropertyRow::DeleteSubProperties()
 {
-	ULiveConfigSystem* System = ULiveConfigSystem::Get();
+	ULiveConfigSystem& System = ULiveConfigSystem::Get();
 	ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get();
-	if (!System)
-	{
-		return;
-	}
 
 	FString Prefix = Item->PropertyDefinition->PropertyName.ToString() + TEXT(".");
 	TArray<FLiveConfigProperty> PropertiesToDelete;
 
-	for (auto& Pair : System->PropertyDefinitions)
+	for (auto& Pair : System.PropertyDefinitions)
 	{
 		if (Pair.Key.ToString().StartsWith(Prefix))
 		{
@@ -981,14 +972,14 @@ void SLiveConfigPropertyRow::DeleteSubProperties()
 		UE_LOG(LogLiveConfig, Log, TEXT("DeleteSubProperties: Deleting %d sub-properties for prefix %s"), PropertiesToDelete.Num(), *Prefix);
 		for (const FLiveConfigProperty& Prop : PropertiesToDelete)
 		{
-			System->PropertyDefinitions.Remove(Prop);
+			System.PropertyDefinitions.Remove(Prop);
 			if (JsonSystem)
 			{
 				JsonSystem->DeletePropertyFile(Prop.GetName());
 			}
 		}
 
-		System->RebuildConfigCache();
+		System.RebuildConfigCache();
 		OnRequestRefresh.ExecuteIfBound();
 	}
 }

@@ -17,9 +17,9 @@ void ULiveConfigCurveTableUpdater::Initialize(FSubsystemCollectionBase& Collecti
 
 	UpdateCurveTables();
 
-	if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
+	ULiveConfigSystem& System = ULiveConfigSystem::Get();
 	{
-		System->OnPropertiesUpdated.AddUObject(this, &ThisClass::ExportToCurveTables);
+		System.PropertyDefinitions.Empty();
 	}
 }
 
@@ -81,8 +81,8 @@ void ULiveConfigCurveTableUpdater::ImportFromCurveTables()
 				{
 					FName PropName = (Curve->Keys.Num() == 1) ? RowName : FName(FString::Printf(TEXT("%s.%d"), *RowName.ToString(), FMath::RoundToInt(Key.Time)));
 					
-					ULiveConfigSystem* System = ULiveConfigSystem::Get();
-					FLiveConfigPropertyDefinition& Def = System->PropertyDefinitions.FindOrAdd(PropName);
+					ULiveConfigSystem& System = ULiveConfigSystem::Get();
+					FLiveConfigPropertyDefinition& Def = System.PropertyDefinitions.FindOrAdd(PropName);
 					
 					if (Def.PropertyName != PropName || (Def.PropertyType != ELiveConfigPropertyType::Float && Def.PropertyType != ELiveConfigPropertyType::Int) || Def.Value != FString::SanitizeFloat(Key.Value))
 					{
@@ -109,10 +109,10 @@ void ULiveConfigCurveTableUpdater::ImportFromCurveTables()
 
 		if (bSettingsChanged)
 		{
-			ULiveConfigSystem* System = ULiveConfigSystem::Get();
-			System->Modify();
-			System->SaveConfig();
-			System->TryUpdateDefaultConfigFile();
+			ULiveConfigSystem& System = ULiveConfigSystem::Get();
+			System.Modify();
+			System.SaveConfig();
+			System.TryUpdateDefaultConfigFile();
 		}
 	}
 }
@@ -120,7 +120,7 @@ void ULiveConfigCurveTableUpdater::ImportFromCurveTables()
 // ReSharper disable once CppMemberFunctionMayBeConst
 void ULiveConfigCurveTableUpdater::ExportToCurveTables()
 {
-	const ULiveConfigSystem* System = ULiveConfigSystem::Get();
+	const ULiveConfigSystem& System = ULiveConfigSystem::Get();
 
 	if (!ExportActiveCurveTable)
 	{
@@ -136,7 +136,7 @@ void ULiveConfigCurveTableUpdater::ExportToCurveTables()
 		FSimpleCurve* Curve = Pair.Value;
 
 		// Exact match
-		if (const FLiveConfigPropertyDefinition* Def = System->PropertyDefinitions.Find(RowName))
+		if (const FLiveConfigPropertyDefinition* Def = System.PropertyDefinitions.Find(RowName))
 		{
 			// Skip properties imported from curve tables
 			if (Def->Tags.Contains(LiveConfigTags::FromCurveTable))
@@ -170,7 +170,7 @@ void ULiveConfigCurveTableUpdater::ExportToCurveTables()
 		for (FSimpleCurveKey& Key : Curve->Keys)
 		{
 			FName ConfigKey = FName(FString::Printf(TEXT("%s.%d"), *RowName.ToString(), FMath::RoundToInt(Key.Time)));
-			if (const FLiveConfigPropertyDefinition* Def = System->PropertyDefinitions.Find(ConfigKey))
+			if (const FLiveConfigPropertyDefinition* Def = System.PropertyDefinitions.Find(ConfigKey))
 			{
 				if (Def->Tags.Contains(LiveConfigTags::FromCurveTable))
 				{
@@ -191,7 +191,7 @@ void ULiveConfigCurveTableUpdater::ExportToCurveTables()
 	}
 
 	// 2. Add/Update rows for all float and int properties in PropertyDefinitions
-	for (const auto& Pair : System->PropertyDefinitions)
+	for (const auto& Pair : System.PropertyDefinitions)
 	{
 		const FLiveConfigPropertyDefinition& Def = Pair.Value;
 		

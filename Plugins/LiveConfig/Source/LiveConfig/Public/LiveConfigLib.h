@@ -19,12 +19,24 @@ class LIVECONFIG_API ULiveConfigLib : public UBlueprintFunctionLibrary
 public:
 	UFUNCTION(BlueprintPure, Category = "Live Config")
 	static FLiveConfigPropertyDefinition GetLiveConfigPropertyDefinition(FLiveConfigProperty Property);
-	
+
+	/**
+	 * Get any live config value
+	 * @tparam T Property type
+	 * @param Property Property to lookup in the config. Its type must match T
+	 * @return Live config value
+	 */
 	template<typename T>
-	T GetLiveConfigValue(FLiveConfigProperty Property);
-	
+	static T GetLiveConfigValue(FLiveConfigProperty Property);
+
+	UFUNCTION(BlueprintPure, Category = "Live Config")
+	static FName GetPropertyName(const FLiveConfigProperty& Property);
+
+	UFUNCTION(BlueprintPure, Category = "Live Config")
+	static FLiveConfigProperty MakeLiteralLiveConfigProperty(FLiveConfigProperty Property);
+private:	
 	UFUNCTION(BlueprintPure, Category = "Live Config", BlueprintInternalUseOnly)
-	static bool IsFeatureEnabled(FLiveConfigProperty Property);
+	static bool GetBoolValue(FLiveConfigProperty Property);
 
 	UFUNCTION(BlueprintPure, Category = "Live Config", BlueprintInternalUseOnly)
 	static float GetValue(FLiveConfigProperty Property);
@@ -45,17 +57,10 @@ public:
 	static void Generic_GetStructValue(FLiveConfigProperty Property, UScriptStruct* Struct, void* OutStructPtr);
 
 	DECLARE_FUNCTION(execGetStructValue);
-
-	UFUNCTION(BlueprintPure, Category = "Live Config")
-	static FName GetPropertyName(const FLiveConfigProperty& Property);
-
-	UFUNCTION(BlueprintPure, Category = "Live Config")
-	static FLiveConfigProperty MakeLiteralLiveConfigProperty(FLiveConfigProperty Property);
 };
 
 template <typename T>
 T ULiveConfigLib::GetLiveConfigValue(FLiveConfigProperty Property)
 {
-	auto System = ULiveConfigSystem::Get();
-	
+	return ULiveConfigSystem::Get().GetLiveConfigValue<T>(Property);
 }

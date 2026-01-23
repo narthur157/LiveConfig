@@ -26,7 +26,12 @@ class LIVECONFIG_API ULiveConfigSystem : public UEngineSubsystem
     GENERATED_BODY()
 
 public:
-    static ULiveConfigSystem* Get();
+    /**
+     * note - if using this very early during startup (eg from another UEngineSubsystem::Initialize) consider
+     * using GEngine->GetEngineSubsystem<ULiveConfigSystem>() to check
+     * @return Checked reference to the live config engine subsystem
+     */
+    static ULiveConfigSystem& Get();
 
     // USubsystem
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
@@ -55,7 +60,7 @@ public:
      * Each UProperty in the struct will be looked up as Prefix.PropertyName.
      */
     template<typename T>
-    T GetStructValue(FLiveConfigProperty Prefix) const
+    T GetLiveConfigStruct(FLiveConfigProperty Prefix) const
     {
         T OutStruct;
         UScriptStruct* Struct = TBaseStructure<T>::Get();
@@ -74,11 +79,6 @@ public:
     	if (!Def)
     	{
     		return {};
-    	}
-    
-    	if (Def->PropertyType == ELiveConfigPropertyType::Struct)
-    	{
-    		return GetStructValue<T>(Property);
     	}
     	
 		return Cache.GetValue<T>(Property);

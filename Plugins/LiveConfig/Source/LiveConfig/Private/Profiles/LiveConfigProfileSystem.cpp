@@ -61,7 +61,7 @@ void ULiveConfigProfileSystem::Initialize(FSubsystemCollectionBase& Collection)
             if (Args.Num() > 1 && !Args[0].IsEmpty() && !Args[1].IsEmpty())
             {
                 FLiveConfigProperty Prop = FLiveConfigProperty(Args[0]);
-                if (!ULiveConfigSystem::Get()->DoesPropertyNameExist(Prop))
+               	if (!ULiveConfigSystem::Get().DoesPropertyNameExist(Prop))
                 {
                     UE_LOG(LogLiveConfig, Warning, TEXT("Property '%s' does not exist in the system. Override not set."), *Args[0]);
                     return;

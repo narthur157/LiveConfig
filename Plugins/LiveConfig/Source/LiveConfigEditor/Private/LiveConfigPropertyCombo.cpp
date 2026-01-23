@@ -82,9 +82,9 @@ void SLiveConfigPropertyCombo::Construct(const FArguments& InArgs)
                 if (CurrentProperty.IsValid())
                 {
                     FString DisplayString = CurrentProperty.GetName().ToString();
-                    if (const ULiveConfigSystem* System = ULiveConfigSystem::Get())
+                    const ULiveConfigSystem& System = ULiveConfigSystem::Get();
                     {
-                        if (const FLiveConfigPropertyDefinition* Def = System->PropertyDefinitions.Find(CurrentProperty))
+                        if (const FLiveConfigPropertyDefinition* Def = System.PropertyDefinitions.Find(CurrentProperty))
                         {
                             DisplayString += FString::Printf(TEXT(": %s"), *Def->Value);
                         }
@@ -182,7 +182,7 @@ void SLiveConfigPropertyCombo::OnPasteProperty()
 	if (!ClipboardText.IsEmpty())
 	{
 		FLiveConfigProperty NewProperty(ClipboardText);
-		if (ULiveConfigSystem::Get()->DoesPropertyNameExist(NewProperty))
+ 	if (ULiveConfigSystem::Get().DoesPropertyNameExist(NewProperty))
 		{
 			OnPropertyChanged.ExecuteIfBound(NewProperty);
 		}
@@ -197,7 +197,7 @@ bool SLiveConfigPropertyCombo::CanPasteProperty() const
 	if (!ClipboardText.IsEmpty())
 	{
 		FLiveConfigProperty NewProperty(ClipboardText);
-		return ULiveConfigSystem::Get()->DoesPropertyNameExist(NewProperty);
+		return ULiveConfigSystem::Get().DoesPropertyNameExist(NewProperty);
 	}
 
 	return false;

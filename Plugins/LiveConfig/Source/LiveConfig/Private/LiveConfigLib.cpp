@@ -12,7 +12,7 @@ FLiveConfigPropertyDefinition ULiveConfigLib::GetLiveConfigPropertyDefinition(FL
 	{
 		return {};
 	}
-	const FLiveConfigPropertyDefinition* Prop = ULiveConfigSystem::Get()->PropertyDefinitions.Find(Property);
+	const FLiveConfigPropertyDefinition* Prop = ULiveConfigSystem::Get().PropertyDefinitions.Find(Property);
 	
 	if (!Prop)
 	{
@@ -22,44 +22,34 @@ FLiveConfigPropertyDefinition ULiveConfigLib::GetLiveConfigPropertyDefinition(FL
 	return *Prop; 
 }
 
-bool ULiveConfigLib::IsFeatureEnabled(FLiveConfigProperty Property)
+FName ULiveConfigLib::GetPropertyName(const FLiveConfigProperty& Property)
 {
-	if (auto LiveConfigSystem = GEngine->GetEngineSubsystem<ULiveConfigSystem>())
-	{
-		return LiveConfigSystem->GetBoolValue(Property);
-	}
+	return Property.GetName();
+}
 
-	return false;
+FLiveConfigProperty ULiveConfigLib::MakeLiteralLiveConfigProperty(FLiveConfigProperty Property)
+{
+	return Property;
+}
+
+bool ULiveConfigLib::GetBoolValue(FLiveConfigProperty Property)
+{
+	return ULiveConfigSystem::Get().GetBoolValue(Property);
 }
 
 float ULiveConfigLib::GetValue(FLiveConfigProperty Property)
 {
-	if (auto LiveConfigSystem = GEngine->GetEngineSubsystem<ULiveConfigSystem>())
-	{
-		return LiveConfigSystem->GetFloatValue(Property);
-	}
-
-	return 0.0f;
+	return ULiveConfigSystem::Get().GetFloatValue(Property);
 }
 
 int32 ULiveConfigLib::GetIntValue(FLiveConfigProperty Property)
 {
-	if (auto LiveConfigSystem = GEngine->GetEngineSubsystem<ULiveConfigSystem>())
-	{
-		return LiveConfigSystem->GetIntValue(Property);
-	}
-
-	return 0;
+	return ULiveConfigSystem::Get().GetIntValue(Property);
 }
 
 FString ULiveConfigLib::GetStringValue(FLiveConfigProperty Property)
 {
-	if (auto LiveConfigSystem = GEngine->GetEngineSubsystem<ULiveConfigSystem>())
-	{
-		return LiveConfigSystem->GetStringValue(Property);
-	}
-
-	return FString();
+	return ULiveConfigSystem::Get().GetStringValue(Property);
 }
 
 void ULiveConfigLib::GetStructValue(FLiveConfigProperty Property, int32& OutStruct)
@@ -72,10 +62,7 @@ void ULiveConfigLib::Generic_GetStructValue(FLiveConfigProperty Property, UScrip
 {
 	if (Struct && OutStructPtr)
 	{
-		if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
-		{
-			System->GetLiveConfigStruct_Internal(Struct, OutStructPtr, Property);
-		}
+		ULiveConfigSystem::Get().GetLiveConfigStruct_Internal(Struct, OutStructPtr, Property);
 	}
 }
 
@@ -95,14 +82,4 @@ DEFINE_FUNCTION(ULiveConfigLib::execGetStructValue)
 		Generic_GetStructValue(Property, StructProp->Struct, OutStructPtr);
 		P_NATIVE_END;
 	}
-}
-
-FName ULiveConfigLib::GetPropertyName(const FLiveConfigProperty& Property)
-{
-	return Property.GetName();
-}
-
-FLiveConfigProperty ULiveConfigLib::MakeLiteralLiveConfigProperty(FLiveConfigProperty Property)
-{
-	return Property;
 }

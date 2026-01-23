@@ -167,8 +167,7 @@ void SLiveConfigPropertyPicker::RefreshPropertyList()
     AvailablePropertyNames.Empty();
     FilteredProperties.Empty();
 
-    // Get all properties from the system - now consolidated
-    auto AllDefinitions = ULiveConfigSystem::Get()->GetAllProperties();
+   	auto AllDefinitions = ULiveConfigSystem::Get().GetAllProperties();
     
     TArray<FLiveConfigProperty> AllProperties;
     AllDefinitions.GetKeys(AllProperties);
@@ -287,9 +286,9 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
                     SNew(SWidgetSwitcher)
                     .WidgetIndex_Lambda([InItem]()
                     {
-                        if (const ULiveConfigSystem* System = ULiveConfigSystem::Get())
+                        const ULiveConfigSystem& System = ULiveConfigSystem::Get();
                         {
-                            if (const FLiveConfigPropertyDefinition* Def = System->PropertyDefinitions.Find(*InItem))
+                            if (const FLiveConfigPropertyDefinition* Def = System.PropertyDefinitions.Find(*InItem))
                             {
                                 return Def->PropertyType == ELiveConfigPropertyType::Bool ? 1 : 0;
                             }
@@ -301,39 +300,33 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
                         SNew(SEditableTextBox)
                         .Text_Lambda([InItem]()
                         {
-                            if (const ULiveConfigSystem* System = ULiveConfigSystem::Get())
+                            if (const FLiveConfigPropertyDefinition* Def = ULiveConfigSystem::Get().PropertyDefinitions.Find(*InItem))
                             {
-                                if (const FLiveConfigPropertyDefinition* Def = System->PropertyDefinitions.Find(*InItem))
-                                {
-                                    return FText::FromString(Def->Value);
-                                }
+                                return FText::FromString(Def->Value);
                             }
                             return FText::GetEmpty();
                         })
                         .OnVerifyTextChanged_Lambda([InItem](const FText& NewText, FText& OutError)
                         {
-                            if (const ULiveConfigSystem* System = ULiveConfigSystem::Get())
+                            if (const FLiveConfigPropertyDefinition* Def = ULiveConfigSystem::Get().PropertyDefinitions.Find(*InItem))
                             {
-                                if (const FLiveConfigPropertyDefinition* Def = System->PropertyDefinitions.Find(*InItem))
+                                FString NewVal = NewText.ToString();
+                                if (Def->PropertyType == ELiveConfigPropertyType::Int)
                                 {
-                                    FString NewVal = NewText.ToString();
-                                    if (Def->PropertyType == ELiveConfigPropertyType::Int)
+                                    if (NewVal.IsEmpty() || NewVal == TEXT("-")) return true;
+                                    if (!NewVal.IsNumeric() || NewVal.Contains(TEXT(".")))
                                     {
-                                        if (NewVal.IsEmpty() || NewVal == TEXT("-")) return true;
-                                        if (!NewVal.IsNumeric() || NewVal.Contains(TEXT(".")))
-                                        {
-                                            OutError = LOCTEXT("ValueIntError", "Value must be a valid integer.");
-                                            return false;
-                                        }
+                                        OutError = LOCTEXT("ValueIntError", "Value must be a valid integer.");
+                                        return false;
                                     }
-                                    else if (Def->PropertyType == ELiveConfigPropertyType::Float)
+                                }
+                                else if (Def->PropertyType == ELiveConfigPropertyType::Float)
+                                {
+                                    if (NewVal.IsEmpty() || NewVal == TEXT("-") || NewVal == TEXT(".") || NewVal == TEXT("-.")) return true;
+                                    if (!NewVal.IsNumeric())
                                     {
-                                        if (NewVal.IsEmpty() || NewVal == TEXT("-") || NewVal == TEXT(".") || NewVal == TEXT("-.")) return true;
-                                        if (!NewVal.IsNumeric())
-                                        {
-                                            OutError = LOCTEXT("ValueFloatError", "Value must be a valid number.");
-                                            return false;
-                                        }
+                                        OutError = LOCTEXT("ValueFloatError", "Value must be a valid number.");
+                                        return false;
                                     }
                                 }
                             }
@@ -341,32 +334,30 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
                         })
                         .OnTextCommitted_Lambda([InItem](const FText& NewText, ETextCommit::Type CommitType)
                         {
-                            if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
+                            ULiveConfigSystem& System = ULiveConfigSystem::Get();
+                            if (FLiveConfigPropertyDefinition* Def = System.PropertyDefinitions.Find(*InItem))
                             {
-                                if (FLiveConfigPropertyDefinition* Def = System->PropertyDefinitions.Find(*InItem))
+                                FString NewVal = NewText.ToString();
+                                bool bChanged = false;
+                                if (Def->PropertyType == ELiveConfigPropertyType::Int)
                                 {
-                                    FString NewVal = NewText.ToString();
-                                    bool bChanged = false;
-                                    if (Def->PropertyType == ELiveConfigPropertyType::Int)
-                                    {
-                                        if (NewVal.IsEmpty() || NewVal == TEXT("-")) { Def->Value = "0"; bChanged = true; }
-                                        else if (NewVal.IsNumeric() && !NewVal.Contains(TEXT("."))) { Def->Value = NewVal; bChanged = true; }
-                                    }
-                                    else if (Def->PropertyType == ELiveConfigPropertyType::Float)
-                                    {
-                                        if (NewVal.IsEmpty() || NewVal == TEXT("-") || NewVal == TEXT(".") || NewVal == TEXT("-.")) { Def->Value = "0"; bChanged = true; }
-                                        else if (NewVal.IsNumeric()) { Def->Value = NewVal; bChanged = true; }
-                                    }
-                                    else
-                                    {
-                                        Def->Value = NewVal;
-                                        bChanged = true;
-                                    }
+                                    if (NewVal.IsEmpty() || NewVal == TEXT("-")) { Def->Value = "0"; bChanged = true; }
+                                    else if (NewVal.IsNumeric() && !NewVal.Contains(TEXT("."))) { Def->Value = NewVal; bChanged = true; }
+                                }
+                                else if (Def->PropertyType == ELiveConfigPropertyType::Float)
+                                {
+                                    if (NewVal.IsEmpty() || NewVal == TEXT("-") || NewVal == TEXT(".") || NewVal == TEXT("-.")) { Def->Value = "0"; bChanged = true; }
+                                    else if (NewVal.IsNumeric()) { Def->Value = NewVal; bChanged = true; }
+                                }
+                                else
+                                {
+                                    Def->Value = NewVal;
+                                    bChanged = true;
+                                }
 
-                                    if (bChanged)
-                                    {
-                                        System->RebuildConfigCache();
-                                    }
+                                if (bChanged)
+                                {
+                                    System.RebuildConfigCache();
                                 }
                             }
                         })
@@ -376,26 +367,22 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
                         SNew(SCheckBox)
                         .IsChecked_Lambda([InItem]()
                         {
-                            if (const ULiveConfigSystem* System = ULiveConfigSystem::Get())
+                            if (const FLiveConfigPropertyDefinition* Def = ULiveConfigSystem::Get().PropertyDefinitions.Find(*InItem))
                             {
-                                if (const FLiveConfigPropertyDefinition* Def = System->PropertyDefinitions.Find(*InItem))
-                                {
-                                    return Def->Value.ToBool() ? ECheckBoxState::Checked : ECheckBoxState::Unchecked;
-                                }
+                                return Def->Value.ToBool() ? ECheckBoxState::Checked : ECheckBoxState::Unchecked;
                             }
+                            
                             return ECheckBoxState::Unchecked;
                         })
                         .OnCheckStateChanged_Lambda([InItem](ECheckBoxState NewState)
                         {
-                            if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
+                            ULiveConfigSystem& System = ULiveConfigSystem::Get();
+                            if (FLiveConfigPropertyDefinition* Def = System.PropertyDefinitions.Find(*InItem))
                             {
-                                if (FLiveConfigPropertyDefinition* Def = System->PropertyDefinitions.Find(*InItem))
-                                {
-                                    Def->Value = NewState == ECheckBoxState::Checked ? TEXT("true") : TEXT("false");
-                                    System->SaveConfig();
-                                    System->TryUpdateDefaultConfigFile();
-                                    System->RebuildConfigCache();
-                                }
+                                Def->Value = NewState == ECheckBoxState::Checked ? TEXT("true") : TEXT("false");
+                                System.SaveConfig();
+                                System.TryUpdateDefaultConfigFile();
+                                System.RebuildConfigCache();
                             }
                         })
                     ]
@@ -425,9 +412,9 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
         ]
     );
 
-    if (const ULiveConfigSystem* System = ULiveConfigSystem::Get())
+    const ULiveConfigSystem& System = ULiveConfigSystem::Get();
     {
-        if (const FLiveConfigPropertyDefinition* Def = System->PropertyDefinitions.Find(*InItem))
+        if (const FLiveConfigPropertyDefinition* Def = System.PropertyDefinitions.Find(*InItem))
         {
             if (Def->Tags.Num() > 0)
             {
@@ -504,9 +491,9 @@ void SLiveConfigPropertyPicker::OnCommitNewProperty(const FText& InText, ETextCo
 
     // Add to property definitions if in editor
 #if WITH_EDITOR
-    if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
+    ULiveConfigSystem& System = ULiveConfigSystem::Get();
     {
-        if (!System->PropertyDefinitions.Contains(NewPropertyName))
+        if (!System.PropertyDefinitions.Contains(NewPropertyName))
         {
             FLiveConfigPropertyDefinition NewDef;
             NewDef.PropertyName = NewPropertyName;
@@ -517,11 +504,11 @@ void SLiveConfigPropertyPicker::OnCommitNewProperty(const FText& InText, ETextCo
                 NewDef.PropertyType = FilterType.GetValue();
             }
 
-            System->PropertyDefinitions.Add(NewPropertyName, NewDef);
-            System->SaveConfig();
-            System->TryUpdateDefaultConfigFile();
+            System.PropertyDefinitions.Add(NewPropertyName, NewDef);
+            System.SaveConfig();
+            System.TryUpdateDefaultConfigFile();
 
-            System->RebuildConfigCache();
+            System.RebuildConfigCache();
         }
     }
 #endif
@@ -555,12 +542,9 @@ FText SLiveConfigPropertyPicker::GetPropertyDescription(FLiveConfigProperty Prop
     }
 
 #if WITH_EDITOR
-    if (const ULiveConfigSystem* System = ULiveConfigSystem::Get())
+    if (const FLiveConfigPropertyDefinition* Def = ULiveConfigSystem::Get().PropertyDefinitions.Find(Property))
     {
-        if (const FLiveConfigPropertyDefinition* Def = System->PropertyDefinitions.Find(Property))
-        {
-            return FText::FromString(Def->Description);
-        }
+        return FText::FromString(Def->Description);
     }
 #endif
 

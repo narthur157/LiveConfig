@@ -101,9 +101,9 @@ void ULiveConfigJsonSystem::LoadJsonFromFile(const FString& Path, const FString&
 		FLiveConfigPropertyDefinition PropertyDefinition;
 		if (FJsonObjectConverter::JsonObjectToUStruct(JsonObject.ToSharedRef(), &PropertyDefinition))
 		{
-			if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
+			ULiveConfigSystem& System = ULiveConfigSystem::Get();
 			{
-				System->PropertyDefinitions.Add(PropertyDefinition.PropertyName, PropertyDefinition);
+				System.PropertyDefinitions.Add(PropertyDefinition.PropertyName, PropertyDefinition);
 			}
 		}
 	}
@@ -131,9 +131,9 @@ void ULiveConfigJsonSystem::VerifyJsonIntegrity()
 	int32 MissingFilesCount = 0;
 	int32 TotalProperties = 0;
 
-	const ULiveConfigSystem* System = ULiveConfigSystem::Get();
+	const ULiveConfigSystem& System = ULiveConfigSystem::Get();
 
-	for (const auto& Pair : System->PropertyDefinitions)
+	for (const auto& Pair : System.PropertyDefinitions)
 	{
 		if (Pair.Value.Tags.Contains(LiveConfigTags::FromCurveTable))
 		{

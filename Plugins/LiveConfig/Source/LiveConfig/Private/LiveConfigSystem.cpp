@@ -18,9 +18,16 @@ namespace LiveConfigTags
 	const FName FromCurveTable = TEXT("FromCurveTable");
 }
 
-ULiveConfigSystem* ULiveConfigSystem::Get()
+ULiveConfigSystem& ULiveConfigSystem::Get()
 {
-    return GEngine->GetEngineSubsystem<ULiveConfigSystem>();
+    ULiveConfigSystem* Subsystem = GEngine->GetEngineSubsystem<ULiveConfigSystem>();
+    check(Subsystem);
+    return *Subsystem;
+}
+
+bool ULiveConfigSystem::DoesPropertyNameExist(FLiveConfigProperty PropertyName)
+{
+    return Get().PropertyDefinitions.Contains(PropertyName);
 }
 
 void ULiveConfigSystem::Initialize(FSubsystemCollectionBase& Collection)
@@ -195,14 +202,6 @@ const TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition>& ULiveConfigSyste
     return PropertyDefinitions;
 }
 
-bool ULiveConfigSystem::DoesPropertyNameExist(FLiveConfigProperty PropertyName)
-{
-    if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
-    {
-        return System->PropertyDefinitions.Contains(PropertyName);
-    }
-    return false;
-}
 
 void ULiveConfigSystem::OnTravel(UWorld* World, FWorldInitializationValues WorldInitializationValues)
 {

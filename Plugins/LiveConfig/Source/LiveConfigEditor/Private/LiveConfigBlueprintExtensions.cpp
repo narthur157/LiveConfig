@@ -162,9 +162,6 @@ void FLiveConfigBlueprintExtensions::PromotePinToLiveConfig(UEdGraphPin* Pin)
 		return;
 	}
 
-	// Get pin information
-	// FName PropertyType = GetPinTypeName(Pin); // No longer needed as we use Pin->PinType directly
-
 	// Create the node
 	const FScopedTransaction Transaction(LOCTEXT("PromoteToLiveConfigTransaction", "Promote to Live Config"));
 	Graph->Modify();
@@ -181,49 +178,6 @@ void FLiveConfigBlueprintExtensions::PromotePinToLiveConfig(UEdGraphPin* Pin)
 	{
 		NewNode->NodePosX = OwningNode->NodePosX - 400; // Position to the left of the input pin
 		NewNode->NodePosY = OwningNode->NodePosY;
-	}
-
-	// Set property name on the Property pin
-	UEdGraphPin* PropertyPin = NewNode->GetPropertyPin();
-
-	if (PropertyPin)
-	{
-		// Use the pin name as a suggestion for the property name if it's not a generic name
-		FString PropertyNameSuggestion = Pin->GetName();
-		PropertyPin->DefaultValue = FString::Printf(TEXT("(PropertyName=\"%s\")"), *PropertyNameSuggestion);
-		
-		// Add this property to the game settings if it doesn't exist
-		ULiveConfigSystem* System = ULiveConfigSystem::Get();
-		FLiveConfigProperty PropertyKey;
-		PropertyKey.PropertyName = FName(*PropertyNameSuggestion);
-		if (!System->PropertyDefinitions.Contains(PropertyKey))
-		{
-			FLiveConfigPropertyDefinition NewDef;
-			NewDef.PropertyName = PropertyKey;
-			NewDef.Description = FString::Printf(TEXT("Promoted from pin %s in %s"), *Pin->GetName(), *Graph->GetName());
-			
-			// Set correct type in definition
-			if (Pin->PinType.PinCategory == UEdGraphSchema_K2::PC_Boolean)
-			{
-				NewDef.PropertyType = ELiveConfigPropertyType::Bool;
-			}
-			else if (Pin->PinType.PinCategory == UEdGraphSchema_K2::PC_Int || Pin->PinType.PinCategory == UEdGraphSchema_K2::PC_Int64)
-			{
-				NewDef.PropertyType = ELiveConfigPropertyType::Int;
-			}
-			else if (Pin->PinType.PinCategory == UEdGraphSchema_K2::PC_Float || Pin->PinType.PinCategory == UEdGraphSchema_K2::PC_Real || Pin->PinType.PinCategory == TEXT("double"))
-			{
-				NewDef.PropertyType = ELiveConfigPropertyType::Float;
-			}
-			else
-			{
-				NewDef.PropertyType = ELiveConfigPropertyType::String;
-			}
-			
-			System->PropertyDefinitions.Add(PropertyKey, NewDef);
-			System->SaveConfig();
-			System->TryUpdateDefaultConfigFile();
-		}
 	}
 
 	// Connect the output pin to the original pin
