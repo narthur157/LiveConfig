@@ -37,7 +37,7 @@ void ULiveConfigSystem::Initialize(FSubsystemCollectionBase& Collection)
         JsonSystem->LoadJsonFromFiles();
     }
 
-    RefreshFromSettings();
+    RebuildConfigCache();
 
    	// Register "FromCurveTable" as a known tag if it's not already there
    	if (ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>())
@@ -52,19 +52,19 @@ void ULiveConfigSystem::Initialize(FSubsystemCollectionBase& Collection)
 
     if (ULiveConfigProfileSystem* ProfileSystem = ULiveConfigProfileSystem::Get())
     {
-        ProfileSystem->OnProfileChanged.AddUObject(this, &ThisClass::RefreshFromSettings);
+        ProfileSystem->OnProfileChanged.AddUObject(this, &ThisClass::RebuildConfigCache);
     }
 }
 
-void ULiveConfigSystem::RefreshFromSettings()
+void ULiveConfigSystem::RebuildConfigCache()
 {
     BuildCache();
     OnPropertiesUpdated.Broadcast();
 }
 
-void ULiveConfigSystem::RefreshFromSettings(const FLiveConfigProfile& Profile)
+void ULiveConfigSystem::RebuildConfigCache(const FLiveConfigProfile& Profile)
 {
-    RefreshFromSettings();
+    RebuildConfigCache();
 }
 
 void ULiveConfigSystem::Deinitialize()
@@ -103,7 +103,7 @@ void ULiveConfigSystem::DownloadConfig()
     // could have GID as an optional arg, but this also gets confusing? Just going to assume it's the first tab for now
     if (SheetUrl.IsEmpty())
     {
-        UE_LOG(LogLiveConfig, Warning, TEXT("LiveConfigSystem: SheetUrl is empty. Please set it in DefaultGame.ini."));
+        UE_LOG(LogLiveConfig, Log, TEXT("LiveConfigSystem: SheetUrl is empty. No remote overrides will be downloaded"));
         return;
     }
 
@@ -186,7 +186,7 @@ void ULiveConfigSystem::OnSheetDownloadComplete(FHttpRequestPtr Request, FHttpRe
     {   
         UE_LOG(LogLiveConfig, Log, TEXT("LiveConfigSystem:Environment profile changed, rebuilding cache"));
         EnvironmentOverrides = NewEnvProfile;
-        RefreshFromSettings();
+        RebuildConfigCache();
     }
 }
 
@@ -237,27 +237,27 @@ void ULiveConfigSystem::BuildCache()
     }
 }
 
-FString ULiveConfigSystem::GetStringValue(FLiveConfigProperty Key)
+FString ULiveConfigSystem::GetStringValue(FLiveConfigProperty Key) const
 {
     return Cache.GetValue<FString>(Key);
 }
 
-float ULiveConfigSystem::GetFloatValue(FLiveConfigProperty Key)
+float ULiveConfigSystem::GetFloatValue(FLiveConfigProperty Key) const
 {
     return Cache.GetValue<float>(Key);
 }
 
-int32 ULiveConfigSystem::GetIntValue(FLiveConfigProperty Key)
+int32 ULiveConfigSystem::GetIntValue(FLiveConfigProperty Key) const
 {
     return Cache.GetValue<int32>(Key);
 }
 
-bool ULiveConfigSystem::GetBoolValue(FLiveConfigProperty Key)
+bool ULiveConfigSystem::GetBoolValue(FLiveConfigProperty Key) const
 {
     return Cache.GetValue<bool>(Key);
 }
 
-void ULiveConfigSystem::GetLiveConfigStruct_Internal(UScriptStruct* Struct, void* OutStructPtr, FLiveConfigProperty Prefix)
+void ULiveConfigSystem::GetLiveConfigStruct_Internal(UScriptStruct* Struct, void* OutStructPtr, FLiveConfigProperty Prefix) const
 {
 	if (!Struct || !OutStructPtr)
 	{
@@ -275,7 +275,7 @@ void ULiveConfigSystem::GetLiveConfigStruct_Internal(UScriptStruct* Struct, void
 
 		if (FDoubleProperty* DoubleProp = CastField<FDoubleProperty>(Prop))
 		{
-			double Value = (double)GetFloatValue(ConfigProp);
+			double Value = GetFloatValue(ConfigProp);
 			DoubleProp->SetPropertyValue_InContainer(OutStructPtr, Value);
 		}
 		else if (FFloatProperty* FloatProp = CastField<FFloatProperty>(Prop))

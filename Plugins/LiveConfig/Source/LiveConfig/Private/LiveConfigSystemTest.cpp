@@ -56,7 +56,7 @@ bool FLiveConfigSystemValueTest::RunTest(const FString& Parameters)
 	}
 
 	// Rebuild cache for test data
-	System->RefreshFromSettings();
+	System->RebuildConfigCache();
 
 	// Test valid keys
 	TestEqual(TEXT("String value should match"), System->GetStringValue(FLiveConfigProperty(FName(TEXT("Test.String")))), TEXT("Hello World"));
@@ -78,7 +78,7 @@ bool FLiveConfigSystemValueTest::RunTest(const FString& Parameters)
 	
 	// Restore original settings
 	MutableSystem->PropertyDefinitions = OriginalDefinitions;
-	System->RefreshFromSettings();
+	System->RebuildConfigCache();
 
 	return true;
 }

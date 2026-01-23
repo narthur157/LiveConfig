@@ -49,10 +49,10 @@ bool FLiveConfigStructLookupTest::RunTest(const FString& Parameters)
 	}
 
 	// Rebuild cache for test data
-	System->RefreshFromSettings();
+	System->RebuildConfigCache();
 
 	// Test struct lookup
-	FLiveConfigTestStruct Result = System->GetLiveConfigStruct<FLiveConfigTestStruct>(FLiveConfigProperty(Prefix));
+	FLiveConfigTestStruct Result = System->GetStructValue<FLiveConfigTestStruct>(FLiveConfigProperty(Prefix));
 
 	TestEqual(TEXT("String property should match"), Result.SomeString, TEXT("Hello Struct"));
 	TestEqual(TEXT("Int property should match"), Result.SomeInt, 123);
@@ -61,7 +61,7 @@ bool FLiveConfigStructLookupTest::RunTest(const FString& Parameters)
 
 	// Restore original settings
 	System->PropertyDefinitions = OriginalDefinitions;
-	System->RefreshFromSettings();
+	System->RebuildConfigCache();
 
 	return true;
 }

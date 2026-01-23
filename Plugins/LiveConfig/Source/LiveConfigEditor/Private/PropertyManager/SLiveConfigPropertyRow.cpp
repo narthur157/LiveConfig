@@ -951,7 +951,7 @@ void SLiveConfigPropertyRow::GenerateSubPropertiesForStruct(const UScriptStruct*
 	if (bChanged)
 	{
 		UE_LOG(LogLiveConfig, Log, TEXT("GenerateSubPropertiesForStruct: Refreshing system and UI"));
-		System->RefreshFromSettings();
+		System->RebuildConfigCache();
 		OnRequestRefresh.ExecuteIfBound();
 	}
 }
@@ -988,7 +988,7 @@ void SLiveConfigPropertyRow::DeleteSubProperties()
 			}
 		}
 
-		System->RefreshFromSettings();
+		System->RebuildConfigCache();
 		OnRequestRefresh.ExecuteIfBound();
 	}
 }

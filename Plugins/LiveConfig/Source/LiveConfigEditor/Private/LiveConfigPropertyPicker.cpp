@@ -365,7 +365,7 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
 
                                     if (bChanged)
                                     {
-                                        System->RefreshFromSettings();
+                                        System->RebuildConfigCache();
                                     }
                                 }
                             }
@@ -394,7 +394,7 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
                                     Def->Value = NewState == ECheckBoxState::Checked ? TEXT("true") : TEXT("false");
                                     System->SaveConfig();
                                     System->TryUpdateDefaultConfigFile();
-                                    System->RefreshFromSettings();
+                                    System->RebuildConfigCache();
                                 }
                             }
                         })
@@ -521,7 +521,7 @@ void SLiveConfigPropertyPicker::OnCommitNewProperty(const FText& InText, ETextCo
             System->SaveConfig();
             System->TryUpdateDefaultConfigFile();
 
-            System->RefreshFromSettings();
+            System->RebuildConfigCache();
         }
     }
 #endif

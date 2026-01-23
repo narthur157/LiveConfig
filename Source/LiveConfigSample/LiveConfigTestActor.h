@@ -36,7 +36,7 @@ struct FLiveConfigSampleNestedStruct
 	FLiveConfigSampleStruct SampleStructB;
 	
 	UPROPERTY()
-	FVector Vector;
+	FVector Vector = FVector{};
 };
 
 UCLASS()

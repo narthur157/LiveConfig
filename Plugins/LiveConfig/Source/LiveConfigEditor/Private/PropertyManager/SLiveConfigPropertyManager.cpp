@@ -1070,7 +1070,7 @@ void SLiveConfigPropertyManager::BulkDeleteProperties(TArray<TSharedRef<FLiveCon
 
 	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
 
-	System->RefreshFromSettings();
+	System->RebuildConfigCache();
 	UpdateAllTags();
 }
 
@@ -1342,7 +1342,7 @@ void SLiveConfigPropertyManager::OnPropertyRowChanged(TSharedPtr<FLiveConfigProp
 		OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
 	}
 
-	LiveConfigSystem->RefreshFromSettings();
+	LiveConfigSystem->RebuildConfigCache();
 
 	UpdateAllTags();
 	
@@ -1370,7 +1370,7 @@ void SLiveConfigPropertyManager::RemoveProperty(TSharedPtr<FLiveConfigPropertyDe
 	RawPropertyList.Remove(InItem);
 	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
 
-	System->RefreshFromSettings();
+	System->RebuildConfigCache();
 
 	UpdateAllTags();
 }
@@ -1427,7 +1427,7 @@ void SLiveConfigPropertyManager::RemoveTag(FName TagName)
 	// Notify system to refresh its base values
 	if (ULiveConfigSystem* System = ULiveConfigSystem::Get())
 	{
-		System->RefreshFromSettings();
+		System->RebuildConfigCache();
 	}
 
 	// Force a full refresh from the settings to ensure everything is in sync

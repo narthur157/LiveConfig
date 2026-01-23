@@ -238,8 +238,16 @@ bool ULiveConfigJsonSystem::OnTick(float DeltaTime)
 
 		if (FilesToCheckout.Num() > 0)
 		{
-			SourceControlHelpers::CheckOutOrAddFiles(FilesToCheckout);
-			SourceControlHelpers::RevertUnchangedFiles(FilesToCheckout);
+			ISourceControlProvider& Provider = ISourceControlModule::Get().GetProvider();
+			TSharedRef<FCheckOut, ESPMode::ThreadSafe> CheckoutOp = ISourceControlOperation::Create<FCheckOut>();
+
+			// run this async to prevent dialogue from showing
+			Provider.Execute(CheckoutOp, FilesToCheckout, EConcurrency::Asynchronous);
+			
+			TSharedRef<FRevertUnchanged, ESPMode::ThreadSafe> RevertUnchangedOp = ISourceControlOperation::Create<FRevertUnchanged>();
+			
+			// This may not run after the checkout, but this is for convenience only anyway
+			Provider.Execute(RevertUnchangedOp, FilesToCheckout, EConcurrency::Asynchronous);
 		}
 	}
 #endif

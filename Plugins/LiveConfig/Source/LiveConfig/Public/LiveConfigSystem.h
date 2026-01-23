@@ -39,27 +39,23 @@ public:
      * @param Key The CVar-like name to look up.
      * @return The found value or the default from property definition.
      */
-    UFUNCTION(BlueprintCallable, Category = "Live Config")
-    FString GetStringValue(FLiveConfigProperty Key);
+    FString GetStringValue(FLiveConfigProperty Key) const;
 
     /** Gets a configuration value as a float. */
-    UFUNCTION(BlueprintCallable, Category = "Live Config")
-    float GetFloatValue(FLiveConfigProperty Key);
+    float GetFloatValue(FLiveConfigProperty Key) const;
 
     /** Gets a configuration value as an integer. */
-    UFUNCTION(BlueprintCallable, Category = "Live Config")
-    int32 GetIntValue(FLiveConfigProperty Key);
+    int32 GetIntValue(FLiveConfigProperty Key) const;
 
     /** Gets a configuration value as a boolean. */
-    UFUNCTION(BlueprintCallable, Category = "Live Config")
-    bool GetBoolValue(FLiveConfigProperty Key);
+    bool GetBoolValue(FLiveConfigProperty Key) const;
 
     /**
      * Look up values for a struct's properties using a prefix.
      * Each UProperty in the struct will be looked up as Prefix.PropertyName.
      */
     template<typename T>
-    T GetLiveConfigStruct(FLiveConfigProperty Prefix)
+    T GetStructValue(FLiveConfigProperty Prefix) const
     {
         T OutStruct;
         UScriptStruct* Struct = TBaseStructure<T>::Get();
@@ -70,8 +66,25 @@ public:
         GetLiveConfigStruct_Internal(Struct, &OutStruct, Prefix);
         return OutStruct;
     }
+	
+	template<typename T>
+	T GetLiveConfigValue(FLiveConfigProperty Property) const
+    {
+	    const FLiveConfigPropertyDefinition* Def = PropertyDefinitions.Find(Property);
+    	if (!Def)
+    	{
+    		return {};
+    	}
+    
+    	if (Def->PropertyType == ELiveConfigPropertyType::Struct)
+    	{
+    		return GetStructValue<T>(Property);
+    	}
+    	
+		return Cache.GetValue<T>(Property);
+    }
 
-    void GetLiveConfigStruct_Internal(class UScriptStruct* Struct, void* OutStructPtr, FLiveConfigProperty Prefix);
+    void GetLiveConfigStruct_Internal(class UScriptStruct* Struct, void* OutStructPtr, FLiveConfigProperty Prefix) const;
 
     /** Returns true if the data has been successfully downloaded and parsed. */
     UFUNCTION(BlueprintCallable, Category = "Live Config")
@@ -80,8 +93,8 @@ public:
     void DownloadConfig();
 
     /** Refresh properties from editor settings */
-    void RefreshFromSettings();
-    void RefreshFromSettings(const FLiveConfigProfile& Profile);
+    void RebuildConfigCache();
+    void RebuildConfigCache(const FLiveConfigProfile& Profile);
 
     FOnLiveConfigPropertiesUpdated OnPropertiesUpdated;
 
