@@ -1,5 +1,6 @@
 #include "LiveConfigPropertyPicker.h"
 #include "LiveConfigEditor/LiveConfigEditor.h"
+#include "PropertyManager/SLiveConfigPropertyValueWidget.h"
 
 #include "Framework/Application/SlateApplication.h"
 #include "LiveConfigSystem.h"
@@ -32,7 +33,7 @@ void SLiveConfigPropertyPicker::Construct(const FArguments& InArgs)
     StructFilter = InArgs._StructFilter;
     bReadOnly = InArgs._bReadOnly;
     bMultiSelect = InArgs._bMultiSelect;
-    OnPropertyChanged = InArgs._OnPropertyChanged;
+    OnPropertyChanged = InArgs._OnPropertySelected;
 
     RefreshPropertyList();
 
@@ -93,6 +94,7 @@ void SLiveConfigPropertyPicker::Construct(const FArguments& InArgs)
         // List of properties
         + SVerticalBox::Slot()
         .FillHeight(1.0f)
+        .MaxHeight(350)
         .Padding(2.0f)
         [
             SAssignNew(PropertyListView, SListView<TSharedPtr<FLiveConfigProperty>>)
@@ -152,14 +154,9 @@ void SLiveConfigPropertyPicker::Construct(const FArguments& InArgs)
     ];
 }
 
-FReply SLiveConfigPropertyPicker::OnFocusReceived(const FGeometry& MyGeometry, const FFocusEvent& InFocusEvent)
+TSharedPtr<SWidget> SLiveConfigPropertyPicker::GetWidgetToFocusOnOpen()
 {
-    return FReply::Handled().SetUserFocus(SearchBox.ToSharedRef(), InFocusEvent.GetCause());
-}
-
-bool SLiveConfigPropertyPicker::SupportsKeyboardFocus() const
-{
-    return true;
+    return SearchBox;
 }
 
 void SLiveConfigPropertyPicker::RefreshPropertyList()
@@ -238,6 +235,9 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
     
     TSharedRef<STableRow<TSharedPtr<FLiveConfigProperty>>> Row = SNew(STableRow<TSharedPtr<FLiveConfigProperty>>, OwnerTable);
     
+    // It may or may not be worth implementing the collapsible name functionality from the manager here
+    // that being said...this widget is less about browsing properties and more about searching for exactly what you want
+    
     Row->SetContent(
         SNew(SHorizontalBox)
         
@@ -252,15 +252,24 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
             .VAlign(VAlign_Center)
             [
                 SNew(SBox)
-                .WidthOverride(150.0f)
+                .WidthOverride(350.0f)
                 [
                     SNew(STextBlock)
                     .Text(GetPropertyDisplayText(*InItem))
-                    .Font(FAppStyle::GetFontStyle("BoldFont"))
-                    .ToolTipText(GetPropertyDescription(*InItem))
+                    .HighlightText_Lambda([&]
+                    {
+                       return Filter.IsValid() ? FText::FromName(Filter) : FText::GetEmpty(); 
+                    })
+                    .ColorAndOpacity_Lambda([&]
+                    {
+                       return FLinearColor::White; 
+                    })
+                    //.Font(FAppStyle::GetFontStyle("BoldFont"))
+                    .ToolTipText(GetPropertyTooltipText(*InItem))
                 ]
             ]
-
+/*
+ * Label for the value input - disabled to save clutter
             + SHorizontalBox::Slot()
             .AutoWidth()
             .VAlign(VAlign_Center)
@@ -274,6 +283,7 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
                     .ColorAndOpacity(FSlateColor::UseSubduedForeground())
                 ]
             ]
+*/
 
             + SHorizontalBox::Slot()
             .AutoWidth()
@@ -283,109 +293,32 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
                 SNew(SBox)
                 .WidthOverride(100.0f)
                 [
-                    SNew(SWidgetSwitcher)
-                    .WidgetIndex_Lambda([InItem]()
+                    SNew(SLiveConfigPropertyValueWidget)
+                    .Value_Lambda([InItem]()
                     {
-                        const ULiveConfigSystem& System = ULiveConfigSystem::Get();
+                        if (const FLiveConfigPropertyDefinition* Def = ULiveConfigSystem::Get().PropertyDefinitions.Find(*InItem))
                         {
-                            if (const FLiveConfigPropertyDefinition* Def = System.PropertyDefinitions.Find(*InItem))
-                            {
-                                return Def->PropertyType == ELiveConfigPropertyType::Bool ? 1 : 0;
-                            }
+                            return Def->Value;
                         }
-                        return 0;
+                        return FString();
                     })
-                    + SWidgetSwitcher::Slot()
-                    [
-                        SNew(SEditableTextBox)
-                        .Text_Lambda([InItem]()
+                    .PropertyType_Lambda([InItem]()
+                    {
+                        if (const FLiveConfigPropertyDefinition* Def = ULiveConfigSystem::Get().PropertyDefinitions.Find(*InItem))
                         {
-                            if (const FLiveConfigPropertyDefinition* Def = ULiveConfigSystem::Get().PropertyDefinitions.Find(*InItem))
-                            {
-                                return FText::FromString(Def->Value);
-                            }
-                            return FText::GetEmpty();
-                        })
-                        .OnVerifyTextChanged_Lambda([InItem](const FText& NewText, FText& OutError)
+                            return Def->PropertyType;
+                        }
+                        return ELiveConfigPropertyType::String;
+                    })
+                    .OnValueChanged_Lambda([InItem](const FString& NewValue)
+                    {
+                        ULiveConfigSystem& System = ULiveConfigSystem::Get();
+                        if (FLiveConfigPropertyDefinition* Def = System.PropertyDefinitions.Find(*InItem))
                         {
-                            if (const FLiveConfigPropertyDefinition* Def = ULiveConfigSystem::Get().PropertyDefinitions.Find(*InItem))
-                            {
-                                FString NewVal = NewText.ToString();
-                                if (Def->PropertyType == ELiveConfigPropertyType::Int)
-                                {
-                                    if (NewVal.IsEmpty() || NewVal == TEXT("-")) return true;
-                                    if (!NewVal.IsNumeric() || NewVal.Contains(TEXT(".")))
-                                    {
-                                        OutError = LOCTEXT("ValueIntError", "Value must be a valid integer.");
-                                        return false;
-                                    }
-                                }
-                                else if (Def->PropertyType == ELiveConfigPropertyType::Float)
-                                {
-                                    if (NewVal.IsEmpty() || NewVal == TEXT("-") || NewVal == TEXT(".") || NewVal == TEXT("-.")) return true;
-                                    if (!NewVal.IsNumeric())
-                                    {
-                                        OutError = LOCTEXT("ValueFloatError", "Value must be a valid number.");
-                                        return false;
-                                    }
-                                }
-                            }
-                            return true;
-                        })
-                        .OnTextCommitted_Lambda([InItem](const FText& NewText, ETextCommit::Type CommitType)
-                        {
-                            ULiveConfigSystem& System = ULiveConfigSystem::Get();
-                            if (FLiveConfigPropertyDefinition* Def = System.PropertyDefinitions.Find(*InItem))
-                            {
-                                FString NewVal = NewText.ToString();
-                                bool bChanged = false;
-                                if (Def->PropertyType == ELiveConfigPropertyType::Int)
-                                {
-                                    if (NewVal.IsEmpty() || NewVal == TEXT("-")) { Def->Value = "0"; bChanged = true; }
-                                    else if (NewVal.IsNumeric() && !NewVal.Contains(TEXT("."))) { Def->Value = NewVal; bChanged = true; }
-                                }
-                                else if (Def->PropertyType == ELiveConfigPropertyType::Float)
-                                {
-                                    if (NewVal.IsEmpty() || NewVal == TEXT("-") || NewVal == TEXT(".") || NewVal == TEXT("-.")) { Def->Value = "0"; bChanged = true; }
-                                    else if (NewVal.IsNumeric()) { Def->Value = NewVal; bChanged = true; }
-                                }
-                                else
-                                {
-                                    Def->Value = NewVal;
-                                    bChanged = true;
-                                }
-
-                                if (bChanged)
-                                {
-                                    System.RebuildConfigCache();
-                                }
-                            }
-                        })
-                    ]
-                    + SWidgetSwitcher::Slot()
-                    [
-                        SNew(SCheckBox)
-                        .IsChecked_Lambda([InItem]()
-                        {
-                            if (const FLiveConfigPropertyDefinition* Def = ULiveConfigSystem::Get().PropertyDefinitions.Find(*InItem))
-                            {
-                                return Def->Value.ToBool() ? ECheckBoxState::Checked : ECheckBoxState::Unchecked;
-                            }
-                            
-                            return ECheckBoxState::Unchecked;
-                        })
-                        .OnCheckStateChanged_Lambda([InItem](ECheckBoxState NewState)
-                        {
-                            ULiveConfigSystem& System = ULiveConfigSystem::Get();
-                            if (FLiveConfigPropertyDefinition* Def = System.PropertyDefinitions.Find(*InItem))
-                            {
-                                Def->Value = NewState == ECheckBoxState::Checked ? TEXT("true") : TEXT("false");
-                                System.SaveConfig();
-                                System.TryUpdateDefaultConfigFile();
-                                System.RebuildConfigCache();
-                            }
-                        })
-                    ]
+                            Def->Value = NewValue;
+                            System.SaveProperty(*Def);
+                        }
+                    })
                 ]
             ]
         ]
@@ -412,41 +345,41 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
         ]
     );
 
-    const ULiveConfigSystem& System = ULiveConfigSystem::Get();
+    /*
+     * List of tags on widget - disabled to save clutter and prevent jarring resizing while scrolling
+    if (const FLiveConfigPropertyDefinition* Def = ULiveConfigSystem::Get().PropertyDefinitions.Find(*InItem))
     {
-        if (const FLiveConfigPropertyDefinition* Def = System.PropertyDefinitions.Find(*InItem))
+        if (Def->Tags.Num() > 0)
         {
-            if (Def->Tags.Num() > 0)
+            SAssignNew(TagsBox, SHorizontalBox);
+            for (const FName& PropertyTag : Def->Tags)
             {
-                SAssignNew(TagsBox, SHorizontalBox);
-                for (const FName& PropertyTag : Def->Tags)
-                {
-                    TagsBox->AddSlot()
-                    .AutoWidth()
-                    .Padding(2, 0)
-                    [
-                        SNew(SBorder)
-                        .BorderImage(FAppStyle::GetBrush("Graph.Node.Body"))
-                        .BorderBackgroundColor(FLinearColor(0.2f, 0.2f, 0.2f, 0.5f))
-                        .Padding(FMargin(4, 0))
-                        [
-                            SNew(STextBlock)
-                            .Text(FText::FromName(PropertyTag))
-                            .Font(FAppStyle::GetFontStyle("SmallFont"))
-                        ]
-                    ];
-                }
-
-                ContentBox->AddSlot()
-                .AutoWidth()
-                .VAlign(VAlign_Center)
-                .Padding(8.0f, 0.0f, 0.0f, 0.0f)
+                TagsBox->AddSlot()
+                       .AutoWidth()
+                       .Padding(2, 0)
                 [
-                    TagsBox.ToSharedRef()
+                    SNew(SBorder)
+                    .BorderImage(FAppStyle::GetBrush("Graph.Node.Body"))
+                    .BorderBackgroundColor(FLinearColor(0.2f, 0.2f, 0.2f, 0.5f))
+                    .Padding(FMargin(4, 0))
+                    [
+                        SNew(STextBlock)
+                        .Text(FText::FromName(PropertyTag))
+                        .Font(FAppStyle::GetFontStyle("SmallFont"))
+                    ]
                 ];
             }
+
+            ContentBox->AddSlot()
+                      .AutoWidth()
+                      .VAlign(VAlign_Center)
+                      .Padding(8.0f, 0.0f, 0.0f, 0.0f)
+            [
+                TagsBox.ToSharedRef()
+            ];
         }
     }
+    */
 
     return Row;
 }
@@ -489,29 +422,20 @@ void SLiveConfigPropertyPicker::OnCommitNewProperty(const FText& InText, ETextCo
         return;
     }
 
-    // Add to property definitions if in editor
-#if WITH_EDITOR
     ULiveConfigSystem& System = ULiveConfigSystem::Get();
+    if (!System.PropertyDefinitions.Contains(NewPropertyName))
     {
-        if (!System.PropertyDefinitions.Contains(NewPropertyName))
-        {
-            FLiveConfigPropertyDefinition NewDef;
-            NewDef.PropertyName = NewPropertyName;
-            NewDef.Description = FString::Printf(TEXT("User-added property: %s"), *PropertyNameString);
+        FLiveConfigPropertyDefinition NewDef;
+        NewDef.PropertyName = NewPropertyName;
+        NewDef.Description = FString::Printf(TEXT("User-added property: %s"), *PropertyNameString);
             
-            if (FilterType.IsSet())
-            {
-                NewDef.PropertyType = FilterType.GetValue();
-            }
-
-            System.PropertyDefinitions.Add(NewPropertyName, NewDef);
-            System.SaveConfig();
-            System.TryUpdateDefaultConfigFile();
-
-            System.RebuildConfigCache();
+        if (FilterType.IsSet())
+        {
+            NewDef.PropertyType = FilterType.GetValue();
         }
+
+        System.SaveProperty(NewDef);
     }
-#endif
 
     // Refresh the list
     RefreshPropertyList();
@@ -532,21 +456,12 @@ FText SLiveConfigPropertyPicker::GetPropertyDisplayText(FLiveConfigProperty Prop
     return FText::FromName(Property.GetName());
 }
 
-FText SLiveConfigPropertyPicker::GetPropertyDescription(FLiveConfigProperty Property) const
+FText SLiveConfigPropertyPicker::GetPropertyTooltipText(FLiveConfigProperty Property) const
 {
-    if (ULiveConfigSystem* System = GEngine->GetEngineSubsystem<ULiveConfigSystem>())
-    {
-        // Try to get description from config values
-        // Note: This would require making ConfigValues accessible or adding a getter
-        // For now, return empty
-    }
-
-#if WITH_EDITOR
     if (const FLiveConfigPropertyDefinition* Def = ULiveConfigSystem::Get().PropertyDefinitions.Find(Property))
     {
         return FText::FromString(Def->Description);
     }
-#endif
 
     return FText::GetEmpty();
 }
@@ -563,9 +478,11 @@ void SLiveConfigPropertyPicker::SetSelectedProperty(FLiveConfigProperty InProper
             if (Property.IsValid() && *Property == InProperty)
             {
                 PropertyListView->SetSelection(Property);
+                PropertyListView->RequestScrollIntoView(Property);
                 break;
             }
         }
+        
     }
 }
 

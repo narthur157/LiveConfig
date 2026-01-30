@@ -65,7 +65,7 @@ bool FLiveConfigCurveTableTest::RunTest(const FString& Parameters)
 		return false;
 	}
 
-	// 2. Test Indexed Property (Array syntax)
+	// Test Indexed Property (Array syntax)
 	{
 		FLiveConfigPropertyDefinition Def;
 		Def.PropertyName = FLiveConfigProperty(FName(TEXT("TestArray.0")));
@@ -95,7 +95,7 @@ bool FLiveConfigCurveTableTest::RunTest(const FString& Parameters)
 		return false;
 	}
 
-	// 3. Test skipping FromCurveTable properties
+	// Test skipping FromCurveTable properties
 	{
 		FLiveConfigPropertyDefinition CurveDef;
 		CurveDef.PropertyName = FLiveConfigProperty(FName(TEXT("InboundProp")));

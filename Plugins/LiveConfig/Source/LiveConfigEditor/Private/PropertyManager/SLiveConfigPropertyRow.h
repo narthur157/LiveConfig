@@ -69,16 +69,12 @@ private:
 	TSharedRef<SWidget> GenerateTagsColumnWidget();
 	TSharedRef<SWidget> GenerateActionsColumnWidget();
 
-	TSharedRef<SWidget> OnGetStructPickerMenu();
-	void OnStructPicked(const UScriptStruct* ChosenStruct);
 	void GenerateSubPropertiesForStruct(const UScriptStruct* Struct);
 	void DeleteSubProperties();
 
 	void RefreshTags();
 	void OnTagChanged();
 	void OnAddNewTagClicked();
-	bool VerifyValueText(const FText& NewText, FText& OutError);
-	void ValueTextCommitted(const FText& NewText, ETextCommit::Type CommitType);
 
 	TSharedPtr<FLiveConfigPropertyTreeNode> Item;
 	FOnDeleteProperty OnDeleteProperty;
@@ -94,9 +90,8 @@ private:
 	TFunction<FSlateColor(FName)> GetTagColor;
 	TSharedPtr<class SScrollBox> TagScrollBox;
 	TSharedPtr<class SEditableTextBox> NameTextBox;
-	TSharedPtr<class SEditableTextBox> ValueTextBox;
-	TSharedPtr<class SCheckBox> ValueCheckBox;
 	TSlateAttribute<TArray<FName>, EInvalidateWidgetReason::Layout> KnownTagsAttribute;
+	TSharedPtr<class SLiveConfigPropertyValueWidget> ValueWidget;
 	bool bNeedsFocus = false;
 	bool bNeedsValueFocus = false;
 	bool bIsCommitting = false;

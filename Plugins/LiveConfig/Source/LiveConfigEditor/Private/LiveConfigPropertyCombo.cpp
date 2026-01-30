@@ -45,30 +45,13 @@ void SLiveConfigPropertyCombo::Construct(const FArguments& InArgs)
         .HasDownArrow(true)
         .ContentPadding(1)
         .Clipping(EWidgetClipping::OnDemand) 
-        .OnGetMenuContent_Lambda([this]()
-        {
-            return SNew(SLiveConfigPropertyPicker)
-                .bReadOnly(false)
-                .FilterType(FilterTypeAttribute.Get())
-                .StructFilter(StructFilterAttribute.Get())
-                .OnPropertyChanged(this, &SLiveConfigPropertyCombo::OnPropertySelected);
-        })
+        .OnGetMenuContent(this, &SLiveConfigPropertyCombo::OnGetMenuContent)
+    	.OnMenuOpenChanged(this, &SLiveConfigPropertyCombo::OnMenuOpenChanged)
         .ButtonContent()
         [
             SAssignNew(Chip, SLiveConfigPropertyChip)
             .ShowClearButton(this, &SLiveConfigPropertyCombo::ShowClearButton)
-            .OnEditPressed_Lambda([&]
-            {
-                if (ComboButton->IsOpen())
-                {
-                    ComboButton->SetIsOpen(false); 
-                }
-                else
-                {
-                    ComboButton->SetIsOpen(ComboButton->ShouldOpenDueToClick()); 
-                }
-                return FReply::Handled();
-            })
+            .OnEditPressed(this, &SLiveConfigPropertyCombo::OnEditPressed)
             .OnClearPressed_Lambda([&]
             {
                 ComboButton->SetIsOpen(false);
@@ -76,23 +59,7 @@ void SLiveConfigPropertyCombo::Construct(const FArguments& InArgs)
                 return FReply::Handled();
             })
             .ReadOnly(false)
-            .Text_Lambda([this]()
-            {
-                FLiveConfigProperty CurrentProperty = RowNameAttribute.Get();
-                if (CurrentProperty.IsValid())
-                {
-                    FString DisplayString = CurrentProperty.GetName().ToString();
-                    const ULiveConfigSystem& System = ULiveConfigSystem::Get();
-                    {
-                        if (const FLiveConfigPropertyDefinition* Def = System.PropertyDefinitions.Find(CurrentProperty))
-                        {
-                            DisplayString += FString::Printf(TEXT(": %s"), *Def->Value);
-                        }
-                    }
-                    return FText::FromString(DisplayString);
-                }
-                return NSLOCTEXT("LiveConfig", "None", "None");
-            })
+            .Text(this, &SLiveConfigPropertyCombo::GetChipText)
         ]
     ];
 }
@@ -134,6 +101,31 @@ void SLiveConfigPropertyCombo::OnPropertySelected(FLiveConfigProperty Property)
     ComboButton->SetIsOpen(false);
 }
 
+TSharedRef<SWidget> SLiveConfigPropertyCombo::OnGetMenuContent()
+{
+	SAssignNew(PropertyPicker, SLiveConfigPropertyPicker)
+		.bReadOnly(false)
+		.FilterType(FilterTypeAttribute.Get())
+		.StructFilter(StructFilterAttribute.Get())
+		.OnPropertySelected(this, &SLiveConfigPropertyCombo::OnPropertySelected);
+	
+	ComboButton->SetMenuContentWidgetToFocus(PropertyPicker->GetWidgetToFocusOnOpen());
+	return PropertyPicker.ToSharedRef();
+}
+
+void SLiveConfigPropertyCombo::OnMenuOpenChanged(bool bOpen)
+{
+	if (bOpen && PropertyPicker.IsValid())
+	{
+		if (RowNameAttribute.Get().IsValid())
+		{
+			PropertyPicker->SetSelectedProperty(RowNameAttribute.Get());
+		}
+		
+		ComboButton->SetMenuContentWidgetToFocus(PropertyPicker->GetWidgetToFocusOnOpen());
+	}
+}
+
 TSharedPtr<SWidget> SLiveConfigPropertyCombo::OnGetContextMenuContent()
 {
 	FMenuBuilder MenuBuilder(true, nullptr);
@@ -163,6 +155,26 @@ TSharedPtr<SWidget> SLiveConfigPropertyCombo::OnGetContextMenuContent()
 	);
 
 	return MenuBuilder.MakeWidget();
+}
+
+FReply SLiveConfigPropertyCombo::OnEditPressed()
+{
+	FReply Reply = FReply::Handled();
+            	
+	if (ComboButton->ShouldOpenDueToClick())
+	{
+		ComboButton->SetIsOpen(true);
+		if (PropertyPicker->GetWidgetToFocusOnOpen())
+		{
+			Reply.SetUserFocus(PropertyPicker->GetWidgetToFocusOnOpen().ToSharedRef());
+		}
+	}
+	else
+	{
+		ComboButton->SetIsOpen(false);
+	}
+               
+	return Reply;
 }
 
 void SLiveConfigPropertyCombo::OnCopyProperty()
@@ -206,6 +218,22 @@ bool SLiveConfigPropertyCombo::CanPasteProperty() const
 void SLiveConfigPropertyCombo::OnClearProperty()
 {
 	OnPropertyChanged.ExecuteIfBound(FLiveConfigProperty());
+}
+
+FText SLiveConfigPropertyCombo::GetChipText() const
+{
+	FLiveConfigProperty CurrentProperty = RowNameAttribute.Get();
+	if (CurrentProperty.IsValid())
+	{
+		FString DisplayString = CurrentProperty.GetName().ToString();
+		const ULiveConfigSystem& System = ULiveConfigSystem::Get();
+		if (const FLiveConfigPropertyDefinition* Def = System.PropertyDefinitions.Find(CurrentProperty))
+		{
+			DisplayString += FString::Printf(TEXT(": %s"), *Def->Value);
+		}
+		return FText::FromString(DisplayString);
+	}
+	return NSLOCTEXT("LiveConfig", "None", "None");
 }
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION

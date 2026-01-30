@@ -2,103 +2,7 @@
 #include "SLiveConfigTagRow.h"
 #include "SLiveConfigTagPicker.h"
 #include "LiveConfigJson.h"
-
-#include "StructViewerFilter.h"
-
-class FLiveConfigStructFilter : public IStructViewerFilter
-{
-public:
-	FLiveConfigStructFilter()
-	{
-		FModuleManager& ModuleManager = FModuleManager::Get();
-
-		TArray<FModuleDiskInfo> AllModules;
-		ModuleManager.FindModules(TEXT("*"), AllModules);
-
-		FString ProjectDir = FPaths::ConvertRelativePathToFull(FPaths::ProjectDir());
-		
-		// TODO: Allow customizing more of these
-		AllowedScripts.Add("/Script/CoreUObject.Vector");
-		AllowedScripts.Add("/Script/CoreUObject.Vector2D");
-		AllowedScripts.Add("/Script/CoreUObject.Transform");
-		AllowedScripts.Add("/Script/CoreUObject.Color");
-
-		for (const auto& ModuleInfo : AllModules)
-		{
-			FName ModuleName = ModuleInfo.Name;
-			if (ModuleInfo.FilePath.IsEmpty())
-			{
-				continue;
-			}
-			if (!ModuleManager.ModuleExists(*ModuleName.ToString()))
-			{
-				continue;
-			}
-			
-			// none of these structs really need to be live configurable
-			if (ModuleName.ToString() == "LiveConfig")
-			{
-				continue;
-			}
-			
-			const FString& ModuleFilenameRelative = ModuleInfo.FilePath;
-			FString ModuleFilename = FPaths::ConvertRelativePathToFull(ModuleFilenameRelative);
-
-			// Check if the module lives inside our project directory or is one of the core types
-			if (ModuleFilename.Contains(ProjectDir))
-			{
-				AllowedScripts.Add(TEXT("/Script/") + ModuleName.ToString());
-			}
-		}
-	}
-
-	virtual bool IsStructAllowed(const FStructViewerInitializationOptions& InInitOptions, const UScriptStruct* InStruct, TSharedRef<class FStructViewerFilterFuncs> InNode) override
-	{
-		if (!InStruct)
-		{
-			return false;
-		}
-		
-		// Don't show any hidden structs
-		static const FName NAME_HiddenMetaTag = "Hidden";
-		if (InStruct->HasMetaData(NAME_HiddenMetaTag))
-		{
-			return false;
-		}
-
-		FString PackageName = InStruct->GetStructPathName().ToString();
-		return IsPackageAllowed(PackageName);
-	}
-
-	virtual bool IsUnloadedStructAllowed(const FStructViewerInitializationOptions& InInitOptions, const FSoftObjectPath& InStructPath, TSharedRef<class FStructViewerFilterFuncs> InNode) override
-	{
-		FString PackageName = InStructPath.GetLongPackageName();
-		return IsPackageAllowed(PackageName);
-	}
-
-private:
-	bool IsPackageAllowed(const FString& PackageName) const
-	{
-		// allow bp structs from content
-		if (PackageName.StartsWith(TEXT("/Game/")))
-		{
-			return true;
-		}
-
-		// Allow project modules and plugins
-		for (const FString& AllowedScript : AllowedScripts)
-		{
-			if (PackageName.StartsWith(AllowedScript))
-			{
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	TArray<FString> AllowedScripts;
-};
+#include "PropertyManager/SLiveConfigPropertyValueWidget.h"
 
 SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyRow);
 
@@ -207,14 +111,9 @@ void SLiveConfigPropertyRow::Tick(const FGeometry& AllottedGeometry, const doubl
 
 	if (bNeedsValueFocus)
 	{
-		if (ValueTextBox.IsValid())
+		if (ValueWidget.IsValid())
 		{
-			FSlateApplication::Get().SetKeyboardFocus(ValueTextBox.ToSharedRef(), EFocusCause::SetDirectly);
-			bNeedsValueFocus = false;
-		}
-		else if (ValueCheckBox.IsValid())
-		{
-			FSlateApplication::Get().SetKeyboardFocus(ValueCheckBox.ToSharedRef(), EFocusCause::SetDirectly);
+			ValueWidget->RequestFocus();
 			bNeedsValueFocus = false;
 		}
 	}
@@ -751,56 +650,31 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateValueColumnWidget()
 		.Padding(FMargin(4.0f, 0.0f))
 		.VAlign(VAlign_Center)
 		[
-			SNew(SWidgetSwitcher)
-			.WidgetIndex_Lambda([this]()
+			SAssignNew(ValueWidget, SLiveConfigPropertyValueWidget)
+			.Value_Lambda([this]() { return Item->PropertyDefinition->Value; })
+			.PropertyType_Lambda([this]() { return Item->PropertyDefinition->PropertyType; })
+			.bReadOnly(this, &SLiveConfigPropertyRow::IsReadOnly)
+			.OnValueChanged_Lambda([this](const FString& NewValue)
 			{
-				switch (Item->PropertyDefinition->PropertyType)
+				TSharedPtr<FLiveConfigPropertyDefinition> OldDef = MakeShared<FLiveConfigPropertyDefinition>(*Item->PropertyDefinition);
+				Item->PropertyDefinition->Value = NewValue;
+				
+				if (OldDef->PropertyType == ELiveConfigPropertyType::Struct && OldDef->Value != NewValue)
 				{
-					case ELiveConfigPropertyType::Bool: return 1;
-					case ELiveConfigPropertyType::Struct: return 2;
-					default: return 0;
+					DeleteSubProperties();
 				}
-			})
-			+ SWidgetSwitcher::Slot()
-			[
-				SAssignNew(ValueTextBox, SEditableTextBox)
-				.Text_Lambda([this]() { return FText::FromString(Item->PropertyDefinition->Value); })
-				.OnVerifyTextChanged(this, &SLiveConfigPropertyRow::VerifyValueText)
-				.OnTextCommitted(this, &SLiveConfigPropertyRow::ValueTextCommitted)
-			]
-			+ SWidgetSwitcher::Slot()
-			[
-				SAssignNew(ValueCheckBox, SCheckBox)
-				.IsChecked_Lambda([this]()
+
+				if (Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Struct)
 				{
-					return Item->PropertyDefinition->Value.ToBool() ? ECheckBoxState::Checked : ECheckBoxState::Unchecked;
-				})
-				.OnCheckStateChanged_Lambda([this](ECheckBoxState NewState)
-				{
-					TSharedPtr<FLiveConfigPropertyDefinition> OldDef = MakeShared<FLiveConfigPropertyDefinition>(*Item->PropertyDefinition);
-					Item->PropertyDefinition->Value = NewState == ECheckBoxState::Checked ? TEXT("true") : TEXT("false");
-					OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value);
-				})
-			]
-			+ SWidgetSwitcher::Slot()
-			[
-				SNew(SComboButton)
-				.IsEnabled_Lambda([this]() { return !IsReadOnly(); })
-				.OnGetMenuContent(this, &SLiveConfigPropertyRow::OnGetStructPickerMenu)
-				.ContentPadding(FMargin(4.0f, 2.0f))
-				.ButtonContent()
-				[
-					SNew(STextBlock)
-					.Text_Lambda([this]()
+					UScriptStruct* Struct = FindFirstObject<UScriptStruct>(*NewValue);
+					if (Struct)
 					{
-						if (Item->PropertyDefinition->Value.IsEmpty())
-						{
-							return LOCTEXT("None", "None");
-						}
-						return FText::FromString(Item->PropertyDefinition->Value);
-					})
-				]
-			]
+						GenerateSubPropertiesForStruct(Struct);
+					}
+				}
+
+				OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value);
+			})
 		];
 }
 
@@ -823,43 +697,6 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateTagsColumnWidget()
 	
 	RefreshTags();
 	return TagsWidget;
-}
-
-TSharedRef<SWidget> SLiveConfigPropertyRow::OnGetStructPickerMenu()
-{
-	FStructViewerModule& StructViewerModule = FModuleManager::LoadModuleChecked<FStructViewerModule>("StructViewer");
-
-	FStructViewerInitializationOptions Options;
-	Options.Mode = EStructViewerMode::StructPicker;
-	Options.StructFilter = MakeShared<FLiveConfigStructFilter>();
-	
-	
-	return SNew(SBox)
-		.WidthOverride(300.0f)
-		.HeightOverride(400.0f)
-		[
-			StructViewerModule.CreateStructViewer(Options, FOnStructPicked::CreateSP(this, &SLiveConfigPropertyRow::OnStructPicked))
-		];
-}
-
-void SLiveConfigPropertyRow::OnStructPicked(const UScriptStruct* ChosenStruct)
-{
-	FSlateApplication::Get().DismissAllMenus();
-
-	TSharedPtr<FLiveConfigPropertyDefinition> OldDef = MakeShared<FLiveConfigPropertyDefinition>(*Item->PropertyDefinition);
-	Item->PropertyDefinition->Value = ChosenStruct ? ChosenStruct->GetName() : "";
-
-	if (OldDef->PropertyType == ELiveConfigPropertyType::Struct && OldDef->Value != Item->PropertyDefinition->Value)
-	{
-		DeleteSubProperties();
-	}
-
-	OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value);
-
-	if (ChosenStruct)
-	{
-		GenerateSubPropertiesForStruct(ChosenStruct);
-	}
 }
 
 void SLiveConfigPropertyRow::GenerateSubPropertiesForStruct(const UScriptStruct* Struct)
@@ -933,12 +770,7 @@ void SLiveConfigPropertyRow::GenerateSubPropertiesForStruct(const UScriptStruct*
 		NewDef.Tags = Item->PropertyDefinition->Tags; // Inherit tags from parent struct property
 
 		UE_LOG(LogLiveConfig, Log, TEXT("GenerateSubPropertiesForStruct: Adding property %s"), *FullPropName);
-		System.PropertyDefinitions.Add(ConfigProp, NewDef);
-		
-		if (ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get())
-		{
-			JsonSystem->SavePropertyToFile(NewDef);
-		}
+		ULiveConfigSystem::Get().SaveProperty(NewDef);
 		
 		bChanged = true;
 	}
@@ -1012,145 +844,6 @@ void SLiveConfigPropertyRow::OnTagChanged()
 	Invalidate(EInvalidateWidgetReason::Layout);
 	OnRequestRefresh.ExecuteIfBound();
 	OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Tags);
-}
-
-bool SLiveConfigPropertyRow::VerifyValueText(const FText& NewText, FText& OutError)
-{
-	FString NewVal = NewText.ToString();
-	if (Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Int)
-	{
-		if (NewVal.IsEmpty() || NewVal == TEXT("-"))
-		{
-			return true;
-		}
-
-		// Must be numeric
-		if (!NewVal.IsNumeric())
-		{
-			OutError = LOCTEXT("ValueIntError", "Value must be a valid integer.");
-			return false;
-		}
-						
-		// Additionally check if it contains a decimal point which IsNumeric might allow depending on platform but we don't want for Int
-		if (NewVal.Contains(TEXT(".")))
-		{
-			OutError = LOCTEXT("ValueIntDecimalError", "Integers cannot have decimal points.");
-			return false;
-		}
-	}
-	else if (Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Float)
-	{
-		if (NewVal.IsEmpty() || NewVal == TEXT("-") || NewVal == TEXT(".") || NewVal == TEXT("-.")) return true;
-		if (!NewVal.IsNumeric())
-		{
-			OutError = LOCTEXT("ValueFloatError", "Value must be a valid number.");
-			return false;
-		}
-	}
-	return true;
-}
-
-void SLiveConfigPropertyRow::ValueTextCommitted(const FText& NewText, ETextCommit::Type CommitType)
-{
-	if (bIsCommitting)
-	{
-		return;
-	}
-
-	if (CommitType == ETextCommit::OnUserMovedFocus && bJustFinishedEnterCommit)
-	{
-		return;
-	}
-
-	if (CommitType == ETextCommit::Default)
-	{
-		return;
-	}
-	
-	FString NewVal = NewText.ToString();
-	if (NewVal == Item->PropertyDefinition->Value)
-	{
-		return;
-	}
-	
-	TSharedPtr<FLiveConfigPropertyDefinition> OldDef = MakeShared<FLiveConfigPropertyDefinition>(*Item->PropertyDefinition);
-	
-	TGuardValue<bool> CommitGuard(bIsCommitting, true);
-	
-	if (CommitType == ETextCommit::OnEnter)
-	{
-		bJustFinishedEnterCommit = true;
-	}
-
-	if (Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Struct)
-	{
-		UScriptStruct* Struct = FindObject<UScriptStruct>(nullptr, *NewVal, EFindObjectFlags::ExactClass);
-		if (!Struct)
-		{
-			// Try a broader search if exact lookup fails (similar to what was done in previous task)
-			for (TObjectIterator<UScriptStruct> It; It; ++It)
-			{
-				if (It->GetName() == NewVal)
-				{
-					Struct = *It;
-					break;
-				}
-			}
-		}
-
-		if (Struct)
-		{
-			OnStructPicked(Struct);
-		}
-		else
-		{
-			// If we manually set it to something invalid or empty, we should still handle the old sub-properties
-			TSharedPtr<FLiveConfigPropertyDefinition> OldDefCopy = MakeShared<FLiveConfigPropertyDefinition>(*Item->PropertyDefinition);
-			Item->PropertyDefinition->Value = NewVal;
-			
-			if (OldDefCopy->Value != NewVal)
-			{
-				DeleteSubProperties();
-			}
-			
-			OnChanged.ExecuteIfBound(OldDefCopy, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value);
-		}
-	}
-	else if (Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Int)
-	{
-		if (NewVal.IsEmpty() || NewVal == TEXT("-"))
-		{
-			Item->PropertyDefinition->Value = "0"; 
-			OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value); 
-			return;
-		}
-		if (NewVal.IsNumeric())
-		{
-			Item->PropertyDefinition->Value = NewVal; 
-			OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value);
-		}
-	}
-	else if (Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Float)
-	{
-		if (NewVal.IsEmpty() || NewVal == TEXT("-") || NewVal == TEXT(".") || NewVal == TEXT("-."))
-		{
-			Item->PropertyDefinition->Value = "0"; 
-			OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value); 
-			return;
-		}
-		
-		if (NewVal.IsNumeric())
-		{
-			float FloatVal = FCString::Atof(*NewVal);
-			Item->PropertyDefinition->Value = FString::SanitizeFloat(FloatVal); 
-			OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value);
-		}
-	}
-	else
-	{
-		Item->PropertyDefinition->Value = NewVal;
-		OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Value);
-	}
 }
 
 #undef LOCTEXT_NAMESPACE

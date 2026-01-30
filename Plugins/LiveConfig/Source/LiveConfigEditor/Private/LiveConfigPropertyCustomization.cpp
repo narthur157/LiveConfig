@@ -70,11 +70,11 @@ void FLiveConfigPropertyCustomization::CustomizeHeader(TSharedRef<IPropertyHandl
                     }
                 }
 
-                TSharedRef<SLiveConfigPropertyPicker> Widget = SNew(SLiveConfigPropertyPicker)
+                TSharedRef<SLiveConfigPropertyPicker> PickerWidget = SNew(SLiveConfigPropertyPicker)
                     .bReadOnly(false)
                     .FilterType(FilterType)
                     .StructFilter(StructFilter)
-                    .OnPropertyChanged_Lambda([this](FLiveConfigProperty NewProperty)
+                    .OnPropertySelected_Lambda([this](FLiveConfigProperty NewProperty)
                     {
                         OnPropertyChanged(NewProperty);
                         if (ComboButton.IsValid())
@@ -82,11 +82,16 @@ void FLiveConfigPropertyCustomization::CustomizeHeader(TSharedRef<IPropertyHandl
                             ComboButton->SetIsOpen(false);
                         }
                     });
+                
+                
                 if (CurrentProperty.IsValid())
                 {
-                    Widget->SetSelectedProperty(CurrentProperty);
+                    PickerWidget->SetSelectedProperty(CurrentProperty);
                 }
-                return Widget;
+                
+                ComboButton->SetMenuContentWidgetToFocus(PickerWidget->GetWidgetToFocusOnOpen());
+                
+                return PickerWidget;
             })
             .ContentPadding(FMargin(2.0f, 2.0f))
             .ButtonContent()

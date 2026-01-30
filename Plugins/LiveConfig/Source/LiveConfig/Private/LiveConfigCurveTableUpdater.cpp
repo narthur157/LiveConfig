@@ -16,11 +16,6 @@ void ULiveConfigCurveTableUpdater::Initialize(FSubsystemCollectionBase& Collecti
 	Collection.InitializeDependency(ULiveConfigSystem::StaticClass());
 
 	UpdateCurveTables();
-
-	ULiveConfigSystem& System = ULiveConfigSystem::Get();
-	{
-		System.PropertyDefinitions.Empty();
-	}
 }
 
 void ULiveConfigCurveTableUpdater::UpdateCurveTables()
@@ -129,7 +124,7 @@ void ULiveConfigCurveTableUpdater::ExportToCurveTables()
 
 	bool bAnythingChanged = false;
 
-	// 1. Update existing rows in the Export Table
+	// Update existing rows in the Export Table
 	for (const TTuple<FName, FSimpleCurve*>& Pair : ExportActiveCurveTable->GetSimpleCurveRowMap())
 	{
 		FName RowName = Pair.Key;
@@ -190,7 +185,7 @@ void ULiveConfigCurveTableUpdater::ExportToCurveTables()
 		}
 	}
 
-	// 2. Add/Update rows for all float and int properties in PropertyDefinitions
+	// Add/Update rows for all float and int properties in PropertyDefinitions
 	for (const auto& Pair : System.PropertyDefinitions)
 	{
 		const FLiveConfigPropertyDefinition& Def = Pair.Value;

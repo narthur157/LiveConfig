@@ -84,6 +84,12 @@ bool ULiveConfigSystem::ShouldCreateSubsystem(UObject* Outer) const
     return true;
 }
 
+void ULiveConfigSystem::SaveProperty(const FLiveConfigPropertyDefinition& PropertyDefinition)
+{
+	PropertyDefinitions.Add(PropertyDefinition.PropertyName, PropertyDefinition);
+	ULiveConfigJsonSystem::Get()->SavePropertyToFile(PropertyDefinition);
+}
+
 void ULiveConfigSystem::DownloadConfig()
 {
     if (IsRunningCookCommandlet())

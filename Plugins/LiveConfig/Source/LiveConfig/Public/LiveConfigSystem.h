@@ -40,6 +40,11 @@ public:
     // ~USubsystem
 
     /**
+     * @param PropertyDefinition Property to be added or updated. Will be saved to file
+     */
+    void SaveProperty(const FLiveConfigPropertyDefinition& PropertyDefinition);
+
+    /**
      * Gets a configuration value as a string.
      * @param Key The CVar-like name to look up.
      * @return The found value or the default from property definition.

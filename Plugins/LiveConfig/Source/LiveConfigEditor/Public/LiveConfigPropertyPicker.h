@@ -11,7 +11,7 @@ class SLiveConfigPropertyPicker : public SCompoundWidget
 	SLATE_DECLARE_WIDGET(SLiveConfigPropertyPicker, SCompoundWidget);
 public:
     /** Callback when selection changes */
-    DECLARE_DELEGATE_OneParam(FOnPropertyChanged, FLiveConfigProperty);
+    DECLARE_DELEGATE_OneParam(FOnPropertySelected, FLiveConfigProperty);
     
     SLATE_BEGIN_ARGS(SLiveConfigPropertyPicker)
         : _Filter()
@@ -25,15 +25,14 @@ public:
         SLATE_ARGUMENT(UScriptStruct*, StructFilter)
         SLATE_ARGUMENT(bool, bReadOnly)
         SLATE_ARGUMENT(bool, bMultiSelect)
-        SLATE_EVENT(FOnPropertyChanged, OnPropertyChanged)
+        SLATE_EVENT(FOnPropertySelected, OnPropertySelected)
     SLATE_END_ARGS()
 
-    void Construct(const FArguments& InArgs);
-    
     // SWidget
-    virtual FReply OnFocusReceived(const FGeometry& MyGeometry, const FFocusEvent& InFocusEvent) override;
-    virtual bool SupportsKeyboardFocus() const override;
+    void Construct(const FArguments& InArgs);
     // ~SWidget
+    
+    TSharedPtr<SWidget> GetWidgetToFocusOnOpen();
 
     /** Get the currently selected property */
     FLiveConfigProperty GetSelectedProperty() const { return SelectedProperty; }
@@ -61,7 +60,7 @@ private:
     FText GetPropertyDisplayText(FLiveConfigProperty Property) const;
 
     /** Get the description for a property */
-    FText GetPropertyDescription(FLiveConfigProperty Property) const;
+    FText GetPropertyTooltipText(FLiveConfigProperty Property) const;
 
     /** Generate a row for the list view */
     TSharedRef<ITableRow> GenerateRow(TSharedPtr<FLiveConfigProperty> InItem, const TSharedRef<STableViewBase>& OwnerTable);
@@ -79,6 +78,6 @@ private:
     TSharedPtr<class SListView<TSharedPtr<FLiveConfigProperty>>> PropertyListView;
     TSharedPtr<class SEditableTextBox> AddNewTextBox;
     
-    FOnPropertyChanged OnPropertyChanged;
+    FOnPropertySelected OnPropertyChanged;
 };
 

@@ -101,10 +101,7 @@ void ULiveConfigJsonSystem::LoadJsonFromFile(const FString& Path, const FString&
 		FLiveConfigPropertyDefinition PropertyDefinition;
 		if (FJsonObjectConverter::JsonObjectToUStruct(JsonObject.ToSharedRef(), &PropertyDefinition))
 		{
-			ULiveConfigSystem& System = ULiveConfigSystem::Get();
-			{
-				System.PropertyDefinitions.Add(PropertyDefinition.PropertyName, PropertyDefinition);
-			}
+			ULiveConfigSystem::Get().PropertyDefinitions.Add(PropertyDefinition.PropertyName, PropertyDefinition);
 		}
 	}
 }

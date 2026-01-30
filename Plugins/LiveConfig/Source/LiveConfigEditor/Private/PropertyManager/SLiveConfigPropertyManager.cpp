@@ -1317,11 +1317,7 @@ void SLiveConfigPropertyManager::OnPropertyRowChanged(TSharedPtr<FLiveConfigProp
 					SubProp->PropertyName = NewSubPropName;
 
 					// Add new name to system and save new file
-					LiveConfigSystem.PropertyDefinitions.Add(NewSubPropName, *SubProp);
-					if (JsonSystem)
-					{
-						JsonSystem->SavePropertyToFile(*SubProp);
-					}
+					ULiveConfigSystem::Get().SaveProperty(*SubProp);
 				}
 			}
 		}
@@ -1329,11 +1325,7 @@ void SLiveConfigPropertyManager::OnPropertyRowChanged(TSharedPtr<FLiveConfigProp
 	
 	if (NewDef.IsValid() && IsValidPropertyName(NewDef->PropertyName))
 	{
-		LiveConfigSystem.PropertyDefinitions.Add(NewDef->PropertyName, *NewDef);
-		if (JsonSystem)
-		{
-			JsonSystem->SavePropertyToFile(*NewDef);
-		}
+		ULiveConfigSystem::Get().SaveProperty(*NewDef);
 	}
 
 	if (ChangeType == ELiveConfigPropertyChangeType::Name)
@@ -1396,22 +1388,14 @@ void SLiveConfigPropertyManager::RemoveTag(FName TagName)
 		}
 
 		// Remove from properties
-		ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get();
-		ULiveConfigSystem& System = ULiveConfigSystem::Get();
 
 		for (const auto& PropDef : RawPropertyList)
 		{
 			if (PropDef->Tags.Remove(TagName) > 0)
 			{
-				System.PropertyDefinitions.Add(PropDef->PropertyName, *PropDef);
-				if (JsonSystem)
-				{
-					JsonSystem->SavePropertyToFile(*PropDef);
-				}
+				ULiveConfigSystem::Get().SaveProperty(*PropDef);
 			}
 		}
-		System.SaveConfig();
-		System.TryUpdateDefaultConfigFile();
 	}
 
 	KnownTags.Remove(TagName);
