@@ -26,6 +26,8 @@ class LIVECONFIG_API ULiveConfigSystem : public UEngineSubsystem
     GENERATED_BODY()
 
 public:
+    FOnLiveConfigPropertiesUpdated OnPropertiesUpdated;
+	
     /**
      * note - if using this very early during startup (eg from another UEngineSubsystem::Initialize) consider
      * using GEngine->GetEngineSubsystem<ULiveConfigSystem>() to check
@@ -45,6 +47,15 @@ public:
     void SaveProperty(const FLiveConfigPropertyDefinition& PropertyDefinition);
 
     /**
+     * Renames an existing property and its associated files on disk.
+     * If the property is a struct, it will also rename all its members.
+     * @param OldName Current name of the property
+     * @param NewName New name for the property
+     * @param bCreateRedirector Whether to create a redirector from the old name to the new name
+     */
+    void RenameProperty(FLiveConfigProperty OldName, FLiveConfigProperty NewName, bool bCreateRedirector = false);
+
+    /**
      * Gets a configuration value as a string.
      * @param Key The CVar-like name to look up.
      * @return The found value or the default from property definition.
@@ -61,11 +72,11 @@ public:
     bool GetBoolValue(FLiveConfigProperty Key) const;
 
     /**
-     * Look up values for a struct's properties using a prefix.
-     * Each UProperty in the struct will be looked up as Prefix.PropertyName.
+     * Look up values for a struct's properties using the property name as a prefix for its members.
+     * Each UProperty in the struct will be looked up as StructProperty.PropertyName.
      */
     template<typename T>
-    T GetLiveConfigStruct(FLiveConfigProperty Prefix) const
+    T GetLiveConfigStruct(FLiveConfigProperty StructProperty) const
     {
         T OutStruct;
         UScriptStruct* Struct = TBaseStructure<T>::Get();
@@ -73,19 +84,18 @@ public:
         {
             Struct = T::StaticStruct();
         }
-        GetLiveConfigStruct_Internal(Struct, &OutStruct, Prefix);
+        GetLiveConfigStruct_Internal(Struct, &OutStruct, StructProperty);
         return OutStruct;
     }
-	
-	template<typename T>
+
+    /**
+     * @tparam T Must be a numeric type, bool, or string. Does NOT support structs
+     * @param Property Property key to lookup - may be implicitly converted
+     */
+    template<typename T>
 	T GetLiveConfigValue(FLiveConfigProperty Property) const
     {
-	    const FLiveConfigPropertyDefinition* Def = PropertyDefinitions.Find(Property);
-    	if (!Def)
-    	{
-    		return {};
-    	}
-    	
+        RedirectPropertyName(Property);
 		return Cache.GetValue<T>(Property);
     }
 
@@ -101,16 +111,60 @@ public:
     void RebuildConfigCache();
     void RebuildConfigCache(const FLiveConfigProfile& Profile);
 
-    FOnLiveConfigPropertiesUpdated OnPropertiesUpdated;
-
     /** Get all available row names (public for editor access) */
 	UFUNCTION(BlueprintCallable, Category = "Live Config")
 	const TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition>& GetAllProperties() const;
 
     static bool DoesPropertyNameExist(FLiveConfigProperty PropertyName);
 
+    /** Redirects a property name based on the redirectors map */
+    void RedirectPropertyName(FLiveConfigProperty& Property) const;
+
+    /**
+     * Gets all properties that are not referenced in any assets or config files
+     * @param OutUnusedProperties Array to fill with unused property names
+     */
+    void GetUnusedProperties(TArray<FName>& OutUnusedProperties) const;
+
+    /**
+     * Gets all redirects that point to properties that no longer exist
+     * @param OutUnusedRedirects Array to fill with redirect keys (old names) that point to non-existent properties and are not referenced
+     */
+    void GetUnusedRedirects(TArray<FName>& OutUnusedRedirects) const;
+
+    /**
+     * Checks if a property name (typically an old redirect name) is still referenced in any blueprint assets
+     * Note: This only checks assets, not C++ code. User should search code separately.
+     * @param PropertyName The property name to search for
+     * @param OutReferencingAssets Optional array to fill with asset paths that reference this property
+     * @return True if the property is found in any assets
+     */
+    bool IsPropertyReferencedInAssets(FName PropertyName, TArray<FString>* OutReferencingAssets = nullptr) const;
+
+    /**
+     * Removes a specific redirect from the map and saves the config
+     * @param OldPropertyName The old property name to remove from redirects
+     */
+    void RemoveRedirect(FName OldPropertyName);
+
+    /**
+     * Removes all redirects that point to properties that no longer exist
+     * @return Number of redirects removed
+     */
+    int32 CleanupUnusedRedirects();
+
+    /**
+     * Gets all names related to a property, including redirects (old names)
+     * @param PropertyName The name to find related names for
+     * @param OutRelatedNames Array to fill with related names
+     */
+    void GetRelatedPropertyNames(FName PropertyName, TArray<FName>& OutRelatedNames) const;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
 	TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition> PropertyDefinitions;
+
+    UPROPERTY(Config)
+    TMap<FName, FName> PropertyRedirects;
 
 
 private:

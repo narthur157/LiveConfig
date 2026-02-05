@@ -13,6 +13,7 @@ void ALiveConfigTestActor::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	bool bValue = ULiveConfigLib::GetLiveConfigValue<bool>("LiveConfigTest");
+	FLiveConfigProperty Prop = "LiveConfigTest"_LC;
+	bool bValue = ULiveConfigLib::GetLiveConfigValue<bool>(Prop);
 	UE_LOG(LogLiveConfig, Log, TEXT("Live config test actor got value %s for LiveConfigTest"), bValue ? TEXT("true") : TEXT("false"));	
 }

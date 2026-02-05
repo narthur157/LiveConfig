@@ -3,6 +3,8 @@
 #include "SLiveConfigTagPicker.h"
 #include "LiveConfigJson.h"
 #include "PropertyManager/SLiveConfigPropertyValueWidget.h"
+#include "Editor.h"
+#include "LiveConfigSystem.h"
 
 SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyRow);
 
@@ -286,6 +288,20 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateActionsColumnWidget()
 							OnAddNewTag.ExecuteIfBound();
 						});
 				})
+			]
+			+ SHorizontalBox::Slot()
+			.AutoWidth()
+			.Padding(2.0f)
+			[
+				SNew(SButton)
+				.IsFocusable(false)
+				.ButtonStyle(FAppStyle::Get(), "SimpleButton")
+				.ToolTipText(LOCTEXT("FindUsagesTooltip", "Find usages of this property in assets (Blueprints, etc.)"))
+				.OnClicked(this, &SLiveConfigPropertyRow::OnFindUsages)
+				[
+					SNew(SImage)
+					.Image(FAppStyle::GetBrush("Icons.Search"))
+				]
 			]
 			+ SHorizontalBox::Slot()
 			.AutoWidth()
@@ -819,6 +835,26 @@ void SLiveConfigPropertyRow::DeleteSubProperties()
 void SLiveConfigPropertyRow::OnAddNewTagClicked()
 {
 	OnAddNewTag.ExecuteIfBound();
+}
+
+FReply SLiveConfigPropertyRow::OnFindUsages()
+{
+	if (Item->PropertyDefinition.IsValid())
+	{
+		FName PropertyName = Item->PropertyDefinition->PropertyName.GetName();
+		
+		TArray<FName> RelatedNames;
+		ULiveConfigSystem::Get().GetRelatedPropertyNames(PropertyName, RelatedNames);
+
+		TArray<FAssetIdentifier> AssetIdentifiers;
+		for (const FName& Name : RelatedNames)
+		{
+			AssetIdentifiers.Add(FAssetIdentifier(FLiveConfigProperty::StaticStruct(), Name));
+		}
+
+		FEditorDelegates::OnOpenReferenceViewer.Broadcast(AssetIdentifiers, FReferenceViewerParams());
+	}
+	return FReply::Handled();
 }
 
 void SLiveConfigPropertyRow::RefreshTags()

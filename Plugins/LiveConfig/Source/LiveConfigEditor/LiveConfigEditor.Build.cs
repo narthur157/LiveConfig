@@ -32,7 +32,10 @@ public class LiveConfigEditor : ModuleRules
                 "InputCore",
                 "ToolMenus",
                 "ApplicationCore",
-                "StructViewer"
+                "StructViewer",
+                "DesktopPlatform",
+                "AssetRegistry",
+                "DataValidation"
             }
         );
     }

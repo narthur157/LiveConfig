@@ -61,6 +61,8 @@ private:
 	void BulkDeleteProperties(TArray<TSharedRef<FLiveConfigPropertyTreeNode>> Nodes);
 	TSharedPtr<SWidget> OnGetContextMenuContent();
 	void OnSelectionChanged(TSharedPtr<FLiveConfigPropertyTreeNode> SelectedItem, ESelectInfo::Type SelectInfo);
+	void OnManageRedirects();
+	void OnCleanupUnusedProperties();
 
 	TArray<TSharedPtr<FLiveConfigPropertyDefinition>> RawPropertyList;
 	TArray<TSharedRef<FLiveConfigPropertyTreeNode>> RootNodes;

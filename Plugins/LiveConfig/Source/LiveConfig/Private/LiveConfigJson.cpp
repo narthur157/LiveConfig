@@ -101,6 +101,8 @@ void ULiveConfigJsonSystem::LoadJsonFromFile(const FString& Path, const FString&
 		FLiveConfigPropertyDefinition PropertyDefinition;
 		if (FJsonObjectConverter::JsonObjectToUStruct(JsonObject.ToSharedRef(), &PropertyDefinition))
 		{
+			// We don't need to redirect this as it's the source of truth - if a redirector exists it could hide this property
+			// but that is better than causing it to get loaded as the something else
 			ULiveConfigSystem::Get().PropertyDefinitions.Add(PropertyDefinition.PropertyName, PropertyDefinition);
 		}
 	}
@@ -196,6 +198,46 @@ void ULiveConfigJsonSystem::DeletePropertyFile(FName PropertyName)
 	QueuedDeletions.Add(PropertyName);
 	QueuedSaves.Remove(PropertyName);
 	QueueSave();
+}
+
+void ULiveConfigJsonSystem::RenamePropertyOnDisk(FName OldPropertyName, FName NewPropertyName)
+{
+	if (OldPropertyName.IsNone() || NewPropertyName.IsNone())
+	{
+		return;
+	}
+
+	FString OldPath = GetPropertyPath(OldPropertyName);
+	FString NewPath = GetPropertyPath(NewPropertyName);
+
+	if (FPaths::FileExists(OldPath))
+	{
+		// Ensure new directory exists
+		FString NewDir = FPaths::GetPath(NewPath);
+		IFileManager::Get().MakeDirectory(*NewDir, true);
+
+		// Move the file - slightly weird that this is not queued when saves and deletes are queued
+		// Ultimately it is the checkouts that are actually slow, not the file operations, so maybe we should only queue checkouts
+		if (IFileManager::Get().Move(*NewPath, *OldPath))
+		{
+			UE_LOG(LogLiveConfig, Log, TEXT("Renamed property file from %s to %s"), *OldPath, *NewPath);
+		}
+		else
+		{
+			UE_LOG(LogLiveConfig, Error, TEXT("Failed to rename property file from %s to %s"), *OldPath, *NewPath);
+		}
+	}
+
+	// Also handle queued operations
+	if (QueuedSaves.Contains(OldPropertyName))
+	{
+		FLiveConfigPropertyDefinition Def = QueuedSaves[OldPropertyName];
+		Def.PropertyName = FLiveConfigProperty(NewPropertyName);
+		QueuedSaves.Remove(OldPropertyName);
+		QueuedSaves.Add(NewPropertyName, Def);
+	}
+	
+	QueuedDeletions.Remove(OldPropertyName);
 }
 
 void ULiveConfigJsonSystem::QueueSave()

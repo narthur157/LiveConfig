@@ -14,10 +14,11 @@ struct LIVECONFIG_API FLiveConfigProperty
 
 	FLiveConfigProperty() : PropertyName(NAME_None) {}
 	FLiveConfigProperty(FName InPropertyName) : PropertyName(InPropertyName) {}
+	FLiveConfigProperty(FName InPropertyName, bool bRedirect);
+	// Note this version will *not* handle redirects
 	FLiveConfigProperty(const FString& InPropertyStr) : PropertyName(*InPropertyStr) {}
+	FLiveConfigProperty(const FString& InPropertyStr, bool bRedirect);
 	FLiveConfigProperty(const TCHAR* InPropertyStr) : PropertyName(InPropertyStr) {}
-	// ReSharper disable once CppNonExplicitConvertingConstructor
-	FLiveConfigProperty(const char* InPropertyStr) : PropertyName(InPropertyStr) {}
     
 	/** Get the underlying FName */
 	FName GetName() const { return PropertyName; }
@@ -32,6 +33,12 @@ struct LIVECONFIG_API FLiveConfigProperty
 	bool operator==(const FLiveConfigProperty& Other) const { return PropertyName == Other.PropertyName; }
 	bool operator!=(const FLiveConfigProperty& Other) const { return PropertyName != Other.PropertyName; }
 
+	/**
+	 * Creates a redirected Live Config property from a name.
+	 * This is the preferred way to create properties in C++ to ensure redirects are handled.
+	 */
+	static FLiveConfigProperty Request(FName InPropertyName);
+
 	bool ExportTextItem(FString& ValueStr, FLiveConfigProperty const& DefaultValue, UObject* Parent, int32 PortFlags, UObject* ExportRootScope) const;
 	bool ImportTextItem(const TCHAR*& Buffer, int32 PortFlags, UObject* Parent, FOutputDevice* ErrorText);
 
@@ -42,7 +49,16 @@ struct LIVECONFIG_API FLiveConfigProperty
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (Categories = "LiveConfig"))
 	FName PropertyName;
+
+	/** Helper to sync name in editor */
+	void PostSerialize(const FArchive& Ar);
 };
+
+/** Literal operator for Live Config properties, which automatically handles redirects. */
+FORCEINLINE FLiveConfigProperty operator""_LC(const char* Str,size_t)
+{
+	return FLiveConfigProperty::Request(FName(Str));
+}
 
 template<>
 struct TStructOpsTypeTraits<FLiveConfigProperty> : public TStructOpsTypeTraitsBase2<FLiveConfigProperty>
@@ -51,6 +67,7 @@ struct TStructOpsTypeTraits<FLiveConfigProperty> : public TStructOpsTypeTraitsBa
 	{
 		WithExportTextItem = true,
 		WithImportTextItem = true,
+		WithPostSerialize = true,
 	};
 };
 

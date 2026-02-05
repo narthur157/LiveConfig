@@ -25,6 +25,7 @@ public:
 	virtual void NotifyPinConnectionListChanged(UEdGraphPin* Pin) override;
 	virtual bool IsConnectionDisallowed(const UEdGraphPin* MyPin, const UEdGraphPin* OtherPin, FString& OutConnectionMessage) const override;
 	virtual void PostReconstructNode() override;
+	virtual void ValidateNodeDuringCompilation(class FCompilerResultsLog& MessageLog) const override;
 	// End UK2Node interface
 
 	/** Get the property pin */

@@ -242,7 +242,10 @@ void ULiveConfigProfileSystem::SetActiveProfileData(const FLiveConfigProfile& Pr
 
 void ULiveConfigProfileSystem::SetActiveProfileData_NoReplication(const FLiveConfigProfile& Profile)
 {
-    ActiveProfile = Profile;
+    FLiveConfigProfile RedirectedProfile = Profile;
+    RedirectedProfile.Redirect();
+    
+    ActiveProfile = RedirectedProfile;
     OnProfileChanged.Broadcast(Profile);
 }
 

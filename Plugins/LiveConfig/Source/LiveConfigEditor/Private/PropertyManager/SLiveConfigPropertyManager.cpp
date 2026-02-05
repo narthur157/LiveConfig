@@ -2,6 +2,7 @@
 #include "SLiveConfigPropertyRow.h"
 #include "SLiveConfigTagRow.h"
 #include "SLiveConfigTagPicker.h"
+#include "SLiveConfigRedirectManager.h"
 #include "Widgets/Text/STextBlock.h"
 #include "Widgets/Layout/SBox.h"
 #include "Widgets/Views/SListView.h"
@@ -18,6 +19,8 @@
 #include "LiveConfigGameSettings.h"
 #include "LiveConfigJson.h"
 #include "LiveConfigSystem.h"
+#include "LiveConfigEditorSettings.h"
+#include "SLiveConfigCleanupUnusedPropertiesWidget.h"
 #include "Misc/MessageDialog.h"
 #include "Misc/ComparisonUtility.h"
 
@@ -167,7 +170,35 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 						.Text(LOCTEXT("AddProperty", "+ Add Property"))
 						.OnClicked_Lambda([this]()
 						{
-							OnAddNewProperty(); 
+							OnAddNewProperty();
+							return FReply::Handled();
+						})
+					]
+					+ SHorizontalBox::Slot()
+					.AutoWidth()
+					.Padding(5, 0, 0, 0)
+					[
+						SNew(SButton)
+						.ButtonStyle(FAppStyle::Get(), "SimpleButton")
+						.Text(LOCTEXT("CleanupUnusedProperties", "Cleanup Unused"))
+						.ToolTipText(LOCTEXT("CleanupUnusedPropertiesTooltip", "Find and remove properties that are not used in any assets or config files"))
+						.OnClicked_Lambda([this]()
+						{
+							OnCleanupUnusedProperties();
+							return FReply::Handled();
+						})
+					]
+					+ SHorizontalBox::Slot()
+					.AutoWidth()
+					.Padding(5, 0, 0, 0)
+					[
+						SNew(SButton)
+						.ButtonStyle(FAppStyle::Get(), "SimpleButton")
+						.Text(LOCTEXT("ManageRedirects", "Manage Redirects"))
+						.ToolTipText(LOCTEXT("ManageRedirectsTooltip", "View and clean up property redirects"))
+						.OnClicked_Lambda([this]()
+						{
+							OnManageRedirects();
 							return FReply::Handled();
 						})
 					]
@@ -1266,7 +1297,6 @@ void SLiveConfigPropertyManager::OnAddPropertyAtFolder(FString FolderPath)
 void SLiveConfigPropertyManager::OnPropertyRowChanged(TSharedPtr<FLiveConfigPropertyDefinition> OldDef, TSharedPtr<FLiveConfigPropertyDefinition> NewDef, ELiveConfigPropertyChangeType ChangeType)
 {
 	ULiveConfigSystem& LiveConfigSystem = ULiveConfigSystem::Get();
-	ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get();
 
 	auto IsValidPropertyName = [](const FLiveConfigProperty& Prop)
 	{
@@ -1279,51 +1309,50 @@ void SLiveConfigPropertyManager::OnPropertyRowChanged(TSharedPtr<FLiveConfigProp
 		// If the name changed, we need to handle the old key in the settings
 		if (OldDef.IsValid() && IsValidPropertyName(OldDef->PropertyName))
 		{
-			LiveConfigSystem.PropertyDefinitions.Remove(OldDef->PropertyName);
-			if (JsonSystem)
+			// Check the redirect mode setting
+			const ULiveConfigEditorSettings* EditorSettings = GetDefault<ULiveConfigEditorSettings>();
+			bool bCreateRedirector = false;
+
+			switch (EditorSettings->RedirectMode)
 			{
-				JsonSystem->DeletePropertyFile(OldDef->PropertyName.GetName());
+			case ELiveConfigRedirectMode::AlwaysCreate:
+				bCreateRedirector = true;
+				break;
+
+			case ELiveConfigRedirectMode::NeverCreate:
+				bCreateRedirector = false;
+				break;
+
+			case ELiveConfigRedirectMode::Prompt:
+				{
+					const EAppReturnType::Type Result = FMessageDialog::Open(EAppMsgType::YesNo,
+						LOCTEXT("CreateRedirectorQuestion", "Would you like to create a property redirector for this rename? This will ensure existing references continue to work."),
+						LOCTEXT("CreateRedirectorTitle", "Create Redirector?"));
+					bCreateRedirector = (Result == EAppReturnType::Yes);
+				}
+				break;
 			}
 
-			// If this was a struct, we need to rename all subproperties as well
+			LiveConfigSystem.RenameProperty(OldDef->PropertyName, NewDef->PropertyName, bCreateRedirector);
+
+			// Update all our local TSharedPtrs if they were part of a struct rename
 			if (OldDef->PropertyType == ELiveConfigPropertyType::Struct)
 			{
 				FString OldPrefix = OldDef->PropertyName.ToString() + TEXT(".");
 				FString NewPrefix = NewDef->PropertyName.ToString() + TEXT(".");
 
-				TArray<TSharedPtr<FLiveConfigPropertyDefinition>> SubPropsToUpdate;
 				for (const auto& PropDef : RawPropertyList)
 				{
 					if (PropDef->PropertyName.ToString().StartsWith(OldPrefix))
 					{
-						SubPropsToUpdate.Add(PropDef);
+						FString RelativeName = PropDef->PropertyName.ToString().RightChop(OldPrefix.Len());
+						PropDef->PropertyName = FLiveConfigProperty(NewPrefix + RelativeName);
 					}
-				}
-
-				for (const auto& SubProp : SubPropsToUpdate)
-				{
-					FLiveConfigProperty OldSubPropName = SubProp->PropertyName;
-					FString NewSubPropNameStr = SubProp->PropertyName.ToString().Replace(*OldPrefix, *NewPrefix, ESearchCase::CaseSensitive);
-					FLiveConfigProperty NewSubPropName(NewSubPropNameStr);
-
-					// Remove old name from system and delete old file
-					LiveConfigSystem.PropertyDefinitions.Remove(OldSubPropName);
-					if (JsonSystem)
-					{
-						JsonSystem->DeletePropertyFile(OldSubPropName.GetName());
-					}
-
-					// Update the property definition
-					SubProp->PropertyName = NewSubPropName;
-
-					// Add new name to system and save new file
-					ULiveConfigSystem::Get().SaveProperty(*SubProp);
 				}
 			}
 		}
 	}
-	
-	if (NewDef.IsValid() && IsValidPropertyName(NewDef->PropertyName))
+	else if (NewDef.IsValid() && IsValidPropertyName(NewDef->PropertyName))
 	{
 		ULiveConfigSystem::Get().SaveProperty(*NewDef);
 	}
@@ -1428,6 +1457,39 @@ bool SLiveConfigPropertyManager::IsNameDuplicate(FName Name) const
 		}
 	}
 	return Count > 1;
+}
+
+void SLiveConfigPropertyManager::OnManageRedirects()
+{
+	TSharedPtr<SWindow> RedirectWindow = SNew(SWindow)
+		.Title(LOCTEXT("ManageRedirectsWindowTitle", "Manage Property Redirects"))
+		.ClientSize(FVector2D(900, 600))
+		.SupportsMinimize(false)
+		.SupportsMaximize(false)
+		[
+			SNew(SLiveConfigRedirectManager)
+		];
+
+	FSlateApplication::Get().AddWindow(RedirectWindow.ToSharedRef());
+}
+
+void SLiveConfigPropertyManager::OnCleanupUnusedProperties()
+{
+	TSharedPtr<SWindow> CleanupWindow = SNew(SWindow)
+		.Title(LOCTEXT("CleanupUnusedPropertiesWindowTitle", "Cleanup Unused Live Config Properties"))
+		.ClientSize(FVector2D(600, 500))
+		.SupportsMaximize(true)
+		.SupportsMinimize(false)
+		[
+			SNew(SLiveConfigCleanupUnusedPropertiesWidget)
+		];
+
+	FSlateApplication::Get().AddWindow(CleanupWindow.ToSharedRef());
+
+	CleanupWindow->GetOnWindowClosedEvent().AddLambda([this](const TSharedRef<SWindow>&)
+	{
+		RefreshList();
+	});
 }
 
 #undef LOCTEXT_NAMESPACE

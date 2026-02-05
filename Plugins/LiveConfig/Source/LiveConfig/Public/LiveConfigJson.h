@@ -26,9 +26,13 @@ public:
 
 	void SavePropertyToFile(const FLiveConfigPropertyDefinition& PropertyDefinition);
 	void DeletePropertyFile(FName PropertyName);
+	void RenamePropertyOnDisk(FName OldPropertyName, FName NewPropertyName);
 
 	static FString GetPropertyPath(FName PropertyName);
 	static FString GetLiveConfigDirectory();
+	
+	// for testing 
+	bool bDisableFileOperations = false;
 private:
 	void LoadJsonFromDirectory(const FString& Dir);
 	void LoadJsonFromFile(const FString& Path, const FString& FileName);

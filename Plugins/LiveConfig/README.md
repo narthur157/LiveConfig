@@ -26,7 +26,7 @@ Live Config bridges the gap by providing a designer-friendly workflow while main
 - **Built for source control** Live config uses one JSON file per property, preventing excessive merge conflicts and creating a readable diff for tuning changes.
 - **Exportable game database** Easily create a wiki or other knowledge store using your game's actual data
 - **Property Tags** Tagging properties provides opportunities not only for organizing, but building additional tooling around properties
-- **Google Sheets Integration**: Use a public Google Sheet (published as CSV) to override config values at runtime.
+- **Google Sheets Integration**: Use a public readable Google Sheet (published as CSV) to override config values at runtime.
 - **Type support**: Properties are tied to particular types, including structs.
 - **Curve Table Support**: Seamlessly sync remote values with Unreal's native Curve Tables. This is particularly useful for `FScalableFloat` from GAS
 - **Profile System**: Create sets of tuning changes and save them to their own file.
@@ -64,16 +64,16 @@ From here you can:
 #include "LiveConfigSystem.h"
 
 // Get a float value
-float Speed = ULiveConfigSystem::Get()->GetFloatValue("Hero.MoveSpeed");
+float Speed = ULiveConfigSystem::Get().GetFloatValue("Hero.MoveSpeed");
 
 // Map a whole struct (automatically looks up Hero.Stats.Health, Hero.Stats.Armor, etc.)
-FMyHeroStats Stats = ULiveConfigSystem::Get()->GetLiveConfigStruct<FMyHeroStats>("Hero.Stats");
+FMyHeroStats Stats = ULiveConfigSystem::Get().GetLiveConfigStruct<FMyHeroStats>("Hero.Stats");
 ```
 
 ### 4. Using in Blueprints
 - **Get Value**: Use the `Get Value` nodes and select your property from the dropdown.
 - **Promote to Live Config**: Right-click on any compatible pin in a Blueprint and select "Promote to Live Config" to automatically create a linked property.
 
-## Non-features
+# Credit
 
-No A/B testing
+This plugin was developed by Nick Arthur with invaluable assistance and advice from Joe Finley. Additionally, I'd like to credit the team at Genpop for using the plugin which inspired this one.

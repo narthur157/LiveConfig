@@ -24,4 +24,5 @@ private:
 	TSharedRef<SDockTab> SpawnPropertyManagerTab(const FSpawnTabArgs& Args);
 
 	void RegisterMenus();
+	void OnExportCsv();
 };

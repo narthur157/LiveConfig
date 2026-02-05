@@ -32,11 +32,18 @@ public:
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General")
 	TArray<FName> KnownTags;
 
-	/** The curve table to update with live config values (Export TO). */
+	/** 
+	 * The curve table to update with live config values (Export TO). 
+	 * This is especially useful for FScalableFloat values in GAS - providing live config values to Gameplay Effects
+	 */
 	UPROPERTY(Config, EditAnywhere, Category = "CurveTable", Meta = (AllowedClasses = "/Script/Engine.CurveTable"))
 	FSoftObjectPath ExportCurveTable;
 
-	/** List of curve tables that provide live config values (Import FROM). */
+	/** 
+	 * List of curve tables that provide live config values (Import FROM). 
+	 * These values are intended to be read-only in the live config, with the curve table acting as the source of truth
+	 * If the curve table is modified, it will update the live config value
+	 */
 	UPROPERTY(Config, EditAnywhere, Category = "CurveTable", Meta = (AllowedClasses = "/Script/Engine.CurveTable"))
 	TArray<FSoftObjectPath> ImportCurveTables;
 

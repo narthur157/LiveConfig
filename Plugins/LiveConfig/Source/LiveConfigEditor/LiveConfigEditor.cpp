@@ -13,6 +13,10 @@
 #include "Widgets/Docking/SDockTab.h"
 #include "Logging/MessageLog.h"
 #include "Logging/TokenizedMessage.h"
+#include "DesktopPlatformModule.h"
+#include "IDesktopPlatform.h"
+#include "Framework/Application/SlateApplication.h"
+#include "Misc/FileHelper.h"
 
 #define LOCTEXT_NAMESPACE "FLiveConfigEditorModule"
 
@@ -166,6 +170,88 @@ void FLiveConfigEditorModule::RegisterMenus()
 		Entry.SetCommandList(nullptr);
 		Entry.StyleNameOverride = "CalloutToolbar";
 		Section.AddEntry(Entry);
+
+		FToolMenuEntry ExportEntry = FToolMenuEntry::InitToolBarButton(
+			"ExportLiveConfigCsv",
+			FUIAction(FExecuteAction::CreateRaw(this, &FLiveConfigEditorModule::OnExportCsv)),
+			LOCTEXT("ExportLiveConfigCsv", "Export CSV"),
+			LOCTEXT("ExportLiveConfigCsvTooltip", "Export Live Config data to a Google Sheets-friendly CSV file"),
+			FSlateIcon(FAppStyle::GetAppStyleSetName(), "Icons.Save")
+		);
+		Section.AddEntry(ExportEntry);
+	}
+}
+
+void FLiveConfigEditorModule::OnExportCsv()
+{
+	IDesktopPlatform* DesktopPlatform = FDesktopPlatformModule::Get();
+	if (!DesktopPlatform)
+	{
+		return;
+	}
+
+	TArray<FString> SaveFilenames;
+	const bool bOpened = DesktopPlatform->SaveFileDialog(
+		FSlateApplication::Get().FindBestParentWindowHandleForDialogs(nullptr),
+		LOCTEXT("ExportCsvDialogTitle", "Export Live Config to CSV").ToString(),
+		FPaths::ProjectSavedDir(),
+		TEXT("LiveConfig.csv"),
+		TEXT("CSV files (*.csv)|*.csv"),
+		EFileDialogFlags::None,
+		SaveFilenames
+	);
+
+	if (bOpened && SaveFilenames.Num() > 0)
+	{
+		FString CsvContent = TEXT("Name,Value,Type,Description,Tags\n");
+		
+		const TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition>& AllProperties = ULiveConfigSystem::Get().GetAllProperties();
+		
+		for (auto& Pair : AllProperties)
+		{
+			const FLiveConfigPropertyDefinition& Def = Pair.Value;
+			
+			// Escape function to make it Google Sheets friendly
+			auto EscapeCSV = [](const FString& InString) -> FString
+			{
+				if (InString.Contains(TEXT(",")) || InString.Contains(TEXT("\"")) || InString.Contains(TEXT("\n")))
+				{
+					FString Escaped = InString;
+					Escaped.ReplaceInline(TEXT("\""), TEXT("\"\""));
+					return FString::Printf(TEXT("\"%s\""), *Escaped);
+				}
+				return InString;
+			};
+
+			FString PropertyTypeStr;
+			switch(Def.PropertyType)
+			{
+				case ELiveConfigPropertyType::String: PropertyTypeStr = TEXT("String"); break;
+				case ELiveConfigPropertyType::Int:    PropertyTypeStr = TEXT("Int"); break;
+				case ELiveConfigPropertyType::Float:  PropertyTypeStr = TEXT("Float"); break;
+				case ELiveConfigPropertyType::Bool:   PropertyTypeStr = TEXT("Bool"); break;
+				case ELiveConfigPropertyType::Struct: PropertyTypeStr = TEXT("Struct"); break;
+			}
+
+			FString TagsStr = FString::JoinBy(Def.Tags, TEXT(";"), [](const FName& Tag) { return Tag.ToString(); });
+
+			CsvContent += FString::Printf(TEXT("%s,%s,%s,%s,%s\n"),
+				*EscapeCSV(Def.PropertyName.ToString()),
+				*EscapeCSV(Def.Value),
+				*EscapeCSV(PropertyTypeStr),
+				*EscapeCSV(Def.Description),
+				*EscapeCSV(TagsStr)
+			);
+		}
+
+		if (FFileHelper::SaveStringToFile(CsvContent, *SaveFilenames[0]))
+		{
+			FMessageLog("LiveConfig").Info(FText::Format(LOCTEXT("ExportSuccess", "Successfully exported Live Config to {0}"), FText::FromString(SaveFilenames[0])));
+		}
+		else
+		{
+			FMessageLog("LiveConfig").Error(FText::Format(LOCTEXT("ExportFailed", "Failed to save CSV to {0}"), FText::FromString(SaveFilenames[0])));
+		}
 	}
 }
 

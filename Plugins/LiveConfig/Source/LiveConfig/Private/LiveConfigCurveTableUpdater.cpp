@@ -75,9 +75,8 @@ void ULiveConfigCurveTableUpdater::ImportFromCurveTables()
 				for (const FSimpleCurveKey& Key : Curve->Keys)
 				{
 					FName PropName = (Curve->Keys.Num() == 1) ? RowName : FName(FString::Printf(TEXT("%s.%d"), *RowName.ToString(), FMath::RoundToInt(Key.Time)));
-					
-					ULiveConfigSystem& System = ULiveConfigSystem::Get();
-					FLiveConfigPropertyDefinition& Def = System.PropertyDefinitions.FindOrAdd(PropName);
+
+					FLiveConfigPropertyDefinition& Def = ULiveConfigSystem::Get().PropertyDefinitions.FindOrAdd(PropName);
 					
 					if (Def.PropertyName != PropName || (Def.PropertyType != ELiveConfigPropertyType::Float && Def.PropertyType != ELiveConfigPropertyType::Int) || Def.Value != FString::SanitizeFloat(Key.Value))
 					{
@@ -104,10 +103,7 @@ void ULiveConfigCurveTableUpdater::ImportFromCurveTables()
 
 		if (bSettingsChanged)
 		{
-			ULiveConfigSystem& System = ULiveConfigSystem::Get();
-			System.Modify();
-			System.SaveConfig();
-			System.TryUpdateDefaultConfigFile();
+			ULiveConfigSystem::Get().TryUpdateDefaultConfigFile();
 		}
 	}
 }

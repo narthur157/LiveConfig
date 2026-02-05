@@ -1,6 +1,8 @@
 #include "LiveConfigPropertyCustomization.h"
 
+#include "AssetRegistry/AssetRegistryModule.h"
 #include "DetailWidgetRow.h"
+#include "LiveConfigTypes.h"
 #include "LiveConfigSystem.h"
 #include "PropertyCustomizationHelpers.h"
 #include "LiveConfigPropertyPicker.h"
@@ -170,7 +172,7 @@ void FLiveConfigPropertyCustomization::SetProperty(FLiveConfigProperty NewProper
         return;
     }
 
-    // Set the RowName member of the FLiveConfigProperty struct
+    // Set the PropertyName member of the FLiveConfigProperty struct
     TArray<void*> RawData;
     PropertyHandle->AccessRawData(RawData);
 
@@ -178,6 +180,7 @@ void FLiveConfigPropertyCustomization::SetProperty(FLiveConfigProperty NewProper
     {
         if (FStructProperty* StructProperty = CastField<FStructProperty>(PropertyHandle->GetProperty()))
         {
+            // Set PropertyName
             if (FProperty* PropertyProperty = StructProperty->Struct->FindPropertyByName(GET_MEMBER_NAME_CHECKED(FLiveConfigProperty, PropertyName)))
             {
                 if (FNameProperty* NameProp = CastField<FNameProperty>(PropertyProperty))
@@ -186,10 +189,11 @@ void FLiveConfigPropertyCustomization::SetProperty(FLiveConfigProperty NewProper
                     if (NamePtr)
                     {
                         *NamePtr = NewProperty.GetName();
-                        PropertyHandle->NotifyPostChange(EPropertyChangeType::ValueSet);
                     }
                 }
             }
+            
+            PropertyHandle->NotifyPostChange(EPropertyChangeType::ValueSet);
         }
     }
 }

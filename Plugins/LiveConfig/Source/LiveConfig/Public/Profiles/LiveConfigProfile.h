@@ -29,6 +29,12 @@ struct FLiveConfigProfile
 
     bool IsValid() const { return ProfileName != NAME_None; }
     
+    /**
+     * Update profile so that its properties are redirected accordingly
+     * This is used automatically whenever profiles are applied, so it should not need to be used in general 
+    */ 
+    void Redirect();
+    
     // May be able to handle this behavior via a net serializer rather than forcing us to do a pre/post call
     void PrepareForReplication()
     {
