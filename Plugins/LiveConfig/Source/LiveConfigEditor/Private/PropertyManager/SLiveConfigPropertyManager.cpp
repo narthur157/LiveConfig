@@ -16,6 +16,7 @@
 #include "Widgets/Input/SComboButton.h"
 #include "Widgets/Input/SSearchBox.h"
 #include "Framework/MultiBox/MultiBoxBuilder.h"
+#include "ISettingsModule.h"
 #include "Modules/ModuleManager.h"
 #include "Widgets/Layout/SScrollBox.h"
 #include "LiveConfigSettings.h"
@@ -180,6 +181,23 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 					+ SHorizontalBox::Slot()
 					.AutoWidth()
 					.Padding(5, 0, 0, 0)
+					[
+						SNew(SButton)
+						.ButtonStyle(FAppStyle::Get(), "SimpleButton")
+						.ToolTipText(LOCTEXT("OpenLiveConfigSettingsTooltip", "Open Live Config settings"))
+						.OnClicked_Lambda([]()
+						{
+							if (ISettingsModule* SettingsModule = FModuleManager::GetModulePtr<ISettingsModule>("Settings"))
+							{
+								SettingsModule->ShowViewer("Project", "Plugins", "Live Config");
+							}
+							return FReply::Handled();
+						})
+						[
+							SNew(SImage)
+							.Image(FAppStyle::GetBrush("Icons.Settings"))
+						]
+					]
 					+ SHorizontalBox::Slot()
 					.Padding(5, 0)
 					.FillWidth(1.0f)

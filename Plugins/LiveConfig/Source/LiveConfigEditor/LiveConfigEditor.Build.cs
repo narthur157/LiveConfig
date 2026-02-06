@@ -30,6 +30,7 @@ public class LiveConfigEditor : ModuleRules
                 "KismetCompiler",
                 "EditorStyle",
                 "InputCore",
+                "PythonScriptPlugin",
                 "ToolMenus",
                 "ApplicationCore",
                 "StructViewer",

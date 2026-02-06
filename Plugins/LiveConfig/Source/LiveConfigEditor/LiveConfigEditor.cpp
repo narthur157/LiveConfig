@@ -181,15 +181,6 @@ void FLiveConfigEditorModule::RegisterMenus()
 		Entry.SetCommandList(nullptr);
 		Entry.StyleNameOverride = "CalloutToolbar";
 		Section.AddEntry(Entry);
-
-		FToolMenuEntry ExportEntry = FToolMenuEntry::InitToolBarButton(
-			"ExportLiveConfigCsv",
-			FUIAction(FExecuteAction::CreateRaw(this, &FLiveConfigEditorModule::OnExportCsv)),
-			LOCTEXT("ExportLiveConfigCsv", "Export CSV"),
-			LOCTEXT("ExportLiveConfigCsvTooltip", "Export Live Config data to a Google Sheets-friendly CSV file"),
-			FSlateIcon(FAppStyle::GetAppStyleSetName(), "Icons.Save")
-		);
-		Section.AddEntry(ExportEntry);
 	}
 }
 
