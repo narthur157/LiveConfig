@@ -1,9 +1,9 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "LiveConfigLib.h"
 
-#include "LiveConfigGameSettings.h"
+#include "LiveConfigSettings.h"
 #include "LiveConfigSystem.h"
 
 FLiveConfigPropertyDefinition ULiveConfigLib::GetLiveConfigPropertyDefinition(FLiveConfigProperty Property)
@@ -116,3 +116,4 @@ DEFINE_FUNCTION(ULiveConfigLib::execGetStructValue)
 		P_NATIVE_END;
 	}
 }
+

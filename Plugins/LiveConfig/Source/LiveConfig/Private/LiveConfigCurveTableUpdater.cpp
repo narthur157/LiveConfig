@@ -1,8 +1,8 @@
-﻿// All rights reserved - Genpop
+// All rights reserved - Genpop
 
 #include "LiveConfigCurveTableUpdater.h"
 #include "LiveConfigSystem.h"
-#include "LiveConfigGameSettings.h"
+#include "LiveConfigSettings.h"
 #include "Engine/CurveTable.h"
 
 #if WITH_EDITOR
@@ -23,7 +23,7 @@ void ULiveConfigCurveTableUpdater::UpdateCurveTables()
 	ExportActiveCurveTable = nullptr;
 	ImportActiveCurveTables.Empty();
 	
-	const ULiveConfigGameSettings* Settings = GetDefault<ULiveConfigGameSettings>();
+	const ULiveConfigSettings* Settings = GetDefault<ULiveConfigSettings>();
 	
 	// Handle Export
 	if (Settings->ExportCurveTable.IsValid())
@@ -46,7 +46,7 @@ void ULiveConfigCurveTableUpdater::UpdateCurveTables()
 
 void ULiveConfigCurveTableUpdater::ImportFromCurveTables()
 {
-	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
+	ULiveConfigSettings* Settings = GetMutableDefault<ULiveConfigSettings>();
 	if (!Settings)
 	{
 		return;
@@ -220,7 +220,7 @@ void ULiveConfigCurveTableUpdater::ExportToCurveTables()
 			FSimpleCurve* Curve = ExportActiveCurveTable->GetSimpleCurveRowMap().FindRef(RowName);
 			if (!Curve)
 			{
-				if (GetDefault<ULiveConfigGameSettings>()->bAutoCreateRowsInExportTable)
+				if (GetDefault<ULiveConfigSettings>()->bAutoCreateRowsInExportTable)
 				{
 					Curve = &ExportActiveCurveTable->AddSimpleCurve(RowName);
 					bAnythingChanged = true;
@@ -304,3 +304,4 @@ void ULiveConfigCurveTableUpdater::ExportToCurveTables()
 	}
 #endif
 }
+

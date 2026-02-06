@@ -1,4 +1,4 @@
-﻿#include "SLiveConfigPropertyManager.h"
+#include "SLiveConfigPropertyManager.h"
 #include "SLiveConfigPropertyRow.h"
 #include "SLiveConfigTagRow.h"
 #include "SLiveConfigTagPicker.h"
@@ -18,10 +18,9 @@
 #include "Framework/MultiBox/MultiBoxBuilder.h"
 #include "Modules/ModuleManager.h"
 #include "Widgets/Layout/SScrollBox.h"
-#include "LiveConfigGameSettings.h"
+#include "LiveConfigSettings.h"
 #include "LiveConfigJson.h"
 #include "LiveConfigSystem.h"
-#include "LiveConfigEditorSettings.h"
 #include "LiveConfigLib.h"
 #include "SLiveConfigCleanupUnusedPropertiesWidget.h"
 #include "Misc/MessageDialog.h"
@@ -181,31 +180,6 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 					+ SHorizontalBox::Slot()
 					.AutoWidth()
 					.Padding(5, 0, 0, 0)
-					[
-						SNew(SButton)
-						.ButtonStyle(FAppStyle::Get(), "SimpleButton")
-						.Text(LOCTEXT("CleanupUnusedProperties", "Cleanup Unused"))
-						.ToolTipText(LOCTEXT("CleanupUnusedPropertiesTooltip", "Find and remove properties that are not used in any assets or config files"))
-						.OnClicked_Lambda([this]()
-						{
-							OnCleanupUnusedProperties();
-							return FReply::Handled();
-						})
-					]
-					+ SHorizontalBox::Slot()
-					.AutoWidth()
-					.Padding(5, 0, 0, 0)
-					[
-						SNew(SButton)
-						.ButtonStyle(FAppStyle::Get(), "SimpleButton")
-						.Text(LOCTEXT("ManageRedirects", "Manage Redirects"))
-						.ToolTipText(LOCTEXT("ManageRedirectsTooltip", "View and clean up property redirects"))
-						.OnClicked_Lambda([this]()
-						{
-							OnManageRedirects();
-							return FReply::Handled();
-						})
-					]
 					+ SHorizontalBox::Slot()
 					.Padding(5, 0)
 					.FillWidth(1.0f)
@@ -1102,7 +1076,7 @@ void SLiveConfigPropertyManager::GetMissingTags(TArray<FName>& OutMissingTags)
 		}
 	}
 
-	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
+	ULiveConfigSettings* Settings = GetMutableDefault<ULiveConfigSettings>();
 
 	TSet<FName> PropertyTagsSet(ULiveConfigSystem::Get().PropertyTags);
 	for (const FName& PropertyTag : UsedTags)
@@ -1223,7 +1197,7 @@ void SLiveConfigPropertyManager::OnPropertyRowChanged(TSharedPtr<FLiveConfigProp
 		if (OldDef.IsValid() && IsValidPropertyName(OldDef->PropertyName))
 		{
 			// Check the redirect mode setting
-			const ULiveConfigEditorSettings* EditorSettings = GetDefault<ULiveConfigEditorSettings>();
+			const ULiveConfigSettings* EditorSettings = GetDefault<ULiveConfigSettings>();
 			bool bCreateRedirector = false;
 
 			switch (EditorSettings->RedirectMode)
@@ -1400,3 +1374,4 @@ void SLiveConfigPropertyManager::OnCleanupUnusedProperties()
 }
 
 #undef LOCTEXT_NAMESPACE
+

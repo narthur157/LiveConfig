@@ -4,9 +4,8 @@
 
 #include "Framework/Application/SlateApplication.h"
 #include "LiveConfigSystem.h"
-#include "LiveConfigEditorSettings.h"
 #include "PropertyManager/SLiveConfigNewPropertyDialog.h"
-#include "LiveConfigGameSettings.h"
+#include "LiveConfigSettings.h"
 #include "LiveConfigLib.h"
 #include "PropertyHandle.h"
 #include "Widgets/Input/SSearchBox.h"
@@ -449,3 +448,4 @@ SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyPicker);
 #undef LOCTEXT_NAMESPACE
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
+

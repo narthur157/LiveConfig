@@ -1,8 +1,8 @@
-﻿#include "LiveConfigJson.h"
+#include "LiveConfigJson.h"
 #include "LiveConfigSystem.h"
 #include "Profiles/LiveConfigProfileSystem.h"
 #include "Profiles/LiveConfigProfile.h"
-#include "LiveConfigGameSettings.h"
+#include "LiveConfigSettings.h"
 #include "Misc/AutomationTest.h"
 #include "Misc/Paths.h"
 #include "HAL/FileManager.h"
@@ -185,3 +185,4 @@ bool FLiveConfigProfileJsonTest::RunTest(const FString& Parameters)
 
 	return true;
 }
+

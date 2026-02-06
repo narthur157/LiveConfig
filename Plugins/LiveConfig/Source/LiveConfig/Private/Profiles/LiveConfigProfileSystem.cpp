@@ -1,10 +1,10 @@
-﻿#include "Profiles/LiveConfigProfileSystem.h"
+#include "Profiles/LiveConfigProfileSystem.h"
 #include "LiveConfigSystem.h"
 #include "Misc/Paths.h"
 #include "Misc/FileHelper.h"
 #include "HAL/FileManager.h"
 #include "JsonObjectConverter.h"
-#include "LiveConfigGameSettings.h"
+#include "LiveConfigSettings.h"
 #include "Dom/JsonObject.h"
 #include "Serialization/JsonWriter.h"
 #include "Serialization/JsonReader.h"
@@ -259,3 +259,4 @@ FString ULiveConfigProfileSystem::GetProfilePath(FName ProfileName)
 {
     return GetProfilesDirectory() / ProfileName.ToString() + TEXT(".json");
 }
+

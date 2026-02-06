@@ -2,8 +2,7 @@
 
 #include "Profiles/LiveConfigProfileSystem.h"
 #include "HttpModule.h"
-#include "LiveConfigEditorSettings.h"
-#include "LiveConfigGameSettings.h"
+#include "LiveConfigSettings.h"
 #include "Interfaces/IHttpResponse.h"
 #include "LiveConfigTypes.h"
 #include "Serialization/Csv/CsvParser.h"
@@ -67,7 +66,7 @@ void ULiveConfigSystem::Initialize(FSubsystemCollectionBase& Collection)
     Collection.InitializeDependency(ULiveConfigProfileSystem::StaticClass());
     Collection.InitializeDependency(ULiveConfigJsonSystem::StaticClass());
     
-    SheetUrl = GetDefault<ULiveConfigGameSettings>()->SheetUrl;
+    SheetUrl = GetDefault<ULiveConfigSettings>()->SheetUrl;
 
     UConsole::RegisterConsoleAutoCompleteEntries.AddUObject(this, &ThisClass::PopulateAutoCompleteEntries);
 
@@ -524,7 +523,7 @@ void ULiveConfigSystem::OnSheetDownloadComplete(FHttpRequestPtr Request, FHttpRe
         return;
     }
 
-    ULiveConfigGameSettings* GameSettings = GetMutableDefault<ULiveConfigGameSettings>();
+    ULiveConfigSettings* GameSettings = GetMutableDefault<ULiveConfigSettings>();
     if (!GameSettings)
     {
         return;
@@ -587,10 +586,10 @@ void ULiveConfigSystem::OnTravel(UWorld* World, FWorldInitializationValues World
 
 void ULiveConfigSystem::OnStartGameInstance(UGameInstance* GameInstance)
 {
-    float PollingRate = ULiveConfigGameSettings::StaticClass()->GetDefaultObject<ULiveConfigGameSettings>()->PollingRate;
+    float PollingRate = ULiveConfigSettings::StaticClass()->GetDefaultObject<ULiveConfigSettings>()->PollingRate;
     
 #if WITH_EDITOR
-    PollingRate = ULiveConfigEditorSettings::StaticClass()->GetDefaultObject<ULiveConfigEditorSettings>()->EditorPollRateMinutes * 60;
+    PollingRate = ULiveConfigSettings::StaticClass()->GetDefaultObject<ULiveConfigSettings>()->EditorPollRateMinutes * 60;
 #endif
     
     GameInstance->GetTimerManager().SetTimer(PollingTimer, FTimerDelegate::CreateWeakLambda(this, [&]
@@ -717,3 +716,4 @@ void ULiveConfigSystem::PopulateAutoCompleteEntries(TArray<FAutoCompleteCommand>
         Entries.Add(Command);
     }
 }
+

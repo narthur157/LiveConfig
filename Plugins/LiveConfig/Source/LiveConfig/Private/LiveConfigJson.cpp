@@ -1,8 +1,8 @@
-﻿// All rights reserved - Genpop
+// All rights reserved - Genpop
 
 #include "LiveConfigJson.h"
 #include "LiveConfigSystem.h"
-#include "LiveConfigGameSettings.h"
+#include "LiveConfigSettings.h"
 #include "Dom/JsonObject.h"
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
@@ -110,7 +110,7 @@ void ULiveConfigJsonSystem::LoadJsonFromFile(const FString& Path, const FString&
 
 void ULiveConfigJsonSystem::VerifyJsonIntegrity()
 {
-	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
+	ULiveConfigSettings* Settings = GetMutableDefault<ULiveConfigSettings>();
 	if (!Settings)
 	{
 		return;
@@ -355,3 +355,4 @@ FString ULiveConfigJsonSystem::GetLiveConfigDirectory()
 {
 	return FPaths::ProjectConfigDir() / TEXT("LiveConfig");
 }
+

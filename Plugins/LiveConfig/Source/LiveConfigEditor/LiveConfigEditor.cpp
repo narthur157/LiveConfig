@@ -7,9 +7,10 @@
 #include "LiveConfigPropertyPinFactory.h"
 #include "LiveConfigTypes.h"
 #include "LiveConfigBlueprintExtensions.h"
+#include "LiveConfigSettingsCustomization.h"
 #include "GraphEditorModule.h"
 #include "PropertyManager/SLiveConfigPropertyManager.h"
-#include "LiveConfigGameSettings.h"
+#include "LiveConfigSettings.h"
 #include "Widgets/Docking/SDockTab.h"
 #include "Logging/MessageLog.h"
 #include "Logging/TokenizedMessage.h"
@@ -32,6 +33,10 @@ void FLiveConfigEditorModule::StartupModule()
 	PropertyModule.RegisterCustomPropertyTypeLayout(
 		FLiveConfigProperty::StaticStruct()->GetFName(),
 		FOnGetPropertyTypeCustomizationInstance::CreateStatic(&FLiveConfigPropertyCustomization::MakeInstance)
+	);
+	PropertyModule.RegisterCustomClassLayout(
+		ULiveConfigSettings::StaticClass()->GetFName(),
+		FOnGetDetailCustomizationInstance::CreateStatic(&FLiveConfigSettingsCustomization::MakeInstance)
 	);
 
 	auto PropertyPinFactory = MakeShareable(new FLiveConfigPropertyPinFactory());
@@ -103,6 +108,7 @@ void FLiveConfigEditorModule::ShutdownModule()
 	FPropertyEditorModule& PropertyModule = FModuleManager::GetModuleChecked<FPropertyEditorModule>("PropertyEditor");
 	PropertyModule.UnregisterCustomPropertyTypeLayout(FLiveConfigPropertyDefinition::StaticStruct()->GetFName());
 	PropertyModule.UnregisterCustomPropertyTypeLayout(FLiveConfigProperty::StaticStruct()->GetFName());
+	PropertyModule.UnregisterCustomClassLayout(ULiveConfigSettings::StaticClass()->GetFName());
 }
 
 void FLiveConfigEditorModule::OpenPropertyManager(FLiveConfigProperty FocusProperty)

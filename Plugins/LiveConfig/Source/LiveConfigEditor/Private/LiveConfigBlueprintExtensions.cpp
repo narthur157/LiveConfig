@@ -2,8 +2,7 @@
 #include "K2Node_CallFunction.h"
 #include "K2Node_LiveConfigLookup.h"
 #include "LiveConfigLib.h"
-#include "LiveConfigEditorSettings.h"
-#include "LiveConfigGameSettings.h"
+#include "LiveConfigSettings.h"
 #include "LiveConfigSystem.h"
 #include "EdGraph/EdGraph.h"
 #include "EdGraph/EdGraphPin.h"
@@ -273,3 +272,4 @@ FName FLiveConfigBlueprintExtensions::GetPinTypeName(const UEdGraphPin* Pin)
 }
 
 #undef LOCTEXT_NAMESPACE
+

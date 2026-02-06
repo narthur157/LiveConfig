@@ -1,6 +1,6 @@
-﻿#include "SLiveConfigTagPicker.h"
+#include "SLiveConfigTagPicker.h"
 
-#include "LiveConfigGameSettings.h"
+#include "LiveConfigSettings.h"
 #include "LiveConfigSystem.h"
 #include "SLiveConfigNewTagDialog.h"
 #include "Widgets/Layout/SBox.h"
@@ -95,3 +95,4 @@ void SLiveConfigTagPicker::ShowNewTagDialog()
 }
 
 #undef LOCTEXT_NAMESPACE
+

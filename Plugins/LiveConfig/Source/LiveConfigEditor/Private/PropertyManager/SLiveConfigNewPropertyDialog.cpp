@@ -1,6 +1,6 @@
-﻿#include "SLiveConfigNewPropertyDialog.h"
+#include "SLiveConfigNewPropertyDialog.h"
 
-#include "LiveConfigGameSettings.h"
+#include "LiveConfigSettings.h"
 #include "SLiveConfigTagPicker.h"
 #include "SLiveConfigTagRow.h"
 #include "PropertyManager/SLiveConfigPropertyValueWidget.h"
@@ -390,3 +390,4 @@ void SLiveConfigNewPropertyDialog::RefreshTags()
 }
 
 #undef LOCTEXT_NAMESPACE
+

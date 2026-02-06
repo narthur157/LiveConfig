@@ -1,5 +1,5 @@
-﻿#include "LiveConfigSystem.h"
-#include "LiveConfigGameSettings.h"
+#include "LiveConfigSystem.h"
+#include "LiveConfigSettings.h"
 #include "LiveConfigJson.h"
 #include "Misc/AutomationTest.h"
 
@@ -300,3 +300,4 @@ bool FLiveConfigRenameTest::RunTest(const FString& Parameters)
 
 	return true;
 }
+

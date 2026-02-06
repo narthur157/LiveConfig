@@ -5,13 +5,6 @@
 #include "PropertyManager/SLiveConfigPropertyValueWidget.h"
 #include "Editor.h"
 #include "LiveConfigSystem.h"
-
-SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyRow);
-
-SLiveConfigPropertyRow::SLiveConfigPropertyRow()
-{
-}
-
 #include "Widgets/Views/STableViewBase.h"
 #include "Widgets/Text/STextBlock.h"
 #include "Widgets/Layout/SBox.h"
@@ -20,18 +13,15 @@ SLiveConfigPropertyRow::SLiveConfigPropertyRow()
 #include "Widgets/Input/SCheckBox.h"
 #include "Widgets/Input/SComboBox.h"
 #include "Widgets/Input/SComboButton.h"
-#include "Widgets/Layout/SWrapBox.h"
-#include "Widgets/Layout/SWidgetSwitcher.h"
 #include "Framework/MultiBox/MultiBoxBuilder.h"
 #include "Widgets/Layout/SScrollBox.h"
-#include "Styling/SlateStyleMacros.h"
 #include "Widgets/SWindow.h"
 #include "Framework/Application/SlateApplication.h"
 #include "Widgets/Text/SMultiLineEditableText.h"
-#include "Misc/ComparisonUtility.h"
-#include "StructViewerModule.h"
 
 #define LOCTEXT_NAMESPACE "SLiveConfigPropertyManager"
+
+SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyRow);
 
 const FName SLiveConfigPropertyRow::ColumnNames::Name("Name");
 const FName SLiveConfigPropertyRow::ColumnNames::Description("Description");
@@ -39,6 +29,10 @@ const FName SLiveConfigPropertyRow::ColumnNames::Type("Type");
 const FName SLiveConfigPropertyRow::ColumnNames::Value("Value");
 const FName SLiveConfigPropertyRow::ColumnNames::Tags("Tags");
 const FName SLiveConfigPropertyRow::ColumnNames::Actions("Actions");
+
+SLiveConfigPropertyRow::SLiveConfigPropertyRow()
+{
+}
 
 // ReSharper disable once CppPassValueParameterByConstReference
 void SLiveConfigPropertyRow::Construct(const FArguments& InArgs, const TSharedRef<STableViewBase>& InOwnerTable, TSharedPtr<FLiveConfigPropertyTreeNode>

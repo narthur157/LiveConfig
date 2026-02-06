@@ -1,7 +1,7 @@
-﻿#include "Profiles/LiveConfigProfileReplicationSystem.h"
+#include "Profiles/LiveConfigProfileReplicationSystem.h"
 #include "Profiles/LiveConfigProfileActor.h"
 #include "Profiles/LiveConfigPlayerControllerComponent.h"
-#include "LiveConfigGameSettings.h"
+#include "LiveConfigSettings.h"
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
 #include "Profiles/LiveConfigProfileSystem.h"
@@ -58,7 +58,7 @@ void ULiveConfigProfileReplicationSystem::OnWorldBeginPlay(UWorld& InWorld)
         return;
     }
 
-    const ULiveConfigGameSettings* Settings = GetDefault<ULiveConfigGameSettings>();
+    const ULiveConfigSettings* Settings = GetDefault<ULiveConfigSettings>();
     if (Settings && Settings->bEnableProfileReplication)
     {
         TSubclassOf<ALiveConfigProfileActor> ActorClass = ALiveConfigProfileActor::StaticClass();
@@ -113,3 +113,4 @@ bool ULiveConfigProfileReplicationSystem::ReplicateProfileData(const FLiveConfig
     Actor->ServerSetActiveProfileData(Profile);
     return true;
 }
+

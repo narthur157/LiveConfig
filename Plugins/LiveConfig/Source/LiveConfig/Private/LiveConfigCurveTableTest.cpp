@@ -1,7 +1,7 @@
-﻿#include "LiveConfigCurveTableUpdater.h"
+#include "LiveConfigCurveTableUpdater.h"
 #include "LiveConfigSystem.h"
 #include "LiveConfigTypes.h"
-#include "LiveConfigGameSettings.h"
+#include "LiveConfigSettings.h"
 #include "Engine/CurveTable.h"
 #include "Misc/AutomationTest.h"
 #include "UObject/Package.h"
@@ -11,7 +11,7 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FLiveConfigCurveTableTest, "LiveConfig.CurveTab
 bool FLiveConfigCurveTableTest::RunTest(const FString& Parameters)
 {
 	ULiveConfigCurveTableUpdater* Updater = NewObject<ULiveConfigCurveTableUpdater>();
-	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
+	ULiveConfigSettings* Settings = GetMutableDefault<ULiveConfigSettings>();
 	ULiveConfigSystem& System = ULiveConfigSystem::Get();
 
 	// Backup original settings
@@ -119,3 +119,4 @@ bool FLiveConfigCurveTableTest::RunTest(const FString& Parameters)
 
 	return true;
 }
+

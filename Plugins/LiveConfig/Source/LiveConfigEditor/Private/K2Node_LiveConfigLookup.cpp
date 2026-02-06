@@ -1,6 +1,6 @@
-﻿#include "K2Node_LiveConfigLookup.h"
+#include "K2Node_LiveConfigLookup.h"
 #include "LiveConfigLib.h"
-#include "LiveConfigGameSettings.h"
+#include "LiveConfigSettings.h"
 #include "EdGraphSchema_K2.h"
 #include "KismetCompiler.h"
 #include "K2Node_CallFunction.h"
@@ -478,3 +478,4 @@ void UK2Node_LiveConfigLookup::ValidateNodeDuringCompilation(FCompilerResultsLog
 }
 
 #undef LOCTEXT_NAMESPACE
+
