@@ -32,6 +32,39 @@ FLiveConfigProperty ULiveConfigLib::MakeLiteralLiveConfigProperty(FLiveConfigPro
 	return Property;
 }
 
+FSlateColor ULiveConfigLib::GetTagColor(FName InTag)
+{
+	if (InTag.IsNone())
+	{
+		return FSlateColor(FLinearColor::Gray);
+	}
+
+	uint32 Hash = GetTypeHash(InTag.ToString());
+	
+	// Generate a color from hash
+	float Hue = (Hash % 360);
+	float Saturation = 0.8f;
+	float Value = 0.6f;
+
+	// Simple HSV to RGB
+	auto HSVtoRGB = [](float h, float s, float v) -> FLinearColor
+	{
+		float c = v * s;
+		float x = c * (1.0f - FMath::Abs(FMath::Fmod(h / 60.0f, 2.0f) - 1.0f));
+		float m = v - c;
+		float r, g, b;
+		if (h < 60) { r = c; g = x; b = 0; }
+		else if (h < 120) { r = x; g = c; b = 0; }
+		else if (h < 180) { r = 0; g = c; b = x; }
+		else if (h < 240) { r = 0; g = x; b = c; }
+		else if (h < 300) { r = x; g = 0; b = c; }
+		else { r = c; g = 0; b = x; }
+		return FLinearColor(r + m, g + m, b + m, 1.0f);
+	};
+
+	return FSlateColor(HSVtoRGB(Hue, Saturation, Value));
+}
+
 bool ULiveConfigLib::GetBoolValue(FLiveConfigProperty Property)
 {
 	return ULiveConfigSystem::Get().GetBoolValue(Property);

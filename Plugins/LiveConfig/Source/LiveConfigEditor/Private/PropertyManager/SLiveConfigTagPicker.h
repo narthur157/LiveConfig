@@ -16,8 +16,8 @@ public:
 		: _TagVisibilityFilter()
 	{}
 		SLATE_EVENT(FOnTagSelected, OnTagSelected)
-		SLATE_EVENT(FSimpleDelegate, OnAddNewTag)
-		SLATE_ATTRIBUTE(TArray<FName>, KnownTags)
+		SLATE_EVENT(FOnTagSelected, OnAddNewTag)
+		SLATE_ATTRIBUTE(TArray<FName>, TagOptions)
 		SLATE_ARGUMENT(TFunction<bool(FName)>, TagVisibilityFilter)
 	SLATE_END_ARGS()
 
@@ -25,9 +25,10 @@ public:
 
 private:
 	TSharedRef<SWidget> GenerateMenuContent();
+	void ShowNewTagDialog();
 
 	FOnTagSelected OnTagSelected;
-	FSimpleDelegate OnAddNewTag;
-	TSlateAttribute<TArray<FName>> KnownTagsAttribute;
+	FOnTagSelected OnAddNewTag;
+	TSlateAttribute<TArray<FName>> TagOptionsAttribute;
 	TFunction<bool(FName)> TagVisibilityFilter;
 };

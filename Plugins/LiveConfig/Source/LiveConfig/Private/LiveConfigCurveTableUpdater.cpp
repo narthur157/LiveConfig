@@ -59,9 +59,11 @@ void ULiveConfigCurveTableUpdater::ImportFromCurveTables()
 		bool bSettingsChanged = false;
 
 		// Add the table tag to known tags if it's missing
-		if (!Settings->KnownTags.Contains(TableTag))
+		ULiveConfigSystem& System = ULiveConfigSystem::Get();
+		if (!System.PropertyTags.Contains(TableTag))
 		{
-			Settings->KnownTags.Add(TableTag);
+			System.PropertyTags.Add(TableTag);
+			System.HandleTagsChanged();
 			bSettingsChanged = true;
 		}
 

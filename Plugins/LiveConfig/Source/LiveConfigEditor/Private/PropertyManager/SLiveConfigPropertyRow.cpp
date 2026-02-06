@@ -9,7 +9,6 @@
 SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyRow);
 
 SLiveConfigPropertyRow::SLiveConfigPropertyRow()
-	: KnownTagsAttribute(*this)
 {
 }
 
@@ -57,8 +56,6 @@ void SLiveConfigPropertyRow::Construct(const FArguments& InArgs, const TSharedRe
 	OnNavigateValue = InArgs._OnNavigateValue;
 	OnRequestScroll = InArgs._OnRequestScroll;
 	OnAddNewTag = InArgs._OnAddNewTag;
-	GetTagColor = InArgs._GetTagColor;
-	KnownTagsAttribute.Assign(*this, InArgs._KnownTags);
 	
 	SMultiColumnTableRow<TSharedRef<FLiveConfigPropertyTreeNode>>::Construct(
 		SPropertyRowParent::FArguments()
@@ -219,7 +216,6 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateActionsColumnWidget()
  				.OnGetMenuContent_Lambda([this]()
  				{
  					return SNew(SLiveConfigTagPicker)
- 						.KnownTags(KnownTagsAttribute.Get())
  						.OnTagSelected_Lambda([this](FName InTag)
  						{
  							OnBulkTagFolder.ExecuteIfBound(Item->FullPath, InTag);
@@ -273,7 +269,6 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateActionsColumnWidget()
 				.OnGetMenuContent_Lambda([this]()
 				{
 					return SNew(SLiveConfigTagPicker)
-						.KnownTags(KnownTagsAttribute.Get())
 						.TagVisibilityFilter([this](FName InTag)
 						{
 							return !Item->PropertyDefinition->Tags.Contains(InTag);
@@ -283,7 +278,7 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateActionsColumnWidget()
 							Item->PropertyDefinition->Tags.Add(InTag);
 							OnTagChanged();
 						})
-						.OnAddNewTag_Lambda([this]()
+						.OnAddNewTag_Lambda([this](FName NewTag)
 						{
 							OnAddNewTag.ExecuteIfBound();
 						});
@@ -867,7 +862,7 @@ void SLiveConfigPropertyRow::RefreshTags()
 			TagScrollBox->AddSlot()
 			.Padding(2.0f)
 			[
-				SNew(SLiveConfigTagRow, Item->PropertyDefinition, i, FSimpleDelegate::CreateSP(this, &SLiveConfigPropertyRow::OnTagChanged), GetTagColor, IsReadOnly())
+				SNew(SLiveConfigTagRow, Item->PropertyDefinition, i, FSimpleDelegate::CreateSP(this, &SLiveConfigPropertyRow::OnTagChanged), IsReadOnly())
 			];
 		}
 	}

@@ -105,6 +105,7 @@ void SLiveConfigPropertyValueWidget::Construct(const FArguments& InArgs)
 	PropertyTypeAttribute = InArgs._PropertyType;
 	bReadOnlyAttribute = InArgs._bReadOnly;
 	OnValueChanged = InArgs._OnValueChanged;
+	OnEnter = InArgs._OnEnter;
 
 	ChildSlot
 	[
@@ -257,6 +258,11 @@ void SLiveConfigPropertyValueWidget::ValueTextCommitted(const FText& NewText, ET
 	}
 	
 	OnValueChanged.ExecuteIfBound(NewVal);
+
+	if (CommitType == ETextCommit::OnEnter)
+	{
+		OnEnter.ExecuteIfBound();
+	}
 }
 
 #undef LOCTEXT_NAMESPACE

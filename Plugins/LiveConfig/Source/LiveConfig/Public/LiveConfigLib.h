@@ -34,6 +34,8 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Live Config")
 	static FLiveConfigProperty MakeLiteralLiveConfigProperty(FLiveConfigProperty Property);
+	
+	static FSlateColor GetTagColor(FName InTag);
 private:	
 	UFUNCTION(BlueprintPure, Category = "Live Config", BlueprintInternalUseOnly)
 	static bool GetBoolValue(FLiveConfigProperty Property);

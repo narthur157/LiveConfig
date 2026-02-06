@@ -25,18 +25,19 @@ class SLiveConfigPropertyManager : public SCompoundWidget
 public:
 	SLATE_BEGIN_ARGS(SLiveConfigPropertyManager)
 	{}
-	SLATE_END_ARGS()
+	SLATE_END_ARGS();
 
 	SLiveConfigPropertyManager();
 
 	void Construct(const FArguments& InArgs);
+	virtual bool SupportsKeyboardFocus() const override { return true; }
+	virtual FReply OnKeyDown(const FGeometry& MyGeometry, const FKeyEvent& InKeyEvent) override;
 	virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
 	void RemoveProperty(TSharedPtr<FLiveConfigPropertyDefinition> InItem);
 	void RemoveTag(FName TagName);
 	void ScrollToProperty(FLiveConfigProperty Property);
 	bool IsNameDuplicate(FName Name) const;
 
-	static void SaveKnownTags(const TArray<FName>& InKnownTags);
 	static void GetMissingTags(TArray<FName>& OutMissingTags);
 
 private:
@@ -45,14 +46,12 @@ private:
 	void RefreshList();
 	void OnAddNewProperty();
 	void OnAddPropertyAtFolder(FString FolderPath);
-	void OnAddNewTag();
+	void OnAddNewTag(FName NewTag);
 	void OnFilterTextChanged(const FText& InFilterText);
-	void UpdateAllTags();
+	void RefreshTags();
 	void OnTagFilterSelected(FName InTag);
 	int32 GetTagCount(FName InTag) const;
-	FSlateColor GetTagColor(FName InTag) const;
 	void OnPropertyRowChanged(TSharedPtr<FLiveConfigPropertyDefinition> OldDef, TSharedPtr<FLiveConfigPropertyDefinition> NewDef, ELiveConfigPropertyChangeType ChangeType);
-	void SaveKnownTags();
 	void GetFlatVisibleProperties(TArray<TSharedRef<FLiveConfigPropertyTreeNode>>& OutFlatList) const;
 	void NavigateToProperty(TSharedPtr<FLiveConfigPropertyTreeNode> CurrentItem, int32 Direction);
 	void OnContextMenuOpening(FMenuBuilder& MenuBuilder);
@@ -66,8 +65,6 @@ private:
 
 	TArray<TSharedPtr<FLiveConfigPropertyDefinition>> RawPropertyList;
 	TArray<TSharedRef<FLiveConfigPropertyTreeNode>> RootNodes;
-	TArray<FName> AllTags;
-	TArray<FName> KnownTags;
 	FName SelectedTag;
 	TSharedPtr<STreeView<TSharedRef<FLiveConfigPropertyTreeNode>>> PropertyTreeView;
 	TSharedPtr<SSearchBox> SearchBox;

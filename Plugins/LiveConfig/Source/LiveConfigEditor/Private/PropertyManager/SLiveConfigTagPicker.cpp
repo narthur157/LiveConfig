@@ -1,4 +1,8 @@
 ﻿#include "SLiveConfigTagPicker.h"
+
+#include "LiveConfigGameSettings.h"
+#include "LiveConfigSystem.h"
+#include "SLiveConfigNewTagDialog.h"
 #include "Widgets/Layout/SBox.h"
 #include "Widgets/Text/STextBlock.h"
 
@@ -7,20 +11,20 @@
 SLATE_IMPLEMENT_WIDGET(SLiveConfigTagPicker);
 
 SLiveConfigTagPicker::SLiveConfigTagPicker()
-	: KnownTagsAttribute(*this)
+	: TagOptionsAttribute(*this)
 {
 }
 
 void SLiveConfigTagPicker::PrivateRegisterAttributes(FSlateAttributeInitializer& AttributeInitializer)
 {
-	SLATE_ADD_MEMBER_ATTRIBUTE_DEFINITION_WITH_NAME(AttributeInitializer, "KnownTags", KnownTagsAttribute, EInvalidateWidgetReason::Layout);
+	SLATE_ADD_MEMBER_ATTRIBUTE_DEFINITION_WITH_NAME(AttributeInitializer, "TagOptions", TagOptionsAttribute, EInvalidateWidgetReason::Layout);
 }
 
 void SLiveConfigTagPicker::Construct(const FArguments& InArgs)
 {
 	OnTagSelected = InArgs._OnTagSelected;
 	OnAddNewTag = InArgs._OnAddNewTag;
-	KnownTagsAttribute.Assign(*this, InArgs._KnownTags);
+	TagOptionsAttribute.Assign(*this, InArgs._TagOptions);
 	TagVisibilityFilter = InArgs._TagVisibilityFilter;
 
 	ChildSlot
@@ -33,7 +37,8 @@ TSharedRef<SWidget> SLiveConfigTagPicker::GenerateMenuContent()
 {
 	FMenuBuilder MenuBuilder(true, nullptr);
 
-	TArray<FName> AvailableTags = KnownTagsAttribute.Get();
+	TArray<FName> AvailableTags = TagOptionsAttribute.IsBound(*this) ? TagOptionsAttribute.Get() : ULiveConfigSystem::Get().PropertyTags;
+	
 	AvailableTags.Sort([](const FName& A, const FName& B) { return A.Compare(B) < 0; });
 
 	bool bAnyTagsVisible = false;
@@ -48,8 +53,6 @@ TSharedRef<SWidget> SLiveConfigTagPicker::GenerateMenuContent()
 				FUIAction(FExecuteAction::CreateLambda([this, AvailableTag]()
 				{
 					OnTagSelected.ExecuteIfBound(AvailableTag);
-					// Note: Since this widget is typically hosted in a SComboButton or Menu, 
-					// the menu will close automatically upon selection.
 				}))
 			);
 			bAnyTagsVisible = true;
@@ -59,7 +62,7 @@ TSharedRef<SWidget> SLiveConfigTagPicker::GenerateMenuContent()
 	if (!bAnyTagsVisible)
 	{
 		MenuBuilder.AddMenuEntry(
-			LOCTEXT("NoTagsAvailable", "No more tags available"),
+			LOCTEXT("NoTagsAvailable", "No tags available"),
 			FText::GetEmpty(),
 			FSlateIcon(),
 			FUIAction(),
@@ -68,21 +71,27 @@ TSharedRef<SWidget> SLiveConfigTagPicker::GenerateMenuContent()
 		);
 	}
 
-	if (OnAddNewTag.IsBound())
-	{
-		MenuBuilder.AddMenuSeparator();
-		MenuBuilder.AddMenuEntry(
-			LOCTEXT("AddNewTagMenu", "Add New Tag..."),
-			FText::GetEmpty(),
-			FSlateIcon(FAppStyle::GetAppStyleSetName(), "Icons.Plus"),
-			FUIAction(FExecuteAction::CreateLambda([this]()
-			{
-				OnAddNewTag.ExecuteIfBound();
-			}))
-		);
-	}
+	MenuBuilder.AddMenuSeparator();
+	MenuBuilder.AddMenuEntry(
+		LOCTEXT("AddNewTagMenu", "Add New Tag..."),
+		FText::GetEmpty(),
+		FSlateIcon(FAppStyle::GetAppStyleSetName(), "Icons.Plus"),
+		FUIAction(FExecuteAction::CreateLambda([this]()
+		{
+			ShowNewTagDialog();
+		}))
+	);
 
 	return MenuBuilder.MakeWidget();
+}
+
+void SLiveConfigTagPicker::ShowNewTagDialog()
+{
+	SLiveConfigNewTagDialog::OpenDialog(FOnTagCreated::CreateLambda([this](FName NewTag)
+	{
+		OnAddNewTag.ExecuteIfBound(NewTag);
+		OnTagSelected.ExecuteIfBound(NewTag);
+	}));
 }
 
 #undef LOCTEXT_NAMESPACE

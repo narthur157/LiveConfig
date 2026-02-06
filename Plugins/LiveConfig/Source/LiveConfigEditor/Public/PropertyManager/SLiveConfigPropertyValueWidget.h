@@ -37,6 +37,7 @@ public:
 		SLATE_ATTRIBUTE(ELiveConfigPropertyType, PropertyType);
 		SLATE_ATTRIBUTE(bool, bReadOnly);
 		SLATE_EVENT(FOnValueChanged, OnValueChanged);
+		SLATE_EVENT(FSimpleDelegate, OnEnter);
 	SLATE_END_ARGS();
 
 	void Construct(const FArguments& InArgs);
@@ -53,6 +54,7 @@ private:
 	TAttribute<ELiveConfigPropertyType> PropertyTypeAttribute;
 	TAttribute<bool> bReadOnlyAttribute;
 	FOnValueChanged OnValueChanged;
+	FSimpleDelegate OnEnter;
 
 	TSharedPtr<class SEditableTextBox> ValueTextBox;
 	TSharedPtr<class SCheckBox> ValueCheckBox;

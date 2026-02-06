@@ -49,8 +49,6 @@ void FLiveConfigEditorModule::StartupModule()
 	RegisterTabSpawners();
 
 	UToolMenus::RegisterStartupCallback(FSimpleMulticastDelegate::FDelegate::CreateRaw(this, &FLiveConfigEditorModule::RegisterMenus));
-
-	CheckForMissingTags();
 }
 
 void FLiveConfigEditorModule::CheckForMissingTags()
@@ -81,18 +79,17 @@ void FLiveConfigEditorModule::CheckForMissingTags()
 
 void FLiveConfigEditorModule::FixMissingTags(TArray<FName> MissingTags)
 {
-	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
-	if (Settings)
+	ULiveConfigSystem& System = ULiveConfigSystem::Get();
+	TArray<FName> NewPropertyTags = System.PropertyTags;
+	for (const FName& Tag : MissingTags)
 	{
-		TArray<FName> NewKnownTags = Settings->KnownTags;
-		for (const FName& Tag : MissingTags)
-		{
-			NewKnownTags.AddUnique(Tag);
-		}
-		SLiveConfigPropertyManager::SaveKnownTags(NewKnownTags);
-		
-		FMessageLog("LiveConfig").Info(LOCTEXT("MissingTagsFixed", "Successfully imported missing tags."));
+		NewPropertyTags.AddUnique(Tag);
 	}
+	
+	System.PropertyTags = NewPropertyTags;	
+	System.HandleTagsChanged();
+		
+	FMessageLog("LiveConfig").Info(LOCTEXT("MissingTagsFixed", "Successfully imported missing tags."));
 }
 
 void FLiveConfigEditorModule::ShutdownModule()
@@ -137,6 +134,14 @@ void FLiveConfigEditorModule::UnregisterTabSpawners()
 
 TSharedRef<SDockTab> FLiveConfigEditorModule::SpawnPropertyManagerTab(const FSpawnTabArgs& Args)
 {
+	static bool bChecked = false;
+	// just check once ever
+	if (!bChecked)
+	{
+		CheckForMissingTags();
+		bChecked = true;
+	}
+
 	TSharedRef<SLiveConfigPropertyManager> Manager = SNew(SLiveConfigPropertyManager);
 	if (PropertyToFocus.IsValid())
 	{

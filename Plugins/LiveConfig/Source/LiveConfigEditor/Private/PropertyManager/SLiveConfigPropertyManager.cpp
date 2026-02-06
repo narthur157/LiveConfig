@@ -2,6 +2,8 @@
 #include "SLiveConfigPropertyRow.h"
 #include "SLiveConfigTagRow.h"
 #include "SLiveConfigTagPicker.h"
+#include "SLiveConfigNewTagDialog.h"
+#include "SLiveConfigNewPropertyDialog.h"
 #include "SLiveConfigRedirectManager.h"
 #include "Widgets/Text/STextBlock.h"
 #include "Widgets/Layout/SBox.h"
@@ -20,6 +22,7 @@
 #include "LiveConfigJson.h"
 #include "LiveConfigSystem.h"
 #include "LiveConfigEditorSettings.h"
+#include "LiveConfigLib.h"
 #include "SLiveConfigCleanupUnusedPropertiesWidget.h"
 #include "Misc/MessageDialog.h"
 #include "Misc/ComparisonUtility.h"
@@ -42,6 +45,7 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 	ULiveConfigSystem& System = ULiveConfigSystem::Get();
 	{
 		System.OnPropertiesUpdated.AddSP(this, &SLiveConfigPropertyManager::RefreshList);
+		System.OnTagsChanged.AddSP(this, &SLiveConfigPropertyManager::RefreshTags);
 	}
 
 	ChildSlot
@@ -94,7 +98,7 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 							.HAlign(HAlign_Center)
 							.OnClicked_Lambda([this]()
 							{
-								OnAddNewTag();
+								SLiveConfigNewTagDialog::OpenDialog(FOnTagCreated::CreateSP(this, &SLiveConfigPropertyManager::OnAddNewTag));
 								return FReply::Handled();
 							})
 							[
@@ -167,7 +171,7 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 					[
 						SNew(SButton)
 						.ButtonStyle(FAppStyle::Get(), "PrimaryButton")
-						.Text(LOCTEXT("AddProperty", "+ Add Property"))
+						.Text(LOCTEXT("AddProperty", "+ Add Property [A]"))
 						.OnClicked_Lambda([this]()
 						{
 							OnAddNewProperty();
@@ -271,6 +275,25 @@ void SLiveConfigPropertyManager::Tick(const FGeometry& AllottedGeometry, const d
 	}
 }
 
+FReply SLiveConfigPropertyManager::OnKeyDown(const FGeometry& MyGeometry, const FKeyEvent& InKeyEvent)
+{
+	if (InKeyEvent.GetModifierKeys().IsControlDown() && InKeyEvent.GetKey() == EKeys::F)
+	{
+		if (SearchBox.IsValid())
+		{
+			FSlateApplication::Get().SetKeyboardFocus(SearchBox.ToSharedRef(), EFocusCause::SetDirectly);
+			return FReply::Handled();
+		}
+	}
+	else if (InKeyEvent.GetKey() == EKeys::A)
+	{
+		OnAddNewProperty();
+		return FReply::Handled();
+	}
+
+	return SCompoundWidget::OnKeyDown(MyGeometry, InKeyEvent);
+}
+
 TSharedRef<ITableRow> SLiveConfigPropertyManager::OnGenerateRow(TSharedRef<FLiveConfigPropertyTreeNode> InItem, const TSharedRef<STableViewBase>& OwnerTable)
 {
 	return SNew(SLiveConfigPropertyRow, OwnerTable, InItem, 0)
@@ -354,10 +377,7 @@ TSharedRef<ITableRow> SLiveConfigPropertyManager::OnGenerateRow(TSharedRef<FLive
 		.OnRequestScroll_Lambda([this](FLiveConfigProperty Property)
 		{
 			PendingScrollProperty = Property;
-		})
-		.OnAddNewTag(this, &SLiveConfigPropertyManager::OnAddNewTag)
-		.GetTagColor(TFunction<FSlateColor(FName)>([this](FName InTag) { return GetTagColor(InTag); }))
-		.KnownTags_Lambda([this]() { return KnownTags; });
+		});
 }
 
 void SLiveConfigPropertyManager::OnGetChildren(TSharedRef<FLiveConfigPropertyTreeNode> InItem, TArray<TSharedRef<FLiveConfigPropertyTreeNode>>& OutChildren)
@@ -374,15 +394,12 @@ void SLiveConfigPropertyManager::RefreshList()
 		RawPropertyList.Add(MakeShared<FLiveConfigPropertyDefinition>(Pair.Value));
 	}
 
-	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
-	KnownTags = Settings->KnownTags;
-
 	RawPropertyList.Sort([](const TSharedPtr<FLiveConfigPropertyDefinition>& A, const TSharedPtr<FLiveConfigPropertyDefinition>& B)
 	{
 		return UE::ComparisonUtility::CompareNaturalOrder(A->PropertyName.ToString(), B->PropertyName.ToString()) < 0;
 	});
 	
-	UpdateAllTags();
+	RefreshTags();
 	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
 }
 
@@ -607,7 +624,7 @@ void SLiveConfigPropertyManager::OnFilterTextChanged(const FText& InFilterText)
 	}
 }
 
-void SLiveConfigPropertyManager::UpdateAllTags()
+void SLiveConfigPropertyManager::RefreshTags()
 {
 	if (TagFilterBox.IsValid())
 	{
@@ -645,7 +662,7 @@ void SLiveConfigPropertyManager::UpdateAllTags()
 							.BorderImage(FAppStyle::GetBrush("WhiteBrush"))
 							.BorderBackgroundColor_Lambda([this, TagName]()
 							{
-								return TagName.IsNone() ? FLinearColor::Transparent : GetTagColor(TagName).GetSpecifiedColor();
+								return TagName.IsNone() ? FLinearColor::Transparent : ULiveConfigLib::GetTagColor(TagName).GetSpecifiedColor();
 							})
 							[
 								SNew(SBox)
@@ -675,7 +692,7 @@ void SLiveConfigPropertyManager::UpdateAllTags()
 			CreateTagWidget(NAME_None, LOCTEXT("AllTagsFilter", "All"), true)
 		];
 
-		for (const FName& PropertyTag : KnownTags)
+		for (const FName& PropertyTag : ULiveConfigSystem::Get().PropertyTags)
 		{
 			TagFilterBox->AddSlot()
 			.Padding(0, 2)
@@ -701,71 +718,8 @@ int32 SLiveConfigPropertyManager::GetTagCount(FName InTag) const
 	return Count;
 }
 
-void SLiveConfigPropertyManager::OnAddNewTag()
+void SLiveConfigPropertyManager::OnAddNewTag(FName NewTag)
 {
-	TSharedPtr<SEditableTextBox> TagNameTextBox;
-
-	SAssignNew(NewTagWindow, SWindow)
-		.Title(LOCTEXT("CreateNewTagTitle", "Create New Tag"))
-		.ClientSize(FVector2D(300, 100))
-		.SupportsMinimize(false)
-		.SupportsMaximize(false)
-		[
-			SNew(SVerticalBox)
-			+ SVerticalBox::Slot()
-			.Padding(10)
-			.AutoHeight()
-			[
-				SAssignNew(TagNameTextBox, SEditableTextBox)
-				.HintText(LOCTEXT("NewTagNameHint", "Enter tag name..."))
-				.OnTextCommitted_Lambda([this, TagNameTextBox](const FText& Text, ETextCommit::Type CommitType)
-				{
-					if (CommitType == ETextCommit::OnEnter)
-					{
-						FName NewTag = FName(*Text.ToString());
-						if (!NewTag.IsNone() && !KnownTags.Contains(NewTag))
-						{
-							KnownTags.Add(NewTag);
-							SaveKnownTags();
-							UpdateAllTags();
-						}
-						
-						if (NewTagWindow)
-						{
-							NewTagWindow->RequestDestroyWindow();
-						}
-					}
-				})
-			]
-			+ SVerticalBox::Slot()
-			.Padding(10, 0, 10, 10)
-			.AutoHeight()
-			.HAlign(HAlign_Right)
-			[
-				SNew(SButton)
-				.Text(LOCTEXT("AddTagOk", "Add"))
-				.OnClicked_Lambda([this, TagNameTextBox]()
-				{
-					FName NewTag = FName(*TagNameTextBox->GetText().ToString());
-					if (!NewTag.IsNone() && !KnownTags.Contains(NewTag))
-					{
-						KnownTags.Add(NewTag);
-						SaveKnownTags();
-						UpdateAllTags();
-					}
-					
-					if (NewTagWindow)
-					{
-						NewTagWindow->RequestDestroyWindow();
-					}
-					
-					return FReply::Handled();
-				})
-			]
-		];
-
-	NewTagWindow->SetWidgetToFocusOnActivate(TagNameTextBox);
-	FSlateApplication::Get().AddWindow(NewTagWindow.ToSharedRef());
 }
 
 void SLiveConfigPropertyManager::GetFlatVisibleProperties(TArray<TSharedRef<FLiveConfigPropertyTreeNode>>& OutFlatList) const
@@ -858,7 +812,7 @@ TSharedPtr<SWidget> SLiveConfigPropertyManager::OnGetContextMenuContent()
 
 		SubMenuBuilder.AddWidget(
 			SNew(SLiveConfigTagPicker)
-			.KnownTags(KnownTags)
+			.TagOptions(ULiveConfigSystem::Get().PropertyTags)
 			.OnTagSelected_Lambda([this, PropertyNodes](FName SelectedTag)
 			{
 				BulkAddTag(PropertyNodes, SelectedTag);
@@ -1102,7 +1056,7 @@ void SLiveConfigPropertyManager::BulkDeleteProperties(TArray<TSharedRef<FLiveCon
 	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
 
 	System.RebuildConfigCache();
-	UpdateAllTags();
+	RefreshTags();
 }
 
 void SLiveConfigPropertyManager::OnSelectionChanged(TSharedPtr<FLiveConfigPropertyTreeNode> SelectedItem, ESelectInfo::Type SelectInfo)
@@ -1116,7 +1070,7 @@ void SLiveConfigPropertyManager::OnSelectionChanged(TSharedPtr<FLiveConfigProper
 	if (SelectedItem->IsStruct() || (!SelectedItem->PropertyDefinition.IsValid() && SelectedItem->Children.Num() > 0))
 	{
 		TArray<TSharedRef<FLiveConfigPropertyTreeNode>> ToSelect;
-		
+			
 		TFunction<void(TSharedRef<FLiveConfigPropertyTreeNode>)> CollectChildren = [&](TSharedRef<FLiveConfigPropertyTreeNode> Node)
 		{
 			for (auto& Child : Node->Children)
@@ -1135,11 +1089,6 @@ void SLiveConfigPropertyManager::OnSelectionChanged(TSharedPtr<FLiveConfigProper
 	}
 }
 
-void SLiveConfigPropertyManager::SaveKnownTags()
-{
-	SaveKnownTags(KnownTags);
-}
-
 void SLiveConfigPropertyManager::GetMissingTags(TArray<FName>& OutMissingTags)
 {
 	ULiveConfigSystem& System = ULiveConfigSystem::Get();
@@ -1155,63 +1104,23 @@ void SLiveConfigPropertyManager::GetMissingTags(TArray<FName>& OutMissingTags)
 
 	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
 
-	TSet<FName> KnownTagsSet(Settings->KnownTags);
+	TSet<FName> PropertyTagsSet(ULiveConfigSystem::Get().PropertyTags);
 	for (const FName& PropertyTag : UsedTags)
 	{
-		if (!KnownTagsSet.Contains(PropertyTag))
+		if (!PropertyTagsSet.Contains(PropertyTag))
 		{
 			OutMissingTags.Add(PropertyTag);
 		}
 	}
 }
 
-void SLiveConfigPropertyManager::SaveKnownTags(const TArray<FName>& InKnownTags)
-{
-	ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>();
-	Settings->KnownTags = InKnownTags;
-	Settings->SaveConfig();
-	Settings->TryUpdateDefaultConfigFile();
-}
-
 void SLiveConfigPropertyManager::OnTagFilterSelected(FName InTag)
 {
 	SelectedTag = InTag;
-	UpdateAllTags(); // Refresh colors/highlights
+	RefreshTags(); // Refresh colors/highlights
 	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
 }
 
-FSlateColor SLiveConfigPropertyManager::GetTagColor(FName InTag) const
-{
-	if (InTag.IsNone())
-	{
-		return FSlateColor(FLinearColor::Gray);
-	}
-
-	uint32 Hash = GetTypeHash(InTag.ToString());
-	
-	// Generate a color from hash
-	float Hue = (Hash % 360);
-	float Saturation = 0.8f;
-	float Value = 0.6f;
-
-	// Simple HSV to RGB
-	auto HSVtoRGB = [](float h, float s, float v) -> FLinearColor
-	{
-		float c = v * s;
-		float x = c * (1.0f - FMath::Abs(FMath::Fmod(h / 60.0f, 2.0f) - 1.0f));
-		float m = v - c;
-		float r, g, b;
-		if (h < 60) { r = c; g = x; b = 0; }
-		else if (h < 120) { r = x; g = c; b = 0; }
-		else if (h < 180) { r = 0; g = c; b = x; }
-		else if (h < 240) { r = 0; g = x; b = c; }
-		else if (h < 300) { r = x; g = 0; b = c; }
-		else { r = c; g = 0; b = x; }
-		return FLinearColor(r + m, g + m, b + m, 1.0f);
-	};
-
-	return FSlateColor(HSVtoRGB(Hue, Saturation, Value));
-}
 
 void SLiveConfigPropertyManager::ScrollToProperty(FLiveConfigProperty Property)
 {
@@ -1261,37 +1170,41 @@ void SLiveConfigPropertyManager::ScrollToProperty(FLiveConfigProperty Property)
 
 void SLiveConfigPropertyManager::OnAddNewProperty()
 {
-	TSharedPtr<FLiveConfigPropertyDefinition> NewProp = MakeShared<FLiveConfigPropertyDefinition>();
-	NewProp->PropertyName = FLiveConfigProperty(NAME_None);
-	
-	if (!SelectedTag.IsNone())
+	ELiveConfigPropertyType InitialType = ELiveConfigPropertyType::String;
+	SLiveConfigNewPropertyDialog::OpenDialog(TEXT(""), InitialType, FOnPropertyCreated::CreateLambda([this](const FLiveConfigPropertyDefinition& NewDef)
 	{
-		NewProp->Tags.Add(SelectedTag);
-	}
-
-	RawPropertyList.Add(NewProp);
-	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
-	
-	ScrollToProperty(NewProp->PropertyName);
-	UpdateAllTags();
+		TSharedPtr<FLiveConfigPropertyDefinition> NewProp = MakeShared<FLiveConfigPropertyDefinition>(NewDef);
+		
+		ULiveConfigSystem::Get().SaveProperty(*NewProp);
+		RawPropertyList.Add(NewProp);
+		
+		OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
+		
+		// Ensure it's scrolled to and selected
+		ScrollToProperty(NewProp->PropertyName);
+		
+		RefreshTags();
+		
+		ULiveConfigSystem::Get().RebuildConfigCache();
+	}));
 }
 
 void SLiveConfigPropertyManager::OnAddPropertyAtFolder(FString FolderPath)
 {
-	TSharedPtr<FLiveConfigPropertyDefinition> NewProp = MakeShared<FLiveConfigPropertyDefinition>();
 	FString NewName = FolderPath + TEXT(".");
-	NewProp->PropertyName = FLiveConfigProperty(FName(*NewName));
+	ELiveConfigPropertyType InitialType = ELiveConfigPropertyType::String;
 	
-	if (!SelectedTag.IsNone())
+	SLiveConfigNewPropertyDialog::OpenDialog(NewName, InitialType, FOnPropertyCreated::CreateLambda([this](const FLiveConfigPropertyDefinition& NewDef)
 	{
-		NewProp->Tags.Add(SelectedTag);
-	}
-
-	RawPropertyList.Add(NewProp);
-	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
-
-	ScrollToProperty(NewProp->PropertyName);
-	UpdateAllTags();
+		TSharedPtr<FLiveConfigPropertyDefinition> NewProp = MakeShared<FLiveConfigPropertyDefinition>(NewDef);
+		
+		ULiveConfigSystem::Get().SaveProperty(*NewProp);
+		RawPropertyList.Add(NewProp);
+		
+		OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
+		ScrollToProperty(NewProp->PropertyName);
+		RefreshTags();
+	}));
 }
 
 void SLiveConfigPropertyManager::OnPropertyRowChanged(TSharedPtr<FLiveConfigPropertyDefinition> OldDef, TSharedPtr<FLiveConfigPropertyDefinition> NewDef, ELiveConfigPropertyChangeType ChangeType)
@@ -1364,7 +1277,7 @@ void SLiveConfigPropertyManager::OnPropertyRowChanged(TSharedPtr<FLiveConfigProp
 
 	LiveConfigSystem.RebuildConfigCache();
 
-	UpdateAllTags();
+	RefreshTags();
 	
 	if (ChangeType == ELiveConfigPropertyChangeType::Name)
 	{
@@ -1392,7 +1305,7 @@ void SLiveConfigPropertyManager::RemoveProperty(TSharedPtr<FLiveConfigPropertyDe
 
 	System.RebuildConfigCache();
 
-	UpdateAllTags();
+	RefreshTags();
 }
 
 void SLiveConfigPropertyManager::RemoveTag(FName TagName)
@@ -1427,19 +1340,13 @@ void SLiveConfigPropertyManager::RemoveTag(FName TagName)
 		}
 	}
 
-	KnownTags.Remove(TagName);
+	ULiveConfigSystem& System = ULiveConfigSystem::Get();
+	System.PropertyTags.Remove(TagName);
+	System.TryUpdateDefaultConfigFile();
+	
 	if (SelectedTag == TagName)
 	{
 		SelectedTag = NAME_None;
-	}
-
-	// Persist KnownTags first
-	SaveKnownTags();
-	
-	// Notify system to refresh its base values
-	ULiveConfigSystem& System = ULiveConfigSystem::Get();
-	{
-		System.RebuildConfigCache();
 	}
 
 	// Force a full refresh from the settings to ensure everything is in sync

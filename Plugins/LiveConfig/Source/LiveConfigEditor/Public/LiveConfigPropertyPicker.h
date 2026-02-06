@@ -20,13 +20,13 @@ public:
         , _bReadOnly(false)
         , _bMultiSelect(false)
     {}
-        SLATE_ARGUMENT(FName, Filter)
-        SLATE_ARGUMENT(TOptional<ELiveConfigPropertyType>, FilterType)
-        SLATE_ARGUMENT(UScriptStruct*, StructFilter)
-        SLATE_ARGUMENT(bool, bReadOnly)
-        SLATE_ARGUMENT(bool, bMultiSelect)
-        SLATE_EVENT(FOnPropertySelected, OnPropertySelected)
-    SLATE_END_ARGS()
+        SLATE_ARGUMENT(FName, Filter);
+        SLATE_ARGUMENT(TOptional<ELiveConfigPropertyType>, FilterType);
+        SLATE_ARGUMENT(UScriptStruct*, StructFilter);
+        SLATE_ARGUMENT(bool, bReadOnly);
+        SLATE_ARGUMENT(bool, bMultiSelect);
+        SLATE_EVENT(FOnPropertySelected, OnPropertySelected);
+    SLATE_END_ARGS();
 
     // SWidget
     void Construct(const FArguments& InArgs);
@@ -51,10 +51,7 @@ private:
     void OnSelectionChanged(TSharedPtr<FLiveConfigProperty> InItem, ESelectInfo::Type SelectInfo);
 
     /** Handle adding a new property */
-    void OnAddNewProperty();
-
-    /** Validate and add the new property */
-    void OnCommitNewProperty(const FText& InText, ETextCommit::Type CommitInfo);
+    FReply OnAddNewPropertyClicked();
 
     /** Get the display text for a property */
     FText GetPropertyDisplayText(FLiveConfigProperty Property) const;
@@ -76,7 +73,6 @@ private:
     TArray<TSharedPtr<FLiveConfigProperty>> FilteredProperties;
     TSharedPtr<class SSearchBox> SearchBox;
     TSharedPtr<class SListView<TSharedPtr<FLiveConfigProperty>>> PropertyListView;
-    TSharedPtr<class SEditableTextBox> AddNewTextBox;
     
     FOnPropertySelected OnPropertyChanged;
 };

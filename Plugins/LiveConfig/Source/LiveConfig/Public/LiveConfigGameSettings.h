@@ -28,10 +28,6 @@ public:
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "GoogleSheets")
 	float PollingRate = 30;
 
-	/** Global list of tags that can be assigned to properties. */
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General")
-	TArray<FName> KnownTags;
-
 	/** 
 	 * The curve table to update with live config values (Export TO). 
 	 * This is especially useful for FScalableFloat values in GAS - providing live config values to Gameplay Effects

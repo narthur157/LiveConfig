@@ -79,10 +79,7 @@ void ULiveConfigSystem::Initialize(FSubsystemCollectionBase& Collection)
     RebuildConfigCache();
 
    	// Register "FromCurveTable" as a known tag if it's not already there
-   	if (ULiveConfigGameSettings* Settings = GetMutableDefault<ULiveConfigGameSettings>())
-   	{
-   		Settings->KnownTags.AddUnique(LiveConfigTags::FromCurveTable);
-   	}
+	PropertyTags.AddUnique(LiveConfigTags::FromCurveTable);
 
     DownloadConfig();
 
@@ -467,6 +464,12 @@ void ULiveConfigSystem::GetRelatedPropertyNames(FName PropertyName, TArray<FName
 			}
 		}
 	}
+}
+
+void ULiveConfigSystem::HandleTagsChanged()
+{
+	TryUpdateDefaultConfigFile();
+	OnTagsChanged.Broadcast();
 }
 
 void ULiveConfigSystem::DownloadConfig()

@@ -44,8 +44,6 @@ public:
 		SLATE_EVENT(FOnNavigateValue, OnNavigateValue)
 		SLATE_EVENT(FOnScrollToProperty, OnRequestScroll)
 		SLATE_EVENT(FSimpleDelegate, OnAddNewTag)
-		SLATE_ARGUMENT(TFunction<FSlateColor(FName)>, GetTagColor)
-		SLATE_ATTRIBUTE(TArray<FName>, KnownTags)
 	SLATE_END_ARGS()
 
 	void Construct(const FArguments& InArgs, const TSharedRef<STableViewBase>& InOwnerTable, TSharedPtr<FLiveConfigPropertyTreeNode>
@@ -88,10 +86,8 @@ private:
 	FOnNavigatePropertyName OnNavigateUp;
 	FOnNavigateValue OnNavigateValue;
 	FOnScrollToProperty OnRequestScroll;
-	TFunction<FSlateColor(FName)> GetTagColor;
 	TSharedPtr<class SScrollBox> TagScrollBox;
 	TSharedPtr<class SEditableTextBox> NameTextBox;
-	TSlateAttribute<TArray<FName>, EInvalidateWidgetReason::Layout> KnownTagsAttribute;
 	TSharedPtr<class SLiveConfigPropertyValueWidget> ValueWidget;
 	bool bNeedsFocus = false;
 	bool bNeedsValueFocus = false;

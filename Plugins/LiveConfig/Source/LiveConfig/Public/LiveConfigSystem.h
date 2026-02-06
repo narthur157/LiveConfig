@@ -28,6 +28,8 @@ class LIVECONFIG_API ULiveConfigSystem : public UEngineSubsystem
 public:
     FOnLiveConfigPropertiesUpdated OnPropertiesUpdated;
 	
+	FSimpleMulticastDelegate OnTagsChanged;
+	
     /**
      * note - if using this very early during startup (eg from another UEngineSubsystem::Initialize) consider
      * using GEngine->GetEngineSubsystem<ULiveConfigSystem>() to check
@@ -160,8 +162,14 @@ public:
      */
     void GetRelatedPropertyNames(FName PropertyName, TArray<FName>& OutRelatedNames) const;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "General")
 	TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition> PropertyDefinitions;
+	
+	UPROPERTY(Config, VisibleAnywhere, BlueprintReadOnly, Category = "General")
+	TArray<FName> PropertyTags;
+	
+	void HandleTagsChanged();
+	
 
     UPROPERTY(Config)
     TMap<FName, FName> PropertyRedirects;

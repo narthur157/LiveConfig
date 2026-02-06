@@ -1,4 +1,6 @@
 ﻿#include "SLiveConfigTagRow.h"
+
+#include "LiveConfigLib.h"
 #include "Widgets/Text/STextBlock.h"
 #include "Widgets/Layout/SBox.h"
 #include "Widgets/Input/SButton.h"
@@ -11,11 +13,11 @@ void SLiveConfigTagRow::PrivateRegisterAttributes(FSlateAttributeInitializer& At
 {
 }
 
-void SLiveConfigTagRow::Construct(const FArguments& InArgs, TSharedPtr<FLiveConfigPropertyDefinition> InItem, int32 InIndex, FSimpleDelegate InOnChanged, TFunction<FSlateColor(FName)> InGetTagColor, bool bInReadOnly)
+void SLiveConfigTagRow::Construct(const FArguments& InArgs, TSharedPtr<FLiveConfigPropertyDefinition> InItem, int32 InIndex, FSimpleDelegate InOnRemove, bool bInReadOnly)
 {
 	Item = InItem;
 	Index = InIndex;
-	OnChanged = InOnChanged;
+	OnRemove = InOnRemove;
 	bReadOnly = bInReadOnly;
 
 	ChildSlot
@@ -32,11 +34,11 @@ void SLiveConfigTagRow::Construct(const FArguments& InArgs, TSharedPtr<FLiveConf
 			[
 				SNew(SBorder)
 				.BorderImage(FAppStyle::GetBrush("WhiteBrush"))
-				.BorderBackgroundColor_Lambda([InGetTagColor, this]() 
+				.BorderBackgroundColor_Lambda([this]() 
 				{ 
 					if (Item.IsValid() && Item->Tags.IsValidIndex(Index))
 					{
-						return InGetTagColor(Item->Tags[Index]);
+						return ULiveConfigLib::GetTagColor(Item->Tags[Index]);
 					}
 					return FSlateColor(FLinearColor::White);
 				})
@@ -75,7 +77,7 @@ void SLiveConfigTagRow::Construct(const FArguments& InArgs, TSharedPtr<FLiveConf
 				.OnClicked_Lambda([this]()
 				{
 					Item->Tags.RemoveAt(Index);
-					OnChanged.ExecuteIfBound();
+					OnRemove.ExecuteIfBound();
 					return FReply::Handled();
 				})
 				[

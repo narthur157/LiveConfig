@@ -5,6 +5,7 @@
 #include "Framework/Application/SlateApplication.h"
 #include "LiveConfigSystem.h"
 #include "LiveConfigEditorSettings.h"
+#include "PropertyManager/SLiveConfigNewPropertyDialog.h"
 #include "LiveConfigGameSettings.h"
 #include "LiveConfigLib.h"
 #include "PropertyHandle.h"
@@ -12,6 +13,7 @@
 #include "Widgets/Input/SEditableTextBox.h"
 #include "Widgets/Input/SButton.h"
 #include "Widgets/Input/SCheckBox.h"
+#include "Widgets/Images/SImage.h"
 #include "Widgets/Layout/SWidgetSwitcher.h"
 #include "Widgets/Views/SListView.h"
 #include "Widgets/Views/STableRow.h"
@@ -117,38 +119,27 @@ void SLiveConfigPropertyPicker::Construct(const FArguments& InArgs)
         .AutoHeight()
         .Padding(2.0f)
         [
-            SNew(SHorizontalBox)
-            
-            + SHorizontalBox::Slot()
-            .FillWidth(1.0f)
+            SNew(SButton)
+            .HAlign(HAlign_Center)
+            .OnClicked(this, &SLiveConfigPropertyPicker::OnAddNewPropertyClicked)
+            .IsEnabled(!bReadOnly)
             [
-                SAssignNew(AddNewTextBox, SEditableTextBox)
-                .HintText(NSLOCTEXT("LiveConfig", "AddNewProperty", "Enter new property name..."))
-                .OnTextCommitted_Lambda([this](const FText& Text, ETextCommit::Type CommitType)
-                {
-                    if (CommitType == ETextCommit::OnEnter)
-                    {
-                        OnCommitNewProperty(Text, CommitType);
-                    }
-                })
-                .IsEnabled(!bReadOnly)
-            ]
-
-            + SHorizontalBox::Slot()
-            .AutoWidth()
-            .Padding(4.0f, 0.0f, 0.0f, 0.0f)
-            [
-                SNew(SButton)
-                .Text(NSLOCTEXT("LiveConfig", "Add", "Add"))
-                .OnClicked_Lambda([this]()
-                {
-                    if (AddNewTextBox.IsValid())
-                    {
-                        OnCommitNewProperty(AddNewTextBox->GetText(), ETextCommit::OnEnter);
-                    }
-                    return FReply::Handled();
-                })
-                .IsEnabled(!bReadOnly)
+                SNew(SHorizontalBox)
+                + SHorizontalBox::Slot()
+                .AutoWidth()
+                .VAlign(VAlign_Center)
+                .Padding(0, 0, 4, 0)
+                [
+                    SNew(SImage)
+                    .Image(FAppStyle::GetBrush("EditableComboBox.Add"))
+                ]
+                + SHorizontalBox::Slot()
+                .AutoWidth()
+                .VAlign(VAlign_Center)
+                [
+                    SNew(STextBlock)
+                    .Text(NSLOCTEXT("LiveConfig", "AddNewProperty", "Add New Property"))
+                ]
             ]
         ]
     ];
@@ -393,62 +384,25 @@ void SLiveConfigPropertyPicker::OnSelectionChanged(TSharedPtr<FLiveConfigPropert
     }
 }
 
-void SLiveConfigPropertyPicker::OnAddNewProperty()
+FReply SLiveConfigPropertyPicker::OnAddNewPropertyClicked()
 {
-    if (AddNewTextBox.IsValid())
+    ELiveConfigPropertyType InitialType = FilterType.Get(ELiveConfigPropertyType::String);
+    FString InitialName = SearchBox.IsValid() ? SearchBox->GetText().ToString() : TEXT("");
+
+    SLiveConfigNewPropertyDialog::OpenDialog(InitialName, InitialType, FOnPropertyCreated::CreateLambda([this](const FLiveConfigPropertyDefinition& NewDef)
     {
-        OnCommitNewProperty(AddNewTextBox->GetText(), ETextCommit::OnEnter);
-    }
-}
+        ULiveConfigSystem::Get().SaveProperty(NewDef);
+        ULiveConfigSystem::Get().RebuildConfigCache();
+        
+        // Refresh the list
+        RefreshPropertyList();
 
-void SLiveConfigPropertyPicker::OnCommitNewProperty(const FText& InText, ETextCommit::Type CommitInfo)
-{
-    if (bReadOnly || CommitInfo != ETextCommit::OnEnter)
-    {
-        return;
-    }
+        // Select the new item
+        SelectedProperty = NewDef.PropertyName;
+        OnPropertyChanged.ExecuteIfBound(SelectedProperty);
+    }));
 
-    const FString PropertyNameString = InText.ToString().TrimStartAndEnd();
-    if (PropertyNameString.IsEmpty())
-    {
-        return;
-    }
-
-    FName NewPropertyName(*PropertyNameString);
-
-    // Validate the name (basic validation)
-    if (NewPropertyName == NAME_None)
-    {
-        return;
-    }
-
-    ULiveConfigSystem& System = ULiveConfigSystem::Get();
-    if (!System.PropertyDefinitions.Contains(NewPropertyName))
-    {
-        FLiveConfigPropertyDefinition NewDef;
-        NewDef.PropertyName = NewPropertyName;
-        NewDef.Description = FString::Printf(TEXT("User-added property: %s"), *PropertyNameString);
-            
-        if (FilterType.IsSet())
-        {
-            NewDef.PropertyType = FilterType.GetValue();
-        }
-
-        System.SaveProperty(NewDef);
-    }
-
-    // Refresh the list
-    RefreshPropertyList();
-
-    // Select the new item
-    SelectedProperty = NewPropertyName;
-    OnPropertyChanged.ExecuteIfBound(SelectedProperty);
-
-    // Clear the text box
-    if (AddNewTextBox.IsValid())
-    {
-        AddNewTextBox->SetText(FText::GetEmpty());
-    }
+    return FReply::Handled();
 }
 
 FText SLiveConfigPropertyPicker::GetPropertyDisplayText(FLiveConfigProperty Property) const
