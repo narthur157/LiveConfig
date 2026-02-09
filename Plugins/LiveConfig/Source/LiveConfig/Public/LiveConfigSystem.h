@@ -47,6 +47,10 @@ public:
      * @param PropertyDefinition Property to be added or updated. Will be saved to file
      */
     void SaveProperty(const FLiveConfigPropertyDefinition& PropertyDefinition);
+    /**
+     * Like @SaveProperty, but don't rebuild the cache right away 
+     */
+    void SavePropertyDeferred(const FLiveConfigPropertyDefinition& PropertyDefinition);
 
     /**
      * Renames an existing property and its associated files on disk.

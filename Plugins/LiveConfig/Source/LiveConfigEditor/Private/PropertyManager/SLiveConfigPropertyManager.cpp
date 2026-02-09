@@ -22,6 +22,7 @@
 #include "LiveConfigSettings.h"
 #include "LiveConfigJson.h"
 #include "LiveConfigSystem.h"
+#include "LiveConfigPropertyTreeSubsystem.h"
 #include "LiveConfigLib.h"
 #include "SLiveConfigCleanupUnusedPropertiesWidget.h"
 #include "Misc/MessageDialog.h"
@@ -204,7 +205,7 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 					.VAlign(VAlign_Center)
 					[
 						SAssignNew(SearchBox, SSearchBox)
-						.HintText(LOCTEXT("SearchPropertiesHint", "Search properties..."))
+						.HintText(LOCTEXT("SearchPropertiesHint", "Search properties... [Ctrl+F]"))
 						.OnTextChanged(this, &SLiveConfigPropertyManager::OnFilterTextChanged)
 					]
 				]
@@ -377,19 +378,14 @@ void SLiveConfigPropertyManager::OnGetChildren(TSharedRef<FLiveConfigPropertyTre
 	OutChildren.Append(InItem->Children);
 }
 
+const TArray<TSharedPtr<FLiveConfigPropertyDefinition>>& SLiveConfigPropertyManager::GetPropertyDefinitions()
+{
+	return ULiveConfigPropertyTreeSubsystem::Get().Definitions;
+}
+
 void SLiveConfigPropertyManager::RefreshList()
 {
-	RawPropertyList.Empty();
-	ULiveConfigSystem& System = ULiveConfigSystem::Get();
-	for (auto& Pair : System.PropertyDefinitions)
-	{
-		RawPropertyList.Add(MakeShared<FLiveConfigPropertyDefinition>(Pair.Value));
-	}
-
-	RawPropertyList.Sort([](const TSharedPtr<FLiveConfigPropertyDefinition>& A, const TSharedPtr<FLiveConfigPropertyDefinition>& B)
-	{
-		return UE::ComparisonUtility::CompareNaturalOrder(A->PropertyName.ToString(), B->PropertyName.ToString()) < 0;
-	});
+	ULiveConfigPropertyTreeSubsystem::Get().RebuildFromSystem();
 	
 	RefreshTags();
 	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
@@ -420,162 +416,56 @@ void SLiveConfigPropertyManager::RefreshSearchFilter()
 
 	RootNodes.Empty();
 
-	TMap<FString, TSharedPtr<FLiveConfigPropertyTreeNode>> FolderMap;
-	TFunction<TSharedPtr<FLiveConfigPropertyTreeNode>(FString)> GetOrCreatePropertyFolder;
-	GetOrCreatePropertyFolder = [&](FString FolderPath) -> TSharedPtr<FLiveConfigPropertyTreeNode>
+	TMap<FString, TSharedPtr<FLiveConfigPropertyTreeNode>> NodeByPath;
+	auto PassesFilter = [&](const FLiveConfigPropertyModelNode& Node) -> bool
 	{
-		if (TSharedPtr<FLiveConfigPropertyTreeNode>* FoundFolder = FolderMap.Find(FolderPath))
+		if (!Node.PropertyDefinition.IsValid())
 		{
-			return *FoundFolder;
+			return false;
 		}
 
-		// Check if we already have a property that is a struct with this name
-		for (const auto& PropDef : RawPropertyList)
-		{
-			if (PropDef->PropertyName.ToString() == FolderPath && PropDef->PropertyType == ELiveConfigPropertyType::Struct)
-			{
-				// This struct property will be created later in the loop and will replace the folder if it's already here.
-				// But we need a node NOW to attach children to.
-				TSharedRef<FLiveConfigPropertyTreeNode> NewNode = MakeShared<FLiveConfigPropertyTreeNode>();
-				NewNode->FullPath = FolderPath;
-				NewNode->PropertyDefinition = PropDef;
-				
-				int32 LastDot;
-				if (FolderPath.FindLastChar('.', LastDot))
-				{
-					NewNode->DisplayName = FolderPath.RightChop(LastDot + 1);
-					FString ParentPath = FolderPath.Left(LastDot);
-					TSharedPtr<FLiveConfigPropertyTreeNode> ParentFolder = GetOrCreatePropertyFolder(ParentPath);
-					if (ParentFolder.IsValid())
-					{
-						ParentFolder->Children.Add(NewNode);
-						NewNode->Parent = ParentFolder;
-					}
-				}
-				else
-				{
-					NewNode->DisplayName = FolderPath;
-					RootNodes.Add(NewNode);
-				}
-
-				TSharedPtr<FLiveConfigPropertyTreeNode> NewNodePtr = NewNode;
-				FolderMap.Add(FolderPath, NewNodePtr);
-				return NewNodePtr;
-			}
-		}
-
-		TSharedRef<FLiveConfigPropertyTreeNode> NewFolder = MakeShared<FLiveConfigPropertyTreeNode>();
-		NewFolder->FullPath = FolderPath;
-		
-		int32 LastDot;
-		if (FolderPath.FindLastChar('.', LastDot))
-		{
-			NewFolder->DisplayName = FolderPath.RightChop(LastDot + 1);
-			FString ParentPath = FolderPath.Left(LastDot);
-			TSharedPtr<FLiveConfigPropertyTreeNode> ParentFolder = GetOrCreatePropertyFolder(ParentPath);
-			if (ParentFolder.IsValid())
-			{
-				ParentFolder->Children.Add(NewFolder);
-				NewFolder->Parent = ParentFolder;
-			}
-		}
-		else
-		{
-			NewFolder->DisplayName = FolderPath;
-			RootNodes.Add(NewFolder);
-		}
-
-		TSharedPtr<FLiveConfigPropertyTreeNode> NewFolderPtr = NewFolder;
-		FolderMap.Add(FolderPath, NewFolderPtr);
-		return NewFolderPtr;
+		const TSharedPtr<FLiveConfigPropertyDefinition>& Def = Node.PropertyDefinition;
+		const bool bPassesTextFilter = FilterString.IsEmpty() ||
+			Def->PropertyName.ToString().Contains(FilterString) ||
+			Def->Description.Contains(FilterString);
+		const bool bPassesTagFilter = SelectedTag.IsNone() || Def->Tags.Contains(SelectedTag);
+		return bPassesTextFilter && bPassesTagFilter;
 	};
 
-	for (const auto& PropDef : RawPropertyList)
+	TFunction<bool(const TArray<TSharedRef<FLiveConfigPropertyModelNode>>&, TArray<TSharedRef<FLiveConfigPropertyTreeNode>>&)> BuildFilteredView;
+	BuildFilteredView = [&](const TArray<TSharedRef<FLiveConfigPropertyModelNode>>& InNodes, TArray<TSharedRef<FLiveConfigPropertyTreeNode>>& OutNodes) -> bool
 	{
-		bool bPassesTextFilter = FilterString.IsEmpty() || 
-			PropDef->PropertyName.ToString().Contains(FilterString) || 
-			PropDef->Description.Contains(FilterString);
+		bool bAnyVisible = false;
 
-		bool bPassesTagFilter = SelectedTag.IsNone() || PropDef->Tags.Contains(SelectedTag);
-
-		if (bPassesTextFilter && bPassesTagFilter)
+		for (const auto& ModelNode : InNodes)
 		{
-			FString FullName = PropDef->PropertyName.ToString();
-			
-			// If it's a struct property and it already exists in FolderMap (created by GetOrCreateFolder)
-			// we skip it here as it was already added.
-			if (PropDef->PropertyType == ELiveConfigPropertyType::Struct && FolderMap.Contains(FullName))
-			{
-				continue;
-			}
+			TArray<TSharedRef<FLiveConfigPropertyTreeNode>> FilteredChildren;
+			const bool bChildVisible = BuildFilteredView(ModelNode->Children, FilteredChildren);
+			const bool bSelfVisible = PassesFilter(*ModelNode);
 
-			int32 LastDot;
-			if (FullName.FindLastChar('.', LastDot))
+			if (bSelfVisible || bChildVisible)
 			{
-				FString FolderPath = FullName.Left(LastDot);
-				FString DisplayName = FullName.RightChop(LastDot + 1);
+				TSharedRef<FLiveConfigPropertyTreeNode> ViewNode = MakeShared<FLiveConfigPropertyTreeNode>();
+				ViewNode->DisplayName = ModelNode->DisplayName;
+				ViewNode->FullPath = ModelNode->FullPath;
+				ViewNode->PropertyDefinition = ModelNode->PropertyDefinition;
+				ViewNode->Children = MoveTemp(FilteredChildren);
 
-				TSharedPtr<FLiveConfigPropertyTreeNode> ParentFolder = GetOrCreatePropertyFolder(FolderPath);
-				
-				TSharedRef<FLiveConfigPropertyTreeNode> NewNode = MakeShared<FLiveConfigPropertyTreeNode>();
-				NewNode->DisplayName = DisplayName;
-				NewNode->FullPath = FullName;
-				NewNode->PropertyDefinition = PropDef;
-				
-				if (ParentFolder.IsValid())
+				for (auto& Child : ViewNode->Children)
 				{
-					NewNode->Parent = ParentFolder;
-					ParentFolder->Children.Add(NewNode);
+					Child->Parent = ViewNode;
 				}
-			}
-			else
-			{
-				TSharedRef<FLiveConfigPropertyTreeNode> NewNode = MakeShared<FLiveConfigPropertyTreeNode>();
-				NewNode->DisplayName = FullName;
-				NewNode->FullPath = FullName;
-				NewNode->PropertyDefinition = PropDef;
-				
-				if (PropDef->PropertyType == ELiveConfigPropertyType::Struct)
-				{
-					// If it's a struct and we already have a folder with the same name,
-					// we should probably merge them or ensure the struct node becomes the parent.
-					if (TSharedPtr<FLiveConfigPropertyTreeNode>* ExistingFolder = FolderMap.Find(FullName))
-					{
-						// Merge existing folder into this struct node
-						NewNode->Children = (*ExistingFolder)->Children;
-						for (auto& Child : NewNode->Children)
-						{
-							Child->Parent = NewNode;
-						}
-						
-						// Replace folder in RootNodes or its parent's children
-						if (TSharedPtr<FLiveConfigPropertyTreeNode> FolderParent = (*ExistingFolder)->Parent.Pin())
-						{
-							FolderParent->Children.Remove((*ExistingFolder).ToSharedRef());
-							FolderParent->Children.Add(NewNode);
-							NewNode->Parent = FolderParent;
-						}
-						else
-						{
-							RootNodes.Remove((*ExistingFolder).ToSharedRef());
-							RootNodes.Add(NewNode);
-						}
-						
-						FolderMap[FullName] = NewNode;
-					}
-					else
-					{
-						RootNodes.Add(NewNode);
-						FolderMap.Add(FullName, NewNode);
-					}
-				}
-				else
-				{
-					RootNodes.Add(NewNode);
-				}
+
+				OutNodes.Add(ViewNode);
+				NodeByPath.Add(ViewNode->FullPath, ViewNode);
+				bAnyVisible = true;
 			}
 		}
-	}
+
+		return bAnyVisible;
+	};
+
+	BuildFilteredView(ULiveConfigPropertyTreeSubsystem::Get().GetRootNodes(), RootNodes);
 
 	auto SortNodes = [](TArray<TSharedRef<FLiveConfigPropertyTreeNode>>& Nodes)
 	{
@@ -603,23 +493,32 @@ void SLiveConfigPropertyManager::RefreshSearchFilter()
 		});
 	};
 
-	SortNodes(RootNodes);
-	for (auto& FolderPair : FolderMap)
+	TFunction<void(TArray<TSharedRef<FLiveConfigPropertyTreeNode>>&)> SortNodesRecursive;
+	SortNodesRecursive = [&](TArray<TSharedRef<FLiveConfigPropertyTreeNode>>& Nodes)
 	{
-		SortNodes(FolderPair.Value->Children);
-	}
+		SortNodes(Nodes);
+		for (auto& Node : Nodes)
+		{
+			if (Node->Children.Num() > 0)
+			{
+				SortNodesRecursive(Node->Children);
+			}
+		}
+	};
+
+	SortNodesRecursive(RootNodes);
 
 	if (PropertyTreeView.IsValid())
 	{
 		PropertyTreeView->RequestTreeRefresh();
 		
 		// Restore expansion state or auto-expand all nodes when filtering
-		for (auto& FolderPair : FolderMap)
+		for (auto& NodePair : NodeByPath)
 		{
-			bool bShouldExpand = !FilterString.IsEmpty() || ExpandedPaths.Contains(FolderPair.Key);
-			if (bShouldExpand && FolderPair.Value.IsValid())
+			bool bShouldExpand = !FilterString.IsEmpty() || ExpandedPaths.Contains(NodePair.Key);
+			if (bShouldExpand && NodePair.Value.IsValid())
 			{
-				PropertyTreeView->SetItemExpansion(FolderPair.Value.ToSharedRef(), true);
+				PropertyTreeView->SetItemExpansion(NodePair.Value.ToSharedRef(), true);
 			}
 		}
 	}
@@ -706,10 +605,14 @@ void SLiveConfigPropertyManager::RefreshTags()
 
 int32 SLiveConfigPropertyManager::GetTagCount(FName InTag) const
 {
-	if (InTag.IsNone()) return RawPropertyList.Num();
-	
+	const TArray<TSharedPtr<FLiveConfigPropertyDefinition>>& Definitions = GetPropertyDefinitions();
+	if (InTag.IsNone())
+	{
+		return Definitions.Num();
+	}
+
 	int32 Count = 0;
-	for (const auto& PropDef : RawPropertyList)
+	for (const auto& PropDef : Definitions)
 	{
 		if (PropDef->Tags.Contains(InTag))
 		{
@@ -1049,14 +952,11 @@ void SLiveConfigPropertyManager::BulkDeleteProperties(TArray<TSharedRef<FLiveCon
 			{
 				JsonSystem->DeletePropertyFile(Node->PropertyDefinition->PropertyName.GetName());
 			}
-
-			RawPropertyList.Remove(Node->PropertyDefinition);
 		}
 	}
 
-	RefreshSearchFilter();
-
 	System.RebuildConfigCache();
+	RefreshSearchFilter();
 	RefreshTags();
 }
 
@@ -1174,19 +1074,13 @@ void SLiveConfigPropertyManager::OnAddNewProperty()
 	ELiveConfigPropertyType InitialType = ELiveConfigPropertyType::String;
 	SLiveConfigNewPropertyDialog::OpenDialog(TEXT(""), InitialType, FOnPropertyCreated::CreateLambda([this](const FLiveConfigPropertyDefinition& NewDef)
 	{
-		TSharedPtr<FLiveConfigPropertyDefinition> NewProp = MakeShared<FLiveConfigPropertyDefinition>(NewDef);
-		
-		ULiveConfigSystem::Get().SaveProperty(*NewProp);
-		RawPropertyList.Add(NewProp);
-		
+		ULiveConfigSystem::Get().SaveProperty(NewDef);
 		RefreshSearchFilter();
 		
 		// Ensure it's scrolled to and selected
-		ScrollToProperty(NewProp->PropertyName);
+		ScrollToProperty(NewDef.PropertyName);
 		
 		RefreshTags();
-		
-		ULiveConfigSystem::Get().RebuildConfigCache();
 	}));
 }
 
@@ -1197,13 +1091,9 @@ void SLiveConfigPropertyManager::OnAddPropertyAtFolder(FString FolderPath)
 	
 	SLiveConfigNewPropertyDialog::OpenDialog(NewName, InitialType, FOnPropertyCreated::CreateLambda([this](const FLiveConfigPropertyDefinition& NewDef)
 	{
-		TSharedPtr<FLiveConfigPropertyDefinition> NewProp = MakeShared<FLiveConfigPropertyDefinition>(NewDef);
-		
-		ULiveConfigSystem::Get().SaveProperty(*NewProp);
-		RawPropertyList.Add(NewProp);
-		
+		ULiveConfigSystem::Get().SaveProperty(NewDef);
 		RefreshSearchFilter();
-		ScrollToProperty(NewProp->PropertyName);
+		ScrollToProperty(NewDef.PropertyName);
 		RefreshTags();
 	}));
 }
@@ -1248,22 +1138,6 @@ void SLiveConfigPropertyManager::OnPropertyRowChanged(TSharedPtr<FLiveConfigProp
 			}
 
 			LiveConfigSystem.RenameProperty(OldDef->PropertyName, NewDef->PropertyName, bCreateRedirector);
-
-			// Update all our local TSharedPtrs if they were part of a struct rename
-			if (OldDef->PropertyType == ELiveConfigPropertyType::Struct)
-			{
-				FString OldPrefix = OldDef->PropertyName.ToString() + TEXT(".");
-				FString NewPrefix = NewDef->PropertyName.ToString() + TEXT(".");
-
-				for (const auto& PropDef : RawPropertyList)
-				{
-					if (PropDef->PropertyName.ToString().StartsWith(OldPrefix))
-					{
-						FString RelativeName = PropDef->PropertyName.ToString().RightChop(OldPrefix.Len());
-						PropDef->PropertyName = FLiveConfigProperty(NewPrefix + RelativeName);
-					}
-				}
-			}
 		}
 	}
 	else if (NewDef.IsValid() && IsValidPropertyName(NewDef->PropertyName))
@@ -1275,8 +1149,6 @@ void SLiveConfigPropertyManager::OnPropertyRowChanged(TSharedPtr<FLiveConfigProp
 	{
 		RefreshSearchFilter();
 	}
-
-	LiveConfigSystem.RebuildConfigCache();
 
 	RefreshTags();
 	
@@ -1301,11 +1173,8 @@ void SLiveConfigPropertyManager::RemoveProperty(TSharedPtr<FLiveConfigPropertyDe
 		JsonSystem->DeletePropertyFile(InItem->PropertyName.GetName());
 	}
 
-	RawPropertyList.Remove(InItem);
-	RefreshSearchFilter();
-
 	System.RebuildConfigCache();
-
+	RefreshSearchFilter();
 	RefreshTags();
 }
 
@@ -1331,8 +1200,7 @@ void SLiveConfigPropertyManager::RemoveTag(FName TagName)
 		}
 
 		// Remove from properties
-
-		for (const auto& PropDef : RawPropertyList)
+		for (const auto& PropDef : ULiveConfigPropertyTreeSubsystem::Get().Definitions)
 		{
 			if (PropDef->Tags.Remove(TagName) > 0)
 			{
@@ -1357,7 +1225,7 @@ void SLiveConfigPropertyManager::RemoveTag(FName TagName)
 bool SLiveConfigPropertyManager::IsNameDuplicate(FName Name) const
 {
 	int32 Count = 0;
-	for (const auto& PropDef : RawPropertyList)
+	for (const auto& PropDef : GetPropertyDefinitions())
 	{
 		if (PropDef->PropertyName.GetName() == Name)
 		{

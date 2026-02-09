@@ -25,5 +25,11 @@
 			"Type": "UncookedOnly",
 			"LoadingPhase": "PostEngineInit"
 		}
+	],
+	"Plugins": [
+		{ 
+			"Name": "PythonScriptPlugin",
+			"Enabled": true
+		}
 	]
 }

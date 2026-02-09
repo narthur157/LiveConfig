@@ -391,7 +391,6 @@ FReply SLiveConfigPropertyPicker::OnAddNewPropertyClicked()
     SLiveConfigNewPropertyDialog::OpenDialog(InitialName, InitialType, FOnPropertyCreated::CreateLambda([this](const FLiveConfigPropertyDefinition& NewDef)
     {
         ULiveConfigSystem::Get().SaveProperty(NewDef);
-        ULiveConfigSystem::Get().RebuildConfigCache();
         
         // Refresh the list
         RefreshPropertyList();

@@ -5,6 +5,8 @@
 #include "Widgets/Views/STreeView.h"
 #include "LiveConfigSystem.h"
 
+class ULiveConfigPropertyTreeSubsystem;
+
 /**
  * Property tree nodes represent collapsing/expanding properties based on their paths
  * IE a property that is `MyProperty.SubProperty` has `MyProperty` as a folder
@@ -45,6 +47,8 @@ public:
 	static void GetMissingTags(TArray<FName>& OutMissingTags);
 
 private:
+	static const TArray<TSharedPtr<FLiveConfigPropertyDefinition>>& GetPropertyDefinitions();
+
 	TSharedRef<ITableRow> OnGenerateRow(TSharedRef<FLiveConfigPropertyTreeNode> InItem, const TSharedRef<STableViewBase>& OwnerTable);
 	void OnGetChildren(TSharedRef<FLiveConfigPropertyTreeNode> InItem, TArray<TSharedRef<FLiveConfigPropertyTreeNode>>& OutChildren);
 	void RefreshList();
@@ -59,7 +63,6 @@ private:
 	void OnPropertyRowChanged(TSharedPtr<FLiveConfigPropertyDefinition> OldDef, TSharedPtr<FLiveConfigPropertyDefinition> NewDef, ELiveConfigPropertyChangeType ChangeType);
 	void GetFlatVisibleProperties(TArray<TSharedRef<FLiveConfigPropertyTreeNode>>& OutFlatList) const;
 	void NavigateToProperty(TSharedPtr<FLiveConfigPropertyTreeNode> CurrentItem, int32 Direction);
-	void OnContextMenuOpening(FMenuBuilder& MenuBuilder);
 	void BulkAddTag(TArray<TSharedRef<FLiveConfigPropertyTreeNode>> Nodes, FName TagName);
 	void BulkRemoveTag(TArray<TSharedRef<FLiveConfigPropertyTreeNode>> Nodes, FName TagName);
 	void BulkDeleteProperties(TArray<TSharedRef<FLiveConfigPropertyTreeNode>> Nodes);
@@ -68,7 +71,6 @@ private:
 	void OnManageRedirects();
 	void OnCleanupUnusedProperties();
 
-	TArray<TSharedPtr<FLiveConfigPropertyDefinition>> RawPropertyList;
 	TArray<TSharedRef<FLiveConfigPropertyTreeNode>> RootNodes;
 	FName SelectedTag;
 	TSharedPtr<STreeView<TSharedRef<FLiveConfigPropertyTreeNode>>> PropertyTreeView;

@@ -775,7 +775,7 @@ void SLiveConfigPropertyRow::GenerateSubPropertiesForStruct(const UScriptStruct*
 		NewDef.Tags = Item->PropertyDefinition->Tags; // Inherit tags from parent struct property
 
 		UE_LOG(LogLiveConfig, Log, TEXT("GenerateSubPropertiesForStruct: Adding property %s"), *FullPropName);
-		ULiveConfigSystem::Get().SaveProperty(NewDef);
+		ULiveConfigSystem::Get().SavePropertyDeferred(NewDef);
 		
 		bChanged = true;
 	}

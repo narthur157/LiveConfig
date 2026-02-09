@@ -116,6 +116,13 @@ void ULiveConfigSystem::SaveProperty(const FLiveConfigPropertyDefinition& Proper
 {
 	PropertyDefinitions.Add(PropertyDefinition.PropertyName, PropertyDefinition);
 	ULiveConfigJsonSystem::Get()->SavePropertyToFile(PropertyDefinition);
+	RebuildConfigCache();
+}
+
+void ULiveConfigSystem::SavePropertyDeferred(const FLiveConfigPropertyDefinition& PropertyDefinition)
+{
+	PropertyDefinitions.Add(PropertyDefinition.PropertyName, PropertyDefinition);
+	ULiveConfigJsonSystem::Get()->SavePropertyToFile(PropertyDefinition);
 }
 
 void ULiveConfigSystem::RenameProperty(FLiveConfigProperty OldName, FLiveConfigProperty NewName, bool bCreateRedirector)
@@ -600,6 +607,8 @@ void ULiveConfigSystem::OnStartGameInstance(UGameInstance* GameInstance)
 
 void ULiveConfigSystem::BuildCache()
 {
+	QUICK_SCOPE_CYCLE_COUNTER(STAT_LiveConfig_BuildCache);
+	
 	if (ULiveConfigProfileSystem* ProfileSystem = ULiveConfigProfileSystem::Get())
     {
         FLiveConfigCache::BuildConfig(PropertyDefinitions, EnvironmentOverrides, ProfileSystem->GetActiveProfile(), Cache);
