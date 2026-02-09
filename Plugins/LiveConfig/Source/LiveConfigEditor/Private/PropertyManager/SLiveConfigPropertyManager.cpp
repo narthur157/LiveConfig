@@ -397,6 +397,16 @@ void SLiveConfigPropertyManager::RefreshList()
 
 void SLiveConfigPropertyManager::OnFilterTextChanged(const FText& InFilterText)
 {
+	RefreshSearchFilter();
+}
+
+void SLiveConfigPropertyManager::RefreshSearchFilter()
+{
+	QUICK_SCOPE_CYCLE_COUNTER(STAT_LiveConfig_RefreshSearchFilter);
+	
+	FText FilterText = SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty();
+	FString FilterString = FilterText.ToString();
+	
 	TSet<FString> ExpandedPaths;
 	if (PropertyTreeView.IsValid())
 	{
@@ -409,11 +419,10 @@ void SLiveConfigPropertyManager::OnFilterTextChanged(const FText& InFilterText)
 	}
 
 	RootNodes.Empty();
-	FString FilterString = InFilterText.ToString();
 
 	TMap<FString, TSharedPtr<FLiveConfigPropertyTreeNode>> FolderMap;
-	TFunction<TSharedPtr<FLiveConfigPropertyTreeNode>(FString)> GetOrCreateFolder;
-	GetOrCreateFolder = [&](FString FolderPath) -> TSharedPtr<FLiveConfigPropertyTreeNode>
+	TFunction<TSharedPtr<FLiveConfigPropertyTreeNode>(FString)> GetOrCreatePropertyFolder;
+	GetOrCreatePropertyFolder = [&](FString FolderPath) -> TSharedPtr<FLiveConfigPropertyTreeNode>
 	{
 		if (TSharedPtr<FLiveConfigPropertyTreeNode>* FoundFolder = FolderMap.Find(FolderPath))
 		{
@@ -436,7 +445,7 @@ void SLiveConfigPropertyManager::OnFilterTextChanged(const FText& InFilterText)
 				{
 					NewNode->DisplayName = FolderPath.RightChop(LastDot + 1);
 					FString ParentPath = FolderPath.Left(LastDot);
-					TSharedPtr<FLiveConfigPropertyTreeNode> ParentFolder = GetOrCreateFolder(ParentPath);
+					TSharedPtr<FLiveConfigPropertyTreeNode> ParentFolder = GetOrCreatePropertyFolder(ParentPath);
 					if (ParentFolder.IsValid())
 					{
 						ParentFolder->Children.Add(NewNode);
@@ -463,7 +472,7 @@ void SLiveConfigPropertyManager::OnFilterTextChanged(const FText& InFilterText)
 		{
 			NewFolder->DisplayName = FolderPath.RightChop(LastDot + 1);
 			FString ParentPath = FolderPath.Left(LastDot);
-			TSharedPtr<FLiveConfigPropertyTreeNode> ParentFolder = GetOrCreateFolder(ParentPath);
+			TSharedPtr<FLiveConfigPropertyTreeNode> ParentFolder = GetOrCreatePropertyFolder(ParentPath);
 			if (ParentFolder.IsValid())
 			{
 				ParentFolder->Children.Add(NewFolder);
@@ -506,7 +515,7 @@ void SLiveConfigPropertyManager::OnFilterTextChanged(const FText& InFilterText)
 				FString FolderPath = FullName.Left(LastDot);
 				FString DisplayName = FullName.RightChop(LastDot + 1);
 
-				TSharedPtr<FLiveConfigPropertyTreeNode> ParentFolder = GetOrCreateFolder(FolderPath);
+				TSharedPtr<FLiveConfigPropertyTreeNode> ParentFolder = GetOrCreatePropertyFolder(FolderPath);
 				
 				TSharedRef<FLiveConfigPropertyTreeNode> NewNode = MakeShared<FLiveConfigPropertyTreeNode>();
 				NewNode->DisplayName = DisplayName;
@@ -1045,7 +1054,7 @@ void SLiveConfigPropertyManager::BulkDeleteProperties(TArray<TSharedRef<FLiveCon
 		}
 	}
 
-	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
+	RefreshSearchFilter();
 
 	System.RebuildConfigCache();
 	RefreshTags();
@@ -1110,7 +1119,7 @@ void SLiveConfigPropertyManager::OnTagFilterSelected(FName InTag)
 {
 	SelectedTag = InTag;
 	RefreshTags(); // Refresh colors/highlights
-	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
+	RefreshSearchFilter();
 }
 
 
@@ -1170,7 +1179,7 @@ void SLiveConfigPropertyManager::OnAddNewProperty()
 		ULiveConfigSystem::Get().SaveProperty(*NewProp);
 		RawPropertyList.Add(NewProp);
 		
-		OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
+		RefreshSearchFilter();
 		
 		// Ensure it's scrolled to and selected
 		ScrollToProperty(NewProp->PropertyName);
@@ -1193,7 +1202,7 @@ void SLiveConfigPropertyManager::OnAddPropertyAtFolder(FString FolderPath)
 		ULiveConfigSystem::Get().SaveProperty(*NewProp);
 		RawPropertyList.Add(NewProp);
 		
-		OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
+		RefreshSearchFilter();
 		ScrollToProperty(NewProp->PropertyName);
 		RefreshTags();
 	}));
@@ -1264,7 +1273,7 @@ void SLiveConfigPropertyManager::OnPropertyRowChanged(TSharedPtr<FLiveConfigProp
 
 	if (ChangeType == ELiveConfigPropertyChangeType::Name)
 	{
-		OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
+		RefreshSearchFilter();
 	}
 
 	LiveConfigSystem.RebuildConfigCache();
@@ -1293,7 +1302,7 @@ void SLiveConfigPropertyManager::RemoveProperty(TSharedPtr<FLiveConfigPropertyDe
 	}
 
 	RawPropertyList.Remove(InItem);
-	OnFilterTextChanged(SearchBox.IsValid() ? SearchBox->GetText() : FText::GetEmpty());
+	RefreshSearchFilter();
 
 	System.RebuildConfigCache();
 

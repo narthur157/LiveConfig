@@ -11,7 +11,7 @@ public:
     virtual void ShutdownModule() override;
 
 	/** Opens the property manager window */
-	void OpenPropertyManager(FLiveConfigProperty FocusProperty = FLiveConfigProperty());
+	void OpenPropertyManager(FLiveConfigProperty FocusProperty = FLiveConfigProperty(), bool bOpenInNewTab = false);
 
 private:
 	void CheckForMissingTags();

@@ -5,6 +5,10 @@
 #include "Widgets/Views/STreeView.h"
 #include "LiveConfigSystem.h"
 
+/**
+ * Property tree nodes represent collapsing/expanding properties based on their paths
+ * IE a property that is `MyProperty.SubProperty` has `MyProperty` as a folder
+ */
 struct FLiveConfigPropertyTreeNode : public TSharedFromThis<FLiveConfigPropertyTreeNode>
 {
 	FString DisplayName;
@@ -48,6 +52,7 @@ private:
 	void OnAddPropertyAtFolder(FString FolderPath);
 	void OnAddNewTag(FName NewTag);
 	void OnFilterTextChanged(const FText& InFilterText);
+	void RefreshSearchFilter();
 	void RefreshTags();
 	void OnTagFilterSelected(FName InTag);
 	int32 GetTagCount(FName InTag) const;

@@ -18,6 +18,7 @@
 #include "IDesktopPlatform.h"
 #include "Framework/Application/SlateApplication.h"
 #include "Misc/FileHelper.h"
+#include "Misc/Guid.h"
 
 #define LOCTEXT_NAMESPACE "FLiveConfigEditorModule"
 
@@ -111,9 +112,17 @@ void FLiveConfigEditorModule::ShutdownModule()
 	PropertyModule.UnregisterCustomClassLayout(ULiveConfigSettings::StaticClass()->GetFName());
 }
 
-void FLiveConfigEditorModule::OpenPropertyManager(FLiveConfigProperty FocusProperty)
+void FLiveConfigEditorModule::OpenPropertyManager(FLiveConfigProperty FocusProperty, bool bOpenInNewTab)
 {
 	PropertyToFocus = FocusProperty;
+	if (bOpenInNewTab)
+	{
+		static int32 PropertyManagerInstanceId = 0;
+		PropertyManagerInstanceId++;
+		FGlobalTabmanager::Get()->TryInvokeTab(FTabId(LiveConfigPropertyManagerTabId, PropertyManagerInstanceId));
+		return;
+	}
+
 	TSharedPtr<SDockTab> Tab = FGlobalTabmanager::Get()->TryInvokeTab(LiveConfigPropertyManagerTabId);
 	if (Tab.IsValid())
 	{
@@ -129,8 +138,15 @@ void FLiveConfigEditorModule::OpenPropertyManager(FLiveConfigProperty FocusPrope
 void FLiveConfigEditorModule::RegisterTabSpawners()
 {
 	FTabSpawnerEntry& Spawner = FGlobalTabmanager::Get()->RegisterTabSpawner(LiveConfigPropertyManagerTabId, FOnSpawnTab::CreateRaw(this, &FLiveConfigEditorModule::SpawnPropertyManagerTab))
-		.SetDisplayName(LOCTEXT("PropertyManagerTabTitle", "Live Config Property Manager"))
+		.SetDisplayName(LOCTEXT("PropertyManagerTabTitle", "Live Config"))
+		.SetCanSidebarTab(true)
+		.SetReuseTabMethod(FOnFindTabToReuse::CreateLambda([](const FTabId& InTabId) ->TSharedPtr<SDockTab> {
+		
+			return TSharedPtr<SDockTab>();
+		}))
+		.SetIcon(FSlateIcon(FAppStyle::GetAppStyleSetName(), "Tab.Spreadsheet"))
 		.SetMenuType(ETabSpawnerMenuType::Enabled);
+	
 }
 
 void FLiveConfigEditorModule::UnregisterTabSpawners()
@@ -173,10 +189,10 @@ void FLiveConfigEditorModule::RegisterMenus()
 		FToolMenuSection& Section = PlayMenu->AddSection("LiveConfig", LOCTEXT("LiveConfigSection", "Live Config"));
 		FToolMenuEntry Entry = FToolMenuEntry::InitToolBarButton(
 			"OpenLiveConfigManager",
-			FUIAction(FExecuteAction::CreateRaw(this, &FLiveConfigEditorModule::OpenPropertyManager, FLiveConfigProperty())),
+			FUIAction(FExecuteAction::CreateRaw(this, &FLiveConfigEditorModule::OpenPropertyManager, FLiveConfigProperty(), false)),
 			LOCTEXT("OpenLiveConfigManager", "Live Config"),
 			LOCTEXT("OpenLiveConfigManagerTooltip", "Open the Live Config Property Manager"),
-			FSlateIcon(FAppStyle::GetAppStyleSetName(), "Icons.Settings")
+			FSlateIcon(FAppStyle::GetAppStyleSetName(), "Tab.Spreadsheet")
 		);
 		Entry.SetCommandList(nullptr);
 		Entry.StyleNameOverride = "CalloutToolbar";

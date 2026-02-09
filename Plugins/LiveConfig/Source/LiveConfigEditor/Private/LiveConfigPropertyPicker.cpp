@@ -52,7 +52,7 @@ void SLiveConfigPropertyPicker::Construct(const FArguments& InArgs)
             .OnClicked_Lambda([]()
             {
                 FLiveConfigEditorModule& EditorModule = FModuleManager::GetModuleChecked<FLiveConfigEditorModule>("LiveConfigEditor");
-                EditorModule.OpenPropertyManager();
+                EditorModule.OpenPropertyManager(FLiveConfigProperty(), true);
                 return FReply::Handled();
             })
             [
@@ -324,7 +324,7 @@ TSharedRef<ITableRow> SLiveConfigPropertyPicker::GenerateRow(TSharedPtr<FLiveCon
             .OnClicked_Lambda([InItem]()
             {
                 FLiveConfigEditorModule& EditorModule = FModuleManager::GetModuleChecked<FLiveConfigEditorModule>("LiveConfigEditor");
-                EditorModule.OpenPropertyManager(*InItem);
+                EditorModule.OpenPropertyManager(*InItem, true);
                 return FReply::Handled();
             })
             [
