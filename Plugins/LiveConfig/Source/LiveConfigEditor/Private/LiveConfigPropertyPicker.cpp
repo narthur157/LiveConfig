@@ -388,7 +388,7 @@ FReply SLiveConfigPropertyPicker::OnAddNewPropertyClicked()
     ELiveConfigPropertyType InitialType = FilterType.Get(ELiveConfigPropertyType::String);
     FString InitialName = SearchBox.IsValid() ? SearchBox->GetText().ToString() : TEXT("");
 
-    SLiveConfigNewPropertyDialog::OpenDialog(InitialName, InitialType, FOnPropertyCreated::CreateLambda([this](const FLiveConfigPropertyDefinition& NewDef)
+    SLiveConfigNewPropertyDialog::OpenDialog(InitialName, InitialType, TArray<FName>(), FOnPropertyCreated::CreateLambda([this](const FLiveConfigPropertyDefinition& NewDef)
     {
         ULiveConfigSystem::Get().SaveProperty(NewDef);
         

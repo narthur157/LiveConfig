@@ -16,6 +16,7 @@
 #include "Logging/TokenizedMessage.h"
 #include "DesktopPlatformModule.h"
 #include "IDesktopPlatform.h"
+#include "LiveConfigStyle.h"
 #include "Framework/Application/SlateApplication.h"
 #include "Misc/FileHelper.h"
 #include "Misc/Guid.h"
@@ -43,6 +44,7 @@ void FLiveConfigEditorModule::StartupModule()
 	auto PropertyPinFactory = MakeShareable(new FLiveConfigPropertyPinFactory());
 	FEdGraphUtilities::RegisterVisualPinFactory(PropertyPinFactory);
 	FLiveConfigPropertyStyle::Initialize();
+	FLiveConfigStyle::Initialize();
 
 	// Initialize blueprint extensions for "Promote to Live Config"
 	FLiveConfigBlueprintExtensions::Initialize();

@@ -44,6 +44,7 @@ public:
 		SLATE_EVENT(FOnNavigateValue, OnNavigateValue)
 		SLATE_EVENT(FOnScrollToProperty, OnRequestScroll)
 		SLATE_EVENT(FSimpleDelegate, OnAddNewTag)
+		SLATE_EVENT(FSimpleDelegate, OnMouseDown)
 	SLATE_END_ARGS()
 
 	void Construct(const FArguments& InArgs, const TSharedRef<STableViewBase>& InOwnerTable, TSharedPtr<FLiveConfigPropertyTreeNode>
@@ -56,6 +57,8 @@ public:
 	virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
 
 	virtual TSharedRef<SWidget> GenerateWidgetForColumn(const FName& ColumnName) override;
+	
+	virtual FReply OnMouseButtonDown(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent) override;
 
 	static constexpr float RowHeight = 32.0f;
 
@@ -93,5 +96,6 @@ private:
 	bool bNeedsValueFocus = false;
 	bool bIsCommitting = false;
 	bool bJustFinishedEnterCommit = false;
+	FSimpleDelegate OnMouseDown;
 	FSimpleDelegate OnAddNewTag;
 };

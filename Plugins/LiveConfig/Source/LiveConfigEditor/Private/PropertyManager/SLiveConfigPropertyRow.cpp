@@ -4,6 +4,7 @@
 #include "LiveConfigJson.h"
 #include "PropertyManager/SLiveConfigPropertyValueWidget.h"
 #include "Editor.h"
+#include "LiveConfigStyle.h"
 #include "LiveConfigSystem.h"
 #include "Widgets/Views/STableViewBase.h"
 #include "Widgets/Text/STextBlock.h"
@@ -50,28 +51,13 @@ void SLiveConfigPropertyRow::Construct(const FArguments& InArgs, const TSharedRe
 	OnNavigateValue = InArgs._OnNavigateValue;
 	OnRequestScroll = InArgs._OnRequestScroll;
 	OnAddNewTag = InArgs._OnAddNewTag;
+	OnMouseDown = InArgs._OnMouseDown;
 	
 	SMultiColumnTableRow<TSharedRef<FLiveConfigPropertyTreeNode>>::Construct(
 		SPropertyRowParent::FArguments()
+		.Style(FLiveConfigStyle::Get(), "LiveConfig.TableRow")
 		.Padding(0), 
 		InOwnerTable);
-
-	if (!Item->IsProperty())
-	{
-		// Folder and Struct nodes get a distinct darker background
-		SetBorderImage(FAppStyle::GetBrush("WhiteBrush"));
-		SetBorderBackgroundColor(FLinearColor(0.02f, 0.02f, 0.02f, 1.0f));
-	}
-	else if (InIndex % 2 == 1)
-	{
-		// Use a subtle dark background for striping
-		SetBorderImage(FAppStyle::GetBrush("WhiteBrush"));
-		SetBorderBackgroundColor(FLinearColor(1.0f, 1.0f, 1.0f, 0.02f));
-	}
-	else
-	{
-		SetBorderImage(FAppStyle::GetBrush("NoBorder"));
-	}
 
 	// If the name is empty or ends with a dot, it's a new property, request focus
 	if (Item->IsProperty() && (!Item->PropertyDefinition->PropertyName.IsValid() || Item->PropertyDefinition->PropertyName.ToString().EndsWith(TEXT(".")) || Item->bNeedsFocus))
@@ -153,6 +139,18 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateWidgetForColumn(const FName&
 	}
 
 	return SNullWidget::NullWidget;
+}
+
+FReply SLiveConfigPropertyRow::OnMouseButtonDown(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent)
+{
+	FReply Reply = SMultiColumnTableRow<TSharedRef<FLiveConfigPropertyTreeNode>>::OnMouseButtonDown(MyGeometry, MouseEvent);
+	
+	if ( MouseEvent.GetEffectingButton() == EKeys::LeftMouseButton )
+	{
+		OnMouseDown.ExecuteIfBound();
+	}
+	
+	return Reply;
 }
 
 TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateActionsColumnWidget()
@@ -359,7 +357,6 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateNameColumnWidget()
 		[
 			SAssignNew(NameTextBox, SEditableTextBox)
 			.IsReadOnly(this, &SLiveConfigPropertyRow::IsReadOnly)
-			.Font(FAppStyle::GetFontStyle("BoldFont"))
 			.ForegroundColor(FLinearColor::Black)
 			.Text_Lambda([this]()
 			{
@@ -551,7 +548,6 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateNameColumnWidget()
 		.VAlign(VAlign_Center)
 		[
 			SNew(STextBlock)
-			.Font(FAppStyle::GetFontStyle("BoldFont"))
 			.Text(FText::FromString(Item->FullPath))
 		];
 	}

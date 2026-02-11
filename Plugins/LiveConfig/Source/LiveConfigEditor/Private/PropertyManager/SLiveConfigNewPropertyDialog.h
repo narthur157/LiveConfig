@@ -13,9 +13,11 @@ public:
 	SLATE_BEGIN_ARGS(SLiveConfigNewPropertyDialog)
 		: _InitialName()
 		, _InitialType(ELiveConfigPropertyType::String)
+		, _InitialTags()
 	{}
 		SLATE_ARGUMENT(FString, InitialName);
 		SLATE_ARGUMENT(ELiveConfigPropertyType, InitialType);
+		SLATE_ARGUMENT(TArray<FName>, InitialTags);
 		SLATE_EVENT(FOnPropertyCreated, OnPropertyCreated);
 	SLATE_END_ARGS();
 
@@ -23,7 +25,7 @@ public:
 	virtual bool SupportsKeyboardFocus() const override;
 	virtual FReply OnKeyDown(const FGeometry& MyGeometry, const FKeyEvent& InKeyEvent) override;
 
-	static void OpenDialog(const FString& InInitialName, ELiveConfigPropertyType InInitialType, FOnPropertyCreated InOnPropertyCreated);
+	static void OpenDialog(const FString& InInitialName, ELiveConfigPropertyType InInitialType, const TArray<FName>& InInitialTags, FOnPropertyCreated InOnPropertyCreated);
 	
 private:
 	FReply HandleCreate();

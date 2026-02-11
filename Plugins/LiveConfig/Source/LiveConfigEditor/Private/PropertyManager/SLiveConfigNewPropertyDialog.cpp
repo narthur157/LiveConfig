@@ -22,6 +22,7 @@ void SLiveConfigNewPropertyDialog::Construct(const FArguments& InArgs)
 
 	TempDefinition = MakeShared<FLiveConfigPropertyDefinition>();
 	TempDefinition->PropertyType = SelectedType;
+	TempDefinition->Tags = InArgs._InitialTags;
 
 	TypeOptions.Add(MakeShared<ELiveConfigPropertyType>(ELiveConfigPropertyType::String));
 	TypeOptions.Add(MakeShared<ELiveConfigPropertyType>(ELiveConfigPropertyType::Int));
@@ -262,7 +263,7 @@ FReply SLiveConfigNewPropertyDialog::OnKeyDown(const FGeometry& MyGeometry, cons
 	return SCompoundWidget::OnKeyDown(MyGeometry, InKeyEvent);
 }
 
-void SLiveConfigNewPropertyDialog::OpenDialog(const FString& InInitialName, ELiveConfigPropertyType InInitialType, FOnPropertyCreated InOnPropertyCreated)
+void SLiveConfigNewPropertyDialog::OpenDialog(const FString& InInitialName, ELiveConfigPropertyType InInitialType, const TArray<FName>& InInitialTags, FOnPropertyCreated InOnPropertyCreated)
 {
 	TSharedRef<SWindow> Window = SNew(SWindow)
 		.Title(LOCTEXT("DialogTitle", "Create New Live Config Property"))
@@ -273,6 +274,7 @@ void SLiveConfigNewPropertyDialog::OpenDialog(const FString& InInitialName, ELiv
 	TSharedRef<SLiveConfigNewPropertyDialog> Dialog = SNew(SLiveConfigNewPropertyDialog)
 		.InitialName(InInitialName)
 		.InitialType(InInitialType)
+		.InitialTags(InInitialTags)
 		.OnPropertyCreated(InOnPropertyCreated);
 
 	Dialog->WindowPtr = Window;

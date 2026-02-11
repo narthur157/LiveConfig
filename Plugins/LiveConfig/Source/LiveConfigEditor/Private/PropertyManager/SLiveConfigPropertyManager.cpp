@@ -1,6 +1,5 @@
 #include "SLiveConfigPropertyManager.h"
 #include "SLiveConfigPropertyRow.h"
-#include "SLiveConfigTagRow.h"
 #include "SLiveConfigTagPicker.h"
 #include "SLiveConfigNewTagDialog.h"
 #include "SLiveConfigNewPropertyDialog.h"
@@ -19,6 +18,7 @@
 #include "ISettingsModule.h"
 #include "Modules/ModuleManager.h"
 #include "Widgets/Layout/SScrollBox.h"
+#include "Widgets/Layout/SSplitter.h"
 #include "LiveConfigSettings.h"
 #include "LiveConfigJson.h"
 #include "LiveConfigSystem.h"
@@ -51,16 +51,17 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 
 	ChildSlot
 	[
-		SNew(SHorizontalBox)
+		SNew(SSplitter)
+		.Orientation(Orient_Horizontal)
+		.Style(FAppStyle::Get(), "DetailsView.Splitter")
 
 		// Tag Filter Sidebar
-		+ SHorizontalBox::Slot()
-		.AutoWidth()
-		.Padding(5.0f)
+		+ SSplitter::Slot()
+		.Value(0.22f)
+		.MinSize(180.0f)
 		[
 			SNew(SBorder)
-			.BorderImage(FAppStyle::GetBrush("WhiteBrush"))
-			.BorderBackgroundColor(FLinearColor(0.05f, 0.05f, 0.05f, 1.0f))
+			.BorderBackgroundColor(FLinearColor(.1, .1, .1))
 			.Padding(FMargin(10, 10, 10, 10))
 			[
 				SNew(SBox)
@@ -72,7 +73,7 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 					.Padding(2.0f, 0.0f, 2.0f, 10.0f)
 					[
 						SNew(STextBlock)
-						.Text(LOCTEXT("TagsFilterTitle", "Tag Manager"))
+						.Text(LOCTEXT("TagsFilterTitle", "Tag Filter"))
 						.Font(FAppStyle::GetFontStyle("BoldFont"))
 						.ColorAndOpacity(FLinearColor(0.8f, 0.8f, 0.8f, 1.0f))
 					]
@@ -80,6 +81,7 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 					.FillHeight(1.0f)
 					[
 						SNew(SScrollBox)
+						.ScrollBarPadding(5.f)
 						+ SScrollBox::Slot()
 						[
 							SAssignNew(TagFilterBox, SVerticalBox)
@@ -152,8 +154,8 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 		]
 
 		// Main Content
-		+ SHorizontalBox::Slot()
-		.FillWidth(1.0f)
+		+ SSplitter::Slot()
+		.Value(0.78f)
 		[
 			SNew(SVerticalBox)
 
@@ -172,12 +174,23 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 					[
 						SNew(SButton)
 						.ButtonStyle(FAppStyle::Get(), "PrimaryButton")
-						.Text(LOCTEXT("AddProperty", "+ Add Property [A]"))
+						.Text(LOCTEXT("AddProperty", "+ Add Property"))
+						.ToolTipText(LOCTEXT("AddPropertyTooltip", "Add a new property. Shortcut: A"))
 						.OnClicked_Lambda([this]()
 						{
 							OnAddNewProperty();
 							return FReply::Handled();
 						})
+					]
+					+ SHorizontalBox::Slot()
+					.Padding(5, 0)
+					.FillWidth(1.0f)
+					.VAlign(VAlign_Center)
+					[
+						SAssignNew(SearchBox, SSearchBox)
+						.HintText(LOCTEXT("SearchPropertiesHint", "Search properties..."))
+						.ToolTipText(LOCTEXT("SearchPropertiesTooltip", "Filter properties. Shortcut: Ctrl+F"))	
+						.OnTextChanged(this, &SLiveConfigPropertyManager::OnFilterTextChanged)
 					]
 					+ SHorizontalBox::Slot()
 					.AutoWidth()
@@ -199,15 +212,6 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 							.Image(FAppStyle::GetBrush("Icons.Settings"))
 						]
 					]
-					+ SHorizontalBox::Slot()
-					.Padding(5, 0)
-					.FillWidth(1.0f)
-					.VAlign(VAlign_Center)
-					[
-						SAssignNew(SearchBox, SSearchBox)
-						.HintText(LOCTEXT("SearchPropertiesHint", "Search properties... [Ctrl+F]"))
-						.OnTextChanged(this, &SLiveConfigPropertyManager::OnFilterTextChanged)
-					]
 				]
 			]
 
@@ -220,6 +224,7 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 				.OnGetChildren(this, &SLiveConfigPropertyManager::OnGetChildren)
 				.OnSelectionChanged(this, &SLiveConfigPropertyManager::OnSelectionChanged)
 				.OnContextMenuOpening(this, &SLiveConfigPropertyManager::OnGetContextMenuContent)
+				.OnMouseButtonDoubleClick(this, &SLiveConfigPropertyManager::OnTreeDoubleClick)
 				.SelectionMode(ESelectionMode::Multi)
 				.HeaderRow(
 					SNew(SHeaderRow)
@@ -292,6 +297,7 @@ TSharedRef<ITableRow> SLiveConfigPropertyManager::OnGenerateRow(TSharedRef<FLive
 	return SNew(SLiveConfigPropertyRow, OwnerTable, InItem, 0)
 		.OnDeleteProperty(this, &SLiveConfigPropertyManager::RemoveProperty)
 		.OnAddPropertyAtFolder(this, &SLiveConfigPropertyManager::OnAddPropertyAtFolder)
+		.OnMouseDown(this, &SLiveConfigPropertyManager::OnPropertyRowMouseDown, InItem)
 		.OnBulkTagFolder_Lambda([this](FString FolderPath, FName TagName)
 		{
 			TArray<TSharedRef<FLiveConfigPropertyTreeNode>> FolderProperties;
@@ -683,9 +689,52 @@ void SLiveConfigPropertyManager::NavigateToProperty(TSharedPtr<FLiveConfigProper
 	}
 }
 
+void SLiveConfigPropertyManager::SetAllNodesExpanded(bool bExpanded)
+{
+	if (!PropertyTreeView.IsValid())
+	{
+		return;
+	}
+
+	SetNodesExpandedRecursive(RootNodes, bExpanded);
+	PropertyTreeView->RequestTreeRefresh();
+}
+
+void SLiveConfigPropertyManager::SetNodesExpandedRecursive(const TArray<TSharedRef<FLiveConfigPropertyTreeNode>>& Nodes, bool bExpanded)
+{
+	if (!PropertyTreeView.IsValid())
+	{
+		return;
+	}
+
+	for (const auto& Node : Nodes)
+	{
+		if (Node->Children.Num() > 0)
+		{
+			PropertyTreeView->SetItemExpansion(Node, bExpanded);
+			SetNodesExpandedRecursive(Node->Children, bExpanded);
+		}
+	}
+}
+
 TSharedPtr<SWidget> SLiveConfigPropertyManager::OnGetContextMenuContent()
 {
 	FMenuBuilder MenuBuilder(true, nullptr);
+
+	MenuBuilder.BeginSection("Expansion", LOCTEXT("ExpansionSection", "Expansion"));
+	MenuBuilder.AddMenuEntry(
+		LOCTEXT("CollapseAllProperties", "Collapse All"),
+		LOCTEXT("CollapseAllPropertiesTooltip", "Collapse all folders and structs"),
+		FSlateIcon(FAppStyle::GetAppStyleSetName(), "Icons.Collapse"),
+		FUIAction(FExecuteAction::CreateSP(this, &SLiveConfigPropertyManager::SetAllNodesExpanded, false))
+	);
+	MenuBuilder.AddMenuEntry(
+		LOCTEXT("ExpandAllProperties", "Expand All"),
+		LOCTEXT("ExpandAllPropertiesTooltip", "Expand all folders and structs"),
+		FSlateIcon(FAppStyle::GetAppStyleSetName(), "Icons.Expand"),
+		FUIAction(FExecuteAction::CreateSP(this, &SLiveConfigPropertyManager::SetAllNodesExpanded, true))
+	);
+	MenuBuilder.EndSection();
 
 	TArray<TSharedRef<FLiveConfigPropertyTreeNode>> SelectedItems = PropertyTreeView->GetSelectedItems();
 	TArray<TSharedRef<FLiveConfigPropertyTreeNode>> FlatVisibleItems;
@@ -876,6 +925,12 @@ TSharedPtr<SWidget> SLiveConfigPropertyManager::OnGetContextMenuContent()
 	return MenuBuilder.MakeWidget();
 }
 
+void SLiveConfigPropertyManager::OnTreeDoubleClick(TSharedRef<FLiveConfigPropertyTreeNode> LiveConfigPropertyTreeNode)
+{
+	// do nothing - we bind this event so that it doesn't do the default behavior, which is toggling expansion
+	// as we prefer expansion to happen on mouse down instead
+}
+
 void SLiveConfigPropertyManager::BulkAddTag(TArray<TSharedRef<FLiveConfigPropertyTreeNode>> Nodes, FName TagName)
 {
 	bool bChanged = false;
@@ -966,28 +1021,6 @@ void SLiveConfigPropertyManager::OnSelectionChanged(TSharedPtr<FLiveConfigProper
 	{
 		return;
 	}
-
-	// If a folder (struct with no definition, or explicit struct type) is selected, select all its children
-	if (SelectedItem->IsStruct() || (!SelectedItem->PropertyDefinition.IsValid() && SelectedItem->Children.Num() > 0))
-	{
-		TArray<TSharedRef<FLiveConfigPropertyTreeNode>> ToSelect;
-			
-		TFunction<void(TSharedRef<FLiveConfigPropertyTreeNode>)> CollectChildren = [&](TSharedRef<FLiveConfigPropertyTreeNode> Node)
-		{
-			for (auto& Child : Node->Children)
-			{
-				ToSelect.Add(Child);
-				CollectChildren(Child);
-			}
-		};
-
-		CollectChildren(SelectedItem.ToSharedRef());
-
-		if (ToSelect.Num() > 0)
-		{
-			PropertyTreeView->SetItemSelection(ToSelect, true, ESelectInfo::Direct);
-		}
-	}
 }
 
 void SLiveConfigPropertyManager::GetMissingTags(TArray<FName>& OutMissingTags)
@@ -1072,7 +1105,12 @@ void SLiveConfigPropertyManager::ScrollToProperty(FLiveConfigProperty Property)
 void SLiveConfigPropertyManager::OnAddNewProperty()
 {
 	ELiveConfigPropertyType InitialType = ELiveConfigPropertyType::String;
-	SLiveConfigNewPropertyDialog::OpenDialog(TEXT(""), InitialType, FOnPropertyCreated::CreateLambda([this](const FLiveConfigPropertyDefinition& NewDef)
+	TArray<FName> InitialTags;
+	if (!SelectedTag.IsNone())
+	{
+		InitialTags.Add(SelectedTag);
+	}
+	SLiveConfigNewPropertyDialog::OpenDialog(TEXT(""), InitialType, InitialTags, FOnPropertyCreated::CreateLambda([this](const FLiveConfigPropertyDefinition& NewDef)
 	{
 		ULiveConfigSystem::Get().SaveProperty(NewDef);
 		RefreshSearchFilter();
@@ -1088,14 +1126,26 @@ void SLiveConfigPropertyManager::OnAddPropertyAtFolder(FString FolderPath)
 {
 	FString NewName = FolderPath + TEXT(".");
 	ELiveConfigPropertyType InitialType = ELiveConfigPropertyType::String;
-	
-	SLiveConfigNewPropertyDialog::OpenDialog(NewName, InitialType, FOnPropertyCreated::CreateLambda([this](const FLiveConfigPropertyDefinition& NewDef)
+	TArray<FName> InitialTags;
+	if (!SelectedTag.IsNone())
+	{
+		InitialTags.Add(SelectedTag);
+	}
+	SLiveConfigNewPropertyDialog::OpenDialog(NewName, InitialType, InitialTags, FOnPropertyCreated::CreateLambda([this](const FLiveConfigPropertyDefinition& NewDef)
 	{
 		ULiveConfigSystem::Get().SaveProperty(NewDef);
 		RefreshSearchFilter();
 		ScrollToProperty(NewDef.PropertyName);
 		RefreshTags();
 	}));
+}
+
+void SLiveConfigPropertyManager::OnPropertyRowMouseDown( TSharedRef<FLiveConfigPropertyTreeNode> SelectedItem)
+{
+	// not all properties *can* be expanded, but that's fine
+	TArray<TSharedRef<FLiveConfigPropertyTreeNode>> ToSelect;
+	bool bWasExpanded = PropertyTreeView->IsItemExpanded(SelectedItem);
+	PropertyTreeView->SetItemExpansion(SelectedItem, !bWasExpanded);
 }
 
 void SLiveConfigPropertyManager::OnPropertyRowChanged(TSharedPtr<FLiveConfigPropertyDefinition> OldDef, TSharedPtr<FLiveConfigPropertyDefinition> NewDef, ELiveConfigPropertyChangeType ChangeType)

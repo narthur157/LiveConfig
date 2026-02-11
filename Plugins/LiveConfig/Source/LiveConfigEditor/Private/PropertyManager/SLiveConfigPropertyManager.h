@@ -54,6 +54,7 @@ private:
 	void RefreshList();
 	void OnAddNewProperty();
 	void OnAddPropertyAtFolder(FString FolderPath);
+	void OnPropertyRowMouseDown(TSharedRef<FLiveConfigPropertyTreeNode> SelectedItem);
 	void OnAddNewTag(FName NewTag);
 	void OnFilterTextChanged(const FText& InFilterText);
 	void RefreshSearchFilter();
@@ -63,10 +64,13 @@ private:
 	void OnPropertyRowChanged(TSharedPtr<FLiveConfigPropertyDefinition> OldDef, TSharedPtr<FLiveConfigPropertyDefinition> NewDef, ELiveConfigPropertyChangeType ChangeType);
 	void GetFlatVisibleProperties(TArray<TSharedRef<FLiveConfigPropertyTreeNode>>& OutFlatList) const;
 	void NavigateToProperty(TSharedPtr<FLiveConfigPropertyTreeNode> CurrentItem, int32 Direction);
+	void SetAllNodesExpanded(bool bExpanded);
+	void SetNodesExpandedRecursive(const TArray<TSharedRef<FLiveConfigPropertyTreeNode>>& Nodes, bool bExpanded);
 	void BulkAddTag(TArray<TSharedRef<FLiveConfigPropertyTreeNode>> Nodes, FName TagName);
 	void BulkRemoveTag(TArray<TSharedRef<FLiveConfigPropertyTreeNode>> Nodes, FName TagName);
 	void BulkDeleteProperties(TArray<TSharedRef<FLiveConfigPropertyTreeNode>> Nodes);
 	TSharedPtr<SWidget> OnGetContextMenuContent();
+	void OnTreeDoubleClick(TSharedRef<FLiveConfigPropertyTreeNode> LiveConfigPropertyTreeNode);
 	void OnSelectionChanged(TSharedPtr<FLiveConfigPropertyTreeNode> SelectedItem, ESelectInfo::Type SelectInfo);
 	void OnManageRedirects();
 	void OnCleanupUnusedProperties();
