@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Operator.wallRunMinRequiredSpeed"
-	},
+	"propertyName": "Operator.wallRunMinRequiredSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Operator"
 	],
 	"value": "999999"
 }

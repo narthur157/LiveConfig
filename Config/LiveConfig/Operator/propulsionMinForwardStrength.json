@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Operator.propulsionMinForwardStrength"
-	},
+	"propertyName": "Operator.propulsionMinForwardStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Operator"
 	],
 	"value": "2500"
 }

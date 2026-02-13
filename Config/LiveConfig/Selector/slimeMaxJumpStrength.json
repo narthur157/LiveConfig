@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.slimeMaxJumpStrength"
-	},
+	"propertyName": "Selector.slimeMaxJumpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Selector"
 	],
 	"value": "1450"
 }

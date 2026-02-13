@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.wallRunMinRequiredSpeed"
-	},
+	"propertyName": "Selector.wallRunMinRequiredSpeed",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Selector"
 	],
 	"value": "999999"
 }

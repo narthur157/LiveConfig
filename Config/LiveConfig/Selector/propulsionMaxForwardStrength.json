@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Selector.propulsionMaxForwardStrength"
-	},
+	"propertyName": "Selector.propulsionMaxForwardStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Selector"
 	],
 	"value": "2500"
 }

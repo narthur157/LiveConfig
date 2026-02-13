@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Operator.sprintStrength"
-	},
+	"propertyName": "Operator.sprintStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Operator"
 	],
 	"value": "700"
 }

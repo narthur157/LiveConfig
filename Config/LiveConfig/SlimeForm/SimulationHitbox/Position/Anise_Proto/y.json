@@ -1,10 +1,10 @@
 {
 	"propertyName": "SlimeForm.SimulationHitbox.Position.Anise_Proto.y",
 	"description": "",
-	"propertyType": "Int",
+	"propertyType": "Struct",
 	"tags": [
 		"Vector",
 		"Vandal"
 	],
-	"value": "0"
+	"value": ""
 }

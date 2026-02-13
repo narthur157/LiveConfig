@@ -1,12 +1,10 @@
 {
-	"propertyName":
-	{
-		"propertyName": "Operator.heroJumpStrength"
-	},
+	"propertyName": "Operator.heroJumpStrength",
 	"description": "",
 	"propertyType": "Int",
 	"tags": [
-		"Movement"
+		"Movement",
+		"Operator"
 	],
 	"value": "1150"
 }

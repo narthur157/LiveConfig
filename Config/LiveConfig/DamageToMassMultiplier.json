@@ -2,6 +2,8 @@
 	"propertyName": "DamageToMassMultiplier",
 	"description": "",
 	"propertyType": "Float",
-	"tags": [],
+	"tags": [
+		"CombatSystem"
+	],
 	"value": "0.5"
 }
