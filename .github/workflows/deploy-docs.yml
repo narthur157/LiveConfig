@@ -25,7 +25,8 @@ jobs:
       - name: Generate API Docs
         run: |
           mkdir -p Plugins/LiveConfig/Docs/public/api
-          doxygen Plugins/LiveConfig/doxyconfig
+          cd Plugins/LiveConfig
+          doxygen doxyconfig
 
       - name: Setup Node
         uses: actions/setup-node@v6
