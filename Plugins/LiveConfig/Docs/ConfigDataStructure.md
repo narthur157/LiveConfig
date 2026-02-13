@@ -44,12 +44,9 @@ Additionally, in the case that there _is_ a merge conflict, it can be resolved e
 
 ### Reference Tracking and Renaming
 
-LiveConfig uses a "Lightweight Asset" approach similar to **GameplayTags** for reference tracking and renaming.
-
 #### Reference Tracking
 LiveConfig uses Unreal's **Searchable Names** in the Asset Registry. When an `FLiveConfigProperty` is saved in any asset (Blueprint, Level, Data Asset), its name is registered as a searchable dependency.
-- Use the **Reference Viewer** on a property name in the LiveConfig editor to see all assets that reference it.
-- This provides the benefits of reference tracking without the overhead of individual `.uasset` files.
+- Use **find usages** on a property name in the LiveConfig editor to see all assets that reference it.
 
 #### Renaming and Redirectors
 If a property needs to be renamed, LiveConfig supports **Property Redirectors** via configuration.

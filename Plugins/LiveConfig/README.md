@@ -1,18 +1,17 @@
 ﻿# Live Config Plugin
 
-Centralize your game data
+Treat your game data with respect.
 
-Use feature flags to deploy confidently and differentiate environments
-
-Skip digging through blueprints, curve tables, data tables for tuning values
-
-Make tuning changes in realtime, in any build
+Live Config allows you to decouple tuning concerns from feature implementation. Create tuning values on the fly while coding, and empower designers to refine them in-editor or in-build without further engineering support.
 
 ## Why use Live Config?
 
-Game balancing and iteration requires endless tiny tweaks to variables. Unreal lacks tools to efficiently manage these variables during development and live operations. 
+Tuning and gameplay iteration shouldn't be an afterthought buried in Blueprints or hardcoded constants. Live Config pulls your tuning data away from the implementation, giving it the respect it deserves.
 
-Live Config bridges the gap by providing a designer-friendly workflow while maintaining high performance through local caching and type-safe access in C++ and Blueprints. It is particularly useful during development for rapid iteration and in live-service games for "over-the-air" balancing.
+- **Stop Thinking About Tuning While Coding**: Create an initial property, use it in your code, and move on.
+- **Empower Designers**: Designers can iterate on values in the editor or live in-build via Google Sheets.
+- **SCM-First Workflow**: Changes are stored in individual JSON files, making tuning history as readable and manageable as code.
+- **Big Studio Tooling for Everyone**: Smaller teams often lack the resources to build dedicated tools teams. Live Config provides the robust configuration infrastructure used by AAA studios, out of the box.
 
 
 
@@ -31,6 +30,11 @@ Live Config bridges the gap by providing a designer-friendly workflow while main
 - **Curve Table Support**: Seamlessly sync remote values with Unreal's native Curve Tables. This is particularly useful for `FScalableFloat` from GAS
 - **Profile System**: Create sets of tuning changes and save them to their own file.
 - **Network Replication**: Server-authoritative config values are efficiently replicated to clients.
+
+## Documentation
+
+The full documentation, including the API reference, is available at:
+[https://narthur157.github.io/LiveConfig/](https://narthur157.github.io/LiveConfig/)
 
 ## Comparison with Similar Tools
 
@@ -76,4 +80,4 @@ FMyHeroStats Stats = ULiveConfigSystem::Get().GetLiveConfigStruct<FMyHeroStats>(
 
 # Credit
 
-This plugin was developed by Nick Arthur with invaluable assistance and advice from Joe Finley. Additionally, I'd like to credit the team at Genpop for using the plugin which inspired this one.
+This plugin was developed with invaluable assistance from Joe Finley -  we have spent considerable time deliberating on the pros and cons of  

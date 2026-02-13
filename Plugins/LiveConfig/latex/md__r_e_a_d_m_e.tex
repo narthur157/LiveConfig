@@ -1,0 +1,105 @@
+\chapter{Live Config Plugin}
+\hypertarget{md__r_e_a_d_m_e}{}\label{md__r_e_a_d_m_e}\index{Live Config Plugin@{Live Config Plugin}}
+\label{md__r_e_a_d_m_e_autotoc_md0}%
+\Hypertarget{md__r_e_a_d_m_e_autotoc_md0}%
+ Treat your game data with respect.
+
+Live Config allows you to decouple tuning concerns from feature implementation. Create tuning values on the fly while coding, and empower designers to refine them in-\/editor or in-\/build without further engineering support.\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysection{\texorpdfstring{Why use Live Config?}{Why use Live Config?}}\label{md__r_e_a_d_m_e_autotoc_md1}
+Tuning and gameplay iteration shouldn\textquotesingle{}t be an afterthought buried in Blueprints or hardcoded constants. Live Config pulls your tuning data away from the implementation, giving it the respect it deserves.
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Stop Thinking About Tuning While Coding}}\+: Create an initial property, use it in your code, and move on.
+\item {\bfseries{Empower Designers}}\+: Designers can iterate on values in the editor or live in-\/build via Google Sheets.
+\item {\bfseries{SCM-\/\+First Workflow}}\+: Changes are stored in individual JSON files, making tuning history as readable and manageable as code.
+\item {\bfseries{Big Studio Tooling for Everyone}}\+: Smaller teams often lack the resources to build dedicated tools teams. Live Config provides the robust configuration infrastructure used by AAA studios, out of the box.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{\texorpdfstring{Key Features}{Key Features}}\label{md__r_e_a_d_m_e_autotoc_md2}
+
+\begin{DoxyItemize}
+\item {\bfseries{Editor Tooling}}\+:
+\begin{DoxyItemize}
+\item {\bfseries{Live Config Manager}}\+: A dedicated window to manage all your properties, tags, and overrides.
+\item {\bfseries{Blueprint Integration}}\+: Special blueprint node for easy access to config properties, provides type-\/safe access and autocomplete.
+\item {\bfseries{CVar per-\/property}}\+: Automatic autocomplete for live config properties in the console. Easily test editing values
+\end{DoxyItemize}
+\item {\bfseries{Built for source control}} Live config uses one JSON file per property, preventing excessive merge conflicts and creating a readable diff for tuning changes.
+\item {\bfseries{Exportable game database}} Easily create a wiki or other knowledge store using your game\textquotesingle{}s actual data
+\item {\bfseries{Property Tags}} Tagging properties provides opportunities not only for organizing, but building additional tooling around properties
+\item {\bfseries{Google Sheets Integration}}\+: Use a public readable Google Sheet (published as CSV) to override config values at runtime.
+\item {\bfseries{Type support}}\+: Properties are tied to particular types, including structs.
+\item {\bfseries{Curve Table Support}}\+: Seamlessly sync remote values with Unreal\textquotesingle{}s native Curve Tables. This is particularly useful for {\ttfamily FScalable\+Float} from GAS
+\item {\bfseries{Profile System}}\+: Create sets of tuning changes and save them to their own file.
+\item {\bfseries{Network Replication}}\+: Server-\/authoritative config values are efficiently replicated to clients.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md3}{}\doxysection{\texorpdfstring{Comparison with Similar Tools}{Comparison with Similar Tools}}\label{md__r_e_a_d_m_e_autotoc_md3}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\cellcolor{\tableheadbgcolor}\textbf{ Tool   }&\cellcolor{\tableheadbgcolor}\textbf{ Pros   }&\cellcolor{\tableheadbgcolor}\textbf{ Cons    }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\cellcolor{\tableheadbgcolor}\textbf{ Tool   }&\cellcolor{\tableheadbgcolor}\textbf{ Pros   }&\cellcolor{\tableheadbgcolor}\textbf{ Cons    }\\\cline{1-3}
+\endhead
+{\bfseries{Live Config}}   &{\bfseries{Easy Setup}}\+: Up and running in minutes.~\newline
+{\bfseries{Designer Friendly}}.~\newline
+{\bfseries{Real-\/time}}\+: Updates live in-\/game with polling.~\newline
+{\bfseries{Type-\/safe}}\+: Strong integration with Unreal types and structs.   &Requires internet for remote updates.~\newline
+Sheet must be public (or accessible via URL).~\newline
+Not intended for massive binary data.    \\\cline{1-3}
+{\bfseries{Unreal Hotfix Manager}}   &Native Epic support.~\newline
+Can patch code and assets, not just variables.   &Very complex to set up.~\newline
+Requires dedicated backend infrastructure (CDN/\+Manifests).~\newline
+High friction for simple variable tweaks.    \\\cline{1-3}
+{\bfseries{Firestore (Firebase)}}   &Real-\/time, highly scalable.~\newline
+Cloud-\/native features (Auth, Analytics).   &Requires Firebase SDK integration.~\newline
+Overkill for simple config.~\newline
+Not natively designed for Unreal\textquotesingle{}s data flow.    \\\cline{1-3}
+{\bfseries{Play\+Fab / App\+Config}}   &Cloud-\/native, scalable.~\newline
+Supports complex rules and segments.   &Requires third-\/party SDK.~\newline
+Costs can scale with usage.~\newline
+Less integrated with local Unreal structs.    \\\cline{1-3}
+{\bfseries{Normal Config (.ini)}}   &No internet required.~\newline
+Standard Unreal workflow.   &Requires game restart (usually) to apply changes.~\newline
+Hard to manage remotely for live games.~\newline
+No central source of truth for a distributed team.   \\\cline{1-3}
+\end{longtabu}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysection{\texorpdfstring{Quickstart Guide}{Quickstart Guide}}\label{md__r_e_a_d_m_e_autotoc_md4}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md5}{}\doxysubsection{\texorpdfstring{1. Basic Setup}{1. Basic Setup}}\label{md__r_e_a_d_m_e_autotoc_md5}
+
+\begin{DoxyEnumerate}
+\item Enable the {\bfseries{Live Config}} plugin in your project.
+\item In the Unreal Editor, go to {\bfseries{Project Settings}} -\/\texorpdfstring{$>$}{>} {\bfseries{Project}} -\/\texorpdfstring{$>$}{>} {\bfseries{Live Config}}.
+\item Set your {\bfseries{Sheet URL}}. This should be a link to a Google Sheet published as CSV.
+\begin{DoxyItemize}
+\item {\itshape Google Sheets\+: File -\/\texorpdfstring{$>$}{>} Share -\/\texorpdfstring{$>$}{>} Publish to web -\/\texorpdfstring{$>$}{>} Select Sheet and \textquotesingle{}Comma-\/separated values (.csv)\textquotesingle{} -\/\texorpdfstring{$>$}{>} Copy Link.}
+\end{DoxyItemize}
+\end{DoxyEnumerate}\hypertarget{md__r_e_a_d_m_e_autotoc_md6}{}\doxysubsection{\texorpdfstring{2. Defining Properties}{2. Defining Properties}}\label{md__r_e_a_d_m_e_autotoc_md6}
+Open the {\bfseries{Live Config Property Manager}} from the {\bfseries{Live Config}} button in the Level Editor toolbar (next to the Play button).
+
+From here you can\+:
+\begin{DoxyItemize}
+\item Add new properties.
+\item Assign tags (e.\+g., {\ttfamily Combat}, {\ttfamily Movement}).
+\item Set default values and types.
+\item Import/\+Export from Curve Tables.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md7}{}\doxysubsection{\texorpdfstring{3. Using in Code (\+C++)}{3. Using in Code (C++)}}\label{md__r_e_a_d_m_e_autotoc_md7}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ "{}LiveConfigSystem.h"{}}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Get\ a\ float\ value}}
+\DoxyCodeLine{\textcolor{keywordtype}{float}\ Speed\ =\ ULiveConfigSystem::Get().GetFloatValue(\textcolor{stringliteral}{"{}Hero.MoveSpeed"{}});}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Map\ a\ whole\ struct\ (automatically\ looks\ up\ Hero.Stats.Health,\ Hero.Stats.Armor,\ etc.)}}
+\DoxyCodeLine{FMyHeroStats\ Stats\ =\ ULiveConfigSystem::Get().GetLiveConfigStruct<FMyHeroStats>(\textcolor{stringliteral}{"{}Hero.Stats"{}});}
+
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md8}{}\doxysubsection{\texorpdfstring{4. Using in Blueprints}{4. Using in Blueprints}}\label{md__r_e_a_d_m_e_autotoc_md8}
+
+\begin{DoxyItemize}
+\item {\bfseries{Get Value}}\+: Use the {\ttfamily Get Value} nodes and select your property from the dropdown.
+\item {\bfseries{Promote to Live Config}}\+: Right-\/click on any compatible pin in a Blueprint and select \"{}\+Promote to Live Config\"{} to automatically create a linked property.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md9}{}\doxysection{\texorpdfstring{Credit}{Credit}}\label{md__r_e_a_d_m_e_autotoc_md9}
+This plugin was developed with invaluable assistance from Joe Finley -\/ we have spent considerable time deliberating on the pros and cons of ~\newline
+ 

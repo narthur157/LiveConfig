@@ -1,10 +1,10 @@
 docs/.vitepress/dist
 docs/.vitepress/cache
 
+.vsconfig
 .aiassistant/
 .output.txt
 node_modules/
-/
 # python
 __pycache__/
 # Visual Studio 2015/2017/2019/2022 user specific files
@@ -91,6 +91,11 @@ Build/
 ehthumbs.db
 Thumbs.db
 Desktop.ini
+
+# Docs
+Plugins/LiveConfig/Docs/temp
+# Doxygen
+Plugins/LiveConfig/Docs/public/api/
 
 # Unreal Engine specific
 # Note: .uasset and .umap files in Content/ should be tracked
