@@ -24,8 +24,7 @@ jobs:
 
       - name: Generate API Docs
         run: |
-          mkdir -p Plugins/LiveConfig/Docs/public/api
-          cd Plugins/LiveConfig
+          mkdir -p Docs/public/api
           doxygen doxyconfig
 
       - name: Setup Node
@@ -41,12 +40,12 @@ jobs:
         run: npm ci
 
       - name: Build VitePress
-        run: npx vitepress build Plugins/LiveConfig/Docs
+        run: npx vitepress build Docs
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: Plugins/LiveConfig/Docs/.vitepress/dist
+          path: Docs/.vitepress/dist
 
   deploy:
     environment:
