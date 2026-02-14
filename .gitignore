@@ -1,5 +1,5 @@
-docs/.vitepress/dist
-docs/.vitepress/cache
+Docs/.vitepress/dist
+Docs/.vitepress/cache
 
 .vsconfig
 .aiassistant/
@@ -93,9 +93,9 @@ Thumbs.db
 Desktop.ini
 
 # Docs
-Plugins/LiveConfig/Docs/temp
+Docs/temp
 # Doxygen
-Plugins/LiveConfig/Docs/public/api/
+Docs/public/api/
 
 # Unreal Engine specific
 # Note: .uasset and .umap files in Content/ should be tracked
