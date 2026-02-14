@@ -1,9 +1,0 @@
-{
-	"propertyName": "Calico.BlastUp.BurnField.PowerCoeffecient",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Calico"
-	],
-	"value": "0.1"
-}

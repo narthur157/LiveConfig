@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.Primary.FalloffSecondPointDistance",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Scanner"
-	],
-	"value": "4500"
-}

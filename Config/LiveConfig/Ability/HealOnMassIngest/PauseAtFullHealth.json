@@ -1,9 +1,0 @@
-{
-	"propertyName": "Ability.HealOnMassIngest.PauseAtFullHealth",
-	"description": "",
-	"propertyType": "Bool",
-	"tags": [
-		"Abilities"
-	],
-	"value": "true"
-}

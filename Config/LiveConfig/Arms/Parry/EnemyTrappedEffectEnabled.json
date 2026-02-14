@@ -1,9 +1,0 @@
-{
-	"propertyName": "Arms.Parry.EnemyTrappedEffectEnabled",
-	"description": "",
-	"propertyType": "Bool",
-	"tags": [
-		"Arms"
-	],
-	"value": "true"
-}

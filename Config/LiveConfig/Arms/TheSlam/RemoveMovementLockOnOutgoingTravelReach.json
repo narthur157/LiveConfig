@@ -1,9 +1,0 @@
-{
-	"propertyName": "Arms.TheSlam.RemoveMovementLockOnOutgoingTravelReach",
-	"description": "",
-	"propertyType": "Bool",
-	"tags": [
-		"Arms"
-	],
-	"value": "true"
-}

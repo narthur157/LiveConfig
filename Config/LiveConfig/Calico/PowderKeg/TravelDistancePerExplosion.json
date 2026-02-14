@@ -1,9 +1,0 @@
-{
-	"propertyName": "Calico.PowderKeg.TravelDistancePerExplosion",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Calico"
-	],
-	"value": "500"
-}

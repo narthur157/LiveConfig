@@ -1,9 +1,0 @@
-{
-	"propertyName": "Calico.BouncyBomb.BaseDamage",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Calico"
-	],
-	"value": "60"
-}

@@ -1,9 +1,0 @@
-{
-	"propertyName": "Toxic.Venom.PowerReductionPerStack",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Fugu"
-	],
-	"value": "5"
-}

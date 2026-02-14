@@ -1,9 +1,0 @@
-{
-	"propertyName": "Arms.AttackDistance",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Arms"
-	],
-	"value": "2000"
-}

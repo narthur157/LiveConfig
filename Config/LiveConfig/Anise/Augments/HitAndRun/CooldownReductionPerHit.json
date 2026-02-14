@@ -1,9 +1,0 @@
-{
-	"propertyName": "Anise.Augments.HitAndRun.CooldownReductionPerHit",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Vandal"
-	],
-	"value": "0.2"
-}

@@ -1,9 +1,0 @@
-{
-	"propertyName": "Marker.ChargeLaser.CapsuleTraceLength",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Marker"
-	],
-	"value": "2000000"
-}

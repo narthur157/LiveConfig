@@ -1,9 +1,0 @@
-{
-	"propertyName": "Marker.Primary.FalloffSecondPointDistance",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Marker"
-	],
-	"value": "7500"
-}

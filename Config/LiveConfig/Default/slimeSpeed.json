@@ -1,9 +1,0 @@
-{
-	"propertyName": "Default.slimeSpeed",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Movement"
-	],
-	"value": "990"
-}

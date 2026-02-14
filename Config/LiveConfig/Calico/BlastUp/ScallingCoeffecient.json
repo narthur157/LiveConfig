@@ -1,9 +1,0 @@
-{
-	"propertyName": "Calico.BlastUp.ScallingCoeffecient",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Calico"
-	],
-	"value": "0.4"
-}

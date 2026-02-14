@@ -1,9 +1,0 @@
-{
-	"propertyName": "Marker.ChargeLaser.DamagePerMark",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Marker"
-	],
-	"value": "20"
-}

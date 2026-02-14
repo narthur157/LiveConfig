@@ -1,9 +1,0 @@
-{
-	"propertyName": "Marker.MassBlind.Cooldown",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Marker"
-	],
-	"value": "10"
-}

@@ -1,9 +1,0 @@
-{
-	"propertyName": "Marker.AllSeeingEye.WallForgiveness",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Marker"
-	],
-	"value": "200"
-}

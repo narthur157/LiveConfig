@@ -1,9 +1,0 @@
-{
-	"propertyName": "Default.massToUltEnergyRatioAsPercentage",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Mode"
-	],
-	"value": "100"
-}

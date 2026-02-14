@@ -1,7 +1,0 @@
-{
-	"propertyName": "Movement.Momentum.ForceBased.MinSpeedThreshold",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [],
-	"value": "300"
-}

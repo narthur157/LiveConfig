@@ -1,9 +1,0 @@
-{
-	"propertyName": "Arms.Primary.PowerScalingCof",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Arms"
-	],
-	"value": "0.08"
-}

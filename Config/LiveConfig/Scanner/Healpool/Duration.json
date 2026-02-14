@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.Healpool.Duration",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Scanner"
-	],
-	"value": "3"
-}

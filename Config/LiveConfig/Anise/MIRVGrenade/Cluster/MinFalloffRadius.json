@@ -1,9 +1,0 @@
-{
-	"propertyName": "Anise.MIRVGrenade.Cluster.MinFalloffRadius",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Vandal"
-	],
-	"value": "400"
-}

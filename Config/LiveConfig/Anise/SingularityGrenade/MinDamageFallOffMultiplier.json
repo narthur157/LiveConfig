@@ -1,9 +1,0 @@
-{
-	"propertyName": "Anise.SingularityGrenade.MinDamageFallOffMultiplier",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Vandal"
-	],
-	"value": "0.75"
-}

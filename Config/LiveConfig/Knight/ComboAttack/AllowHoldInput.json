@@ -1,9 +1,0 @@
-{
-	"propertyName": "Knight.ComboAttack.AllowHoldInput",
-	"description": "",
-	"propertyType": "Bool",
-	"tags": [
-		"Claypool"
-	],
-	"value": "true"
-}

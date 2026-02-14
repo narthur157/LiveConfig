@@ -1,9 +1,0 @@
-{
-	"propertyName": "Anise.Augments.MissingIsOk.ProcChance",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Vandal"
-	],
-	"value": "0.35"
-}

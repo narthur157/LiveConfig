@@ -1,9 +1,0 @@
-{
-	"propertyName": "Arms.Parry.SelfStopMovementEnabled",
-	"description": "",
-	"propertyType": "Bool",
-	"tags": [
-		"Arms"
-	],
-	"value": "true"
-}

@@ -1,9 +1,0 @@
-{
-	"propertyName": "Domination.maxGameLengthSeconds",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Mode"
-	],
-	"value": "720"
-}

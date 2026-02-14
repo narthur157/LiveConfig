@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.Augment.Emergency.HealthThreshold",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Scanner"
-	],
-	"value": "0.3"
-}

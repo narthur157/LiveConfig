@@ -1,9 +1,0 @@
-{
-	"propertyName": "DamageToMaxHealthReductionConversion",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"CombatSystem"
-	],
-	"value": "0.2"
-}

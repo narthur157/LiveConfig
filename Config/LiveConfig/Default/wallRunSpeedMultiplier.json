@@ -1,9 +1,0 @@
-{
-	"propertyName": "Default.wallRunSpeedMultiplier",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Movement"
-	],
-	"value": "1"
-}

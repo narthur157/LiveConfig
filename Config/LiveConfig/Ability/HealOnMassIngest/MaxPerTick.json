@@ -1,9 +1,0 @@
-{
-	"propertyName": "Ability.HealOnMassIngest.MaxPerTick",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Abilities"
-	],
-	"value": "0"
-}

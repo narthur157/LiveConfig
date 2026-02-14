@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.Railgun.Damage.LowHealth",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Scanner"
-	],
-	"value": "75"
-}

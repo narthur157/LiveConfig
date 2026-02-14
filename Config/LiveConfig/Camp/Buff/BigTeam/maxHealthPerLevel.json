@@ -1,9 +1,0 @@
-{
-	"propertyName": "Camp.Buff.BigTeam.maxHealthPerLevel",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Attributes"
-	],
-	"value": "20"
-}

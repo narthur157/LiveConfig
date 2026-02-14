@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.Projectiles",
-	"description": "",
-	"propertyType": "Bool",
-	"tags": [
-		"Scanner"
-	],
-	"value": "false"
-}

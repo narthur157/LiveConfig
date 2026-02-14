@@ -1,9 +1,0 @@
-{
-	"propertyName": "Marker.ChargeLaser.CapsuleRadius",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Marker"
-	],
-	"value": "30"
-}

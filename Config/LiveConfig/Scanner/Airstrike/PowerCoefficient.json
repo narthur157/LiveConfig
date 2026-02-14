@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.Airstrike.PowerCoefficient",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Scanner"
-	],
-	"value": "1.4"
-}

@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.SphereCastRadius",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Scanner"
-	],
-	"value": "9"
-}

@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.PoweredUp.PercentageGainedPerHit",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Scanner"
-	],
-	"value": "2"
-}

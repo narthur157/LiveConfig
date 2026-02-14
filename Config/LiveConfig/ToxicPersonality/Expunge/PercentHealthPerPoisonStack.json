@@ -1,9 +1,0 @@
-{
-	"propertyName": "ToxicPersonality.Expunge.PercentHealthPerPoisonStack",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Fugu"
-	],
-	"value": "0.075"
-}

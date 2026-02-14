@@ -1,9 +1,0 @@
-{
-	"propertyName": "Anise.Augment.BoomGoesTheDynamite.CooldownIncreasePercentage",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Vandal"
-	],
-	"value": "0.4"
-}

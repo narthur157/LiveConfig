@@ -1,9 +1,0 @@
-{
-	"propertyName": "Calico.PowderKeg.MaxSpeedMultiplier",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Calico"
-	],
-	"value": "0.5"
-}

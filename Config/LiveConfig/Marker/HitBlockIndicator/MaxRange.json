@@ -1,9 +1,0 @@
-{
-	"propertyName": "Marker.HitBlockIndicator.MaxRange",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Marker"
-	],
-	"value": "250"
-}

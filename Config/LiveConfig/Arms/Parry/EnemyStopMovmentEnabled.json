@@ -1,9 +1,0 @@
-{
-	"propertyName": "Arms.Parry.EnemyStopMovmentEnabled",
-	"description": "",
-	"propertyType": "Bool",
-	"tags": [
-		"Arms"
-	],
-	"value": "true"
-}

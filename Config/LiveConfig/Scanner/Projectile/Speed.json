@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.Projectile.Speed",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Scanner"
-	],
-	"value": "60000"
-}

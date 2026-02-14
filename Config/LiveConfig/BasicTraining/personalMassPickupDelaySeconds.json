@@ -1,9 +1,0 @@
-{
-	"propertyName": "BasicTraining.personalMassPickupDelaySeconds",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Mode"
-	],
-	"value": "5"
-}

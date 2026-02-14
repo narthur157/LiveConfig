@@ -1,9 +1,0 @@
-{
-	"propertyName": "Default.slimeMaxJumpStrength",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Movement"
-	],
-	"value": "1450"
-}

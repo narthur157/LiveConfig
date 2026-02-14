@@ -1,9 +1,0 @@
-{
-	"propertyName": "Anise.TrueSentience.Spawned.MinDamageFallOffMultiplier",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Vandal"
-	],
-	"value": "0.75"
-}

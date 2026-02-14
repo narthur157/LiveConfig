@@ -1,9 +1,0 @@
-{
-	"propertyName": "Glutton.distanceFalloffZero",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Weapon"
-	],
-	"value": "10000"
-}

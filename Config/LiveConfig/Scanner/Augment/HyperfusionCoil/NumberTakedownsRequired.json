@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.Augment.HyperfusionCoil.NumberTakedownsRequired",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Scanner"
-	],
-	"value": "9"
-}

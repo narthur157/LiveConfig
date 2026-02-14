@@ -1,9 +1,0 @@
-{
-	"propertyName": "Arms.Dash.JumpDashEnabled",
-	"description": "",
-	"propertyType": "Bool",
-	"tags": [
-		"Arms"
-	],
-	"value": "false"
-}

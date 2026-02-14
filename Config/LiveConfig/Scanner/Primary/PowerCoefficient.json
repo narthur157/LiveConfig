@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.Primary.PowerCoefficient",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Scanner"
-	],
-	"value": "0.13"
-}

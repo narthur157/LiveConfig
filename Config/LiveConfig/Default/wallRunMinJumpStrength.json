@@ -1,9 +1,0 @@
-{
-	"propertyName": "Default.wallRunMinJumpStrength",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Movement"
-	],
-	"value": "2000"
-}

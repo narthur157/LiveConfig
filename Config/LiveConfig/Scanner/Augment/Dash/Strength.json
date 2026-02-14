@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.Augment.Dash.Strength",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Scanner"
-	],
-	"value": "500"
-}

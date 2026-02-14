@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.Primary.FalloffSecondPointValue",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Scanner"
-	],
-	"value": "0.5"
-}

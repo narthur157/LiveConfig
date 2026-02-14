@@ -1,9 +1,0 @@
-{
-	"propertyName": "ToxicPersonality.Poison.PowerCoeffecient",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Fugu"
-	],
-	"value": "0.05"
-}

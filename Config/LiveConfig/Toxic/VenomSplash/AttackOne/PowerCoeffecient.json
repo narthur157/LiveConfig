@@ -1,9 +1,0 @@
-{
-	"propertyName": "Toxic.VenomSplash.AttackOne.PowerCoeffecient",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Fugu"
-	],
-	"value": "0.15"
-}

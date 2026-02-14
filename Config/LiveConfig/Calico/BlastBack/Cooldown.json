@@ -1,9 +1,0 @@
-{
-	"propertyName": "Calico.BlastBack.Cooldown",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Calico"
-	],
-	"value": "10"
-}

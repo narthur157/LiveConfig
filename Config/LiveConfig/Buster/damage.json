@@ -1,9 +1,0 @@
-{
-	"propertyName": "Buster.damage",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Weapon"
-	],
-	"value": "999999"
-}

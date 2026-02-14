@@ -1,7 +1,0 @@
-{
-	"propertyName": "Matchmaking.StaleReconnectCutoffSeconds",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [],
-	"value": "120"
-}

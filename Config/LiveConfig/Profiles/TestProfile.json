@@ -1,8 +1,0 @@
-{
-	"profileName": "TestProfile",
-	"overrides":
-	{
-		"(PropertyName=\"Arms.defenceMultiplier\")": "3"
-	},
-	"replicatedOverrides": []
-}

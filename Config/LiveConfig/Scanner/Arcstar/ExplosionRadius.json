@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.Arcstar.ExplosionRadius",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Scanner"
-	],
-	"value": "600"
-}

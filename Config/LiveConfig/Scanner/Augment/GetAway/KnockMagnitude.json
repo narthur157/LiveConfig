@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.Augment.GetAway.KnockMagnitude",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Scanner"
-	],
-	"value": "2000"
-}

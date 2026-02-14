@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.Railgun.EmpoweredCritDuration",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Scanner"
-	],
-	"value": "2"
-}

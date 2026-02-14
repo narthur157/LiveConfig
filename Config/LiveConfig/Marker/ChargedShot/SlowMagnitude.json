@@ -1,9 +1,0 @@
-{
-	"propertyName": "Marker.ChargedShot.SlowMagnitude",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Marker"
-	],
-	"value": "0.6"
-}

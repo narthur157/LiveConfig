@@ -1,9 +1,0 @@
-{
-	"propertyName": "Interactable.VendingMachine.SlimedropMagnitude",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"VendingMachine"
-	],
-	"value": "15"
-}

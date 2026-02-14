@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.PoweredUp.PowerScaling",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Scanner"
-	],
-	"value": "40"
-}

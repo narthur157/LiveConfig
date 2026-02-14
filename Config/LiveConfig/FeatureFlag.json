@@ -1,9 +1,0 @@
-{
-	"propertyName": "FeatureFlag",
-	"description": "",
-	"propertyType": "Bool",
-	"tags": [
-		"Hero"
-	],
-	"value": "TRUE"
-}

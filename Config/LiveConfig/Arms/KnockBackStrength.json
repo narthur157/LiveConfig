@@ -1,9 +1,0 @@
-{
-	"propertyName": "Arms.KnockBackStrength",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Arms"
-	],
-	"value": "1500"
-}

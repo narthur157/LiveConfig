@@ -1,9 +1,0 @@
-{
-	"propertyName": "Marker.AllSeeingEye.Cooldown",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Marker"
-	],
-	"value": "15"
-}

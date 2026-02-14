@@ -1,9 +1,0 @@
-{
-	"propertyName": "ToxicPersonality.Expunge.FlatDamagePerStack",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Fugu"
-	],
-	"value": "35"
-}

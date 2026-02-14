@@ -1,9 +1,0 @@
-{
-	"propertyName": "Calico.BlimeyBomb.FinalBounceDamageMultipllier",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Calico"
-	],
-	"value": "1.5"
-}

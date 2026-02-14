@@ -1,9 +1,0 @@
-{
-	"propertyName": "Marker.SlimeJump.Cooldown",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Marker"
-	],
-	"value": "12"
-}

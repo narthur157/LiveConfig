@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.Dash.Duration",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Scanner"
-	],
-	"value": "0.1"
-}

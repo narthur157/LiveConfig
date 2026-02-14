@@ -1,9 +1,0 @@
-{
-	"propertyName": "Basil.Primary.UseWeaponConfigForFalloff",
-	"description": "",
-	"propertyType": "Bool",
-	"tags": [
-		"Basil"
-	],
-	"value": "false"
-}

@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.PoweredUp.SpeedBoost",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Scanner"
-	],
-	"value": "0.2"
-}

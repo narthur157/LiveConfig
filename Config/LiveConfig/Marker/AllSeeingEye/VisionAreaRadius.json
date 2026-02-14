@@ -1,9 +1,0 @@
-{
-	"propertyName": "Marker.AllSeeingEye.VisionAreaRadius",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Marker"
-	],
-	"value": "15000"
-}

@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.Airstrike.Delay",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Scanner"
-	],
-	"value": "1.5"
-}

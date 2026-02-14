@@ -1,9 +1,0 @@
-{
-	"propertyName": "Cilantro.Isolation.MaintainDistanceInIsolation",
-	"description": "",
-	"propertyType": "Bool",
-	"tags": [
-		"Vandal"
-	],
-	"value": "true"
-}

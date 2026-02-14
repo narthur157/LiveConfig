@@ -1,9 +1,0 @@
-{
-	"propertyName": "Anise.MIRVGrenade.Cluster.KnockbackMultiplier",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Vandal"
-	],
-	"value": "1500"
-}

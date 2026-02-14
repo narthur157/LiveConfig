@@ -1,9 +1,0 @@
-{
-	"propertyName": "Calico.BlastBack.KnockbackMagnitude",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Calico"
-	],
-	"value": "1000"
-}

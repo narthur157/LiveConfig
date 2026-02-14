@@ -1,9 +1,0 @@
-{
-	"propertyName": "Marker.Mark.LineOfSight.CheckPeriod",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Marker"
-	],
-	"value": "0.1"
-}

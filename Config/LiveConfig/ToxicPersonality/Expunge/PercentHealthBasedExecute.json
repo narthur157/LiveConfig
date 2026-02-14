@@ -1,9 +1,0 @@
-{
-	"propertyName": "ToxicPersonality.Expunge.PercentHealthBasedExecute",
-	"description": "",
-	"propertyType": "Bool",
-	"tags": [
-		"Fugu"
-	],
-	"value": "false"
-}

@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.PoweredUp.SpeedBoost.Duration",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Scanner"
-	],
-	"value": "5"
-}

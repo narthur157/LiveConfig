@@ -1,9 +1,0 @@
-{
-	"propertyName": "Marker.Primary.FalloffSecondPointValue",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Marker"
-	],
-	"value": "0.5"
-}

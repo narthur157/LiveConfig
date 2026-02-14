@@ -1,9 +1,0 @@
-{
-	"propertyName": "Cilantro.Isolation.MaxDistance",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Vandal"
-	],
-	"value": "3500"
-}

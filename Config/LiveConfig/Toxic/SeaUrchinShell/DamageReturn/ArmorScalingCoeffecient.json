@@ -1,9 +1,0 @@
-{
-	"propertyName": "Toxic.SeaUrchinShell.DamageReturn.ArmorScalingCoeffecient",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Fugu"
-	],
-	"value": "0.2"
-}

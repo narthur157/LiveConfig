@@ -1,9 +1,0 @@
-{
-	"propertyName": "ToxicPersonality.PoisonedStrikes.DamageScalingCoefficient",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Fugu"
-	],
-	"value": "0.175"
-}

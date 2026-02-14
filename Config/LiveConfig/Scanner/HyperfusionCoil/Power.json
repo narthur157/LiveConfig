@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.HyperfusionCoil.Power",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Scanner"
-	],
-	"value": "25"
-}

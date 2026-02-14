@@ -1,9 +1,0 @@
-{
-	"propertyName": "Anise.Primary.UseWeaponConfigForFalloff",
-	"description": "",
-	"propertyType": "Bool",
-	"tags": [
-		"Vandal"
-	],
-	"value": "false"
-}

@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.Arcstar.DebuffDuration",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Scanner"
-	],
-	"value": "3"
-}

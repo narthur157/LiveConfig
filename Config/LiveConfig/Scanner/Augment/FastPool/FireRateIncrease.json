@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.Augment.FastPool.FireRateIncrease",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Scanner"
-	],
-	"value": "0.3"
-}

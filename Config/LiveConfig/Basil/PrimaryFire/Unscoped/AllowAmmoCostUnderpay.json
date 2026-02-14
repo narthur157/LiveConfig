@@ -1,9 +1,0 @@
-{
-	"propertyName": "Basil.PrimaryFire.Unscoped.AllowAmmoCostUnderpay",
-	"description": "",
-	"propertyType": "Bool",
-	"tags": [
-		"Basil"
-	],
-	"value": "true"
-}

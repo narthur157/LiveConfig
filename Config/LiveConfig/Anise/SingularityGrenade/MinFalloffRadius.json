@@ -1,9 +1,0 @@
-{
-	"propertyName": "Anise.SingularityGrenade.MinFalloffRadius",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Vandal"
-	],
-	"value": "400"
-}

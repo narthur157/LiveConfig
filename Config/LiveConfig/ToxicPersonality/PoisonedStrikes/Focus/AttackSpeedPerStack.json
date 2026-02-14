@@ -1,9 +1,0 @@
-{
-	"propertyName": "ToxicPersonality.PoisonedStrikes.Focus.AttackSpeedPerStack",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Fugu"
-	],
-	"value": "0.125"
-}

@@ -1,9 +1,0 @@
-{
-	"propertyName": "ToxicPersonality.Expunge.AttackRadius",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Fugu"
-	],
-	"value": "300"
-}

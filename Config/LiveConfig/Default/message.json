@@ -1,9 +1,0 @@
-{
-	"propertyName": "Default.message",
-	"description": "",
-	"propertyType": "String",
-	"tags": [
-		"Matchmaking"
-	],
-	"value": "Wait for Matchmaking Queue in Slime Hub"
-}

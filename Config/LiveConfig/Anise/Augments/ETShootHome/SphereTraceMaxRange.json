@@ -1,9 +1,0 @@
-{
-	"propertyName": "Anise.Augments.ETShootHome.SphereTraceMaxRange",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Vandal"
-	],
-	"value": "1500"
-}

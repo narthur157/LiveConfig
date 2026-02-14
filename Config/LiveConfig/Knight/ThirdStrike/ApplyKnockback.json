@@ -1,9 +1,0 @@
-{
-	"propertyName": "Knight.ThirdStrike.ApplyKnockback",
-	"description": "",
-	"propertyType": "Bool",
-	"tags": [
-		"Claypool"
-	],
-	"value": "false"
-}

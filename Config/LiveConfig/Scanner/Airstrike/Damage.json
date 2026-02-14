@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.Airstrike.Damage",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Scanner"
-	],
-	"value": "120"
-}

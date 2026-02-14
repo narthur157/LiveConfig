@@ -1,9 +1,0 @@
-{
-	"propertyName": "Interactable.VendingMachine.SlimedropDecayTime",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"VendingMachine"
-	],
-	"value": "999"
-}

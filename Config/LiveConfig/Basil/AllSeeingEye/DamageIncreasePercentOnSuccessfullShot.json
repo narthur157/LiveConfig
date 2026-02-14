@@ -1,9 +1,0 @@
-{
-	"propertyName": "Basil.AllSeeingEye.DamageIncreasePercentOnSuccessfullShot",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Basil"
-	],
-	"value": "0.2"
-}

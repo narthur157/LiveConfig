@@ -1,9 +1,0 @@
-{
-	"propertyName": "DynamicMassSizeScaling.ArmorMultiplier.p10",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Tiers"
-	],
-	"value": "1"
-}

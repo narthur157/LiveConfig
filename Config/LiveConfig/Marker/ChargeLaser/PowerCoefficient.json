@@ -1,9 +1,0 @@
-{
-	"propertyName": "Marker.ChargeLaser.PowerCoefficient",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Marker"
-	],
-	"value": "0.625"
-}

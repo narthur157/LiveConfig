@@ -1,9 +1,0 @@
-{
-	"propertyName": "Default.propulsionMinUpStrength",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Movement"
-	],
-	"value": "1500"
-}

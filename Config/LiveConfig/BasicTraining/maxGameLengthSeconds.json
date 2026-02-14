@@ -1,9 +1,0 @@
-{
-	"propertyName": "BasicTraining.maxGameLengthSeconds",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Mode"
-	],
-	"value": "1800"
-}

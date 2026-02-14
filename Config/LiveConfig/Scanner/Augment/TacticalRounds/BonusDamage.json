@@ -1,9 +1,0 @@
-{
-	"propertyName": "Scanner.Augment.TacticalRounds.BonusDamage",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Scanner"
-	],
-	"value": "10"
-}

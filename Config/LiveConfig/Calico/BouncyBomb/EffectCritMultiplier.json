@@ -1,9 +1,0 @@
-{
-	"propertyName": "Calico.BouncyBomb.EffectCritMultiplier",
-	"description": "",
-	"propertyType": "Float",
-	"tags": [
-		"Calico"
-	],
-	"value": "1.5"
-}

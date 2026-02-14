@@ -1,9 +1,0 @@
-{
-	"propertyName": "Toxic.SeaUrchinShell.MaxPoisonApplications",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Fugu"
-	],
-	"value": "5"
-}

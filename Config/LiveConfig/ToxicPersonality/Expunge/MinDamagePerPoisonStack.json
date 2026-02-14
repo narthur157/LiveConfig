@@ -1,9 +1,0 @@
-{
-	"propertyName": "ToxicPersonality.Expunge.MinDamagePerPoisonStack",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Fugu"
-	],
-	"value": "35"
-}

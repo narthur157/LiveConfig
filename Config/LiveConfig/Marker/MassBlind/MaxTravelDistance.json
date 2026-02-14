@@ -1,9 +1,0 @@
-{
-	"propertyName": "Marker.MassBlind.MaxTravelDistance",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Marker"
-	],
-	"value": "750"
-}

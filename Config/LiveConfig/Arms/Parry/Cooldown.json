@@ -1,9 +1,0 @@
-{
-	"propertyName": "Arms.Parry.Cooldown",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Arms"
-	],
-	"value": "2"
-}

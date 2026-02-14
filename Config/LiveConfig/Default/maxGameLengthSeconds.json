@@ -1,9 +1,0 @@
-{
-	"propertyName": "Default.maxGameLengthSeconds",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Mode"
-	],
-	"value": "960"
-}

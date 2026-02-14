@@ -1,9 +1,0 @@
-{
-	"propertyName": "VendingMachine.TieredHealth.MaxHealth",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"VendingMachine"
-	],
-	"value": "500"
-}

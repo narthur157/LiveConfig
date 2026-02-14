@@ -1,9 +1,0 @@
-{
-	"propertyName": "BasicTraining.respawnDelaySeconds",
-	"description": "",
-	"propertyType": "Int",
-	"tags": [
-		"Mode"
-	],
-	"value": "4"
-}
