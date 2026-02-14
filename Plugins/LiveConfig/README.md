@@ -1,7 +1,5 @@
 ﻿# Live Config Plugin
 
-Treat your game data with respect.
-
 Live Config allows you to decouple tuning concerns from feature implementation. Create tuning values on the fly while coding, and empower designers to refine them in-editor or in-build without further engineering support.
 
 ## Why use Live Config?
