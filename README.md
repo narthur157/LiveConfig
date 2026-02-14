@@ -78,4 +78,4 @@ FMyHeroStats Stats = ULiveConfigSystem::Get().GetLiveConfigStruct<FMyHeroStats>(
 
 # Credit
 
-This plugin was developed with invaluable assistance from Joe Finley -  we have spent considerable time deliberating on the pros and cons of  
+This plugin was developed with invaluable assistance from Joe Finley https://github.com/jfinley2017
