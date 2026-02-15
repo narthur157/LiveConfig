@@ -4,12 +4,17 @@ layout: home
 
 hero:
   name: "Live Config"
-  text: "Expert game data management"
+  text: "Game data Management for Unreal Engine"
   tagline: Decouple configuration from implementation
   actions:
     - theme: brand
       text: Get Started
       link: /ConfigDataStructure
+    - theme: alt
+      text: Download
+      link: https://github.com/narthur157/LiveConfig
+  image: 
+    src: /Screenshots/LiveConfig-GetValueNodes.png
 
 features:
   - title: Feature Flags
@@ -18,9 +23,6 @@ features:
   - title: Rapid Iteration 
     details: Tune values via editor UI, Google Sheets, or console commands. 
     icon: 🚤
-  - title: Real World Experience
-    details: Developed based on 5 years of experience on SLIMECORE.
-    icon: 🌐
   - title: Source Control Integrated
     details: Every tuning change is tracked in source control with readable diffs.
     icon: 🗒️

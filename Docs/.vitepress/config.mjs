@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "Live Config Plugin",
+  title: "Live Config",
   description: "Live Config Docs",
   base: '/LiveConfig/',
   appearance: 'dark',
@@ -18,7 +18,15 @@ export default defineConfig({
         text: 'Introduction',
         items: [
           { text: 'Getting Started', link: '/ConfigDataStructure' },
-          { text: 'CI Setup', link: '/CISetup' },
+          { text: 'Download', link: 'https://github.com/narthur157/LiveConfig/releases' },
+        ]
+      },
+      {
+        text: 'Features',
+        items: [
+          { text: 'Curve Tables', link: '/Features/CurveTables' },
+          { text: 'Config Profiles', link: '/Features/Profiles'},
+          { text: 'Sync to Google Sheets', link: '/Features/SyncGoogleSheets' },
         ]
       },
       {
@@ -29,7 +37,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
+      { icon: 'github', link: 'https://github.com/narthur157/LiveConfig' }
     ]
   }
 })

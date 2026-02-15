@@ -93,7 +93,7 @@ def sync_to_google_sheets(spreadsheet_id, sheet_name, source_dir, credentials_pa
         print(f"Sync Error: {e}")
 
 def main():
-    # Calculate base directory relative to this script: ../../../
+    # Calculate base directory relative to this script: ../../../ (assume we're coming from Plugins/LiveConfig/Scripts)
     script_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.abspath(os.path.join(script_dir, "..", "..", ".."))
 

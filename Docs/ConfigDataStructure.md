@@ -1,7 +1,7 @@
 ﻿## LiveConfig Data Structure 
 ### Directory Structure and Property Naming
 
-The LiveConfig data is stored in the `Config/LiveConfig/` directory. The plugin uses the filesystem structure (folders and filenames) to define the hierarchy and naming of configuration properties.
+JSON Data is stored in the `Config/LiveConfig/` directory. The filesystem structure (folders and filenames) define the hierarchy and naming of configuration properties.
 
 - **Root Directory**: `Config/LiveConfig/`
 - **Property Name Formation**: The property name is derived from the relative path of the JSON file within the `Config/LiveConfig/` directory. Folder separators are converted into dots (`.`), and the `.json` extension is removed.
