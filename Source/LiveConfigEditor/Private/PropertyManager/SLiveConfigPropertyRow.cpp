@@ -4,6 +4,7 @@
 #include "LiveConfigJson.h"
 #include "PropertyManager/SLiveConfigPropertyValueWidget.h"
 #include "Editor.h"
+#include "LiveConfigEditorLib.h"
 #include "LiveConfigStyle.h"
 #include "LiveConfigSystem.h"
 #include "Widgets/Views/STableViewBase.h"
@@ -290,6 +291,26 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateActionsColumnWidget()
 					.Image(FAppStyle::GetBrush("Icons.Search"))
 				]
 			]
+
+			+ SHorizontalBox::Slot()
+			.AutoWidth()
+			.HAlign(HAlign_Right)
+			.VAlign(VAlign_Center)
+			.Padding(2)
+			[
+				SNew(SButton)
+				.IsFocusable(false)
+				.ButtonStyle(FAppStyle::Get(), "SimpleButton")
+				.ToolTipText(LOCTEXT("EditDescriptionToolTip", "Edit Description"))
+				.OnClicked(this, &SLiveConfigPropertyRow::HandleEditDescription)
+				[
+					SNew(SImage)
+					.Image(FAppStyle::GetBrush("Icons.Edit"))
+					.DesiredSizeOverride(FVector2D(16, 16))
+					.ColorAndOpacity(FSlateColor::UseForeground())
+				]
+			]
+			
 			+ SHorizontalBox::Slot()
 			.AutoWidth()
 			.Padding(2.0f)
@@ -453,90 +474,6 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateNameColumnWidget()
 				}
 				return FSlateColor::UseForeground();
 			})
-		];
-
-		NameContent->AddSlot()
-		.AutoWidth()
-		.HAlign(HAlign_Right)
-		.VAlign(VAlign_Center)
-		.Padding(4, 0, 0, 0)
-		[
-			SNew(SButton)
-			.IsFocusable(false)
-			.ButtonStyle(FAppStyle::Get(), "SimpleButton")
-			.ToolTipText(LOCTEXT("EditDescriptionToolTip", "Edit Description"))
-			.OnClicked_Lambda([this]()
-			{
-				TSharedRef<SWindow> EditWindow = SNew(SWindow)
-					.Title(LOCTEXT("EditDescriptionTitle", "Edit Description"))
-					.ClientSize(FVector2D(400, 200))
-					.SupportsMaximize(false)
-					.SupportsMinimize(false);
-
-				TSharedPtr<SMultiLineEditableText> DescriptionText;
-
-				EditWindow->SetContent(
-					SNew(SBox)
-					.Padding(10)
-					[
-						SNew(SVerticalBox)
-						+ SVerticalBox::Slot()
-						.FillHeight(1.0f)
-						[
-							SNew(SBorder)
-							.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
-							[
-								SAssignNew(DescriptionText, SMultiLineEditableText)
-								.Text(FText::FromString(Item->PropertyDefinition->Description))
-								.AutoWrapText(true)
-							]
-						]
-						+ SVerticalBox::Slot()
-						.AutoHeight()
-						.Padding(0, 10, 0, 0)
-						.HAlign(HAlign_Right)
-						[
-							SNew(SHorizontalBox)
-							+ SHorizontalBox::Slot()
-							.AutoWidth()
-							.Padding(0, 0, 5, 0)
-							[
-								SNew(SButton)
-								.Text(LOCTEXT("OK", "OK"))
-								.OnClicked_Lambda([this, EditWindow, DescriptionText]()
-								{
-									TSharedPtr<FLiveConfigPropertyDefinition> OldDef = MakeShared<FLiveConfigPropertyDefinition>(*Item->PropertyDefinition);
-									Item->PropertyDefinition->Description = DescriptionText->GetText().ToString();
-									OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Description);
-									EditWindow->RequestDestroyWindow();
-									return FReply::Handled();
-								})
-							]
-							+ SHorizontalBox::Slot()
-							.AutoWidth()
-							[
-								SNew(SButton)
-								.Text(LOCTEXT("Cancel", "Cancel"))
-								.OnClicked_Lambda([EditWindow]()
-								{
-									EditWindow->RequestDestroyWindow();
-									return FReply::Handled();
-								})
-							]
-						]
-					]
-				);
-
-				FSlateApplication::Get().AddModalWindow(EditWindow, FSlateApplication::Get().FindBestParentWindowForDialogs(AsShared()));
-
-				return FReply::Handled();
-			})
-			[
-				SNew(SImage)
-				.Image(FAppStyle::GetBrush("Icons.Info"))
-				.DesiredSizeOverride(FVector2D(12, 12))
-				.ColorAndOpacity(FSlateColor::UseForeground())
-			]
 		];
 
 		NameContent->SetToolTipText(TAttribute<FText>::CreateLambda([this]() { return FText::FromString(Item->PropertyDefinition->Description); }));
@@ -829,7 +766,7 @@ FReply SLiveConfigPropertyRow::OnFindUsages()
 		FName PropertyName = Item->PropertyDefinition->PropertyName.GetName();
 		
 		TArray<FName> RelatedNames;
-		ULiveConfigSystem::Get().GetRelatedPropertyNames(PropertyName, RelatedNames);
+		ULiveConfigEditorLib::GetRelatedPropertyNames(PropertyName, RelatedNames);
 
 		TArray<FAssetIdentifier> AssetIdentifiers;
 		for (const FName& Name : RelatedNames)
@@ -839,6 +776,73 @@ FReply SLiveConfigPropertyRow::OnFindUsages()
 
 		FEditorDelegates::OnOpenReferenceViewer.Broadcast(AssetIdentifiers, FReferenceViewerParams());
 	}
+	return FReply::Handled();
+}
+
+FReply SLiveConfigPropertyRow::HandleEditDescription()
+{
+	TSharedRef<SWindow> EditWindow = SNew(SWindow)
+		.Title(LOCTEXT("EditDescriptionTitle", "Edit Description"))
+		.ClientSize(FVector2D(400, 200))
+		.SupportsMaximize(false)
+		.SupportsMinimize(false);
+
+	TSharedPtr<SMultiLineEditableText> DescriptionText;
+
+	EditWindow->SetContent(
+		SNew(SBox)
+		.Padding(10)
+		[
+			SNew(SVerticalBox)
+			+ SVerticalBox::Slot()
+			.FillHeight(1.0f)
+			[
+				SNew(SBorder)
+				.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+				[
+					SAssignNew(DescriptionText, SMultiLineEditableText)
+					.Text(FText::FromString(Item->PropertyDefinition->Description))
+					.AutoWrapText(true)
+				]
+			]
+			+ SVerticalBox::Slot()
+			.AutoHeight()
+			.Padding(0, 10, 0, 0)
+			.HAlign(HAlign_Right)
+			[
+				SNew(SHorizontalBox)
+				+ SHorizontalBox::Slot()
+				.AutoWidth()
+				.Padding(0, 0, 5, 0)
+				[
+					SNew(SButton)
+					.Text(LOCTEXT("OK", "OK"))
+					.OnClicked_Lambda([this, EditWindow, DescriptionText]()
+					{
+						TSharedPtr<FLiveConfigPropertyDefinition> OldDef = MakeShared<FLiveConfigPropertyDefinition>(*Item->PropertyDefinition);
+						Item->PropertyDefinition->Description = DescriptionText->GetText().ToString();
+						OnChanged.ExecuteIfBound(OldDef, Item->PropertyDefinition, ELiveConfigPropertyChangeType::Description);
+						EditWindow->RequestDestroyWindow();
+						return FReply::Handled();
+					})
+				]
+				+ SHorizontalBox::Slot()
+				.AutoWidth()
+				[
+					SNew(SButton)
+					.Text(LOCTEXT("Cancel", "Cancel"))
+					.OnClicked_Lambda([EditWindow]()
+					{
+						EditWindow->RequestDestroyWindow();
+						return FReply::Handled();
+					})
+				]
+			]
+		]
+	);
+
+	FSlateApplication::Get().AddModalWindow(EditWindow, FSlateApplication::Get().FindBestParentWindowForDialogs(AsShared()));
+
 	return FReply::Handled();
 }
 

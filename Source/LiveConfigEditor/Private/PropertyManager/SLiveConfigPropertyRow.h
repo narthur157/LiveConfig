@@ -77,6 +77,7 @@ private:
 	void OnTagChanged();
 	void OnAddNewTagClicked();
 	FReply OnFindUsages();
+	FReply HandleEditDescription();
 
 	TSharedPtr<FLiveConfigPropertyTreeNode> Item;
 	FOnDeleteProperty OnDeleteProperty;

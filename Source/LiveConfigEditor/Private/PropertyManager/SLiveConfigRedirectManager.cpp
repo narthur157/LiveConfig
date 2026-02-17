@@ -7,6 +7,7 @@
 #include "LiveConfigSystem.h"
 #include "Misc/MessageDialog.h"
 #include "Editor.h"
+#include "LiveConfigEditorLib.h"
 
 #define LOCTEXT_NAMESPACE "SLiveConfigRedirectManager"
 
@@ -22,7 +23,7 @@ void SLiveConfigRedirectManager::Construct(const FArguments& InArgs)
 
 	// Get all redirects and check which are unused
 	TArray<FName> UnusedRedirects;
-	System.GetUnusedRedirects(UnusedRedirects);
+	ULiveConfigEditorLib::GetUnusedRedirects(UnusedRedirects);
 
 	ChildSlot
 	[
@@ -115,7 +116,7 @@ void SLiveConfigRedirectManager::RefreshRedirectList()
 
 	ULiveConfigSystem& System = ULiveConfigSystem::Get();
 	TArray<FName> UnusedRedirects;
-	System.GetUnusedRedirects(UnusedRedirects);
+	ULiveConfigEditorLib::GetUnusedRedirects(UnusedRedirects);
 
 	if (System.PropertyRedirects.Num() == 0)
 	{
@@ -244,7 +245,7 @@ void SLiveConfigRedirectManager::RefreshRedirectList()
 void SLiveConfigRedirectManager::OnCheckUsage(FName OldPropertyName)
 {
 	TArray<FName> RelatedNames;
-	ULiveConfigSystem::Get().GetRelatedPropertyNames(OldPropertyName, RelatedNames);
+	ULiveConfigEditorLib::GetRelatedPropertyNames(OldPropertyName, RelatedNames);
 
 	TArray<FAssetIdentifier> AssetIdentifiers;
 	for (const FName& Name : RelatedNames)
@@ -263,8 +264,7 @@ void SLiveConfigRedirectManager::OnRemoveRedirect(FName OldPropertyName)
 
 void SLiveConfigRedirectManager::OnCleanupUnusedRedirects()
 {
-	ULiveConfigSystem& System = ULiveConfigSystem::Get();
-	int32 NumRemoved = System.CleanupUnusedRedirects();
+	int32 NumRemoved = ULiveConfigEditorLib::CleanupUnusedRedirects();
 
 	FText Message = FText::Format(
 		LOCTEXT("RedirectsCleanedUp", "Removed {0} unused redirect(s)"),

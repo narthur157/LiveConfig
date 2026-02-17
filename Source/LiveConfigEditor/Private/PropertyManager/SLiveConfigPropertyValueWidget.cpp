@@ -65,8 +65,14 @@ bool FLiveConfigStructFilter::IsStructAllowed(const FStructViewerInitializationO
 		return false;
 	}
 
-	FString PackageName = InStruct->GetStructPathName().ToString();
-	return IsPackageAllowed(PackageName);
+	// check that we aren't a subobject to prevent ensure
+	if (InStruct->GetPackage() == InStruct->GetOuter())
+	{
+		FString PackageName = InStruct->GetStructPathName().ToString();
+		return IsPackageAllowed(PackageName);
+	}
+	
+	return false;
 }
 
 bool FLiveConfigStructFilter::IsUnloadedStructAllowed(const FStructViewerInitializationOptions& InInitOptions, const FSoftObjectPath& InStructPath, TSharedRef<class FStructViewerFilterFuncs> InNode)

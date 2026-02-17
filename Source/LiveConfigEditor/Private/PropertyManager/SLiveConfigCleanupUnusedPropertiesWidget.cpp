@@ -1,4 +1,6 @@
 ﻿#include "SLiveConfigCleanupUnusedPropertiesWidget.h"
+
+#include "LiveConfigEditorLib.h"
 #include "LiveConfigSystem.h"
 #include "LiveConfigJson.h"
 #include "Widgets/Input/SButton.h"
@@ -121,7 +123,7 @@ void SLiveConfigCleanupUnusedPropertiesWidget::PopulateUnusedProperties()
 	UnusedProperties.Empty();
 
 	TArray<FName> UnusedNames;
-	ULiveConfigSystem::Get().GetUnusedProperties(UnusedNames);
+	ULiveConfigEditorLib::GetUnusedProperties(UnusedNames);
 
 	for (const FName& Name : UnusedNames)
 	{

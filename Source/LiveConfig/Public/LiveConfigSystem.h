@@ -126,45 +126,12 @@ public:
     /** Redirects a property name based on the redirectors map */
     void RedirectPropertyName(FLiveConfigProperty& Property) const;
 
-    /**
-     * Gets all properties that are not referenced in any assets or config files
-     * @param OutUnusedProperties Array to fill with unused property names
-     */
-    void GetUnusedProperties(TArray<FName>& OutUnusedProperties) const;
-
-    /**
-     * Gets all redirects that point to properties that no longer exist
-     * @param OutUnusedRedirects Array to fill with redirect keys (old names) that point to non-existent properties and are not referenced
-     */
-    void GetUnusedRedirects(TArray<FName>& OutUnusedRedirects) const;
-
-    /**
-     * Checks if a property name (typically an old redirect name) is still referenced in any blueprint assets
-     * Note: This only checks assets, not C++ code. User should search code separately.
-     * @param PropertyName The property name to search for
-     * @param OutReferencingAssets Optional array to fill with asset paths that reference this property
-     * @return True if the property is found in any assets
-     */
-    bool IsPropertyReferencedInAssets(FName PropertyName, TArray<FString>* OutReferencingAssets = nullptr) const;
 
     /**
      * Removes a specific redirect from the map and saves the config
      * @param OldPropertyName The old property name to remove from redirects
      */
     void RemoveRedirect(FName OldPropertyName);
-
-    /**
-     * Removes all redirects that point to properties that no longer exist
-     * @return Number of redirects removed
-     */
-    int32 CleanupUnusedRedirects();
-
-    /**
-     * Gets all names related to a property, including redirects (old names)
-     * @param PropertyName The name to find related names for
-     * @param OutRelatedNames Array to fill with related names
-     */
-    void GetRelatedPropertyNames(FName PropertyName, TArray<FName>& OutRelatedNames) const;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "General")
 	TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition> PropertyDefinitions;

@@ -203,7 +203,7 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 						{
 							if (ISettingsModule* SettingsModule = FModuleManager::GetModulePtr<ISettingsModule>("Settings"))
 							{
-								SettingsModule->ShowViewer("Project", "Plugins", "Live Config");
+								SettingsModule->ShowViewer("Project", "Game", "Live Config");
 							}
 							return FReply::Handled();
 						})
@@ -231,7 +231,7 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 					.Style(FAppStyle::Get(), "TableView.Header")
 					+ SHeaderRow::Column(SLiveConfigPropertyRow::ColumnNames::Name)
 					.DefaultLabel(LOCTEXT("NameColumn", "Name"))
-					.FillWidth(0.35f)
+					.FillWidth(0.4f)
 					.HeaderContentPadding(FMargin(4.0f, 0.0f))
 					+ SHeaderRow::Column(SLiveConfigPropertyRow::ColumnNames::Type)
 					.DefaultLabel(LOCTEXT("TypeColumn", "Type"))
@@ -243,11 +243,11 @@ void SLiveConfigPropertyManager::Construct(const FArguments& InArgs)
 					.HeaderContentPadding(FMargin(4.0f, 0.0f))
 					+ SHeaderRow::Column(SLiveConfigPropertyRow::ColumnNames::Tags)
 					.DefaultLabel(LOCTEXT("TagsColumn", "Tags"))
-					.FillWidth(0.3f)
+					.FillWidth(0.2f)
 					.HeaderContentPadding(FMargin(4.0f, 0.0f))
 					+ SHeaderRow::Column(SLiveConfigPropertyRow::ColumnNames::Actions)
-					.DefaultLabel(LOCTEXT("ActionsColumn", ""))
-					.FixedWidth(180.0f)
+					.DefaultLabel(LOCTEXT("ActionsColumn", "Actions"))
+					.FixedWidth(160.0f)
 				)
 			]
 		]

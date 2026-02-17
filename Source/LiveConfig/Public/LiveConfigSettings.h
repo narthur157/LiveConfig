@@ -28,7 +28,7 @@ class LIVECONFIG_API ULiveConfigSettings : public UDeveloperSettings
 	GENERATED_BODY()
 	
 public:
-	virtual FName GetCategoryName() const override { return TEXT("Plugins"); }
+	virtual FName GetCategoryName() const override { return TEXT("Game"); }
 	virtual FName GetSectionName() const override { return TEXT("Live Config"); }
 
 	/** The URL for the public Google Sheet CSV. Set this in DefaultGame.ini. */

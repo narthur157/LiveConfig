@@ -13,6 +13,7 @@ class LIVECONFIGEDITOR_API UK2Node_LiveConfigLookup : public UK2Node
 public:
 	UK2Node_LiveConfigLookup();
 
+	// UK2Node
 	virtual void AllocateDefaultPins() override;
 	virtual FText GetNodeTitle(ENodeTitleType::Type TitleType) const override;
 	virtual FText GetTooltipText() const override;
@@ -26,7 +27,7 @@ public:
 	virtual bool IsConnectionDisallowed(const UEdGraphPin* MyPin, const UEdGraphPin* OtherPin, FString& OutConnectionMessage) const override;
 	virtual void PostReconstructNode() override;
 	virtual void ValidateNodeDuringCompilation(class FCompilerResultsLog& MessageLog) const override;
-	// End UK2Node interface
+	// ~UK2Node 
 
 	/** Get the property pin */
 	UEdGraphPin* GetPropertyPin() const;
