@@ -1,3 +1,6 @@
+// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
+
 #include "SLiveConfigRedirectManager.h"
 #include "Widgets/Text/STextBlock.h"
 #include "Widgets/Layout/SBox.h"

@@ -1,3 +1,6 @@
+// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
+
 #include "LiveConfigPropertyPin.h"
 #include "EdGraphSchema_K2.h"
 #include "K2Node_CallFunction.h"

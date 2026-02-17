@@ -1,4 +1,8 @@
-﻿/**
+﻿// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
+#pragma once 
+
+/**
  * @mainpage Live Config API Reference
  *
  * @section intro_sec Introduction

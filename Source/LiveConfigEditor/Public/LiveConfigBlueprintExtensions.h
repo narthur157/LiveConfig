@@ -1,4 +1,5 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
 
 #pragma once
 

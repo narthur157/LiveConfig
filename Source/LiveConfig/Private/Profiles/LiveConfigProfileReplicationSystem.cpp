@@ -1,3 +1,6 @@
+// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
+
 #include "Profiles/LiveConfigProfileReplicationSystem.h"
 #include "Profiles/LiveConfigProfileActor.h"
 #include "Profiles/LiveConfigPlayerControllerComponent.h"

@@ -1,4 +1,7 @@
-﻿#include "LiveConfigStructTest.h"
+﻿// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
+
+#include "LiveConfigStructTest.h"
 #include "LiveConfigSystem.h"
 #include "Misc/AutomationTest.h"
 

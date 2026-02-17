@@ -1,4 +1,7 @@
-﻿#include "Profiles/LiveConfigPlayerControllerComponent.h"
+﻿// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
+
+#include "Profiles/LiveConfigPlayerControllerComponent.h"
 #include "Profiles/LiveConfigProfileActor.h"
 
 ULiveConfigPlayerControllerComponent::ULiveConfigPlayerControllerComponent()

@@ -1,3 +1,6 @@
+// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
+
 #pragma once
 
 #include "UObject/UnrealType.h"

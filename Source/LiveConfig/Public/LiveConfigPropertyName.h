@@ -1,4 +1,6 @@
-﻿#pragma once
+﻿// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
+#pragma once
 
 #include "CoreMinimal.h"
 #include "LiveConfigPropertyName.generated.h"

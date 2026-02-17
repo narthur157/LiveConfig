@@ -1,4 +1,5 @@
-// All rights reserved - Genpop
+// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
 
 #include "LiveConfigJson.h"
 #include "LiveConfigSystem.h"

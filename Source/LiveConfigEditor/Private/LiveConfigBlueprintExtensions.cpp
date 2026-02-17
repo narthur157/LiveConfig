@@ -1,3 +1,6 @@
+// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
+
 #include "LiveConfigBlueprintExtensions.h"
 #include "K2Node_CallFunction.h"
 #include "K2Node_LiveConfigLookup.h"

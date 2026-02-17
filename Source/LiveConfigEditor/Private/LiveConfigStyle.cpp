@@ -1,4 +1,7 @@
-﻿#include "LiveConfigStyle.h"
+// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
+
+#include "LiveConfigStyle.h"
 
 #include "Styling/SlateStyleMacros.h"
 #include "Styling/SlateStyleRegistry.h"

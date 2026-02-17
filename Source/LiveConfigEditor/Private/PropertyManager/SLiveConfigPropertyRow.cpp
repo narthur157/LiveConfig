@@ -1,4 +1,7 @@
-﻿#include "SLiveConfigPropertyRow.h"
+// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
+
+#include "SLiveConfigPropertyRow.h"
 #include "SLiveConfigTagRow.h"
 #include "SLiveConfigTagPicker.h"
 #include "LiveConfigJson.h"

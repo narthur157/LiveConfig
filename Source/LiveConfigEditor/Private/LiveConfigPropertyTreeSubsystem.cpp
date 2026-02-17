@@ -1,3 +1,6 @@
+// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
+
 #include "LiveConfigPropertyTreeSubsystem.h"
 #include "LiveConfigSystem.h"
 #include "Engine/Engine.h"

@@ -1,4 +1,7 @@
-﻿#include "LiveConfigPropertyName.h"
+﻿// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
+
+#include "LiveConfigPropertyName.h"
 #include "LiveConfigTypes.h"
 #include "LiveConfigSystem.h"
 

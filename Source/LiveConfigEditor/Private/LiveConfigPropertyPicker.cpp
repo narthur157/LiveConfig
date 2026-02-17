@@ -1,3 +1,6 @@
+// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
+
 #include "LiveConfigPropertyPicker.h"
 #include "LiveConfigEditor/LiveConfigEditor.h"
 #include "PropertyManager/SLiveConfigPropertyValueWidget.h"

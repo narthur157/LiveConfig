@@ -1,4 +1,7 @@
-﻿#include "PropertyManager/SLiveConfigPropertyValueWidget.h"
+// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
+
+#include "PropertyManager/SLiveConfigPropertyValueWidget.h"
 #include "LiveConfigJson.h"
 #include "Widgets/Layout/SBox.h"
 #include "Widgets/Layout/SWidgetSwitcher.h"

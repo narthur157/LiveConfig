@@ -1,3 +1,6 @@
+// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
+
 #include "LiveConfigPropertyPinFactory.h"
 
 #include "EdGraphSchema_K2.h"

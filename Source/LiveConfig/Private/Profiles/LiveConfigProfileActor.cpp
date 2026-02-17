@@ -1,4 +1,7 @@
-﻿#include "Profiles/LiveConfigProfileActor.h"
+﻿// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
+
+#include "Profiles/LiveConfigProfileActor.h"
 
 #include "EngineUtils.h"
 #include "LiveConfigSystem.h"

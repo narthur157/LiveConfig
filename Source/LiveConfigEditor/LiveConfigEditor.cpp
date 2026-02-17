@@ -1,4 +1,7 @@
-﻿#include "LiveConfigEditor.h"
+// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
+
+#include "LiveConfigEditor.h"
 
 #include "EdGraphUtilities.h"
 #include "LiveConfigPropertyName.h"

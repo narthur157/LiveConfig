@@ -1,3 +1,6 @@
+// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
+
 #include "LiveConfigPropertyCustomization.h"
 
 #include "AssetRegistry/AssetRegistryModule.h"
