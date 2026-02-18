@@ -142,14 +142,14 @@ void FLiveConfigEditorModule::OpenPropertyManager(FLiveConfigProperty FocusPrope
 
 void FLiveConfigEditorModule::RegisterTabSpawners()
 {
-	FTabSpawnerEntry& Spawner = FGlobalTabmanager::Get()->RegisterTabSpawner(LiveConfigPropertyManagerTabId, FOnSpawnTab::CreateRaw(this, &FLiveConfigEditorModule::SpawnPropertyManagerTab))
+	FTabSpawnerEntry& Spawner = FGlobalTabmanager::Get()->RegisterNomadTabSpawner(LiveConfigPropertyManagerTabId, FOnSpawnTab::CreateRaw(this, &FLiveConfigEditorModule::SpawnPropertyManagerTab))
 		.SetDisplayName(LOCTEXT("PropertyManagerTabTitle", "Live Config"))
 		.SetCanSidebarTab(true)
 		.SetReuseTabMethod(FOnFindTabToReuse::CreateLambda([](const FTabId& InTabId) ->TSharedPtr<SDockTab> {
 		
 			return TSharedPtr<SDockTab>();
 		}))
-		.SetIcon(FSlateIcon(FAppStyle::GetAppStyleSetName(), "Tab.Spreadsheet"))
+		.SetIcon(FSlateIcon("NiagaraEditorStyle", "Tab.Spreadsheet"))
 		.SetMenuType(ETabSpawnerMenuType::Enabled);
 	
 }
@@ -177,7 +177,7 @@ TSharedRef<SDockTab> FLiveConfigEditorModule::SpawnPropertyManagerTab(const FSpa
 	}
 
 	return SNew(SDockTab)
-		.TabRole(ETabRole::PanelTab)
+		.TabRole(ETabRole::NomadTab)
 		[
 			Manager
 		];
@@ -197,7 +197,7 @@ void FLiveConfigEditorModule::RegisterMenus()
 			FUIAction(FExecuteAction::CreateRaw(this, &FLiveConfigEditorModule::OpenPropertyManager, FLiveConfigProperty(), false)),
 			LOCTEXT("OpenLiveConfigManager", "Live Config"),
 			LOCTEXT("OpenLiveConfigManagerTooltip", "Open the Live Config Property Manager"),
-			FSlateIcon(FAppStyle::GetAppStyleSetName(), "Tab.Spreadsheet")
+			FSlateIcon("NiagaraEditorStyle", "Tab.Spreadsheet")
 		);
 		Entry.SetCommandList(nullptr);
 		Entry.StyleNameOverride = "CalloutToolbar";
