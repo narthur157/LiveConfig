@@ -9,7 +9,7 @@ If your project currently uses curve tables, you can easily import that data int
 
 # How-to
 
-In project settings, specify a curve table to export properties to, and/or curve tables to import properties from: ![CurveTableSettings](../Screenshots/ProjectSettings-CurveTables.png)
+In project settings, specify a curve table to export properties to, and/or curve tables to import properties from: ![CurveTableSettings](/Screenshots/ProjectSettings-CurveTables.png)
 
 Properties that are exported or imported will be updated automatically. When live config data is changed, it will be updated in the export curve table.
 

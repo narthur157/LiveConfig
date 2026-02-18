@@ -150,7 +150,7 @@ public:
 
 
 private:
-    FString SheetUrl;
+    FString RemoteOverrideCSVUrl;
     double TimeLoadStarted = -9999;
     float RateLimitSeconds = 5;
     FTimerHandle PollingTimer;

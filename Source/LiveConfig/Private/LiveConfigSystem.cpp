@@ -61,7 +61,7 @@ void ULiveConfigSystem::Initialize(FSubsystemCollectionBase& Collection)
     Collection.InitializeDependency(ULiveConfigProfileSystem::StaticClass());
     Collection.InitializeDependency(ULiveConfigJsonSystem::StaticClass());
     
-    SheetUrl = GetDefault<ULiveConfigSettings>()->SheetUrl;
+    RemoteOverrideCSVUrl = GetDefault<ULiveConfigSettings>()->RemoteOverrideCSVUrl;
 
     UConsole::RegisterConsoleAutoCompleteEntries.AddUObject(this, &ThisClass::PopulateAutoCompleteEntries);
 
@@ -217,12 +217,12 @@ void ULiveConfigSystem::DownloadConfig()
         return;
     }
     
-    // need to sanitize sheet url so that it definitely has /export?format=csv
+    // need to sanitize sheet url so that it definitely has /export?format=csv if coming from sheets
     // we may or may not want to specify the GID, depending on if the tab we're using is the first or not
     // could have GID as an optional arg, but this also gets confusing? Just going to assume it's the first tab for now
-    if (SheetUrl.IsEmpty())
+    if (RemoteOverrideCSVUrl.IsEmpty())
     {
-        UE_LOG(LogLiveConfig, Log, TEXT("LiveConfigSystem: SheetUrl is empty. No remote overrides will be downloaded"));
+        UE_LOG(LogLiveConfig, Log, TEXT("LiveConfigSystem: RemoteOverrideCSVUrl is empty. No remote overrides will be downloaded"));
         return;
     }
 
@@ -230,12 +230,12 @@ void ULiveConfigSystem::DownloadConfig()
     CurrentRequest = HttpModule.CreateRequest();
 
     CurrentRequest->OnProcessRequestComplete().BindUObject(this, &ThisClass::OnSheetDownloadComplete);
-    CurrentRequest->SetURL(SheetUrl);
+    CurrentRequest->SetURL(RemoteOverrideCSVUrl);
     CurrentRequest->SetVerb(TEXT("GET"));
     CurrentRequest->SetHeader(TEXT("User-Agent"), TEXT("X-UnrealEngine-Agent"));
     CurrentRequest->SetHeader(TEXT("Content-Type"), TEXT("text/csv"));
     
-    UE_LOG(LogLiveConfig, Log, TEXT("LiveConfigSystem: Starting download from %s"), *SheetUrl);
+    UE_LOG(LogLiveConfig, Log, TEXT("LiveConfigSystem: Starting download from %s"), *RemoteOverrideCSVUrl);
     CurrentRequest->ProcessRequest();
     TimeLoadStarted = FPlatformTime::Seconds();
 }

@@ -31,11 +31,19 @@ public:
 	virtual FName GetCategoryName() const override { return TEXT("Game"); }
 	virtual FName GetSectionName() const override { return TEXT("Live Config"); }
 
-	/** The URL for the public Google Sheet CSV. Set this in DefaultGame.ini. */
+	/** 
+	 * The URL for the remote override CSV. This CSV will be fetched and used to override key/value pairs
+	 * 
+	 * The first column is treated as "Name", and the second column is "Value" for each property
+	 * For use with Google Sheets, ensure that this url ends with /export?format=csv in the format
+	 * https://docs.google.com/spreadsheets/d/<spreadsheet_id>/export?format=csv
+	 * 
+	 * Sheets works up to about 10-20 CCU, beyond which your CSV must be provided by something like S3
+	 */
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "GoogleSheets")
-	FString SheetUrl;
+	FString RemoteOverrideCSVUrl;
 
-	// default in-game polling rate
+	// default in-game polling rate, in seconds
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "GoogleSheets")
 	float PollingRate = 30;
 
@@ -44,6 +52,7 @@ public:
 
 	/**
 	 * How often to refresh the config in editor
+	 * This should be set to be relatively slow as it will happen even while the editor is idle
 	 */
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "GoogleSheets")
 	float EditorPollRateMinutes = 30;
