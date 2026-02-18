@@ -17,6 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
         with:
+          lfs: true
           fetch-depth: 0
 
       - name: Install Doxygen
