@@ -2,16 +2,16 @@
 
 Sample sheet: https://docs.google.com/spreadsheets/d/1DUZ1VeRQ1zD589moET7h9iMsYv5abeePsWmZHq5G8O4/edit?gid=0#gid=0
 
-![Sheets Data](../Screenshots/LiveConfig-SheetsData.png)
+![Sheets Data](/Screenshots/LiveConfig-SheetsData.png)
 
 In general, it can be useful to have your game data exposed to Google Sheets for quick reference when not using the Unreal Editor.
 
 
-![Sheets Screenshot](../Screenshots/LiveConfig-Sheets.png)
+![Sheets Screenshot](/Screenshots/LiveConfig-Sheets.png)
 
 If specifying remote override values, a data validation rule can be made to provide a dropdown for all property options. 
 
-![Sheets Validator](../Screenshots/LiveConfig-SheetsDataValidation.png)
+![Sheets Validator](/Screenshots/LiveConfig-SheetsDataValidation.png)
 
 ## Overview
 
