@@ -1,16 +1,12 @@
 // Copyright (c) 2026 Nicholas Arthur
 // Licensed under the MIT License
 
-#include "LiveConfigBlueprintExtensions.h"
-#include "K2Node_CallFunction.h"
-#include "K2Node_LiveConfigLookup.h"
+#include "Blueprint/LiveConfigBlueprintExtensions.h"
+#include "Blueprint/K2Node_LiveConfigLookup.h"
 #include "LiveConfigLib.h"
-#include "LiveConfigSettings.h"
-#include "LiveConfigSystem.h"
 #include "EdGraph/EdGraph.h"
 #include "EdGraph/EdGraphPin.h"
 #include "EdGraphSchema_K2.h"
-#include "GraphEditorModule.h"
 #include "Framework/MultiBox/MultiBoxBuilder.h"
 #include "Kismet2/BlueprintEditorUtils.h"
 #include "ScopedTransaction.h"

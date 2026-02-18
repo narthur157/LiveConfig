@@ -1,14 +1,13 @@
 // Copyright (c) 2026 Nicholas Arthur
 // Licensed under the MIT License
 
-#include "LiveConfigPropertyPicker.h"
+#include "Blueprint/SLiveConfigPropertyPicker.h"
 #include "LiveConfigEditor/LiveConfigEditor.h"
 #include "PropertyManager/SLiveConfigPropertyValueWidget.h"
 
 #include "Framework/Application/SlateApplication.h"
 #include "LiveConfigSystem.h"
 #include "PropertyManager/SLiveConfigNewPropertyDialog.h"
-#include "LiveConfigSettings.h"
 #include "LiveConfigLib.h"
 #include "PropertyHandle.h"
 #include "Widgets/Input/SSearchBox.h"
@@ -16,7 +15,6 @@
 #include "Widgets/Input/SButton.h"
 #include "Widgets/Input/SCheckBox.h"
 #include "Widgets/Images/SImage.h"
-#include "Widgets/Layout/SWidgetSwitcher.h"
 #include "Widgets/Views/SListView.h"
 #include "Widgets/Views/STableRow.h"
 #include "Widgets/Text/STextBlock.h"

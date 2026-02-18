@@ -1,11 +1,11 @@
 // Copyright (c) 2026 Nicholas Arthur
 // Licensed under the MIT License
 
-#include "LiveConfigPropertyPinFactory.h"
+#include "Blueprint/LiveConfigPropertyPinFactory.h"
 
 #include "EdGraphSchema_K2.h"
 #include "LiveConfigPropertyName.h"
-#include "LiveConfigPropertyPin.h"
+#include "Blueprint/SLiveConfigPropertyPin.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 

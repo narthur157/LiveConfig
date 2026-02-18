@@ -1,14 +1,14 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
 
-
-#include "LiveConfigPropertyCombo.h"
+#include "Blueprint/SLiveConfigPropertyCombo.h"
 #include "Framework/MultiBox/MultiBoxBuilder.h"
 #include "HAL/PlatformApplicationMisc.h"
 #include "LiveConfigSystem.h"
 
 #include "LiveConfigPropertyStyle.h"
-#include "LiveConfigPropertyChip.h"
-#include "LiveConfigPropertyPicker.h"
+#include "Blueprint/SLiveConfigPropertyChip.h"
+#include "Blueprint/SLiveConfigPropertyPicker.h"
 #include "LiveConfigSettings.h"
 #include "SlateOptMacros.h"
 #include "LiveConfigEditor/LiveConfigEditor.h"

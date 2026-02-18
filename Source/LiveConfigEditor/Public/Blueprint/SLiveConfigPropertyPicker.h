@@ -4,7 +4,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "LiveConfigPropertyCombo.h"
+#include "SLiveConfigPropertyCombo.h"
 #include "Widgets/DeclarativeSyntaxSupport.h"
 #include "Widgets/SCompoundWidget.h"
 #include "LiveConfigSystem.h"

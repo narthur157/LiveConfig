@@ -1,11 +1,11 @@
 // Copyright (c) 2026 Nicholas Arthur
 // Licensed under the MIT License
 
-#include "SLiveConfigTagPicker.h"
+#include "PropertyManager/SLiveConfigTagPicker.h"
 
 #include "LiveConfigSettings.h"
 #include "LiveConfigSystem.h"
-#include "SLiveConfigNewTagDialog.h"
+#include "PropertyManager/SLiveConfigNewTagDialog.h"
 #include "Widgets/Layout/SBox.h"
 #include "Widgets/Text/STextBlock.h"
 

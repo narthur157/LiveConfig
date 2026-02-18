@@ -1,11 +1,9 @@
 // Copyright (c) 2026 Nicholas Arthur
 // Licensed under the MIT License
 
-#include "SLiveConfigNewPropertyDialog.h"
+#include "PropertyManager/SLiveConfigNewPropertyDialog.h"
 
 #include "LiveConfigSettings.h"
-#include "SLiveConfigTagPicker.h"
-#include "SLiveConfigTagRow.h"
 #include "PropertyManager/SLiveConfigPropertyValueWidget.h"
 #include "Widgets/Input/SButton.h"
 #include "Widgets/Input/SEditableTextBox.h"
@@ -14,6 +12,8 @@
 #include "Widgets/Layout/SUniformGridPanel.h"
 #include "Widgets/Text/STextBlock.h"
 #include "Framework/Application/SlateApplication.h"
+#include "PropertyManager/SLiveConfigTagPicker.h"
+#include "PropertyManager/SLiveConfigTagRow.h"
 #include "Widgets/Layout/SWrapBox.h"
 
 #define LOCTEXT_NAMESPACE "SLiveConfigNewPropertyDialog"

@@ -1,7 +1,7 @@
 // Copyright (c) 2026 Nicholas Arthur
 // Licensed under the MIT License
 
-#include "SLiveConfigCleanupUnusedPropertiesWidget.h"
+#include "Tools/SLiveConfigCleanupUnusedPropertiesWidget.h"
 
 #include "LiveConfigEditorLib.h"
 #include "LiveConfigSystem.h"

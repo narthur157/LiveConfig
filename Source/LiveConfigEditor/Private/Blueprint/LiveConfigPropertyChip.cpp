@@ -1,7 +1,7 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
 
-
-#include "LiveConfigPropertyChip.h"
+#include "Blueprint/SLiveConfigPropertyChip.h"
 
 #include "LiveConfigPropertyStyle.h"
 #include "SlateOptMacros.h"

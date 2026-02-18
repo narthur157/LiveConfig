@@ -1,7 +1,7 @@
 // Copyright (c) 2026 Nicholas Arthur
 // Licensed under the MIT License
 
-#include "SLiveConfigNewTagDialog.h"
+#include "PropertyManager/SLiveConfigNewTagDialog.h"
 #include "LiveConfigSystem.h"
 #include "Widgets/Input/SButton.h"
 #include "Widgets/Input/SEditableTextBox.h"

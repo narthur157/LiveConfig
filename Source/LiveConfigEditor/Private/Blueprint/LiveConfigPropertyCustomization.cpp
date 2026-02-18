@@ -1,14 +1,10 @@
 // Copyright (c) 2026 Nicholas Arthur
 // Licensed under the MIT License
 
-#include "LiveConfigPropertyCustomization.h"
-
-#include "AssetRegistry/AssetRegistryModule.h"
+#include "Blueprint/LiveConfigPropertyCustomization.h"
 #include "DetailWidgetRow.h"
 #include "LiveConfigTypes.h"
-#include "LiveConfigSystem.h"
-#include "PropertyCustomizationHelpers.h"
-#include "LiveConfigPropertyPicker.h"
+#include "Blueprint/SLiveConfigPropertyPicker.h"
 #include "Widgets/Input/SComboButton.h"
 #include "Widgets/Text/STextBlock.h"
 #include "UObject/UnrealType.h"

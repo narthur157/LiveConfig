@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "LiveConfigPropertyPin.h"
+#include "SLiveConfigPropertyPin.h"
 #include "Widgets/SCompoundWidget.h"
 
 class SLiveConfigPropertyPicker;

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "Widgets/Views/SListView.h"
 #include "Widgets/Views/STableRow.h"
-#include "SLiveConfigPropertyManager.h"
+#include "PropertyManager/SLiveConfigPropertyManager.h"
 
 typedef SMultiColumnTableRow<TSharedRef<FLiveConfigPropertyTreeNode>> SPropertyRowParent;
 

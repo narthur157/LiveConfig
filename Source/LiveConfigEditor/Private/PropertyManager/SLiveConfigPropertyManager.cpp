@@ -1,12 +1,12 @@
 // Copyright (c) 2026 Nicholas Arthur
 // Licensed under the MIT License
 
-#include "SLiveConfigPropertyManager.h"
-#include "SLiveConfigPropertyRow.h"
-#include "SLiveConfigTagPicker.h"
-#include "SLiveConfigNewTagDialog.h"
-#include "SLiveConfigNewPropertyDialog.h"
-#include "SLiveConfigRedirectManager.h"
+#include "PropertyManager/SLiveConfigPropertyManager.h"
+#include "PropertyManager/SLiveConfigPropertyRow.h"
+#include "PropertyManager/SLiveConfigTagPicker.h"
+#include "PropertyManager/SLiveConfigNewTagDialog.h"
+#include "PropertyManager/SLiveConfigNewPropertyDialog.h"
+#include "Tools/SLiveConfigRedirectManager.h"
 #include "Widgets/Text/STextBlock.h"
 #include "Widgets/Layout/SBox.h"
 #include "Widgets/Views/SListView.h"
@@ -27,7 +27,7 @@
 #include "LiveConfigSystem.h"
 #include "LiveConfigPropertyTreeSubsystem.h"
 #include "LiveConfigLib.h"
-#include "SLiveConfigCleanupUnusedPropertiesWidget.h"
+#include "Tools/SLiveConfigCleanupUnusedPropertiesWidget.h"
 #include "Misc/MessageDialog.h"
 #include "Misc/ComparisonUtility.h"
 

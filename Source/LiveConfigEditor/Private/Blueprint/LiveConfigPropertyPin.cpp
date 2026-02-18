@@ -1,12 +1,11 @@
 // Copyright (c) 2026 Nicholas Arthur
 // Licensed under the MIT License
 
-#include "LiveConfigPropertyPin.h"
+#include "Blueprint/SLiveConfigPropertyPin.h"
 #include "EdGraphSchema_K2.h"
-#include "K2Node_CallFunction.h"
-#include "K2Node_LiveConfigLookup.h"
+#include "Blueprint/K2Node_LiveConfigLookup.h"
 #include "LiveConfigPropertyName.h"
-#include "LiveConfigPropertyCombo.h"
+#include "Blueprint/SLiveConfigPropertyCombo.h"
 
 #include "Widgets/Input/SComboButton.h"
 #include "Widgets/Text/STextBlock.h"
