@@ -4,11 +4,9 @@
 #include "LiveConfigSystem.h"
 
 #include "Profiles/LiveConfigProfileSystem.h"
-#include "HttpModule.h"
 #include "LiveConfigSettings.h"
-#include "Interfaces/IHttpResponse.h"
 #include "LiveConfigTypes.h"
-#include "Serialization/Csv/CsvParser.h"
+#include "Providers/LiveConfigHttpCsvProvider.h"
 
 #include "LiveConfigJson.h"
 #include "ConsoleSettings.h"
@@ -61,7 +59,8 @@ void ULiveConfigSystem::Initialize(FSubsystemCollectionBase& Collection)
     Collection.InitializeDependency(ULiveConfigProfileSystem::StaticClass());
     Collection.InitializeDependency(ULiveConfigJsonSystem::StaticClass());
     
-    RemoteOverrideCSVUrl = GetDefault<ULiveConfigSettings>()->RemoteOverrideCSVUrl;
+    const ULiveConfigSettings* Settings = GetDefault<ULiveConfigSettings>();
+    RemoteOverrideCSVUrl = Settings->RemoteOverrideCSVUrl;
 
     UConsole::RegisterConsoleAutoCompleteEntries.AddUObject(this, &ThisClass::PopulateAutoCompleteEntries);
 
@@ -69,6 +68,14 @@ void ULiveConfigSystem::Initialize(FSubsystemCollectionBase& Collection)
     {
         JsonSystem->LoadJsonFromFiles();
     }
+
+	TSubclassOf<ULiveConfigRemoteOverrideProvider> ProviderClass = Settings->RemoteOverrideProviderClass;
+	if (!ProviderClass)
+	{
+		ProviderClass = ULiveConfigHttpCsvProvider::StaticClass();
+	}
+	CurrentProvider = NewObject<ULiveConfigRemoteOverrideProvider>(this, ProviderClass);
+	CurrentProvider->Initialize();
 
     RebuildConfigCache();
 
@@ -196,6 +203,25 @@ void ULiveConfigSystem::HandleTagsChanged()
 	OnTagsChanged.Broadcast();
 }
 
+void ULiveConfigSystem::PatchEnvironmentOverrides(const FLiveConfigProfile& InProfile)
+{
+	if (EnvironmentOverrides != InProfile)
+	{
+		for (TTuple<FLiveConfigProperty, FString> Pair : InProfile.Overrides)
+		{
+			if (!PropertyDefinitions.Contains(Pair.Key))
+			{
+				UE_LOG(LogLiveConfig, Warning, TEXT("Environment profile contains override %s not found in properties"), *Pair.Key.ToString());	
+			}
+		}
+		
+		UE_LOG(LogLiveConfig, Log, TEXT("LiveConfigSystem: Environment profile patched, rebuilding cache"));
+		EnvironmentOverrides = InProfile;
+		bIsDataReady = true;
+		RebuildConfigCache();
+	}
+}
+
 void ULiveConfigSystem::DownloadConfig()
 {
     if (IsRunningCookCommandlet())
@@ -204,12 +230,6 @@ void ULiveConfigSystem::DownloadConfig()
         return;
     }
  
-    if (CurrentRequest && !CurrentRequest->GetResponse())
-    {
-        UE_LOG(LogLiveConfig, Log, TEXT("Live config request already in progress, not downloading"));
-        return;
-    }
-
     double TimeSinceLastDownload = FPlatformTime::Seconds() - TimeLoadStarted;
     if (TimeSinceLastDownload < RateLimitSeconds)
     {
@@ -217,86 +237,21 @@ void ULiveConfigSystem::DownloadConfig()
         return;
     }
     
-    // need to sanitize sheet url so that it definitely has /export?format=csv if coming from sheets
-    // we may or may not want to specify the GID, depending on if the tab we're using is the first or not
-    // could have GID as an optional arg, but this also gets confusing? Just going to assume it's the first tab for now
-    if (RemoteOverrideCSVUrl.IsEmpty())
+    if (CurrentProvider)
     {
-        UE_LOG(LogLiveConfig, Log, TEXT("LiveConfigSystem: RemoteOverrideCSVUrl is empty. No remote overrides will be downloaded"));
-        return;
+        UE_LOG(LogLiveConfig, Log, TEXT("LiveConfigSystem: Starting download via provider %s"), *CurrentProvider->GetName());
+        
+        FOnRemoteOverridesFetched OnComplete;
+        OnComplete.BindUObject(this, &ULiveConfigSystem::PatchEnvironmentOverrides);
+        CurrentProvider->FetchOverrides(OnComplete);
+        
+        TimeLoadStarted = FPlatformTime::Seconds();
     }
-
-    FHttpModule& HttpModule = FHttpModule::Get();
-    CurrentRequest = HttpModule.CreateRequest();
-
-    CurrentRequest->OnProcessRequestComplete().BindUObject(this, &ThisClass::OnSheetDownloadComplete);
-    CurrentRequest->SetURL(RemoteOverrideCSVUrl);
-    CurrentRequest->SetVerb(TEXT("GET"));
-    CurrentRequest->SetHeader(TEXT("User-Agent"), TEXT("X-UnrealEngine-Agent"));
-    CurrentRequest->SetHeader(TEXT("Content-Type"), TEXT("text/csv"));
-    
-    UE_LOG(LogLiveConfig, Log, TEXT("LiveConfigSystem: Starting download from %s"), *RemoteOverrideCSVUrl);
-    CurrentRequest->ProcessRequest();
-    TimeLoadStarted = FPlatformTime::Seconds();
 }
 
 void ULiveConfigSystem::OnSheetDownloadComplete(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
 {
-    if (!bWasSuccessful || !Response.IsValid())
-    {
-        UE_LOG(LogLiveConfig, Error, TEXT("LiveConfigSystem: Download failed."));
-        return;
-    }
-
-    ULiveConfigSettings* GameSettings = GetMutableDefault<ULiveConfigSettings>();
-    if (!GameSettings)
-    {
-        return;
-    }
-
-    const FString CsvContent = Response->GetContentAsString();
-    
-    FCsvParser Parser(CsvContent);
-    const FCsvParser::FRows& Rows = Parser.GetRows();
-
-    FLiveConfigProfile NewEnvProfile;
-    // Start from index 1 to skip the header row
-    for (int32 i = 1; i < Rows.Num(); ++i)
-    {
-        const TArray<const TCHAR*>& Columns = Rows[i];
-
-        // We expect four columns: key, value, tags, description, but only actually need key/value
-        if (Columns.Num() >= 1)
-        {
-            const FName Key(Columns[0]);
-        	
-            FLiveConfigProperty Property(Key, true);
-            if (!PropertyDefinitions.Contains(Property))
-            {
-                UE_LOG(LogLiveConfig, Warning, TEXT("Skipping remote property with invalid key: %s"), *Property.ToString());
-                continue;
-            }
-            
-            FLiveConfigPropertyDefinition Def = PropertyDefinitions[Property];
-            Def.Value = Columns[1];
-            
-            if (Property.IsValid() && !Def.Value.IsEmpty())
-            {
-                UE_LOG(LogLiveConfig, Verbose, TEXT("Downloaded config value: %s: %s (%s)"), *Property.ToString(), *Def.Value, *Def.Description);
-                NewEnvProfile.Overrides.Add(Property, Def.Value);
-            }
-        }
-    }
-    
-    bIsDataReady = true;
-    UE_LOG(LogLiveConfig, Log, TEXT("Successfully loaded %d key-value pairs"), PropertyDefinitions.Num());
-    
-   	if (NewEnvProfile != EnvironmentOverrides)
-	{   
-		UE_LOG(LogLiveConfig, Log, TEXT("LiveConfigSystem:Environment profile changed, rebuilding cache"));
-		EnvironmentOverrides = MoveTemp(NewEnvProfile);
-		RebuildConfigCache();
-	}
+    // This is now handled by the provider
 }
 
 const TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition>& ULiveConfigSystem::GetAllProperties() const

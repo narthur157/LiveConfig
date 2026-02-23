@@ -20,6 +20,8 @@ class LIVECONFIG_API ULiveConfigProfileSystem : public UEngineSubsystem
 public:
     static ULiveConfigProfileSystem* Get();
 
+    FOnLiveConfigProfileChanged OnProfileChanged;
+
     virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 
     UFUNCTION(BlueprintCallable, Category = "Live Config|Profiles")
@@ -48,13 +50,9 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Live Config|Profiles")
     const FLiveConfigProfile& GetActiveProfile() const { return ActiveProfile; }
 
-    FOnLiveConfigProfileChanged OnProfileChanged;
-
     static FString GetProfilesDirectory();
     static FString GetProfilePath(FName ProfileName);
 
 private:
-    void PopulateAutoCompleteEntries(TArray<struct FAutoCompleteCommand>& Entries);
-
     FLiveConfigProfile ActiveProfile;
 };

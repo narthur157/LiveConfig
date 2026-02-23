@@ -36,6 +36,13 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Live Config")
 	static FLiveConfigProperty MakeLiteralLiveConfigProperty(FLiveConfigProperty Property);
 	
+	/**
+	 * Parses remote overrides from a CSV string.
+	 * The first column is treated as the property name, and the second column as the value.
+	 */
+	UFUNCTION(BlueprintCallable, Category = "Live Config")
+	static FLiveConfigProfile ParseOverridesFromCsv(const FString& CsvContent);
+
 	static FSlateColor GetTagColor(FName InTag);
 private:	
 	UFUNCTION(BlueprintPure, Category = "Live Config", BlueprintInternalUseOnly)

@@ -29,6 +29,25 @@ enum class ELiveConfigPropertyType : uint8
 	Struct
 };
 
+DECLARE_DELEGATE_OneParam(FOnRemoteOverridesFetched, const FLiveConfigProfile&);
+
+/**
+ * Base class for providing remote overrides to the LiveConfig system
+ */
+UCLASS(Abstract, Blueprintable, EditInlineNew)
+class LIVECONFIG_API ULiveConfigRemoteOverrideProvider : public UObject
+{
+	GENERATED_BODY()
+
+public:
+	virtual void Initialize() {};
+	/**
+	 * Fetches overrides from a remote source
+	 * @param OnComplete Delegate to call when the fetch is complete
+	 */
+	virtual void FetchOverrides(const FOnRemoteOverridesFetched& OnComplete) {};
+};
+
 USTRUCT(BlueprintType)
 struct LIVECONFIG_API FLiveConfigPropertyDefinition
 {

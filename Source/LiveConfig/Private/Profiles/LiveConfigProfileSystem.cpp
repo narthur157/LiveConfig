@@ -135,7 +135,6 @@ void ULiveConfigProfileSystem::SaveProfile(const FLiveConfigProfile& Profile)
     TSharedPtr<FJsonObject> JsonObject = FJsonObjectConverter::UStructToJsonObject(Profile);
     if (JsonObject.IsValid())
     {
-        // New format: content is just the overrides
         TSharedPtr<FJsonObject> OverridesObject = JsonObject->GetObjectField(TEXT("overrides"));
         if (OverridesObject.IsValid())
         {
@@ -165,7 +164,6 @@ bool ULiveConfigProfileSystem::LoadProfile(FName ProfileName, FLiveConfigProfile
         {
             OutProfile.ProfileName = ProfileName;
             
-            // New format: the root object is the overrides map
             return FJsonObjectConverter::JsonValueToUProperty(MakeShared<FJsonValueObject>(JsonObject), 
                 FLiveConfigProfile::StaticStruct()->FindPropertyByName(TEXT("overrides")), &OutProfile.Overrides);
         }

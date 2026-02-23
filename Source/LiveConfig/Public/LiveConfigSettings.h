@@ -33,15 +33,28 @@ public:
 	virtual FName GetSectionName() const override { return TEXT("Live Config"); }
 
 	/** 
+	 * Only used with LiveConfigHttpCsvProvider
 	 * The URL for the remote override CSV. This CSV will be fetched and used to override key/value pairs
 	 * 
 	 * The first column is treated as "Name", and the second column is "Value" for each property
-	 * If using Google Sheets, use File -> Share -> Publish to web. Pick the tab with your data and the CSV type
 	 * 
-	 * Ensure that "Automatically republish when changes are made" is enabled.
+	 * If using Google Sheets, use File -> Share -> Publish to web. Pick the tab with your data and the CSV type
+	 * Ensure 
+	 * - "Automatically republish when changes are made" is enabled.
+	 * - Type is set to Comma Separated Values
+	 * - Only the tab with your overrides is selected
 	 */
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "GoogleSheets")
 	FString RemoteOverrideCSVUrl;
+
+	/**
+	 * The class to use for fetching remote overrides.
+	 * The HTTP CSV provider will be used by default
+	 * 
+	 * Override this to integrate with existing backend systems
+	 */
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "RemoteOverrides")
+	TSubclassOf<ULiveConfigRemoteOverrideProvider> RemoteOverrideProviderClass;
 
 	// default in-game polling rate, in seconds
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "GoogleSheets")

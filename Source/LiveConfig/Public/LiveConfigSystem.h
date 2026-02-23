@@ -114,6 +114,12 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Live Config")
     bool IsDataReady() const { return bIsDataReady; }
 
+    /**
+     * Patch in environment overrides. This can be called at any time to update the environment layer.
+     */
+    UFUNCTION(BlueprintCallable, Category = "Live Config")
+    void PatchEnvironmentOverrides(const FLiveConfigProfile& InProfile);
+
     void DownloadConfig();
 
     /** Refresh properties from editor settings */
@@ -155,7 +161,9 @@ private:
     float RateLimitSeconds = 5;
     FTimerHandle PollingTimer;
     FTSTicker::FDelegateHandle TimeoutTimer;
-    TSharedPtr<IHttpRequest> CurrentRequest;
+    
+    UPROPERTY()
+    ULiveConfigRemoteOverrideProvider* CurrentProvider;
 	
 	UPROPERTY()
 	FLiveConfigCache Cache;
