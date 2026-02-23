@@ -1,4 +1,5 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Copyright (c) 2026 Nicholas Arthur
+// Licensed under the MIT License
 
 #pragma once
 
@@ -35,10 +36,9 @@ public:
 	 * The URL for the remote override CSV. This CSV will be fetched and used to override key/value pairs
 	 * 
 	 * The first column is treated as "Name", and the second column is "Value" for each property
-	 * For use with Google Sheets, ensure that this url ends with /export?format=csv in the format
-	 * https://docs.google.com/spreadsheets/d/<spreadsheet_id>/export?format=csv
+	 * If using Google Sheets, use File -> Share -> Publish to web. Pick the tab with your data and the CSV type
 	 * 
-	 * Sheets works up to about 10-20 CCU, beyond which your CSV must be provided by something like S3
+	 * Ensure that "Automatically republish when changes are made" is enabled.
 	 */
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "GoogleSheets")
 	FString RemoteOverrideCSVUrl;
