@@ -55,7 +55,7 @@ private:
 
 	TAttribute<FString> ValueAttribute;
 	TAttribute<ELiveConfigPropertyType> PropertyTypeAttribute;
-	TAttribute<bool> bReadOnlyAttribute;
+	TAttribute<bool> bReadOnlyAttribute = false;
 	FOnValueChanged OnValueChanged;
 	FSimpleDelegate OnEnter;
 

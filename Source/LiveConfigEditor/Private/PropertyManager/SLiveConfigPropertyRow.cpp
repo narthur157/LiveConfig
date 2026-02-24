@@ -594,7 +594,6 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateValueColumnWidget()
 			SAssignNew(ValueWidget, SLiveConfigPropertyValueWidget)
 			.Value_Lambda([this]() { return Item->PropertyDefinition->Value; })
 			.PropertyType_Lambda([this]() { return Item->PropertyDefinition->PropertyType; })
-			.bReadOnly(this, &SLiveConfigPropertyRow::IsReadOnly)
 			.OnValueChanged_Lambda([this](const FString& NewValue)
 			{
 				TSharedPtr<FLiveConfigPropertyDefinition> OldDef = MakeShared<FLiveConfigPropertyDefinition>(*Item->PropertyDefinition);
