@@ -7,6 +7,11 @@
 
 DEFINE_LOG_CATEGORY(LogLiveConfig);
 
+bool FLiveConfigPropertyDefinition::IsDeprecated() const
+{
+	return Tags.Contains(TEXT("Deprecated"));
+}
+
 bool FLiveConfigPropertyDefinition::IsValid() const
 {
 	return PropertyName.IsValid();

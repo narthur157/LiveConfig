@@ -476,6 +476,10 @@ void UK2Node_LiveConfigLookup::ValidateNodeDuringCompilation(FCompilerResultsLog
 			{
 				MessageLog.Warning(*FText::Format(LOCTEXT("PropertyNotFoundWarning", "Live Config property '{0}' not found. @@"), FText::FromName(SelectedProperty.GetName())).ToString(), this);
 			}
+			else if (Def.IsDeprecated())
+			{
+				MessageLog.Warning(*FText::Format(LOCTEXT("PropertyDeprecatedWarning", "Live Config property '{0}' is deprecated. @@"), FText::FromName(SelectedProperty.GetName())).ToString(), this);
+			}
 		}
 	}
 }

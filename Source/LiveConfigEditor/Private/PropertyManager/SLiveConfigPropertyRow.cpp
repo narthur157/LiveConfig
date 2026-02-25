@@ -164,6 +164,7 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateActionsColumnWidget()
 		return SNullWidget::NullWidget;
 	}
 
+	// for folder properties
 	if (!Item->PropertyDefinition.IsValid())
 	{
 		return SNew(SBox)
@@ -234,6 +235,7 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateActionsColumnWidget()
 			];
 	}
 
+	// for non-folder properties
 	return SNew(SBox)
 		.HeightOverride(RowHeight)
 		.Padding(2.0f)
@@ -336,10 +338,6 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateActionsColumnWidget()
 				})
 				.OnClicked_Lambda([this]()
 				{
-					if (Item->IsStruct())
-					{
-						DeleteSubProperties();
-					}
 					OnDeleteProperty.ExecuteIfBound(Item->PropertyDefinition);
 					return FReply::Handled();
 				})
@@ -557,6 +555,7 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateTypeColumnWidget()
 
 					if (bOldWasStruct && Item->PropertyDefinition->PropertyType != ELiveConfigPropertyType::Struct)
 					{
+						// In this case UpdateStructProperties would not get called so we do need to remove the old sub properties
 						DeleteSubProperties();
 						OnRequestScroll.ExecuteIfBound(Item->PropertyDefinition->PropertyName);
 					}
@@ -599,17 +598,11 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateValueColumnWidget()
 				TSharedPtr<FLiveConfigPropertyDefinition> OldDef = MakeShared<FLiveConfigPropertyDefinition>(*Item->PropertyDefinition);
 				Item->PropertyDefinition->Value = NewValue;
 				
-				if (OldDef->PropertyType == ELiveConfigPropertyType::Struct && OldDef->Value != NewValue)
+				if (Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Struct && OldDef->Value != NewValue)
 				{
-					DeleteSubProperties();
-				}
-
-				if (Item->PropertyDefinition->PropertyType == ELiveConfigPropertyType::Struct)
-				{
-					UScriptStruct* Struct = FindFirstObject<UScriptStruct>(*NewValue);
-					if (Struct)
+					if (ULiveConfigSystem::Get().UpdateStructProperties(*Item->PropertyDefinition))
 					{
-						GenerateSubPropertiesForStruct(Struct);
+						OnRequestRefresh.ExecuteIfBound();
 					}
 				}
 
@@ -639,109 +632,19 @@ TSharedRef<SWidget> SLiveConfigPropertyRow::GenerateTagsColumnWidget()
 	return TagsWidget;
 }
 
-void SLiveConfigPropertyRow::GenerateSubPropertiesForStruct(const UScriptStruct* Struct)
-{
-	UE_LOG(LogLiveConfig, Log, TEXT("GenerateSubPropertiesForStruct called for struct: %s"), Struct ? *Struct->GetName() : TEXT("None"));
-
-	if (!Struct || (!Item->IsProperty() && !Item->IsStruct()))
-	{
-		UE_LOG(LogLiveConfig, Warning, TEXT("GenerateSubPropertiesForStruct: Invalid struct or item type (IsProperty: %d, IsStruct: %d)"), Item->IsProperty(), Item->IsStruct());
-		return;
-	}
-
-	ULiveConfigSystem& System = ULiveConfigSystem::Get();
-
-	FString Prefix = Item->PropertyDefinition->PropertyName.ToString();
-	UE_LOG(LogLiveConfig, Log, TEXT("GenerateSubPropertiesForStruct: Using prefix: %s"), *Prefix);
-	
-	if (Prefix.IsEmpty() || Prefix.EndsWith(TEXT(".")))
-	{
-		UE_LOG(LogLiveConfig, Warning, TEXT("GenerateSubPropertiesForStruct: Prefix is empty or ends with dot, skipping generation"));
-		return;
-	}
-
-	bool bChanged = false;
-
-	for (TFieldIterator<FProperty> It(Struct); It; ++It)
-	{
-		FProperty* Prop = *It;
-		FString FullPropName = Prefix + TEXT(".") + Prop->GetAuthoredName();
-		FLiveConfigProperty ConfigProp(FullPropName);
-
-		if (System.PropertyDefinitions.Contains(ConfigProp))
-		{
-			UE_LOG(LogLiveConfig, Log, TEXT("GenerateSubPropertiesForStruct: Property %s already exists, skipping"), *FullPropName);
-			continue;
-		}
-
-		ELiveConfigPropertyType PropType = ELiveConfigPropertyType::String;
-		FString DefaultValue = "";
-
-		if (CastField<FDoubleProperty>(Prop) || CastField<FFloatProperty>(Prop))
-		{
-			PropType = ELiveConfigPropertyType::Float;
-			DefaultValue = "0";
-		}
-		else if (CastField<FIntProperty>(Prop))
-		{
-			PropType = ELiveConfigPropertyType::Int;
-			DefaultValue = "0";
-		}
-		else if (CastField<FBoolProperty>(Prop))
-		{
-			PropType = ELiveConfigPropertyType::Bool;
-			DefaultValue = "false";
-		}
-		else if (CastField<FStrProperty>(Prop) || CastField<FNameProperty>(Prop) || CastField<FTextProperty>(Prop) || CastField<FEnumProperty>(Prop))
-		{
-			PropType = ELiveConfigPropertyType::String;
-			DefaultValue = "";
-		}
-		else
-		{
-			UE_LOG(LogLiveConfig, Log, TEXT("GenerateSubPropertiesForStruct: Skipping unsupported property type for %s"), *Prop->GetName());
-			continue;
-		}
-
-		FLiveConfigPropertyDefinition NewDef;
-		NewDef.PropertyName = ConfigProp;
-		NewDef.PropertyType = PropType;
-		NewDef.Value = DefaultValue;
-		NewDef.Tags = Item->PropertyDefinition->Tags; // Inherit tags from parent struct property
-
-		UE_LOG(LogLiveConfig, Log, TEXT("GenerateSubPropertiesForStruct: Adding property %s"), *FullPropName);
-		ULiveConfigSystem::Get().SavePropertyDeferred(NewDef);
-		
-		bChanged = true;
-	}
-
-	if (bChanged)
-	{
-		UE_LOG(LogLiveConfig, Log, TEXT("GenerateSubPropertiesForStruct: Refreshing system and UI"));
-		System.RebuildConfigCache();
-		OnRequestRefresh.ExecuteIfBound();
-	}
-}
-
 void SLiveConfigPropertyRow::DeleteSubProperties()
 {
 	ULiveConfigSystem& System = ULiveConfigSystem::Get();
 	ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get();
 
-	FString Prefix = Item->PropertyDefinition->PropertyName.ToString() + TEXT(".");
 	TArray<FLiveConfigProperty> PropertiesToDelete;
 
-	for (auto& Pair : System.PropertyDefinitions)
-	{
-		if (Pair.Key.ToString().StartsWith(Prefix))
-		{
-			PropertiesToDelete.Add(Pair.Key);
-		}
-	}
+	FName Prefix = Item->PropertyDefinition->PropertyName.GetName();
+	System.GetSubProperties(Item->PropertyDefinition->PropertyName.GetName(), PropertiesToDelete);
 
 	if (PropertiesToDelete.Num() > 0)
 	{
-		UE_LOG(LogLiveConfig, Log, TEXT("DeleteSubProperties: Deleting %d sub-properties for prefix %s"), PropertiesToDelete.Num(), *Prefix);
+		UE_LOG(LogLiveConfig, Log, TEXT("DeleteSubProperties: Deleting %d sub-properties for prefix %s"), PropertiesToDelete.Num(), *Prefix.ToString());
 		for (const FLiveConfigProperty& Prop : PropertiesToDelete)
 		{
 			System.PropertyDefinitions.Remove(Prop);

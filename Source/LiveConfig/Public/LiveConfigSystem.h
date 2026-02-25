@@ -50,6 +50,14 @@ public:
      * @param PropertyDefinition Property to be added or updated. Will be saved to file
      */
     void SaveProperty(const FLiveConfigPropertyDefinition& PropertyDefinition);
+
+    /**
+     * Updates the struct property represented by @PropertyDefinition, creating its subproperties and deleting any old ones
+     * @param PropertyDefinition Struct property
+     * @returns True if anything changed
+     */
+    bool UpdateStructProperties(const FLiveConfigPropertyDefinition& PropertyDefinition);
+	
     /**
      * Like @SaveProperty, but don't rebuild the cache right away 
      */
@@ -63,6 +71,8 @@ public:
      * @param bCreateRedirector Whether to create a redirector from the old name to the new name
      */
     void RenameProperty(FLiveConfigProperty OldName, FLiveConfigProperty NewName, bool bCreateRedirector = false);
+	
+	void DeleteProperty(FLiveConfigProperty Property);
 
     /**
      * Gets a configuration value as a string.
@@ -107,8 +117,17 @@ public:
         RedirectPropertyName(Property);
 		return Cache.GetValue<T>(Property);
     }
-
+	
     void GetLiveConfigStruct_Internal(class UScriptStruct* Struct, void* OutStructPtr, FLiveConfigProperty Prefix) const;
+	
+	void GetStructPropertyMembers(FLiveConfigProperty StructProperty, TArray<FLiveConfigProperty>& OutProperties);
+
+    /**
+     * 
+     * @param PropertyPath Path to the property folder, with a trailing "." or not
+     * @param OutProperties All properties within PropertyPath
+     */
+    void GetSubProperties(FName PropertyPath, TArray<FLiveConfigProperty>& OutProperties);
 
     /** Returns true if the data has been successfully downloaded and parsed. */
     UFUNCTION(BlueprintCallable, Category = "Live Config")

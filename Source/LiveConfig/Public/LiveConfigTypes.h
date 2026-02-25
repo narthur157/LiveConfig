@@ -67,7 +67,8 @@ struct LIVECONFIG_API FLiveConfigPropertyDefinition
 
 	UPROPERTY(Config, BlueprintReadWrite, EditAnywhere, Category = "Property")
 	FString Value;
-	
+
+	bool IsDeprecated() const;
 	bool IsValid() const;
 };
 

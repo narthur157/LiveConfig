@@ -73,7 +73,6 @@ private:
 	TSharedRef<SWidget> GenerateTagsColumnWidget();
 	TSharedRef<SWidget> GenerateActionsColumnWidget();
 
-	void GenerateSubPropertiesForStruct(const UScriptStruct* Struct);
 	void DeleteSubProperties();
 
 	void RefreshTags();

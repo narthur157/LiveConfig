@@ -28,6 +28,8 @@
 #include "LiveConfigPropertyTreeSubsystem.h"
 #include "LiveConfigLib.h"
 #include "Tools/SLiveConfigCleanupUnusedPropertiesWidget.h"
+#include "LiveConfigEditorLib.h"
+#include "Dialog/SMessageDialog.h"
 #include "Misc/MessageDialog.h"
 #include "Misc/ComparisonUtility.h"
 
@@ -429,6 +431,12 @@ void SLiveConfigPropertyManager::RefreshSearchFilter()
 	auto PassesFilter = [&](const FLiveConfigPropertyModelNode& Node) -> bool
 	{
 		if (!Node.PropertyDefinition.IsValid())
+		{
+			return false;
+		}
+		
+		// If we filter specifically for deprecated properties, show them
+		if (Node.PropertyDefinition->IsDeprecated() && SelectedTag != "Deprecated")
 		{
 			return false;
 		}
@@ -1195,6 +1203,22 @@ void SLiveConfigPropertyManager::OnPropertyRowChanged(TSharedPtr<FLiveConfigProp
 	}
 	else if (NewDef.IsValid() && IsValidPropertyName(NewDef->PropertyName))
 	{
+		// Sync struct tags to struct property - this could be done in UpdateStructProperties, but that starts getting unwieldy
+		// at least for now, assume that struct sub properties always have the same tags as their outer struct property
+		if (ChangeType == ELiveConfigPropertyChangeType::Tags && NewDef->PropertyType == ELiveConfigPropertyType::Struct)
+		{
+			TArray<FLiveConfigProperty> StructProperties;
+			ULiveConfigSystem::Get().GetStructPropertyMembers(NewDef->PropertyName, StructProperties);
+			for (FLiveConfigProperty StructProperty : StructProperties)
+			{
+				if (FLiveConfigPropertyDefinition* StructPropDefinition = ULiveConfigSystem::Get().PropertyDefinitions.Find(StructProperty))
+				{
+					StructPropDefinition->Tags = NewDef->Tags;	
+					ULiveConfigSystem::Get().SavePropertyDeferred(*StructPropDefinition);
+				}
+			}
+		}
+		
 		ULiveConfigSystem::Get().SaveProperty(*NewDef);
 	}
 
@@ -1218,17 +1242,46 @@ void SLiveConfigPropertyManager::RemoveProperty(TSharedPtr<FLiveConfigPropertyDe
 		return;
 	}
 
-	ULiveConfigSystem& System = ULiveConfigSystem::Get();
-	System.PropertyDefinitions.Remove(InItem->PropertyName);
-
-	if (ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get())
+	bool bIsUsed = ULiveConfigEditorLib::IsPropertyNameUsed(InItem->PropertyName.GetName());
+	
+	if (!bIsUsed)
 	{
-		JsonSystem->DeletePropertyFile(InItem->PropertyName.GetName());
+		ULiveConfigSystem::Get().DeleteProperty(InItem->PropertyName);
+		RefreshSearchFilter();
+		RefreshTags();
+		return;
 	}
+	
+	int32 ClickedButton = INDEX_NONE;
+	TSharedRef<SMessageDialog> Dialog = SNew(SMessageDialog)
+		.Title(LOCTEXT("DeletePropertyTitle", "Delete Property"))
+		.Message(FText::Format(
+			LOCTEXT("DeletePropertyInUseConfirm", "The property '{0}' is currently referenced by one or more assets. What would you like to do?"),
+			FText::FromName(InItem->PropertyName.GetName())
+		))
+		.Buttons({
+			SMessageDialog::FButton(LOCTEXT("Deprecate", "Deprecate"), FSimpleDelegate::CreateLambda([&ClickedButton]() { ClickedButton = 0; })),
+			SMessageDialog::FButton(LOCTEXT("Delete", "Delete"), FSimpleDelegate::CreateLambda([&ClickedButton]() { ClickedButton = 1; })),
+			SMessageDialog::FButton(LOCTEXT("Cancel", "Cancel"), FSimpleDelegate::CreateLambda([&ClickedButton]() { ClickedButton = 2; }))
+		});
 
-	System.RebuildConfigCache();
-	RefreshSearchFilter();
-	RefreshTags();
+	Dialog->ShowModal();
+
+	if (ClickedButton == 0) // Deprecate
+	{
+		InItem->Tags.AddUnique("Deprecated");
+		ULiveConfigSystem::Get().SaveProperty(*InItem);
+		RefreshSearchFilter();
+		RefreshTags();
+		return;
+	}
+	
+	if (ClickedButton == 1) // Delete
+	{
+		ULiveConfigSystem::Get().DeleteProperty(InItem->PropertyName);
+		RefreshSearchFilter();
+		RefreshTags();
+	}
 }
 
 void SLiveConfigPropertyManager::RemoveTag(FName TagName)

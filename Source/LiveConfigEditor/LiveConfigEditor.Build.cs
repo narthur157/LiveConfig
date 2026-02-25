@@ -39,7 +39,8 @@ public class LiveConfigEditor : ModuleRules
                 "StructViewer",
                 "DesktopPlatform",
                 "AssetRegistry",
-                "EditorSubsystem"
+                "EditorSubsystem",
+                "ToolWidgets"
             }
         );
     }

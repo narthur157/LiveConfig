@@ -18,6 +18,12 @@ namespace LiveConfigTags
 	const FName FromCurveTable = TEXT("FromCurveTable");
 }
 
+static TArray<FFieldClass*> SupportedStructPropertyTypes = {
+	FDoubleProperty::StaticClass(), FFloatProperty::StaticClass(), FIntProperty::StaticClass(),
+	FBoolProperty::StaticClass(), FStrProperty::StaticClass(), FNameProperty::StaticClass(), 
+	FTextProperty::StaticClass(), FEnumProperty::StaticClass()
+};
+
 ULiveConfigSystem& ULiveConfigSystem::Get()
 {
     ULiveConfigSystem* Subsystem = GEngine->GetEngineSubsystem<ULiveConfigSystem>();
@@ -118,7 +124,113 @@ void ULiveConfigSystem::SaveProperty(const FLiveConfigPropertyDefinition& Proper
 {
 	PropertyDefinitions.Add(PropertyDefinition.PropertyName, PropertyDefinition);
 	ULiveConfigJsonSystem::Get()->SavePropertyToFile(PropertyDefinition);
+	
+	if (PropertyDefinition.PropertyType == ELiveConfigPropertyType::Struct)
+	{
+		UpdateStructProperties(PropertyDefinition);
+	}
+	
 	RebuildConfigCache();
+}
+
+bool ULiveConfigSystem::UpdateStructProperties(const FLiveConfigPropertyDefinition& PropertyDefinition)
+{
+	UScriptStruct* Struct = FindFirstObject<UScriptStruct>(*PropertyDefinition.Value);
+	if (!Struct)
+	{
+		return false;
+	}
+
+	FString Prefix = PropertyDefinition.PropertyName.ToString();
+	
+	if (Prefix.IsEmpty() || Prefix.EndsWith(TEXT(".")))
+	{
+		UE_LOG(LogLiveConfig, Warning, TEXT("UpdateStructProperties: Prefix is empty or ends with dot, skipping generation"));
+		return false;
+	}
+
+	bool bChanged = false;
+	
+	TArray<FLiveConfigProperty> OldSubProperties;
+	GetSubProperties(PropertyDefinition.PropertyName.GetName(), OldSubProperties);
+
+	for (TFieldIterator<FProperty> It(Struct); It; ++It)
+	{
+		FProperty* Prop = *It;
+		FString FullPropName = Prefix + TEXT(".") + Prop->GetAuthoredName();
+		FLiveConfigProperty ConfigProp(FullPropName);
+
+		ELiveConfigPropertyType PropType = ELiveConfigPropertyType::String;
+		FString DefaultValue = "";
+
+		if (CastField<FDoubleProperty>(Prop) || CastField<FFloatProperty>(Prop))
+		{
+			PropType = ELiveConfigPropertyType::Float;
+			DefaultValue = "0";
+		}
+		else if (CastField<FIntProperty>(Prop))
+		{
+			PropType = ELiveConfigPropertyType::Int;
+			DefaultValue = "0";
+		}
+		else if (CastField<FBoolProperty>(Prop))
+		{
+			PropType = ELiveConfigPropertyType::Bool;
+			DefaultValue = "false";
+		}
+		else if (CastField<FStrProperty>(Prop) || CastField<FNameProperty>(Prop) || CastField<FTextProperty>(Prop) || CastField<FEnumProperty>(Prop))
+		{
+			PropType = ELiveConfigPropertyType::String;
+			DefaultValue = "";
+		}
+		else
+		{
+			UE_LOG(LogLiveConfig, Log, TEXT("UpdateStructProperties: Skipping unsupported property type for %s"), *Prop->GetName());
+			continue;
+		}
+		
+		if (PropertyDefinitions.Contains(ConfigProp) && PropertyDefinitions[ConfigProp].PropertyType == PropType)
+		{
+			// if we don't need to remove a property, don't
+			OldSubProperties.Remove(ConfigProp);
+			
+			UE_LOG(LogLiveConfig, Log, TEXT("UpdateStructProperties: Property %s already exists, skipping"), *FullPropName);
+			continue;
+		}
+
+		FLiveConfigPropertyDefinition NewDef;
+		NewDef.PropertyName = ConfigProp;
+		NewDef.PropertyType = PropType;
+		NewDef.Value = DefaultValue;
+		NewDef.Tags = PropertyDefinition.Tags; // Inherit tags from parent struct property
+
+		UE_LOG(LogLiveConfig, Log, TEXT("UpdateStructProperties: Adding property %s"), *FullPropName);
+		SavePropertyDeferred(NewDef);
+		
+		bChanged = true;
+	}
+	
+	// delete old sub properties now that we've had a chance to skip deleting any that are the same
+	for (FLiveConfigProperty OldProp : OldSubProperties)
+	{
+		// DeleteProperty, except defer rebuilding the config cache
+		PropertyDefinitions.Remove(OldProp);
+	
+		if (ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get())
+		{
+			JsonSystem->DeletePropertyFile(OldProp.PropertyName);
+		}
+	}
+		
+	PropertyDefinitions.Add(PropertyDefinition.PropertyName, PropertyDefinition);
+	ULiveConfigJsonSystem::Get()->SavePropertyToFile(PropertyDefinition);
+	
+	if (bChanged)
+	{
+		RebuildConfigCache();
+	}
+	
+	return bChanged;
 }
 
 void ULiveConfigSystem::SavePropertyDeferred(const FLiveConfigPropertyDefinition& PropertyDefinition)
@@ -148,13 +260,7 @@ void ULiveConfigSystem::RenameProperty(FLiveConfigProperty OldName, FLiveConfigP
 		FString NewPrefix = NewName.ToString() + TEXT(".");
 
 		TArray<FLiveConfigProperty> MembersToRename;
-		for (const auto& Pair : PropertyDefinitions)
-		{
-			if (Pair.Key.ToString().StartsWith(OldPrefix))
-			{
-				MembersToRename.Add(Pair.Key);
-			}
-		}
+		GetStructPropertyMembers(OldName, MembersToRename);
 
 		for (const FLiveConfigProperty& OldMemberName : MembersToRename)
 		{
@@ -184,6 +290,39 @@ void ULiveConfigSystem::RenameProperty(FLiveConfigProperty OldName, FLiveConfigP
 		JsonSystem->SavePropertyToFile(NewDef);
 	}
 
+	RebuildConfigCache();
+}
+
+void ULiveConfigSystem::DeleteProperty(FLiveConfigProperty Property)
+{
+	ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get();
+	
+	auto DeletePropertyInner = [&](FLiveConfigProperty InnerProp)
+	{
+		PropertyDefinitions.Remove(InnerProp);
+	
+		if (JsonSystem)
+		{
+			JsonSystem->DeletePropertyFile(InnerProp.PropertyName);
+		}
+	};
+	
+	if (FLiveConfigPropertyDefinition* Def = PropertyDefinitions.Find(Property))
+	{
+		if (Def->PropertyType == ELiveConfigPropertyType::Struct)
+		{
+			TArray<FLiveConfigProperty> SubProperties;			
+			
+			GetStructPropertyMembers(Property, SubProperties);
+			for (FLiveConfigProperty StructProp : SubProperties)
+			{
+				DeletePropertyInner(StructProp);	
+			}
+		}
+	}
+	
+	DeletePropertyInner(Property);
+	
 	RebuildConfigCache();
 }
 
@@ -330,7 +469,7 @@ void ULiveConfigSystem::GetLiveConfigStruct_Internal(UScriptStruct* Struct, void
 
 		if (FDoubleProperty* DoubleProp = CastField<FDoubleProperty>(Prop))
 		{
- 		double Value = Cache.GetValue<float>(ConfigProp);
+ 			double Value = Cache.GetValue<float>(ConfigProp);
 			DoubleProp->SetPropertyValue_InContainer(OutStructPtr, Value);
 		}
 		else if (FFloatProperty* FloatProp = CastField<FFloatProperty>(Prop))
@@ -374,6 +513,60 @@ void ULiveConfigSystem::GetLiveConfigStruct_Internal(UScriptStruct* Struct, void
 					EnumProp->GetUnderlyingProperty()->SetIntPropertyValue(EnumProp->ContainerPtrToValuePtr<void>(OutStructPtr), EnumValue);
 				}
 			}
+		}
+	}
+}
+
+void ULiveConfigSystem::GetStructPropertyMembers(FLiveConfigProperty StructProperty,
+	TArray<FLiveConfigProperty>& OutProperties)
+{
+	FLiveConfigPropertyDefinition* Definition = PropertyDefinitions.Find(StructProperty);
+	if (!Definition || Definition->PropertyType != ELiveConfigPropertyType::Struct)
+	{
+		return;
+	}
+	
+	// the value of a struct is its struct type
+	UScriptStruct* Struct =  FindFirstObject<UScriptStruct>(*Definition->Value);;
+	for (TFieldIterator<FProperty> It(Struct); It; ++It)
+	{
+		FProperty* Prop = *It;
+		
+		// we save properties using GetAuthoredName, so we also look them up that way
+		FString PropName = Prop->GetAuthoredName();
+		FString FullPropName = StructProperty.ToString() + TEXT(".") + PropName;
+		FLiveConfigProperty ConfigProp(FullPropName, true);
+		
+		// TODO: We could check here if the prop is one of our supported struct types
+		// though it's probably enough just to check that it exists in the first place so long as this isn't used
+		// when determining which properties to create
+		if (SupportedStructPropertyTypes.Contains(Prop->GetClass()))
+		{
+			OutProperties.Add(ConfigProp);
+		}
+	}
+}
+
+void ULiveConfigSystem::GetSubProperties(FName PropertyPath, TArray<FLiveConfigProperty>& OutProperties)
+{
+	FString PathStr = PropertyPath.ToString();
+	if (PathStr.IsEmpty())
+	{
+		// refuse to fill the entire config
+		return;
+	}
+
+	if (!PathStr.EndsWith(TEXT(".")))
+	{
+		PathStr += TEXT(".");
+	}
+
+	for (const TTuple<FLiveConfigProperty, FLiveConfigPropertyDefinition>& Pair : PropertyDefinitions)
+	{
+		FString PropName = Pair.Key.ToString();
+		if (PropName.StartsWith(PathStr))
+		{
+			OutProperties.Add(Pair.Key);
 		}
 	}
 }
