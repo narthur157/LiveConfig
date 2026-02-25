@@ -17,16 +17,25 @@ export default defineConfig({
       {
         text: 'Introduction',
         items: [
-          { text: 'Getting Started', link: '/ConfigDataStructure' },
+          { text: 'Getting Started', link: '/GettingStarted' },
           { text: 'Download', link: 'https://github.com/narthur157/LiveConfig/releases' },
+        ]
+      },
+      {
+        text: 'Concepts',
+        items: [
+          { text: 'About', link: '/Concepts/WhatIsLiveConfig' },
+          { text: 'Config Data Structure', link: '/Concepts/ConfigDataStructure' }
         ]
       },
       {
         text: 'Features',
         items: [
+          { text: 'Remote Overrides', link: '/Features/RemoteOverrides' },
           { text: 'Curve Tables', link: '/Features/CurveTables' },
           { text: 'Config Profiles', link: '/Features/Profiles'},
           { text: 'Sync to Google Sheets', link: '/Features/SyncGoogleSheets' },
+          { text: 'Reference Tracking', link: '/Features/ReferenceTracking' }
         ]
       },
       {

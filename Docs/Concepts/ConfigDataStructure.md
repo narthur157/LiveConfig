@@ -1,4 +1,4 @@
-﻿## LiveConfig Data Structure 
+﻿## Config Data Structure 
 ### Directory Structure and Property Naming
 
 JSON Data is stored in the `Config/LiveConfig/` directory. The filesystem structure (folders and filenames) define the hierarchy and naming of configuration properties.
@@ -42,24 +42,6 @@ LiveConfig intentionally stores each configuration property in a separate file r
 
 Additionally, in the case that there _is_ a merge conflict, it can be resolved easily compared to fixing a merge conflict in a binary asset such as a curve table, data table, or blueprint.
 
-### Reference Tracking and Renaming
-
-#### Reference Tracking
-LiveConfig uses Unreal's **Searchable Names** in the Asset Registry. When an `FLiveConfigProperty` is saved in any asset (Blueprint, Level, Data Asset), its name is registered as a searchable dependency.
-- Use **find usages** on a property name in the LiveConfig editor to see all assets that reference it.
-
-#### Renaming and Redirectors
-If a property needs to be renamed, LiveConfig supports **Property Redirectors** via configuration.
-1. Add a redirect entry in `DefaultGame.ini` (or through the LiveConfig settings):
-   ```ini
-   [/Script/LiveConfig.LiveConfigSystem]
-   +PropertyRedirects=(OldName="Old.Property.Name", NewName="New.Property.Name")
-   ```
-2. When an asset containing the old property name is loaded, it will automatically be updated to the new name.
-3. This system mirrors `GameplayTagRedirects`, ensuring that renames don't break existing references.
-
-When using the `RenameProperty` function in C++, you can optionally pass `true` for the `bCreateRedirector` parameter to automatically add a redirect entry to the `PropertyRedirects` map. For structs, this will also recursively create redirectors for all member properties.
-
 ### Structs
 
 LiveConfig supports C++ and Blueprint structs implicitly.
@@ -71,11 +53,10 @@ The system uses a prefix-based lookup. When you call `GetLiveConfigStruct<FMyStr
 #### Supported Member Types
 
 The following property types are supported within a struct:
-- `float`, `double`
+- `float`, `double` (treated as float)
 - `int32`
 - `bool`
-- `FString`, `FName`, `FText`
-- `Enum` (looked up by name string)
+- `FString`, `FName`, `FText` (all treated as strings)
 
 #### Example
 
@@ -102,5 +83,3 @@ FMyConfigStruct Settings = ULiveConfigSystem::Get().GetLiveConfigStruct<FMyConfi
 For a concrete implementation example, see `FLiveConfigStructLookupTest` in `LiveConfigStructTest.cpp`.
 
 Structs are supported in the `GetLiveConfigValue` blueprint node.
-
-TODO: Adding properties to structs will not cause those subproperties to get initialized in the struct config. Removing properties will result in dangling subproperties.

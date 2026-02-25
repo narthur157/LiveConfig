@@ -4,12 +4,12 @@ layout: home
 
 hero:
   name: "Live Config"
-  text: "Game data Management for Unreal Engine"
-  tagline: Decouple configuration from implementation
+  text: ""
+  tagline: Tuning data and feature flags for Unreal Engine
   actions:
     - theme: brand
       text: Get Started
-      link: /ConfigDataStructure
+      link: /GettingStarted
     - theme: alt
       text: Download
       link: https://github.com/narthur157/LiveConfig

@@ -17,4 +17,6 @@ Profiles are only saved when `LiveConfig.SaveProfile <ProfileName>` is called
 A profile can be loaded via `LiveConfig.LoadProfile <ProfileName>`
 
 ## Limitations
-Only 1 profile can be applied at a time. However, support could be added for a layering system.
+Only 1 profile can be applied at a time.
+
+Profiles always take precedence over environment overrides (which are internally also a profile).

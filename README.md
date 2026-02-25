@@ -7,7 +7,7 @@
 
 
 
-Live Config is a tool to manage game data in Unreal Engine.
+Live Config is a tool to manage tuning data and feature flags in Unreal Engine.
 
 ![Node screenshot](./Docs/public/Screenshots/LiveConfig-GetValueNodes.png)
 
@@ -17,7 +17,7 @@ Define and and retrieve JSON backed properties that can be accessed from anywher
 
 ## Documentation
 
-The full documentation, including the API reference, is available at:
+The full documentation is available at:
 [https://narthur157.github.io/LiveConfig/](https://narthur157.github.io/LiveConfig/)
 
 
