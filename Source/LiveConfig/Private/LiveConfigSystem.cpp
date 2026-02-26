@@ -388,11 +388,6 @@ void ULiveConfigSystem::DownloadConfig()
     }
 }
 
-void ULiveConfigSystem::OnSheetDownloadComplete(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
-{
-    // This is now handled by the provider
-}
-
 const TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition>& ULiveConfigSystem::GetAllProperties() const
 {
     return PropertyDefinitions;

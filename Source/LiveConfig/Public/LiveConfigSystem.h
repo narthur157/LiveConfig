@@ -182,7 +182,7 @@ private:
     FTSTicker::FDelegateHandle TimeoutTimer;
     
     UPROPERTY()
-    ULiveConfigRemoteOverrideProvider* CurrentProvider;
+    TObjectPtr<ULiveConfigRemoteOverrideProvider> CurrentProvider;
 	
 	UPROPERTY()
 	FLiveConfigCache Cache;
@@ -191,8 +191,6 @@ private:
 	FLiveConfigProfile EnvironmentOverrides;
     
     float TimeoutDuration;
-    /** Callback function for when the HTTP request completes. */
-    void OnSheetDownloadComplete(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 
     void OnTravel(UWorld* World, FWorldInitializationValues WorldInitializationValues);
     void OnStartGameInstance(UGameInstance* GameInstance);

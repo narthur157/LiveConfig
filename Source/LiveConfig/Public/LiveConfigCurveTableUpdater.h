@@ -26,8 +26,8 @@ protected:
 	void ExportToCurveTables();
 
 	UPROPERTY()
-	UCurveTable* ExportActiveCurveTable;
-
+	TObjectPtr<UCurveTable> ExportActiveCurveTable;
+	
 	UPROPERTY()
-	TArray<UCurveTable*> ImportActiveCurveTables;
+	TArray<TObjectPtr<UCurveTable>> ImportActiveCurveTables;
 };

@@ -4,8 +4,8 @@ layout: home
 
 hero:
   name: "Live Config"
-  text: ""
-  tagline: Tuning data and feature flags for Unreal Engine
+  text: "Unreal Game Database"
+  tagline: Manage tuning data and feature flags
   actions:
     - theme: brand
       text: Get Started
