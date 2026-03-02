@@ -51,6 +51,11 @@ void ULiveConfigJsonSystem::Initialize(FSubsystemCollectionBase& Collection)
 		FConsoleCommandDelegate::CreateUObject(this, &ULiveConfigJsonSystem::VerifyJsonIntegrity),
 		ECVF_Default
 	);
+	
+	if (!FPaths::DirectoryExists(GetLiveConfigDirectory()))
+	{
+		IFileManager::Get().MakeDirectory(*GetLiveConfigDirectory());
+	}
 }
 
 void ULiveConfigJsonSystem::LoadJsonFromFiles()
