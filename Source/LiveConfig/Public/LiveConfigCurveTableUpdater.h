@@ -24,6 +24,8 @@ public:
 protected:
 	void ImportFromCurveTables();
 	void ExportToCurveTables();
+	
+	FTimerHandle SaveTimerHandle;
 
 	UPROPERTY()
 	TObjectPtr<UCurveTable> ExportActiveCurveTable;

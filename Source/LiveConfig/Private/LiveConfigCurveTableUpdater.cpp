@@ -68,20 +68,22 @@ void ULiveConfigCurveTableUpdater::ImportFromCurveTables()
 			bSettingsChanged = true;
 		}
 
-		for (const TTuple<FName, FSimpleCurve*>& Pair : CurveTable->GetSimpleCurveRowMap())
+		for (const TTuple<FName, FRealCurve*>& Pair : CurveTable->GetRowMap())
 		{
 			FName RowName = Pair.Key;
-			FSimpleCurve* Curve = Pair.Value;
+			FRealCurve* Curve = Pair.Value;
 
-			if (Curve->Keys.Num() > 0)
+			if (Curve->GetNumKeys() > 0)
 			{
-				for (const FSimpleCurveKey& Key : Curve->Keys)
+				for (auto It = Curve->GetKeyHandleIterator(); It; ++It )
 				{
-					FName PropName = (Curve->Keys.Num() == 1) ? RowName : FName(FString::Printf(TEXT("%s.%d"), *RowName.ToString(), FMath::RoundToInt(Key.Time)));
+					const FKeyHandle KeyHandle = *It;
+					FName PropName = (Curve->GetNumKeys() == 1) ? RowName : FName(FString::Printf(TEXT("%s.%d"), *RowName.ToString(), FMath::RoundToInt(Curve->GetKeyTime(KeyHandle))));
 
 					FLiveConfigPropertyDefinition& Def = ULiveConfigSystem::Get().PropertyDefinitions.FindOrAdd(PropName);
 					
-					if (Def.PropertyName != PropName || (Def.PropertyType != ELiveConfigPropertyType::Float && Def.PropertyType != ELiveConfigPropertyType::Int) || Def.Value != FString::SanitizeFloat(Key.Value))
+					float KeyValue = Curve->GetKeyValue(KeyHandle);
+					if (Def.PropertyName != PropName || (Def.PropertyType != ELiveConfigPropertyType::Float && Def.PropertyType != ELiveConfigPropertyType::Int) || Def.Value != FString::SanitizeFloat(KeyValue))
 					{
 						bSettingsChanged = true;
 					}
@@ -91,7 +93,7 @@ void ULiveConfigCurveTableUpdater::ImportFromCurveTables()
 					{
 						Def.PropertyType = ELiveConfigPropertyType::Float;
 					}
-					Def.Value = FString::SanitizeFloat(Key.Value);
+					Def.Value = FString::SanitizeFloat(KeyValue);
 					
 					Def.Tags.AddUnique(LiveConfigTags::FromCurveTable);
 					Def.Tags.AddUnique(TableTag);
@@ -278,7 +280,25 @@ void ULiveConfigCurveTableUpdater::ExportToCurveTables()
 			}
 		}
 	}
-
+	
+	TArray<FName> RowsToRemove;
+	// Remove non-existent rows
+	for (const TTuple<FName, FSimpleCurve*>& Pair : ExportActiveCurveTable->GetSimpleCurveRowMap())
+	{
+		FName RowName = Pair.Key;
+		FSimpleCurve* Curve = Pair.Value;
+		if (!System.PropertyDefinitions.Contains(RowName))
+		{
+			RowsToRemove.Add(RowName);	
+		}
+	}
+	
+	for (FName RowToRemove : RowsToRemove)
+	{
+		UE_LOG(LogLiveConfig, Log, TEXT("Removing unused live config row from export curve table: %s"), *RowToRemove.ToString());
+		ExportActiveCurveTable->DeleteRow(RowToRemove);
+	}
+	
 	if (!bAnythingChanged)
 	{
 		return;
@@ -288,20 +308,26 @@ void ULiveConfigCurveTableUpdater::ExportToCurveTables()
 #if WITH_EDITOR
 	ExportActiveCurveTable->PostEditChange();
 
-	// Automatically save the asset in the editor
-	UPackage* Package = ExportActiveCurveTable->GetOutermost();
-	if (Package && !Package->HasAnyFlags(RF_Transient) && !Package->GetName().StartsWith(TEXT("/Temp/")))
+	if (GEditor && GEditor->IsTimerManagerValid())
 	{
-		FString PackageFileName = FPackageName::LongPackageNameToFilename(Package->GetName(), FPackageName::GetAssetPackageExtension());
-		
-		FSavePackageArgs SaveArgs;
-		SaveArgs.TopLevelFlags = RF_Public | RF_Standalone;
-		SaveArgs.Error = GError;
-		SaveArgs.bForceByteSwapping = false;
-		SaveArgs.bWarnOfLongFilename = true;
-		SaveArgs.SaveFlags = SAVE_NoError;
+		GEditor->GetTimerManager()->SetTimer(SaveTimerHandle, [&]()
+		{
+			// Automatically save the asset in the editor
+			UPackage* Package = ExportActiveCurveTable->GetOutermost();
+			if (Package && !Package->HasAnyFlags(RF_Transient) && !Package->GetName().StartsWith(TEXT("/Temp/")))
+			{
+				FString PackageFileName = FPackageName::LongPackageNameToFilename(Package->GetName(), FPackageName::GetAssetPackageExtension());
+				
+				FSavePackageArgs SaveArgs;
+				SaveArgs.TopLevelFlags = RF_Public | RF_Standalone;
+				SaveArgs.Error = GError;
+				SaveArgs.bForceByteSwapping = false;
+				SaveArgs.bWarnOfLongFilename = true;
+				SaveArgs.SaveFlags = SAVE_NoError;
 
-		UPackage::SavePackage(Package, ExportActiveCurveTable, *PackageFileName, SaveArgs);
+				UPackage::SavePackage(Package, ExportActiveCurveTable, *PackageFileName, SaveArgs);
+			}
+		}, 2.5f, false);
 	}
 #endif
 }

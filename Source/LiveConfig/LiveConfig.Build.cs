@@ -17,6 +17,7 @@ public class LiveConfig : ModuleRules
 		if (Target.bBuildEditor)
 		{
 			PrivateDependencyModuleNames.Add("SourceControl");
+			PrivateDependencyModuleNames.Add("UnrealEd");
 		}
 	}
 }

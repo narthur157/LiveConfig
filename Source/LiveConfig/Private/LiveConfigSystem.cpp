@@ -10,6 +10,7 @@
 
 #include "LiveConfigJson.h"
 #include "ConsoleSettings.h"
+#include "LiveConfigCurveTableUpdater.h"
 #include "LiveConfigLib.h"
 #include "Engine/Console.h"
 
@@ -130,6 +131,7 @@ void ULiveConfigSystem::SaveProperty(const FLiveConfigPropertyDefinition& Proper
 		UpdateStructProperties(PropertyDefinition);
 	}
 	
+	GEngine->GetEngineSubsystem<ULiveConfigCurveTableUpdater>()->UpdateCurveTables();
 	RebuildConfigCache();
 }
 
