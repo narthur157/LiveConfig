@@ -12,7 +12,9 @@
 #include "Profiles/LiveConfigProfile.h"
 #include "ConsoleSettings.h"
 #include "LiveConfigSystem.generated.h"
+
 DECLARE_MULTICAST_DELEGATE(FOnLiveConfigPropertiesUpdated);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnRemoteSyncDetected, const TArray<FLiveConfigPropertyDefinition>&);
 
 namespace LiveConfigTags
 {
@@ -30,8 +32,16 @@ class LIVECONFIG_API ULiveConfigSystem : public UEngineSubsystem
 
 public:
     FOnLiveConfigPropertiesUpdated OnPropertiesUpdated;
-	
+
 	FSimpleMulticastDelegate OnTagsChanged;
+
+    /**
+     * Broadcasted on the first load of external overrides
+     */
+    FSimpleMulticastDelegate OnRemoteOverridesLoaded;
+	
+	/** Broadcast when remote sync detects changes (for editor notification system) */
+	FOnRemoteSyncDetected OnDataProviderSync;
 	
     /**
      * note - if using this very early during startup (eg from another UEngineSubsystem::Initialize) consider
@@ -137,9 +147,34 @@ public:
      * Patch in environment overrides. This can be called at any time to update the environment layer.
      */
     UFUNCTION(BlueprintCallable, Category = "Live Config")
-    void PatchEnvironmentOverrides(const FLiveConfigProfile& InProfile);
+   	void PatchEnvironmentOverrides(const FLiveConfigProfile& InProfile);
+	
+   	/** 
+   	 * Fetches the latest remote config and updates local JSON files if changes are detected,
+   	 * regardless of the current SyncMode setting.
+   	 */
+   	void SyncRemoteToLocal();
+	
+	/**
+	 * @returns Properties from @Profile that did not already match the base config
+	 */
+    TArray<FLiveConfigPropertyDefinition> GetProfileDiff(const FLiveConfigProfile& Profile);
+	
+    /**
+	 * Saves @Properties to files
+     * @return Input for chaining
+     */
+    const TArray<FLiveConfigPropertyDefinition>& SaveProperties(const TArray<FLiveConfigPropertyDefinition>& Properties);
+	FString GetDiffString(const TArray<FLiveConfigPropertyDefinition>& Diff);
+	
+    /**
+     * @param Diff Properties which will be compared to base system values
+     * @return Diff represented as "PropertyName: Old -> New" joined by line
+     */
+    FText GetDiffText(const TArray<FLiveConfigPropertyDefinition>& Diff);
+	
 
-    void DownloadConfig();
+   	void DownloadConfig();
 
     /** Refresh properties from editor settings */
     void RebuildConfigCache();
@@ -154,6 +189,10 @@ public:
     /** Redirects a property name based on the redirectors map */
     void RedirectPropertyName(FLiveConfigProperty& Property) const;
 
+	/** 
+	 * Gets the active source type and path from user settings or project default 
+	 */
+    static void GetActiveSource(ELiveConfigSourceType& OutSourceType, FString& OutSourcePath);
 
     /**
      * Removes a specific redirect from the map and saves the config
@@ -175,15 +214,11 @@ public:
 
 
 private:
-    FString RemoteOverrideCSVUrl;
     double TimeLoadStarted = -9999;
     float RateLimitSeconds = 5;
     FTimerHandle PollingTimer;
     FTSTicker::FDelegateHandle TimeoutTimer;
     
-    UPROPERTY()
-    TObjectPtr<ULiveConfigRemoteOverrideProvider> CurrentProvider;
-	
 	UPROPERTY()
 	FLiveConfigCache Cache;
     
@@ -200,8 +235,19 @@ private:
      */
 	UFUNCTION()
     void BuildCache();
-	
+
 	void PopulateAutoCompleteEntries(TArray<FAutoCompleteCommand>& AutoCompleteCommands);
+
+	/**
+	 * Fetches overrides from the specified source
+	 * @param SourceType Type of source (HttpCsv, LocalCsv)
+	 * @param SourcePath URL or file path depending on type
+	 * @param OnComplete Delegate called when fetch completes
+	 */
+	void FetchOverrides(ELiveConfigSourceType SourceType, const FString& SourcePath, const FOnRemoteOverridesFetched& OnComplete);
+
+	/** Console command handler for FetchProfile */
+	void FetchProfileCommand(const TArray<FString>& Args);
 
     /** Flag to indicate if the download and parsing were successful. */
     bool bIsDataReady = false;

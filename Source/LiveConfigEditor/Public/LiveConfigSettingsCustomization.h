@@ -16,4 +16,5 @@ private:
 	FReply OnCleanupUnusedPropertiesClicked();
 	FReply OnManageRedirectsClicked();
 	FReply OnExportCsvClicked();
+	FReply OnSyncRemoteClicked();
 };

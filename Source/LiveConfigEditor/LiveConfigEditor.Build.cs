@@ -40,7 +40,9 @@ public class LiveConfigEditor : ModuleRules
                 "DesktopPlatform",
                 "AssetRegistry",
                 "EditorSubsystem",
-                "ToolWidgets"
+                "ToolWidgets",
+                "DirectoryWatcher",
+                "DeveloperSettings" 
             }
         );
     }

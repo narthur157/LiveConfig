@@ -9,6 +9,7 @@
 #include "LiveConfigPropertyName.h"
 #include "LiveConfigSettings.generated.h"
 
+
 UENUM()
 enum class ELiveConfigRedirectMode : uint8
 {
@@ -32,43 +33,46 @@ public:
 	virtual FName GetCategoryName() const override { return TEXT("Game"); }
 	virtual FName GetSectionName() const override { return TEXT("Live Config"); }
 
-	/** 
-	 * Only used with LiveConfigHttpCsvProvider
-	 * The URL for the remote override CSV. This CSV will be fetched and used to override key/value pairs
-	 * 
-	 * The first column is treated as "Name", and the second column is "Value" for each property
-	 * 
-	 * If using Google Sheets, use File -> Share -> Publish to web. Pick the tab with your data and the CSV type
-	 * Ensure 
-	 * - "Automatically republish when changes are made" is enabled.
-	 * - Type is set to Comma Separated Values
-	 * - Only the tab with your overrides is selected
-	 */
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "GoogleSheets")
-	FString RemoteOverrideCSVUrl;
-
 	/**
-	 * The class to use for fetching remote overrides.
-	 * The HTTP CSV provider will be used by default
-	 * 
-	 * Override this to integrate with existing backend systems
+	 * Default source type for remote overrides (fallback if not set in user settings)
+	 * - HttpCsv: Fetch from URL (e.g., Google Sheets)
+	 * - LocalCsv: Load from Saved/LiveConfigOverrides.csv
+	 * - None: No remote overrides
+	 *
+	 * Note: Per-user settings can be configured in Live Config User Settings
 	 */
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "RemoteOverrides")
-	TSubclassOf<ULiveConfigRemoteOverrideProvider> RemoteOverrideProviderClass;
-
-	// default in-game polling rate, in seconds
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "GoogleSheets")
-	float PollingRate = 30;
-
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "GoogleSheets")
-	bool bPollConfigInEditor = true;
+	ELiveConfigSourceType DefaultExternalSource = ELiveConfigSourceType::None;
+	
+	static FString GetSourcePath();
 
 	/**
-	 * How often to refresh the config in editor
-	 * This should be set to be relatively slow as it will happen even while the editor is idle
+	 * Default source path for remote overrides (fallback if not set in user settings)
+	 * The first column is treated as "Name", and the second column is "Value" for each property
+	 *
+	 * For HttpCsv type (Google Sheets):
+	 * 1.) Dev env method, no delay. Up to 300 requests per minute total
+	 *     Copy your Sheet URL and add "/export?format=csv" to it
+	 *
+	 * 2.) More scalable method (~2 minute delay before changes are consistent):
+	 *     use File -> Share -> Publish to web. Pick the tab with your data and the CSV type
+	 *     Ensure:
+	 *     - "Automatically republish when changes are made" is enabled
+	 *     - Type is set to Comma Separated Values
+	 *     - Only the tab with your overrides is selected
+	 *     Limits for this method are undocumented
+	 *
+	 * Note: This can be overridden per user or in-game
 	 */
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "GoogleSheets")
-	float EditorPollRateMinutes = 30;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "RemoteOverrides", Meta = (EditCondition = "DefaultExternalSource == ELiveConfigSourceType::HttpCsv", EditConditionHides))
+	FString RemoteCsvUrl;
+
+	/**
+	 * Polling rate for packaged builds (in seconds)
+	 * This controls how often the config is refreshed at runtime
+	 */
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "RemoteOverrides", Meta = (ClampMin = "5.0", ClampMax = "3600.0"))
+	float PollingRate = 30.0f;
 
 	/** 
 	 * The curve table to update with live config values (Export TO). 

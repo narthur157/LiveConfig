@@ -9,6 +9,17 @@
 
 LIVECONFIG_API DECLARE_LOG_CATEGORY_EXTERN(LogLiveConfig, Log, All);
 
+UENUM()
+enum class ELiveConfigSyncMode : uint8
+{
+	/** Always sync remote changes to local and log when changes are applied */
+	AlwaysSync,
+	/** Prompt via a dialog when changes are detected */
+	Prompt,
+	/** Never sync remote changes to local */
+	NeverSync
+};
+
 UENUM(BlueprintType)
 enum class ELiveConfigPropertyChangeType : uint8
 {
@@ -29,24 +40,18 @@ enum class ELiveConfigPropertyType : uint8
 	Struct
 };
 
-DECLARE_DELEGATE_OneParam(FOnRemoteOverridesFetched, const FLiveConfigProfile&);
-
-/**
- * Base class for providing remote overrides to the LiveConfig system
- */
-UCLASS(Abstract, Blueprintable, EditInlineNew)
-class LIVECONFIG_API ULiveConfigRemoteOverrideProvider : public UObject
+UENUM()
+enum class ELiveConfigSourceType : uint8
 {
-	GENERATED_BODY()
-
-public:
-	virtual void Initialize() {};
-	/**
-	 * Fetches overrides from a remote source
-	 * @param OnComplete Delegate to call when the fetch is complete
-	 */
-	virtual void FetchOverrides(const FOnRemoteOverridesFetched& OnComplete) {};
+	/** No remote override source configured */
+	None,
+	/** Fetch overrides from HTTP CSV URL (e.g., Google Sheets) */
+	HttpCsv,
+	/** Load overrides from local CSV file */
+	LocalCsv
 };
+
+DECLARE_DELEGATE_OneParam(FOnRemoteOverridesFetched, const FLiveConfigProfile&);
 
 USTRUCT(BlueprintType)
 struct LIVECONFIG_API FLiveConfigPropertyDefinition

@@ -288,8 +288,12 @@ bool FLiveConfigRenameTest::RunTest(const FString& Parameters)
 		TestTrue(TEXT("Struct redirector should be created"), System.PropertyRedirects.Contains(OldStructName.GetName()));
 		
 		FLiveConfigProperty NewMemberName(TEXT("Rename.RedirectStruct.New.Member"));
-		TestTrue(TEXT("Member redirector should be created"), System.PropertyRedirects.Contains(OldMemberName.GetName()));
-		TestEqual(TEXT("Member redirector should point to new member name"), System.PropertyRedirects[OldMemberName.GetName()], NewMemberName.GetName());
+		bool bMemberRedirectExists = System.PropertyRedirects.Contains(OldMemberName.GetName());
+		TestTrue(TEXT("Member redirector should be created"), bMemberRedirectExists);
+		if (bMemberRedirectExists)
+		{
+			TestEqual(TEXT("Member redirector should point to new member name"), System.PropertyRedirects[OldMemberName.GetName()], NewMemberName.GetName());
+		}
 
 		// Test retrieval via old member name
 		TestEqual(TEXT("Should be able to get member value using old name"), System.GetStringValue(OldMemberName), TEXT("StructRedirectValue"));

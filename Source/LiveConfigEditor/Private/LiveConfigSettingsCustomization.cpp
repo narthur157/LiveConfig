@@ -16,6 +16,7 @@
 #include "Widgets/Input/SButton.h"
 #include "Widgets/SWindow.h"
 #include "Widgets/Text/STextBlock.h"
+#include "LiveConfigSystem.h"
 
 #define LOCTEXT_NAMESPACE "LiveConfigSettingsCustomization"
 
@@ -32,6 +33,30 @@ void FLiveConfigSettingsCustomization::CustomizeDetails(IDetailLayoutBuilder& De
 		.WholeRowContent()
 		[
 			SNew(SVerticalBox)
+			+ SVerticalBox::Slot()
+			.AutoHeight()
+			.Padding(0.0f, 0.0f, 0.0f, 6.0f)
+			[
+				SNew(SHorizontalBox)
+				+ SHorizontalBox::Slot()
+				.AutoWidth()
+				.Padding(0.0f, 0.0f, 12.0f, 0.0f)
+				[
+					SNew(SButton)
+					.Text(LOCTEXT("SyncRemoteToLocal", "Sync Remote to Local"))
+					.ToolTipText(LOCTEXT("SyncRemoteToLocalTooltip", "Manually fetch remote overrides and apply them to local JSON files, regardless of the current Sync Mode setting."))
+					.OnClicked(this, &FLiveConfigSettingsCustomization::OnSyncRemoteClicked)
+				]
+				+ SHorizontalBox::Slot()
+				.FillWidth(1.0f)
+				.VAlign(VAlign_Center)
+				[
+					SNew(STextBlock)
+					.Text(LOCTEXT("SyncRemoteToLocalDescription", "Fetches the latest remote config and updates local JSON files if changes are detected."))
+					.AutoWrapText(true)
+					.ColorAndOpacity(FSlateColor::UseSubduedForeground())
+				]
+			]
 			+ SVerticalBox::Slot()
 			.AutoHeight()
 			.Padding(0.0f, 0.0f, 0.0f, 6.0f)
@@ -197,6 +222,12 @@ FReply FLiveConfigSettingsCustomization::OnExportCsvClicked()
 		));
 	}
 
+	return FReply::Handled();
+}
+
+FReply FLiveConfigSettingsCustomization::OnSyncRemoteClicked()
+{
+	ULiveConfigSystem::Get().SyncRemoteToLocal();
 	return FReply::Handled();
 }
 
