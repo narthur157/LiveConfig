@@ -22,7 +22,10 @@ public:
 
     FOnLiveConfigProfileChanged OnProfileChanged;
 
+    // USubsystem
     virtual void Initialize(FSubsystemCollectionBase& Collection) override;
+    virtual void Deinitialize() override;
+    // ~USubsystem
 
     UFUNCTION(BlueprintCallable, Category = "Live Config|Profiles")
     void SaveProfile(const FLiveConfigProfile& Profile);

@@ -124,6 +124,18 @@ void ULiveConfigProfileSystem::Initialize(FSubsystemCollectionBase& Collection)
     );
 }
 
+void ULiveConfigProfileSystem::Deinitialize()
+{
+    Super::Deinitialize();
+    
+    IConsoleManager::Get().UnregisterConsoleObject(TEXT("LiveConfig.SaveProfile"));
+    IConsoleManager::Get().UnregisterConsoleObject(TEXT("LiveConfig.LoadProfile"));
+    IConsoleManager::Get().UnregisterConsoleObject(TEXT("LiveConfig.SetOverride"));
+    IConsoleManager::Get().UnregisterConsoleObject(TEXT("LiveConfig.ClearOverrides"));
+    IConsoleManager::Get().UnregisterConsoleObject(TEXT("LiveConfig.ListProfiles"));
+    IConsoleManager::Get().UnregisterConsoleObject(TEXT("LiveConfig.ShowActiveProfile"));
+}
+
 void ULiveConfigProfileSystem::SaveProfile(const FLiveConfigProfile& Profile)
 {
     if (!Profile.IsValid())

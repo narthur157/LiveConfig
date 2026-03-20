@@ -39,6 +39,7 @@ bool FLiveConfigJsonOperationsTest::RunTest(const FString& Parameters)
 
 	// Test Saving
 	JsonSystem->SavePropertyToFile(PropertyDefinition);
+	JsonSystem->FlushPendingSaves();
 	FString ExpectedPath = JsonSystem->GetPropertyPath(PropertyName);
 	TestTrue(TEXT("Property file should exist after saving"), FPaths::FileExists(ExpectedPath));
 
@@ -68,6 +69,7 @@ bool FLiveConfigJsonOperationsTest::RunTest(const FString& Parameters)
 	// Test Updating
 	PropertyDefinition.Value = TEXT("UpdatedValue");
 	JsonSystem->SavePropertyToFile(PropertyDefinition);
+	JsonSystem->FlushPendingSaves();
 	FFileHelper::LoadFileToString(SavedJson, *ExpectedPath);
 	Reader = TJsonReaderFactory<>::Create(SavedJson);
 	FJsonSerializer::Deserialize(Reader, JsonObject);
@@ -76,6 +78,7 @@ bool FLiveConfigJsonOperationsTest::RunTest(const FString& Parameters)
 
 	// Test Deleting
 	JsonSystem->DeletePropertyFile(PropertyName);
+	JsonSystem->FlushPendingSaves();
 	TestFalse(TEXT("Property file should not exist after deletion"), FPaths::FileExists(ExpectedPath));
 
 	// Test skipping FromCurveTable properties
@@ -97,6 +100,7 @@ bool FLiveConfigJsonOperationsTest::RunTest(const FString& Parameters)
 	FloatDef.Value = TEXT("0.20000000298023224");
 
 	JsonSystem->SavePropertyToFile(FloatDef);
+	JsonSystem->FlushPendingSaves();
 	FString FloatPath = JsonSystem->GetPropertyPath(FloatPropName);
 	TestTrue(TEXT("Float property file should exist"), FPaths::FileExists(FloatPath));
 
@@ -186,6 +190,66 @@ bool FLiveConfigProfileJsonTest::RunTest(const FString& Parameters)
 	// Cleanup
 	ProfileSystem->DeleteProfile(TestProfileName);
 
+	return true;
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FLiveConfigJsonLoadTest, "LiveConfig.JsonLoad", EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter);
+
+bool FLiveConfigJsonLoadTest::RunTest(const FString& Parameters)
+{
+	ULiveConfigSystem& System = ULiveConfigSystem::Get();
+	ULiveConfigJsonSystem* JsonSystem = ULiveConfigJsonSystem::Get();
+	if (!JsonSystem)
+	{
+		return false;
+	}
+
+	TMap<FLiveConfigProperty, FLiveConfigPropertyDefinition> OriginalDefinitions = System.PropertyDefinitions;
+
+	FName TestPropName = TEXT("Test.JsonLoad.Gamma");
+	FLiveConfigProperty TestProp(TestPropName);
+
+	// Write a property file to disk
+	FLiveConfigPropertyDefinition Def;
+	Def.PropertyName = TestProp;
+	Def.PropertyType = ELiveConfigPropertyType::Float;
+	Def.Value = TEXT("2.5");
+	JsonSystem->SavePropertyToFile(Def);
+	JsonSystem->FlushPendingSaves();
+	TestTrue(TEXT("Property file should exist before load test"), FPaths::FileExists(JsonSystem->GetPropertyPath(TestPropName)));
+
+	// Clear definitions so we can verify LoadJsonFromFiles populates them
+	System.PropertyDefinitions.Empty();
+
+	JsonSystem->LoadJsonFromFiles();
+
+	TestTrue(TEXT("LoadJsonFromFiles should populate definitions"), System.PropertyDefinitions.Contains(TestProp));
+	if (System.PropertyDefinitions.Contains(TestProp))
+	{
+		TestEqual(TEXT("Loaded value should match"), System.PropertyDefinitions[TestProp].Value, TEXT("2.5"));
+		TestEqual(TEXT("Loaded type should match"), System.PropertyDefinitions[TestProp].PropertyType, ELiveConfigPropertyType::Float);
+	}
+
+	System.RebuildConfigCache();
+	TestNearlyEqual(TEXT("Cache should reflect loaded float value"), System.GetFloatValue(TestProp), 2.5f, 0.001f);
+
+	// Edge case: malformed JSON file should be silently skipped
+	FName MalformedName = TEXT("Test.JsonLoad.Malformed");
+	FString MalformedPath = JsonSystem->GetPropertyPath(MalformedName);
+	FString MalformedDir = FPaths::GetPath(MalformedPath);
+	IFileManager::Get().MakeDirectory(*MalformedDir, true);
+	FFileHelper::SaveStringToFile(TEXT("{ not valid json }"), *MalformedPath);
+
+	System.PropertyDefinitions.Empty();
+	JsonSystem->LoadJsonFromFiles();
+	TestFalse(TEXT("Malformed JSON file should not add a property"), System.PropertyDefinitions.Contains(FLiveConfigProperty(MalformedName)));
+	IFileManager::Get().Delete(*MalformedPath);
+
+	// Teardown
+	JsonSystem->DeletePropertyFile(TestPropName);
+	JsonSystem->FlushPendingSaves();
+	System.PropertyDefinitions = OriginalDefinitions;
+	System.RebuildConfigCache();
 	return true;
 }
 

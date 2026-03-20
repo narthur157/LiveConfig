@@ -46,29 +46,6 @@ public:
 	FEdGraphPinType DefaultPinType;
 
 private:
-	UFUNCTION(BlueprintPure, Category = "Live Config", BlueprintInternalUseOnly)
-	static bool GetBoolValue(FLiveConfigProperty Property);
-
-	UFUNCTION(BlueprintPure, Category = "Live Config", BlueprintInternalUseOnly)
-	static float GetFloatValue(FLiveConfigProperty Property);
-
-	UFUNCTION(BlueprintPure, Category = "Live Config", BlueprintInternalUseOnly)
-	static int32 GetIntValue(FLiveConfigProperty Property);
-
-	UFUNCTION(BlueprintPure, Category = "Live Config", BlueprintInternalUseOnly)
-	static FString GetStringValue(FLiveConfigProperty Property);
-	
-	/**
-	 * Gets a struct value from live config.
-	 * Each property in the struct will be looked up as Property.PropertyName.
-	 */
-	UFUNCTION(BlueprintPure, CustomThunk, Category = "Live Config", meta = (CustomStructureParam = "OutStruct"), BlueprintInternalUseOnly)
-	static void GetStructValue(FLiveConfigProperty Property, int32& OutStruct);
-
-	static void Generic_GetStructValue(FLiveConfigProperty Property, UScriptStruct* Struct, void* OutStructPtr);
-
-	DECLARE_FUNCTION(execGetStructValue);
-	
 	/** Name of the property pin */
 	static FName PropertyPinName;
 

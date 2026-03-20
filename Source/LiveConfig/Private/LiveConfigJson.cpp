@@ -58,9 +58,16 @@ void ULiveConfigJsonSystem::Initialize(FSubsystemCollectionBase& Collection)
 	}
 }
 
+void ULiveConfigJsonSystem::Deinitialize()
+{
+	IConsoleManager::Get().UnregisterConsoleObject(TEXT("LiveConfig.VerifyJson"));
+}
+
 void ULiveConfigJsonSystem::LoadJsonFromFiles()
 {
 	FString Dir = GetLiveConfigDirectory();
+	FString AbsDir = FPaths::ConvertRelativePathToFull(Dir);
+	UE_LOG(LogLiveConfig, Log, TEXT("Scanning %s for Live Config properties"), *AbsDir);
 	LoadJsonFromDirectory(Dir);
 }
 
@@ -252,6 +259,16 @@ void ULiveConfigJsonSystem::QueueSave()
 	{
 		TickHandle = FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateUObject(this, &ULiveConfigJsonSystem::OnTick));
 	}
+}
+
+void ULiveConfigJsonSystem::FlushPendingSaves()
+{
+	if (TickHandle.IsValid())
+	{
+		FTSTicker::GetCoreTicker().RemoveTicker(TickHandle);
+		TickHandle.Reset();
+	}
+	OnTick(0.0f);
 }
 
 bool ULiveConfigJsonSystem::OnTick(float DeltaTime)

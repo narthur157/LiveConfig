@@ -18,7 +18,10 @@ class LIVECONFIG_API ULiveConfigJsonSystem : public UEngineSubsystem
 public:
 	static ULiveConfigJsonSystem* Get();
 	
+	// USubsystem
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
+	virtual void Deinitialize() override;
+	// ~USubsystem
 	
 	void LoadJsonFromFiles();
 
@@ -32,7 +35,9 @@ public:
 	static FString GetPropertyPath(FName PropertyName);
 	static FString GetLiveConfigDirectory();
 	
-	// for testing 
+	void FlushPendingSaves();
+
+	// for testing
 	bool bDisableFileOperations = false;
 private:
 	void LoadJsonFromDirectory(const FString& Dir);

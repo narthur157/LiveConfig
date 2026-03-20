@@ -10,7 +10,6 @@
 #include "Kismet2/BlueprintEditorUtils.h"
 #include "BlueprintActionDatabaseRegistrar.h"
 #include "BlueprintNodeSpawner.h"
-#include "LiveConfigSystem.h"
 #include "LiveConfigTypes.h"
 
 #define LOCTEXT_NAMESPACE "K2Node_LiveConfigLookup"
@@ -167,27 +166,27 @@ void UK2Node_LiveConfigLookup::ExpandNode(FKismetCompilerContext& CompilerContex
 	switch (PropType)
 	{
 	case ELiveConfigPropertyType::Bool:
-		FunctionName = GET_FUNCTION_NAME_CHECKED(ThisClass, GetBoolValue);
+		FunctionName = GET_FUNCTION_NAME_CHECKED(ULiveConfigLib, GetBoolValue);
 		break;
 	case ELiveConfigPropertyType::Int:
-		FunctionName = GET_FUNCTION_NAME_CHECKED(ThisClass, GetIntValue);
+		FunctionName = GET_FUNCTION_NAME_CHECKED(ULiveConfigLib, GetIntValue);
 		break;
 	case ELiveConfigPropertyType::Float:
-		FunctionName = GET_FUNCTION_NAME_CHECKED(ThisClass, GetFloatValue);
+		FunctionName = GET_FUNCTION_NAME_CHECKED(ULiveConfigLib, GetValue);
 		break;
 	case ELiveConfigPropertyType::String:
-		FunctionName = GET_FUNCTION_NAME_CHECKED(ThisClass, GetStringValue);
+		FunctionName = GET_FUNCTION_NAME_CHECKED(ULiveConfigLib, GetStringValue);
 		break;
 	case ELiveConfigPropertyType::Struct:
-		FunctionName = GET_FUNCTION_NAME_CHECKED(ThisClass, GetStructValue);
+		FunctionName = GET_FUNCTION_NAME_CHECKED(ULiveConfigLib, GetStructValue);
 		break;
 	default:
-		FunctionName = GET_FUNCTION_NAME_CHECKED(ThisClass, GetFloatValue);
+		FunctionName = GET_FUNCTION_NAME_CHECKED(ULiveConfigLib, GetValue);
 		break;
 	}
 
 	UK2Node_CallFunction* CallFunctionNode = CompilerContext.SpawnIntermediateNode<UK2Node_CallFunction>(this, SourceGraph);
-	CallFunctionNode->FunctionReference.SetSelfMember(FunctionName);
+	CallFunctionNode->FunctionReference.SetExternalMember(FunctionName, ULiveConfigLib::StaticClass());
 	CallFunctionNode->AllocateDefaultPins();
 
 	UEdGraphPin* CallPropertyPin = CallFunctionNode->FindPinChecked(TEXT("Property"));
@@ -314,58 +313,6 @@ void UK2Node_LiveConfigLookup::UpdateOutputPinType()
 				}
 			}
 		}
-	}
-}
-
-bool UK2Node_LiveConfigLookup::GetBoolValue(FLiveConfigProperty Property)
-{
-	return ULiveConfigSystem::Get().GetBoolValue(Property);
-}
-
-float UK2Node_LiveConfigLookup::GetFloatValue(FLiveConfigProperty Property)
-{
-	return ULiveConfigSystem::Get().GetFloatValue(Property);
-}
-
-int32 UK2Node_LiveConfigLookup::GetIntValue(FLiveConfigProperty Property)
-{
-	return ULiveConfigSystem::Get().GetIntValue(Property);
-}
-
-FString UK2Node_LiveConfigLookup::GetStringValue(FLiveConfigProperty Property)
-{
-	return ULiveConfigSystem::Get().GetStringValue(Property);
-}
-
-void UK2Node_LiveConfigLookup::GetStructValue(FLiveConfigProperty Property, int32& OutStruct)
-{
-	// This should not be called
-	checkNoEntry();
-}
-
-void UK2Node_LiveConfigLookup::Generic_GetStructValue(FLiveConfigProperty Property, UScriptStruct* Struct, void* OutStructPtr)
-{
-	if (Struct && OutStructPtr)
-	{
-		ULiveConfigSystem::Get().GetLiveConfigStruct_Internal(Struct, OutStructPtr, Property);
-	}
-}
-
-DEFINE_FUNCTION(UK2Node_LiveConfigLookup::execGetStructValue)
-{
-	P_GET_STRUCT(FLiveConfigProperty, Property);
-
-	Stack.StepCompiledIn<FStructProperty>(nullptr);
-	void* OutStructPtr = Stack.MostRecentPropertyAddress;
-	FStructProperty* StructProp = CastField<FStructProperty>(Stack.MostRecentProperty);
-
-	P_FINISH;
-
-	if (StructProp && OutStructPtr)
-	{
-		P_NATIVE_BEGIN;
-		Generic_GetStructValue(Property, StructProp->Struct, OutStructPtr);
-		P_NATIVE_END;
 	}
 }
 

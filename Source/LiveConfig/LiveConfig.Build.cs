@@ -19,5 +19,7 @@ public class LiveConfig : ModuleRules
 			PrivateDependencyModuleNames.Add("SourceControl");
 			PrivateDependencyModuleNames.Add("UnrealEd");
 		}
+
+		RuntimeDependencies.Add("$(ProjectDir)/Config/LiveConfig/...", StagedFileType.NonUFS);
 	}
 }

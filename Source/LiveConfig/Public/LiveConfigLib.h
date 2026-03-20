@@ -44,7 +44,7 @@ public:
 	static FLiveConfigProfile ParseOverridesFromCsv(const FString& CsvContent);
 
 	static FSlateColor GetTagColor(FName InTag);
-private:	
+
 	UFUNCTION(BlueprintPure, Category = "Live Config", BlueprintInternalUseOnly)
 	static bool GetBoolValue(FLiveConfigProperty Property);
 
@@ -64,6 +64,7 @@ private:
 	UFUNCTION(BlueprintPure, CustomThunk, Category = "Live Config", meta = (CustomStructureParam = "OutStruct"), BlueprintInternalUseOnly)
 	static void GetStructValue(FLiveConfigProperty Property, int32& OutStruct);
 
+private:
 	static void Generic_GetStructValue(FLiveConfigProperty Property, UScriptStruct* Struct, void* OutStructPtr);
 
 	DECLARE_FUNCTION(execGetStructValue);

@@ -120,6 +120,9 @@ void ULiveConfigSystem::RebuildConfigCache(const FLiveConfigProfile& Profile)
 void ULiveConfigSystem::Deinitialize()
 {
     Super::Deinitialize();
+	
+	IConsoleManager::Get().UnregisterConsoleObject(TEXT("LiveConfig.FetchProfile"));
+	IConsoleManager::Get().UnregisterConsoleObject(TEXT("LiveConfig.SyncRemote"));
 }
 
 bool ULiveConfigSystem::ShouldCreateSubsystem(UObject* Outer) const
@@ -268,7 +271,7 @@ void ULiveConfigSystem::RenameProperty(FLiveConfigProperty OldName, FLiveConfigP
 		FString NewPrefix = NewName.ToString() + TEXT(".");
 
 		TArray<FLiveConfigProperty> MembersToRename;
-		GetStructPropertyMembers(OldName, MembersToRename);
+		GetSubProperties(OldName.GetName(), MembersToRename);
 
 		for (const FLiveConfigProperty& OldMemberName : MembersToRename)
 		{
@@ -476,7 +479,7 @@ void ULiveConfigSystem::DownloadConfig()
     ELiveConfigSourceType SourceType;
     FString SourcePath;
     GetActiveSource(SourceType, SourcePath);
-
+	
     if (SourceType != ELiveConfigSourceType::None)
     {
         UE_LOG(LogLiveConfig, Log, TEXT("LiveConfigSystem: Starting download from %s"), *SourcePath);
@@ -743,7 +746,8 @@ void ULiveConfigSystem::FetchOverrides(ELiveConfigSourceType SourceType, const F
 		}
 		else
 		{
-			UE_LOG(LogLiveConfig, Error, TEXT("Failed to load local CSV from: %s"), *SourcePath);
+			FString AbsPath = FPaths::ConvertRelativePathToFull(SourcePath);
+			UE_LOG(LogLiveConfig, Error, TEXT("Failed to load local CSV from: %s"), *AbsPath);
 		}
 
 		OnComplete.ExecuteIfBound(Profile);

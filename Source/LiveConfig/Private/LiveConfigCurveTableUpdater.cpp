@@ -286,10 +286,31 @@ void ULiveConfigCurveTableUpdater::ExportToCurveTables()
 	for (const TTuple<FName, FSimpleCurve*>& Pair : ExportActiveCurveTable->GetSimpleCurveRowMap())
 	{
 		FName RowName = Pair.Key;
-		FSimpleCurve* Curve = Pair.Value;
-		if (!System.PropertyDefinitions.Contains(RowName))
+		if (System.PropertyDefinitions.Contains(RowName))
 		{
-			RowsToRemove.Add(RowName);	
+			continue;
+		}
+
+		// Also keep rows that were synthesized from indexed properties (e.g. RowName.0, RowName.1)
+		FString RowPrefix = RowName.ToString() + TEXT(".");
+		bool bHasIndexedProps = false;
+		for (const auto& DefPair : System.PropertyDefinitions)
+		{
+			FString PropStr = DefPair.Key.ToString();
+			if (PropStr.StartsWith(RowPrefix))
+			{
+				FString Suffix = PropStr.RightChop(RowPrefix.Len());
+				if (Suffix.IsNumeric())
+				{
+					bHasIndexedProps = true;
+					break;
+				}
+			}
+		}
+
+		if (!bHasIndexedProps)
+		{
+			RowsToRemove.Add(RowName);
 		}
 	}
 	
@@ -308,26 +329,20 @@ void ULiveConfigCurveTableUpdater::ExportToCurveTables()
 #if WITH_EDITOR
 	ExportActiveCurveTable->PostEditChange();
 
-	if (GEditor && GEditor->IsTimerManagerValid())
+	// Automatically save the asset in the editor
+	UPackage* Package = ExportActiveCurveTable->GetOutermost();
+	if (Package && !Package->HasAnyFlags(RF_Transient) && !Package->GetName().StartsWith(TEXT("/Temp/")))
 	{
-		GEditor->GetTimerManager()->SetTimer(SaveTimerHandle, [&]()
-		{
-			// Automatically save the asset in the editor
-			UPackage* Package = ExportActiveCurveTable->GetOutermost();
-			if (Package && !Package->HasAnyFlags(RF_Transient) && !Package->GetName().StartsWith(TEXT("/Temp/")))
-			{
-				FString PackageFileName = FPackageName::LongPackageNameToFilename(Package->GetName(), FPackageName::GetAssetPackageExtension());
-				
-				FSavePackageArgs SaveArgs;
-				SaveArgs.TopLevelFlags = RF_Public | RF_Standalone;
-				SaveArgs.Error = GError;
-				SaveArgs.bForceByteSwapping = false;
-				SaveArgs.bWarnOfLongFilename = true;
-				SaveArgs.SaveFlags = SAVE_NoError;
+		FString PackageFileName = FPackageName::LongPackageNameToFilename(Package->GetName(), FPackageName::GetAssetPackageExtension());
+		
+		FSavePackageArgs SaveArgs;
+		SaveArgs.TopLevelFlags = RF_Public | RF_Standalone;
+		SaveArgs.Error = GError;
+		SaveArgs.bForceByteSwapping = false;
+		SaveArgs.bWarnOfLongFilename = true;
+		SaveArgs.SaveFlags = SAVE_Async;
 
-				UPackage::SavePackage(Package, ExportActiveCurveTable, *PackageFileName, SaveArgs);
-			}
-		}, 2.5f, false);
+		UPackage::SavePackage(Package, ExportActiveCurveTable, *PackageFileName, SaveArgs);
 	}
 #endif
 }
