@@ -9,7 +9,7 @@
  * A type-safe wrapper for Live Config row names, similar to FGameplayTag.
  * Provides better editor integration and type safety.
  */
-USTRUCT(BlueprintType, Meta = (HasNativeMake = "/Script/LiveConfig.LiveConfigLibrary.MakeLiteralLiveConfigProperty", HasNativeBreak = "/Script/LiveConfig.LiveConfigLibrary.GetPropertyName", DisableSplitPin))
+USTRUCT(BlueprintType, Meta = (HasNativeMake = "/Script/LiveConfig.LiveConfigLib.MakeLiteralLiveConfigProperty", HasNativeBreak = "/Script/LiveConfig.LiveConfigLib.GetPropertyName", DisableSplitPin))
 struct LIVECONFIG_API FLiveConfigProperty
 {
 	GENERATED_BODY()
