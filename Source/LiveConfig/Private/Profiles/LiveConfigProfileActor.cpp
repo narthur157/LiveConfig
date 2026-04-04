@@ -14,9 +14,13 @@ ALiveConfigProfileActor::ALiveConfigProfileActor()
     bAlwaysRelevant = true;
     
     bNetLoadOnClient = false;
-    
+
+#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION >= 7
     // Very slow update frequency 
     SetNetUpdateFrequency(1.f);
+#else
+    NetUpdateFrequency = 1.f;
+#endif
     
     AActor::SetReplicateMovement(false);
 }

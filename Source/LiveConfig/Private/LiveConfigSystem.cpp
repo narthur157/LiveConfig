@@ -355,7 +355,9 @@ void ULiveConfigSystem::HandleTagsChanged()
 
 void ULiveConfigSystem::PatchEnvironmentOverrides(const FLiveConfigProfile& InProfile)
 {
-	if (EnvironmentOverrides != InProfile)
+	const FLiveConfigProfile& Env = EnvironmentOverrides;
+	
+	if (Env != InProfile)
 	{
 		for (TTuple<FLiveConfigProperty, FString> Pair : InProfile.Overrides)
 		{

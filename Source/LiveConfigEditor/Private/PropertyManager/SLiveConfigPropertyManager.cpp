@@ -506,7 +506,11 @@ void SLiveConfigPropertyManager::RefreshSearchFilter()
 				return false;
 			}
 			
+#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION >= 7
 			return UE::ComparisonUtility::CompareNaturalOrder(A->DisplayName, B->DisplayName) < 0;
+#else
+			return UE::ComparisonUtility::CompareWithNumericSuffix(A->DisplayName, B->DisplayName) < 0;
+#endif
 		});
 	};
 
@@ -1000,7 +1004,8 @@ void SLiveConfigPropertyManager::BulkDeleteProperties(TArray<TSharedRef<FLiveCon
 		FText::AsNumber(Nodes.Num())
 	);
 
-	if (FMessageDialog::Open(EAppMsgType::YesNo, ConfirmMessage, LOCTEXT("BulkDeleteTitle", "Delete Properties")) != EAppReturnType::Yes)
+	FText Title = LOCTEXT("BulkDeleteTitle", "Delete Properties");
+	if (FMessageDialog::Open(EAppMsgType::YesNo, ConfirmMessage, &Title) != EAppReturnType::Yes)
 	{
 		return;
 	}
@@ -1190,9 +1195,10 @@ void SLiveConfigPropertyManager::OnPropertyRowChanged(TSharedPtr<FLiveConfigProp
 
 			case ELiveConfigRedirectMode::Prompt:
 				{
+					FText Title = LOCTEXT("CreateRedirectorTitle", "Create Redirector?");
 					const EAppReturnType::Type Result = FMessageDialog::Open(EAppMsgType::YesNo,
 						LOCTEXT("CreateRedirectorQuestion", "Would you like to create a property redirector for this rename? This will ensure existing references continue to work."),
-						LOCTEXT("CreateRedirectorTitle", "Create Redirector?"));
+						&Title);
 					bCreateRedirector = (Result == EAppReturnType::Yes);
 				}
 				break;
@@ -1300,7 +1306,8 @@ void SLiveConfigPropertyManager::RemoveTag(FName TagName)
 			FText::AsNumber(Count)
 		);
 
-		if (FMessageDialog::Open(EAppMsgType::YesNo, ConfirmMessage, LOCTEXT("DeleteTagTitle", "Delete Tag")) != EAppReturnType::Yes)
+		FText Title = LOCTEXT("DeleteTagTitle", "Delete Tag");
+		if (FMessageDialog::Open(EAppMsgType::YesNo, ConfirmMessage, &Title) != EAppReturnType::Yes)
 		{
 			return;
 		}

@@ -106,8 +106,8 @@ void ULiveConfigEditorSubsystem::UpdateCsvMonitor()
 void ULiveConfigEditorSubsystem::HandleLiveConfigSettingsChanged(UObject* Settings,
 	FPropertyChangedEvent& PropertyChangedEvent)
 {
-	if (PropertyChangedEvent.MemberProperty->GetName() == GET_MEMBER_NAME_CHECKED(ULiveConfigUserSettings, ExternalSourceOverride) 
-		|| PropertyChangedEvent.MemberProperty->GetName() == GET_MEMBER_NAME_CHECKED(ULiveConfigSettings, DefaultExternalSource))
+	if (PropertyChangedEvent.MemberProperty->GetFName() == GET_MEMBER_NAME_CHECKED(ULiveConfigUserSettings, ExternalSourceOverride) 
+		|| PropertyChangedEvent.MemberProperty->GetFName() == GET_MEMBER_NAME_CHECKED(ULiveConfigSettings, DefaultExternalSource))
 	{
 		UpdateCsvMonitor();
 	}

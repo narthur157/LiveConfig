@@ -163,7 +163,11 @@ void SLiveConfigPropertyPicker::RefreshPropertyList()
     // Remove duplicates and sort
     AllProperties.Sort([](const FLiveConfigProperty& A, const FLiveConfigProperty& B)
     {
+#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION >= 7
         return UE::ComparisonUtility::CompareNaturalOrder(A.ToString(), B.ToString()) < 0;
+#else
+        return UE::ComparisonUtility::CompareWithNumericSuffix(A.ToString(), B.ToString()) < 0;
+#endif
     });
 
     for (const FLiveConfigProperty& Property : AllProperties)

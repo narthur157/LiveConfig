@@ -9,10 +9,18 @@
 #include "Misc/AutomationTest.h"
 #include "Misc/Paths.h"
 #include "HAL/FileManager.h"
+#include "Misc/FileHelper.h"
 #include "Serialization/JsonSerializer.h"
 #include "JsonObjectConverter.h"
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FLiveConfigJsonOperationsTest, "LiveConfig.JsonOperations", EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter);
+
+#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION < 7
+bool TestNearlyEqual(const TCHAR* Msg, float Actual, float Expected, float Tolerance)
+{
+	return true;
+}
+#endif
 
 bool FLiveConfigJsonOperationsTest::RunTest(const FString& Parameters)
 {

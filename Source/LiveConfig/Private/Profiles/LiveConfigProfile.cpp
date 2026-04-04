@@ -20,3 +20,31 @@ void FLiveConfigProfile::Redirect()
 	
 	Overrides = MoveTemp(NewOverrides);
 }
+
+bool FLiveConfigProfile::operator==(const FLiveConfigProfile& OtherProfile) const
+{
+	if (OtherProfile.Overrides.Num() != Overrides.Num())
+	{
+		return false;
+	}
+    
+	for (auto OverridePair : Overrides)
+	{
+		if (!OtherProfile.Overrides.Contains(OverridePair.Key))
+		{
+			return false;
+		}
+        
+		if (OtherProfile.Overrides[OverridePair.Key] != OverridePair.Value)
+		{
+			return false;
+		}
+	}
+    
+	return true;
+}
+
+bool FLiveConfigProfile::operator!=(const FLiveConfigProfile& OtherProfile) const
+{
+	return !(OtherProfile == *this);
+}

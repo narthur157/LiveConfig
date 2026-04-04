@@ -11,7 +11,8 @@
  */
 class SLiveConfigPropertyChip : public SCompoundWidget
 {
-	SLATE_DECLARE_WIDGET_API(SLiveConfigPropertyChip, SCompoundWidget, LIVECONFIGEDITOR_API);
+	SLATE_DECLARE_WIDGET(SLiveConfigPropertyChip, SCompoundWidget);
+	
 public:
 	SLiveConfigPropertyChip();
 	

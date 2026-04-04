@@ -74,7 +74,11 @@ void ULiveConfigPropertyTreeSubsystem::Rebuild(const TMap<FLiveConfigProperty, F
 
 	Definitions.Sort([](const TSharedPtr<FLiveConfigPropertyDefinition>& A, const TSharedPtr<FLiveConfigPropertyDefinition>& B)
 	{
+#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION >= 7
 		return UE::ComparisonUtility::CompareNaturalOrder(A->PropertyName.ToString(), B->PropertyName.ToString()) < 0;
+#else
+		return UE::ComparisonUtility::CompareWithNumericSuffix(A->PropertyName.ToString(), B->PropertyName.ToString()) < 0;
+#endif
 	});
 
 	for (const auto& Def : Definitions)

@@ -58,6 +58,7 @@ struct FLiveConfigProfile
     }
 
     bool operator==(const FLiveConfigProfile& OtherProfile) const;
+    bool operator!=(const FLiveConfigProfile& OtherProfile) const;
 
 private:
     /** For replication as TMap doesn't replicate */
@@ -65,26 +66,3 @@ private:
     TArray<FLiveConfigOverride> ReplicatedOverrides;
 
 };
-
-inline bool FLiveConfigProfile::operator==(const FLiveConfigProfile& OtherProfile) const
-{
-    if (OtherProfile.Overrides.Num() != Overrides.Num())
-    {
-        return false;
-    }
-    
-    for (auto OverridePair : Overrides)
-    {
-        if (!OtherProfile.Overrides.Contains(OverridePair.Key))
-        {
-            return false;
-        }
-        
-        if (OtherProfile.Overrides[OverridePair.Key] != OverridePair.Value)
-        {
-            return false;
-        }
-    }
-    
-    return true;
-}

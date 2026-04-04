@@ -5,6 +5,7 @@
 
 #include "LiveConfigPropertyStyle.h"
 #include "SlateOptMacros.h"
+#include "Styling/StyleColors.h"
 
 #define LOCTEXT_NAMESPACE "LiveConfigPropertyChip"
 SLATE_IMPLEMENT_WIDGET(SLiveConfigPropertyChip);

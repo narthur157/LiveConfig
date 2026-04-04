@@ -18,7 +18,12 @@ FLiveConfigStructFilter::FLiveConfigStructFilter()
 {
 	FModuleManager& ModuleManager = FModuleManager::Get();
 
+#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION >= 7
 	TArray<FModuleDiskInfo> AllModules;
+#else
+	TArray<FName> AllModules;
+#endif
+	
 	ModuleManager.FindModules(TEXT("*"), AllModules);
 
 	FString ProjectDir = FPaths::ConvertRelativePathToFull(FPaths::ProjectDir());
@@ -30,11 +35,12 @@ FLiveConfigStructFilter::FLiveConfigStructFilter()
 
 	for (const auto& ModuleInfo : AllModules)
 	{
+#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION >= 7
 		FName ModuleName = ModuleInfo.Name;
-		if (ModuleInfo.FilePath.IsEmpty())
-		{
-			continue;
-		}
+#else
+		FName ModuleName = ModuleInfo;
+#endif
+
 		if (!ModuleManager.ModuleExists(*ModuleName.ToString()))
 		{
 			continue;
@@ -44,7 +50,7 @@ FLiveConfigStructFilter::FLiveConfigStructFilter()
 		{
 			continue;
 		}
-		
+#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION >= 7	
 		const FString& ModuleFilenameRelative = ModuleInfo.FilePath;
 		FString ModuleFilename = FPaths::ConvertRelativePathToFull(ModuleFilenameRelative);
 
@@ -52,9 +58,14 @@ FLiveConfigStructFilter::FLiveConfigStructFilter()
 		{
 			AllowedScripts.Add(TEXT("/Script/") + ModuleName.ToString());
 		}
+#else
+		if (ModuleName.ToString().Contains(ProjectDir))
+		{
+			AllowedScripts.Add(TEXT("/Script/") + ModuleName.ToString());
+		}
+#endif
 	}
 }
-
 bool FLiveConfigStructFilter::IsStructAllowed(const FStructViewerInitializationOptions& InInitOptions, const UScriptStruct* InStruct, TSharedRef<class FStructViewerFilterFuncs> InNode)
 {
 	if (!InStruct)
@@ -83,6 +94,8 @@ bool FLiveConfigStructFilter::IsUnloadedStructAllowed(const FStructViewerInitial
 	FString PackageName = InStructPath.GetLongPackageName();
 	return IsPackageAllowed(PackageName);
 }
+
+
 
 bool FLiveConfigStructFilter::IsPackageAllowed(const FString& PackageName) const
 {
