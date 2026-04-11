@@ -9,6 +9,7 @@
 #include "Widgets/Text/STextBlock.h"
 #include "UObject/UnrealType.h"
 #include "PropertyHandle.h"
+#include "SlateOptMacros.h"
 #include "Widgets/DeclarativeSyntaxSupport.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
@@ -171,30 +172,11 @@ void FLiveConfigPropertyCustomization::SetProperty(FLiveConfigProperty NewProper
         return;
     }
 
-    // Set the PropertyName member of the FLiveConfigProperty struct
-    TArray<void*> RawData;
-    PropertyHandle->AccessRawData(RawData);
-
-    if (RawData.Num() > 0)
-    {
-        if (FStructProperty* StructProperty = CastField<FStructProperty>(PropertyHandle->GetProperty()))
-        {
-            // Set PropertyName
-            if (FProperty* PropertyProperty = StructProperty->Struct->FindPropertyByName(GET_MEMBER_NAME_CHECKED(FLiveConfigProperty, PropertyName)))
-            {
-                if (FNameProperty* NameProp = CastField<FNameProperty>(PropertyProperty))
-                {
-                    FName* NamePtr = NameProp->GetPropertyValuePtr_InContainer(RawData[0]);
-                    if (NamePtr)
-                    {
-                        *NamePtr = NewProperty.GetName();
-                    }
-                }
-            }
-            
-            PropertyHandle->NotifyPostChange(EPropertyChangeType::ValueSet);
-        }
-    }
+    // SetValueFromFormattedString calls NotifyPreChange/NotifyPostChange internally,
+    // which triggers Modify() on the outer object so the Blueprint is marked dirty
+    // and the value is saved to the asset. It uses FLiveConfigProperty::ImportTextItem
+    // to parse the string back into the struct.
+    PropertyHandle->SetValueFromFormattedString(NewProperty.ToString());
 }
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
